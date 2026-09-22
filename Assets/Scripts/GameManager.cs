@@ -6,10 +6,11 @@ using UnityEngine.Tilemaps;
 namespace ProjectDM
 {
     /// <summary>
-    /// First playable vertical slice for Project DM. Drop this in an empty Unity scene and press Play.
-    /// It boots itself so the sample scene does not need manual setup.
+    /// Scene-level composition root for Project DM. It initializes Addressables, then starts one run.
     /// </summary>
-    public sealed class ProjectDMGame : MonoBehaviour
+    [DisallowMultipleComponent]
+    [DefaultExecutionOrder(-100)]
+    public sealed class GameManager : MonoBehaviour
     {
         private const string MetaGoldKey = "PROJECT_DM_META_GOLD";
         private const string DamageKey = "PROJECT_DM_DAMAGE_LEVEL";
@@ -60,17 +61,6 @@ namespace ProjectDM
         private GUIStyle statStyle;
         private GUIStyle cardStyle;
         private bool isInitialized;
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Boot()
-        {
-            if (FindFirstObjectByType<ProjectDMGame>() != null)
-            {
-                return;
-            }
-
-            new GameObject("Project DM - Game").AddComponent<ProjectDMGame>();
-        }
 
         private void Awake()
         {
