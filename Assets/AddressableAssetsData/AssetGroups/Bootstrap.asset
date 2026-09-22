@@ -15,8 +15,32 @@ MonoBehaviour:
   m_GroupName: Bootstrap
   m_GUID: b9bc2f2e4ad18c941b856a5aa5b441bd
   m_SerializeEntries:
+  - m_GUID: 0b4999fb554ae064e9e9519f9fe5db43
+    m_Address: prefab/player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1df6fb62170413149b93763b42934bf3
     m_Address: art/monsters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 267f5cc51b04f0a4197b43f5af704950
+    m_Address: prefab/pickup-experience
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 342104ef5671c2543bd4bb7861815b6e
+    m_Address: art/player-walk-cycle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42711d15bad77d747a885b4992a39757
+    m_Address: prefab/pickup-gold
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap
@@ -27,14 +51,38 @@ MonoBehaviour:
     m_SerializedLabels:
     - bootstrap
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d5bc347bafc460b8ec76b43329eb2c9
+    m_Address: art/player-idle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 502dc223c83ea6b4ebad6eefe15e9d07
     m_Address: art/gameplay
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d662f08a6b27a34b9f010b4d599f90b
+    m_Address: prefab/enemy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 846dc85a706084741a5ad93db4c7c75f
+    m_Address: project-dm/sprites
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c9797eff1600d842beba09e6f5a47b6
     m_Address: art/player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9eee96d5dcae97c4c9c3978d58c88f75
+    m_Address: art/player-walk-side-refined
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap
@@ -57,6 +105,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - bootstrap
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7d86bd2abbea5445aac2aeb0f77e549
+    m_Address: prefab/pickup-chest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d55d5644a0735f244bae56fdba626211
     m_Address: project-dm/catalog
     m_ReadOnly: 0
@@ -71,6 +125,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e0d5d46ed18e0e3449a3281c81718e7c
     m_Address: animation/slime
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5528b7a8c42398468f1e227f6e4157e
+    m_Address: prefab/projectile
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap

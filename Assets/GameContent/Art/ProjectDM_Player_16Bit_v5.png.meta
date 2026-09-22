@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cute_Left_0
+      name: ProjectDM_Player_16Bit_v5_2
       rect:
         serializedVersion: 2
-        x: 1
-        y: 513
-        width: 382
-        height: 510
+        x: 800
+        y: 542
+        width: 281
+        height: 362
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d359de7a95a1064188f92f0ddd81018
-      internalID: 2141611642
+      spriteID: 3514faa1722893e449176ac657d15026
+      internalID: -665306239
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cute_Down_0
+      name: ProjectDM_Player_16Bit_v5_3
       rect:
         serializedVersion: 2
-        x: 385
-        y: 513
-        width: 382
-        height: 510
+        x: 1188
+        y: 545
+        width: 281
+        height: 362
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,20 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e896fa4a1fc91184cb7939fc0308d6a8
-      internalID: 1660100171
+      spriteID: 2458a1831f2ec0d4da5fccda72997ce8
+      internalID: -882399811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cute_Right_0
+      name: ProjectDM_Player_16Bit_v5_4
       rect:
         serializedVersion: 2
-        x: 769
-        y: 513
-        width: 382
-        height: 510
+        x: 63
+        y: 543
+        width: 281
+        height: 361
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,20 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3bf8821fe79a634fb7feb0bac670bf1
-      internalID: -1372417175
+      spriteID: 075977d8ea3a3584fb7c5fb0bc98dd96
+      internalID: -1084018258
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cute_Up_0
+      name: ProjectDM_Player_16Bit_v5_5
       rect:
         serializedVersion: 2
-        x: 1153
-        y: 513
-        width: 382
-        height: 510
+        x: 436
+        y: 542
+        width: 281
+        height: 361
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,20 +178,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aba31b21920da024893a1bf67e76332c
-      internalID: 74293948
+      spriteID: 7f7c29f92862f58479e56c80d13a1565
+      internalID: 1578608487
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cute_Left_1
+      name: ProjectDM_Player_16Bit_v5_6
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 382
-        height: 510
+        x: 63
+        y: 120
+        width: 281
+        height: 362
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52b1aa4f03bba3a4aafcaa461faa4b0c
-      internalID: -2025828678
+      spriteID: aa8e7a97976647a4b8aea02318e9a72f
+      internalID: 291186565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cute_Down_1
+      name: ProjectDM_Player_16Bit_v5_7
       rect:
         serializedVersion: 2
-        x: 385
-        y: 1
-        width: 382
-        height: 510
+        x: 436
+        y: 120
+        width: 281
+        height: 362
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,20 +222,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31ea77b3b562a9e4d8e8856bfdf10cb4
-      internalID: -889786718
+      spriteID: 781be9172e5e04d4a9eab3aa70b16f97
+      internalID: 150130932
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cute_Right_1
+      name: ProjectDM_Player_16Bit_v5_8
       rect:
         serializedVersion: 2
-        x: 769
-        y: 1
-        width: 382
-        height: 510
+        x: 800
+        y: 120
+        width: 281
+        height: 362
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,20 +244,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e229dd2c0927993479031301f502d9d1
-      internalID: 482193178
+      spriteID: 83866fdd9543a484385dd9e3f545ca65
+      internalID: -919512215
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cute_Up_1
+      name: ProjectDM_Player_16Bit_v5_9
       rect:
         serializedVersion: 2
-        x: 1153
-        y: 1
-        width: 382
-        height: 510
+        x: 1189
+        y: 120
+        width: 281
+        height: 362
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,8 +266,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea0f274a7509187498387259ed160722
-      internalID: 1897355114
+      spriteID: 78d45610be9d4f54aa7f044f342fe2a8
+      internalID: 1238571473
       vertices: []
       indices: 
       edges: []
@@ -284,16 +284,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Cute_Down_0: 1660100171
-      Cute_Down_1: -889786718
-      Cute_Left_0: 2141611642
-      Cute_Left_1: -2025828678
-      Cute_Right_0: -1372417175
-      Cute_Right_1: 482193178
-      Cute_Up_0: 74293948
-      Cute_Up_1: 1897355114
+      ProjectDM_Player_16Bit_v5_0: -1313568335
+      ProjectDM_Player_16Bit_v5_1: 727853307
+      ProjectDM_Player_16Bit_v5_10: 1064236068
+      ProjectDM_Player_16Bit_v5_2: -665306239
+      ProjectDM_Player_16Bit_v5_3: -882399811
+      ProjectDM_Player_16Bit_v5_4: -1084018258
+      ProjectDM_Player_16Bit_v5_5: 1578608487
+      ProjectDM_Player_16Bit_v5_6: 291186565
+      ProjectDM_Player_16Bit_v5_7: 150130932
+      ProjectDM_Player_16Bit_v5_8: -919512215
+      ProjectDM_Player_16Bit_v5_9: 1238571473
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: ProjectDM_ArtPipeline_v2

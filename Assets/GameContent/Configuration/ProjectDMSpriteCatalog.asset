@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd086b8ee9427e46b53c7a5570e32a7, type: 3}
+  m_Name: ProjectDMSpriteCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.ProjectDMSpriteCatalog
+  playerLeftFrames:
+  - {fileID: -712242547, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  - {fileID: -1052017261, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  - {fileID: -1146067449, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  - {fileID: -847304145, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  playerDownFrames:
+  - {fileID: 1048083004, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  - {fileID: -1002017637, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  - {fileID: 247355777, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  - {fileID: -598132210, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  playerRightFrames:
+  - {fileID: -2045021983, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  - {fileID: -1576998539, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  - {fileID: 154951928, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  - {fileID: 288971503, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  playerUpFrames:
+  - {fileID: -475027555, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  - {fileID: 2079520878, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  - {fileID: 774164547, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  - {fileID: 1308579334, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  slimeFrames:
+  - {fileID: -1098603268, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
+  - {fileID: -866923610, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
+  skeletonFrames:
+  - {fileID: -1288109876, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
+  - {fileID: -84191757, guid: 1df6fb62170413149b93763b42934bf3, type: 3}

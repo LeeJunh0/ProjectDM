@@ -2,36 +2,54 @@ using UnityEngine;
 
 namespace ProjectDM
 {
-    [RequireComponent(typeof(SpriteRenderer), typeof(Animator))]
+    [DisallowMultipleComponent]
     public sealed class PlayerAnimation : MonoBehaviour
     {
         private Animator animator;
         private SpriteRenderer spriteRenderer;
         private string currentState;
+        private string facing = "Down";
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            animator = GetComponentInChildren<Animator>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            if (animator != null)
+            {
+                animator.applyRootMotion = false;
+            }
         }
 
         public void Initialize(Sprite sprite, RuntimeAnimatorController controller)
         {
             spriteRenderer.sprite = sprite;
             animator.runtimeAnimatorController = controller;
+            animator.applyRootMotion = false;
+            currentState = null;
+            PlayState(false);
         }
 
         public void UpdateFacing(Vector2 input)
         {
-            if (input.sqrMagnitude <= 0.01f || animator.runtimeAnimatorController == null)
+            if (animator == null || animator.runtimeAnimatorController == null)
             {
                 return;
             }
 
-            string nextState = Mathf.Abs(input.x) >= Mathf.Abs(input.y)
-                ? input.x < 0f ? "Walk_Left" : "Walk_Right"
-                : input.y < 0f ? "Walk_Down" : "Walk_Up";
+            bool isMoving = input.sqrMagnitude > 0.01f;
+            if (isMoving)
+            {
+                facing = Mathf.Abs(input.x) >= Mathf.Abs(input.y)
+                    ? input.x < 0f ? "Left" : "Right"
+                    : input.y < 0f ? "Down" : "Up";
+            }
 
+            PlayState(isMoving);
+        }
+
+        private void PlayState(bool isMoving)
+        {
+            string nextState = $"{(isMoving ? "Walk" : "Idle")}_{facing}";
             if (nextState == currentState)
             {
                 return;

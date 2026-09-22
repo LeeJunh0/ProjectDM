@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 96
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,10 +100,10 @@ TextureImporter:
       name: Actor_Slime_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 562
-        width: 699
-        height: 559
+        x: 249
+        y: 602
+        width: 390
+        height: 263
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,7 +112,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cad97cac2c5277439a0cc5231aa0cdf
+      spriteID: 979767d0f3edc4c40a82f3c1e90923da
       internalID: -1098603268
       vertices: []
       indices: 
@@ -122,10 +122,10 @@ TextureImporter:
       name: Actor_Slime_1
       rect:
         serializedVersion: 2
-        x: 702
-        y: 562
-        width: 699
-        height: 559
+        x: 779
+        y: 605
+        width: 365
+        height: 370
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,7 +134,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae8b713bb1ce029459a94d99651afcf5
+      spriteID: e43fc0d4dc00cab49bdbdd599673b832
       internalID: -866923610
       vertices: []
       indices: 
@@ -144,10 +144,10 @@ TextureImporter:
       name: Actor_Skeleton_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 699
-        height: 559
+        x: 288
+        y: 79
+        width: 278
+        height: 407
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,7 +156,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e061ee62810f77646983415ec8f3dd15
+      spriteID: ec208e1e778b5a44995c0ab21580c40b
       internalID: -1288109876
       vertices: []
       indices: 
@@ -166,10 +166,10 @@ TextureImporter:
       name: Actor_Skeleton_1
       rect:
         serializedVersion: 2
-        x: 702
-        y: 1
-        width: 699
-        height: 559
+        x: 824
+        y: 79
+        width: 286
+        height: 411
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,7 +178,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b5ef8e077f20464680105a8a442a163
+      spriteID: 9c37216fcc2a56b4cb33ae1fc8dd3621
       internalID: -84191757
       vertices: []
       indices: 

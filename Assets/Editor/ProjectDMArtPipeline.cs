@@ -19,9 +19,13 @@ namespace ProjectDM.Editor
         private const string SpriteSheetPath = "Assets/GameContent/Art/ProjectDM_Sprites_TopDown_v2.png";
         private const string ActorSheetPath = "Assets/GameContent/Art/ProjectDM_Monsters_16Bit_v5.png";
         private const string CutePlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_16Bit_v5.png";
+        private const string WalkCyclePlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Walk_4Frame_v6.png";
+        private const string SideWalkPlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Walk_SideRefined_v7.png";
+        private const string IdlePlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Idle_4Frame_v1.png";
         private const string FloorSheetPath = "Assets/GameContent/Art/ProjectDM_FloorTiles_v1.png";
         private const string TileFolder = "Assets/GameContent/Tiles";
         private const string AnimationFolder = "Assets/GameContent/Animation";
+        private const string SpriteCatalogPath = "Assets/GameContent/Configuration/ProjectDMSpriteCatalog.asset";
         private const string ConfigurationTag = "ProjectDM_ArtPipeline_v2";
 
         static ProjectDMArtPipeline()
@@ -48,6 +52,95 @@ namespace ProjectDM.Editor
             Debug.Log("Project DM generated Tile and Animation assets are ready.");
         }
 
+        [MenuItem("Project DM/Sync Character and Monster Slices")]
+        public static void SyncCharacterAndMonsterSlices()
+        {
+            TextureImporter playerImporter = AssetImporter.GetAtPath(CutePlayerSheetPath) as TextureImporter;
+            TextureImporter actorImporter = AssetImporter.GetAtPath(ActorSheetPath) as TextureImporter;
+            if (playerImporter == null || actorImporter == null)
+            {
+                return;
+            }
+
+            ConfigureActorImporterFromOpaqueRegions(actorImporter, playerImporter.spritePixelsPerUnit);
+            CreateAnimationsAndControllers();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM character and monster slices were synchronized without changing the player slices.");
+        }
+
+        [MenuItem("Project DM/Import 4-Frame Player Walk Cycle")]
+        public static void ImportFourFramePlayerWalkCycle()
+        {
+            TextureImporter referenceImporter = AssetImporter.GetAtPath(CutePlayerSheetPath) as TextureImporter;
+            TextureImporter walkImporter = AssetImporter.GetAtPath(WalkCyclePlayerSheetPath) as TextureImporter;
+            if (referenceImporter == null || walkImporter == null)
+            {
+                Debug.LogWarning("Project DM could not import the four-frame walk cycle because its source sheet is missing.");
+                return;
+            }
+
+            ConfigureWalkCyclePlayerImporter(walkImporter, referenceImporter.spritePixelsPerUnit);
+            CreateAnimationsAndControllers();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM four-frame player walk cycle is ready.");
+        }
+
+        [MenuItem("Project DM/Match Player Walk Frames to First Slice")]
+        public static void MatchPlayerWalkFramesToFirstSlice()
+        {
+            TextureImporter referenceImporter = AssetImporter.GetAtPath(CutePlayerSheetPath) as TextureImporter;
+            TextureImporter walkImporter = AssetImporter.GetAtPath(WalkCyclePlayerSheetPath) as TextureImporter;
+            if (referenceImporter == null || walkImporter == null)
+            {
+                Debug.LogWarning("Project DM could not synchronize player walk frames because its source sheet is missing.");
+                return;
+            }
+
+            ConfigureWalkCyclePlayerImporterFromFirstSlice(walkImporter, referenceImporter.spritePixelsPerUnit);
+            CreateAnimationsAndControllers();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM player walk frames now match the first user-defined slice.");
+        }
+
+        [MenuItem("Project DM/Import Refined Player Side Walk")]
+        public static void ImportRefinedPlayerSideWalk()
+        {
+            TextureImporter sourceImporter = AssetImporter.GetAtPath(WalkCyclePlayerSheetPath) as TextureImporter;
+            TextureImporter sideImporter = AssetImporter.GetAtPath(SideWalkPlayerSheetPath) as TextureImporter;
+            if (sourceImporter == null || sideImporter == null)
+            {
+                Debug.LogWarning("Project DM could not import the refined side walk sheet because its source is missing.");
+                return;
+            }
+
+            ConfigureSideWalkImporterFromSourceSlices(sideImporter, sourceImporter);
+            CreateAnimationsAndControllers();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM refined side walk frames are ready and use the source x/y/w/h slices.");
+        }
+
+        [MenuItem("Project DM/Import Player Idle Animation")]
+        public static void ImportPlayerIdleAnimation()
+        {
+            TextureImporter walkImporter = AssetImporter.GetAtPath(WalkCyclePlayerSheetPath) as TextureImporter;
+            TextureImporter idleImporter = AssetImporter.GetAtPath(IdlePlayerSheetPath) as TextureImporter;
+            if (walkImporter == null || idleImporter == null)
+            {
+                Debug.LogWarning("Project DM could not import the player idle sheet because its source is missing.");
+                return;
+            }
+
+            ConfigureIdleImporterFromWalkSlices(idleImporter, walkImporter);
+            CreateAnimationsAndControllers();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM four-frame player idle animation is ready.");
+        }
+
         private static void ConfigureIfNeeded()
         {
             Configure(force: false);
@@ -64,12 +157,15 @@ namespace ProjectDM.Editor
             TextureImporter actorImporter = AssetImporter.GetAtPath(ActorSheetPath) as TextureImporter;
             TextureImporter cutePlayerImporter = AssetImporter.GetAtPath(CutePlayerSheetPath) as TextureImporter;
             TextureImporter floorImporter = AssetImporter.GetAtPath(FloorSheetPath) as TextureImporter;
+            TextureImporter walkImporter = AssetImporter.GetAtPath(WalkCyclePlayerSheetPath) as TextureImporter;
+            TextureImporter idleImporter = AssetImporter.GetAtPath(IdlePlayerSheetPath) as TextureImporter;
             if (spriteImporter == null || actorImporter == null || cutePlayerImporter == null || floorImporter == null)
             {
                 return;
             }
 
-            if (!force && spriteImporter.userData == ConfigurationTag && actorImporter.userData == ConfigurationTag && cutePlayerImporter.userData == ConfigurationTag && floorImporter.userData == ConfigurationTag)
+            bool idleIsConfigured = idleImporter == null || idleImporter.userData == ConfigurationTag;
+            if (!force && spriteImporter.userData == ConfigurationTag && actorImporter.userData == ConfigurationTag && cutePlayerImporter.userData == ConfigurationTag && floorImporter.userData == ConfigurationTag && idleIsConfigured)
             {
                 return;
             }
@@ -85,9 +181,13 @@ namespace ProjectDM.Editor
             }
 
             ConfigureCharacterImporter(spriteImporter, characterSheet);
-            ConfigureActorImporter(actorImporter, actorSheet);
-            ConfigureCutePlayerImporter(cutePlayerImporter, cutePlayerSheet);
+            // Player and monster frame rectangles are intentionally user-owned after the initial art setup.
+            // Rebuilding generated assets must never overwrite manually adjusted slices.
             ConfigureFloorImporter(floorImporter, floorSheet);
+            if (idleImporter != null && walkImporter != null)
+            {
+                ConfigureIdleImporterFromWalkSlices(idleImporter, walkImporter);
+            }
             CreateRequiredFolder("Assets", "GameContent");
             CreateRequiredFolder("Assets/GameContent", "Tiles");
             CreateRequiredFolder("Assets/GameContent", "Animation");
@@ -141,6 +241,131 @@ namespace ProjectDM.Editor
             importer.SaveAndReimport();
         }
 
+        private static void ConfigureActorImporterFromOpaqueRegions(TextureImporter importer, float pixelsPerUnit)
+        {
+            bool restoreReadable = importer.isReadable;
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.isReadable = true;
+            importer.SaveAndReimport();
+
+            Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(ActorSheetPath);
+            List<Rect> regions = CombineMonsterRegions(FindOpaqueRegions(texture), texture.width, texture.height);
+            if (regions.Count != 4)
+            {
+                string details = string.Join(", ", regions.Select(region => $"({region.x},{region.y},{region.width},{region.height})"));
+                throw new System.InvalidOperationException($"Expected four monster frames but found {regions.Count} opaque regions: {details}");
+            }
+
+            SetSpriteRects(importer, new[]
+            {
+                SpriteMetadata("Actor_Slime_0", regions[0]), SpriteMetadata("Actor_Slime_1", regions[1]),
+                SpriteMetadata("Actor_Skeleton_0", regions[2]), SpriteMetadata("Actor_Skeleton_1", regions[3])
+            });
+            importer.spritePixelsPerUnit = pixelsPerUnit;
+            importer.isReadable = restoreReadable;
+            importer.userData = ConfigurationTag;
+            importer.SaveAndReimport();
+        }
+
+        private static SpriteMetaData SpriteMetadata(string name, Rect rect)
+        {
+            return new SpriteMetaData
+            {
+                name = name,
+                rect = rect,
+                alignment = (int)SpriteAlignment.Center,
+                pivot = new Vector2(.5f, .5f)
+            };
+        }
+
+        private static List<Rect> FindOpaqueRegions(Texture2D texture)
+        {
+            Color32[] pixels = texture.GetPixels32();
+            bool[] visited = new bool[pixels.Length];
+            List<Rect> regions = new();
+            int width = texture.width;
+            int height = texture.height;
+            for (int index = 0; index < pixels.Length; index++)
+            {
+                if (visited[index] || pixels[index].a <= 16)
+                {
+                    continue;
+                }
+
+                Queue<int> pending = new();
+                pending.Enqueue(index);
+                visited[index] = true;
+                int count = 0;
+                int minX = width;
+                int minY = height;
+                int maxX = 0;
+                int maxY = 0;
+                while (pending.Count > 0)
+                {
+                    int current = pending.Dequeue();
+                    int x = current % width;
+                    int y = current / width;
+                    count++;
+                    minX = Mathf.Min(minX, x); minY = Mathf.Min(minY, y);
+                    maxX = Mathf.Max(maxX, x); maxY = Mathf.Max(maxY, y);
+                    for (int offsetY = -1; offsetY <= 1; offsetY++)
+                    {
+                        for (int offsetX = -1; offsetX <= 1; offsetX++)
+                        {
+                            int nextX = x + offsetX;
+                            int nextY = y + offsetY;
+                            if ((offsetX == 0 && offsetY == 0) || nextX < 0 || nextY < 0 || nextX >= width || nextY >= height)
+                            {
+                                continue;
+                            }
+
+                            int next = nextY * width + nextX;
+                            if (!visited[next] && pixels[next].a > 16)
+                            {
+                                visited[next] = true;
+                                pending.Enqueue(next);
+                            }
+                        }
+                    }
+                }
+
+                if (count > 128)
+                {
+                    regions.Add(new Rect(minX, minY, maxX - minX + 1, maxY - minY + 1));
+                }
+            }
+
+            return regions;
+        }
+
+        private static List<Rect> CombineMonsterRegions(List<Rect> regions, int textureWidth, int textureHeight)
+        {
+            Rect?[] frames = new Rect?[4];
+            foreach (Rect region in regions)
+            {
+                int row = region.center.y >= textureHeight * .5f ? 0 : 1;
+                int column = region.center.x >= textureWidth * .5f ? 1 : 0;
+                int index = row * 2 + column;
+                frames[index] = frames[index].HasValue ? Union(frames[index].Value, region) : region;
+            }
+
+            return frames.Where(frame => frame.HasValue).Select(frame => frame.Value).ToList();
+        }
+
+        private static Rect Union(Rect first, Rect second)
+        {
+            float minX = Mathf.Min(first.xMin, second.xMin);
+            float minY = Mathf.Min(first.yMin, second.yMin);
+            float maxX = Mathf.Max(first.xMax, second.xMax);
+            float maxY = Mathf.Max(first.yMax, second.yMax);
+            return Rect.MinMaxRect(minX, minY, maxX, maxY);
+        }
+
         private static void ConfigureCutePlayerImporter(TextureImporter importer, Texture2D texture)
         {
             importer.textureType = TextureImporterType.Sprite;
@@ -152,6 +377,103 @@ namespace ProjectDM.Editor
             importer.spritePixelsPerUnit = 96;
             importer.GetSourceTextureWidthAndHeight(out int sourceWidth, out int sourceHeight);
             SetSpriteRects(importer, CutePlayerSlices(sourceWidth, sourceHeight));
+            importer.userData = ConfigurationTag;
+            importer.SaveAndReimport();
+        }
+
+        private static void ConfigureWalkCyclePlayerImporter(TextureImporter importer, float pixelsPerUnit)
+        {
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.spritePixelsPerUnit = pixelsPerUnit;
+            importer.GetSourceTextureWidthAndHeight(out int width, out int height);
+            SetSpriteRects(importer, FourFrameWalkCycleSlices(width, height));
+            importer.userData = ConfigurationTag;
+            importer.SaveAndReimport();
+        }
+
+        private static void ConfigureWalkCyclePlayerImporterFromFirstSlice(TextureImporter importer, float pixelsPerUnit)
+        {
+            SpriteRect firstSlice = CurrentSpriteRects(importer).FirstOrDefault(sprite => sprite.name == "Walk_Left_0");
+            if (firstSlice == null)
+            {
+                throw new System.InvalidOperationException("The first player walk slice (Walk_Left_0) was not found.");
+            }
+
+            importer.GetSourceTextureWidthAndHeight(out int width, out int height);
+            float cellWidth = width / 4f;
+            float cellHeight = height / 4f;
+            float firstCellBottom = height - cellHeight;
+            Vector2 cellOffset = new(firstSlice.rect.x, firstSlice.rect.y - firstCellBottom);
+
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.spritePixelsPerUnit = pixelsPerUnit;
+            SetSpriteRects(importer, FourFrameWalkCycleSlices(width, height, firstSlice.rect.size, cellOffset, firstSlice.alignment, firstSlice.pivot));
+            importer.userData = ConfigurationTag;
+            importer.SaveAndReimport();
+        }
+
+        private static void ConfigureSideWalkImporterFromSourceSlices(TextureImporter importer, TextureImporter sourceImporter)
+        {
+            SpriteRect[] sourceSlices = CurrentSpriteRects(sourceImporter)
+                .Where(sprite => sprite.name.StartsWith("Walk_"))
+                .ToArray();
+            if (sourceSlices.Length != 16)
+            {
+                throw new System.InvalidOperationException($"Expected 16 source walk slices but found {sourceSlices.Length}.");
+            }
+
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.spritePixelsPerUnit = sourceImporter.spritePixelsPerUnit;
+            SetSpriteRects(importer, sourceSlices.Select(sprite => new SpriteMetaData
+            {
+                name = sprite.name,
+                rect = sprite.rect,
+                alignment = (int)sprite.alignment,
+                pivot = sprite.pivot
+            }).ToArray());
+            importer.userData = ConfigurationTag;
+            importer.SaveAndReimport();
+        }
+
+        private static void ConfigureIdleImporterFromWalkSlices(TextureImporter importer, TextureImporter walkImporter)
+        {
+            SpriteRect[] walkSlices = CurrentSpriteRects(walkImporter)
+                .Where(sprite => sprite.name.StartsWith("Walk_"))
+                .ToArray();
+            if (walkSlices.Length != 16)
+            {
+                throw new System.InvalidOperationException($"Expected 16 walk slices but found {walkSlices.Length}.");
+            }
+
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.spritePixelsPerUnit = walkImporter.spritePixelsPerUnit;
+            SetSpriteRects(importer, walkSlices.Select(sprite => new SpriteMetaData
+            {
+                name = sprite.name.Replace("Walk_", "Idle_"),
+                rect = sprite.rect,
+                alignment = (int)sprite.alignment,
+                pivot = sprite.pivot
+            }).ToArray());
             importer.userData = ConfigurationTag;
             importer.SaveAndReimport();
         }
@@ -227,6 +549,39 @@ namespace ProjectDM.Editor
             };
         }
 
+        private static SpriteMetaData[] FourFrameWalkCycleSlices(int width, int height)
+        {
+            return FourFrameWalkCycleSlices(width, height, Vector2.zero, Vector2.zero, SpriteAlignment.Center, new Vector2(.5f, .5f));
+        }
+
+        private static SpriteMetaData[] FourFrameWalkCycleSlices(int width, int height, Vector2 size, Vector2 cellOffset, SpriteAlignment alignment, Vector2 pivot)
+        {
+            string[] directions = { "Left", "Down", "Right", "Up" };
+            List<SpriteMetaData> slices = new();
+            float cellWidth = width / 4f;
+            float cellHeight = height / 4f;
+            for (int frame = 0; frame < 4; frame++)
+            {
+                for (int direction = 0; direction < directions.Length; direction++)
+                {
+                    if (size == Vector2.zero)
+                    {
+                        slices.Add(GridSlice($"Walk_{directions[direction]}_{frame}", direction, frame, cellWidth, cellHeight, width, height));
+                        continue;
+                    }
+
+                    slices.Add(new SpriteMetaData
+                    {
+                        name = $"Walk_{directions[direction]}_{frame}",
+                        rect = new Rect(direction * cellWidth + cellOffset.x, height - (frame + 1) * cellHeight + cellOffset.y, size.x, size.y),
+                        alignment = (int)alignment,
+                        pivot = pivot
+                    });
+                }
+            }
+            return slices.ToArray();
+        }
+
         private static SpriteMetaData GridSlice(string name, int column, int row, float cellWidth, float cellHeight, int width, int height)
         {
             const float inset = 1f;
@@ -276,6 +631,15 @@ namespace ProjectDM.Editor
             dataProvider.Apply();
         }
 
+        private static SpriteRect[] CurrentSpriteRects(TextureImporter importer)
+        {
+            SpriteDataProviderFactories factories = new();
+            factories.Init();
+            ISpriteEditorDataProvider dataProvider = factories.GetSpriteEditorDataProviderFromObject(importer);
+            dataProvider.InitSpriteEditorDataProvider();
+            return dataProvider.GetSpriteRects();
+        }
+
         private static void CreateFloorTiles()
         {
             Dictionary<string, Sprite> sprites = SpriteMap(FloorSheetPath);
@@ -299,24 +663,105 @@ namespace ProjectDM.Editor
         {
             Dictionary<string, Sprite> actors = SpriteMap(ActorSheetPath);
             Dictionary<string, Sprite> items = SpriteMap(SpriteSheetPath);
-            Dictionary<string, Sprite> cutePlayer = SpriteMap(CutePlayerSheetPath);
-            if (!actors.ContainsKey("Actor_Slime_0") || !actors.ContainsKey("Actor_Skeleton_0") || !items.ContainsKey("Arcane_Bolt") || !cutePlayer.ContainsKey("Cute_Down_0"))
+            Dictionary<string, Sprite> walkCycleFrames = SpriteMap(WalkCyclePlayerSheetPath);
+            Dictionary<string, Sprite> refinedSideWalkFrames = SpriteMap(SideWalkPlayerSheetPath);
+            Dictionary<string, Sprite> idleFrames = SpriteMap(IdlePlayerSheetPath);
+            Sprite[] left = PlayerWalkFrames(refinedSideWalkFrames, "Left") ?? PlayerWalkFrames(walkCycleFrames, "Left");
+            Sprite[] down = PlayerWalkFrames(walkCycleFrames, "Down");
+            Sprite[] right = PlayerWalkFrames(refinedSideWalkFrames, "Right") ?? PlayerWalkFrames(walkCycleFrames, "Right");
+            Sprite[] up = PlayerWalkFrames(walkCycleFrames, "Up");
+            Sprite[] idleLeft = PlayerFrames(idleFrames, "Idle", "Left");
+            Sprite[] idleDown = PlayerFrames(idleFrames, "Idle", "Down");
+            Sprite[] idleRight = PlayerFrames(idleFrames, "Idle", "Right");
+            Sprite[] idleUp = PlayerFrames(idleFrames, "Idle", "Up");
+            if (left == null || down == null || right == null || up == null)
             {
+                List<Sprite> playerFrames = SpriteMap(CutePlayerSheetPath).Values
+                    .OrderBy(sprite => sprite.rect.x)
+                    .ThenByDescending(sprite => sprite.rect.y)
+                    .ToList();
+                if (playerFrames.Count == 8)
+                {
+                    left = new[] { playerFrames[0], playerFrames[1] };
+                    down = new[] { playerFrames[2], playerFrames[3] };
+                    right = new[] { playerFrames[4], playerFrames[5] };
+                    up = new[] { playerFrames[6], playerFrames[7] };
+                }
+            }
+            if (!actors.ContainsKey("Actor_Slime_0") || !actors.ContainsKey("Actor_Slime_1")
+                || !actors.ContainsKey("Actor_Skeleton_0") || !actors.ContainsKey("Actor_Skeleton_1")
+                || !items.ContainsKey("Arcane_Bolt") || left == null || down == null || right == null || up == null)
+            {
+                Debug.LogWarning("Project DM could not create animations because the expected player or monster frames are missing.");
                 return;
             }
 
-            AnimationClip skeletonWalk = CreateSpriteClip("ProjectDM_SkeletonWalk", new[] { actors["Actor_Skeleton_0"], actors["Actor_Skeleton_1"] }, 6f);
-            AnimationClip slimePulse = CreateSpriteClip("ProjectDM_SlimePulse", new[] { actors["Actor_Slime_0"], actors["Actor_Slime_1"] }, 6f);
+            Sprite[] skeleton = { actors["Actor_Skeleton_0"], actors["Actor_Skeleton_1"] };
+            Sprite[] slime = { actors["Actor_Slime_0"], actors["Actor_Slime_1"] };
+            idleLeft ??= RepeatFrame(left[0]);
+            idleDown ??= RepeatFrame(down[0]);
+            idleRight ??= RepeatFrame(right[0]);
+            idleUp ??= RepeatFrame(up[0]);
+
+            AnimationClip skeletonWalk = CreateSpriteClip("ProjectDM_SkeletonWalk", skeleton, 6f);
+            AnimationClip slimePulse = CreateSpriteClip("ProjectDM_SlimePulse", slime, 6f);
             AnimationClip boltLoop = CreateSpriteClip("ProjectDM_BoltLoop", new[] { items["Arcane_Bolt"] }, 8f);
 
             CreateCutePlayerController(
-                CreateSpriteClip("ProjectDM_CuteDown", new[] { cutePlayer["Cute_Down_0"], cutePlayer["Cute_Down_1"] }, 7f),
-                CreateSpriteClip("ProjectDM_CuteLeft", new[] { cutePlayer["Cute_Left_0"], cutePlayer["Cute_Left_1"] }, 7f),
-                CreateSpriteClip("ProjectDM_CuteRight", new[] { cutePlayer["Cute_Right_0"], cutePlayer["Cute_Right_1"] }, 7f),
-                CreateSpriteClip("ProjectDM_CuteUp", new[] { cutePlayer["Cute_Up_0"], cutePlayer["Cute_Up_1"] }, 7f));
+                CreateSpriteClip("ProjectDM_IdleDown", idleDown, 5f),
+                CreateSpriteClip("ProjectDM_IdleLeft", idleLeft, 5f),
+                CreateSpriteClip("ProjectDM_IdleRight", idleRight, 5f),
+                CreateSpriteClip("ProjectDM_IdleUp", idleUp, 5f),
+                CreateSpriteClip("ProjectDM_CuteDown", down, 9f),
+                CreateSpriteClip("ProjectDM_CuteLeft", left, 9f),
+                CreateSpriteClip("ProjectDM_CuteRight", right, 9f),
+                CreateSpriteClip("ProjectDM_CuteUp", up, 9f));
             CreateSingleClipController("ProjectDM_Skeleton", skeletonWalk);
             CreateSingleClipController("ProjectDM_Slime", slimePulse);
             CreateSingleClipController("ProjectDM_Bolt", boltLoop);
+            CreateSpriteCatalog(left, down, right, up, slime, skeleton);
+        }
+
+        private static void CreateSpriteCatalog(Sprite[] left, Sprite[] down, Sprite[] right, Sprite[] up, Sprite[] slime, Sprite[] skeleton)
+        {
+            CreateRequiredFolder("Assets/GameContent", "Configuration");
+            ProjectDMSpriteCatalog catalog = AssetDatabase.LoadAssetAtPath<ProjectDMSpriteCatalog>(SpriteCatalogPath);
+            if (catalog == null)
+            {
+                catalog = ScriptableObject.CreateInstance<ProjectDMSpriteCatalog>();
+                AssetDatabase.CreateAsset(catalog, SpriteCatalogPath);
+            }
+
+            catalog.playerLeftFrames = left;
+            catalog.playerDownFrames = down;
+            catalog.playerRightFrames = right;
+            catalog.playerUpFrames = up;
+            catalog.slimeFrames = slime;
+            catalog.skeletonFrames = skeleton;
+            EditorUtility.SetDirty(catalog);
+        }
+
+        private static Sprite[] PlayerWalkFrames(Dictionary<string, Sprite> sprites, string direction)
+        {
+            return PlayerFrames(sprites, "Walk", direction);
+        }
+
+        private static Sprite[] PlayerFrames(Dictionary<string, Sprite> sprites, string prefix, string direction)
+        {
+            Sprite[] frames = new Sprite[4];
+            for (int frame = 0; frame < frames.Length; frame++)
+            {
+                if (!sprites.TryGetValue($"{prefix}_{direction}_{frame}", out frames[frame]))
+                {
+                    return null;
+                }
+            }
+            return frames;
+        }
+
+        private static Sprite[] RepeatFrame(Sprite sprite)
+        {
+            return new[] { sprite, sprite, sprite, sprite };
         }
 
         private static AnimationClip CreateSpriteClip(string clipName, Sprite[] frames, float frameRate)
@@ -400,18 +845,41 @@ namespace ProjectDM.Editor
             EditorUtility.SetDirty(controller);
         }
 
-        private static void CreateCutePlayerController(AnimationClip down, AnimationClip left, AnimationClip right, AnimationClip up)
+        private static void CreateCutePlayerController(AnimationClip idleDown, AnimationClip idleLeft, AnimationClip idleRight, AnimationClip idleUp, AnimationClip walkDown, AnimationClip walkLeft, AnimationClip walkRight, AnimationClip walkUp)
         {
             string path = $"{AnimationFolder}/ProjectDM_Player_Cute_v4.controller";
-            if (AssetDatabase.LoadAssetAtPath<AnimatorController>(path) != null) return;
-            AnimatorController controller = AnimatorController.CreateAnimatorControllerAtPath(path);
-            controller.AddLayer("Base Layer");
+            AnimatorController controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(path)
+                ?? AnimatorController.CreateAnimatorControllerAtPath(path);
+            if (controller.layers.Length == 0)
+            {
+                controller.AddLayer("Base Layer");
+            }
             AnimatorStateMachine stateMachine = controller.layers[0].stateMachine;
-            AnimatorState downState = stateMachine.AddState("Walk_Down"); downState.motion = down; stateMachine.defaultState = downState;
-            AnimatorState leftState = stateMachine.AddState("Walk_Left"); leftState.motion = left;
-            AnimatorState rightState = stateMachine.AddState("Walk_Right"); rightState.motion = right;
-            AnimatorState upState = stateMachine.AddState("Walk_Up"); upState.motion = up;
+            AnimatorState idleDownState = UpsertState(stateMachine, "Idle_Down", idleDown); stateMachine.defaultState = idleDownState;
+            UpsertState(stateMachine, "Idle_Left", idleLeft);
+            UpsertState(stateMachine, "Idle_Right", idleRight);
+            UpsertState(stateMachine, "Idle_Up", idleUp);
+            UpsertState(stateMachine, "Walk_Down", walkDown);
+            UpsertState(stateMachine, "Walk_Left", walkLeft);
+            UpsertState(stateMachine, "Walk_Right", walkRight);
+            UpsertState(stateMachine, "Walk_Up", walkUp);
             EditorUtility.SetDirty(controller);
+        }
+
+        private static AnimatorState UpsertState(AnimatorStateMachine stateMachine, string name, Motion motion)
+        {
+            foreach (ChildAnimatorState childState in stateMachine.states)
+            {
+                if (childState.state.name == name)
+                {
+                    childState.state.motion = motion;
+                    return childState.state;
+                }
+            }
+
+            AnimatorState state = stateMachine.AddState(name);
+            state.motion = motion;
+            return state;
         }
 
         private static Dictionary<string, Sprite> SpriteMap(string assetPath)

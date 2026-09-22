@@ -40,6 +40,8 @@ namespace ProjectDM
         private RuntimeAnimatorController boltController;
         private RuntimeAnimatorController playerAnimatorController;
         private ProjectDMAssetLoader assetLoader;
+        private GameObjectPool objectPool;
+        private ProjectDMRuntimeAssets runtimeAssets;
 
         private int level = 1;
         private int experience;
@@ -67,6 +69,7 @@ namespace ProjectDM
             Application.targetFrameRate = 60;
             SetupCamera();
             LoadMetaProgress();
+            objectPool = gameObject.AddComponent<GameObjectPool>();
             assetLoader = gameObject.AddComponent<ProjectDMAssetLoader>();
             StartCoroutine(InitializeGame());
         }
@@ -80,8 +83,9 @@ namespace ProjectDM
                 yield break;
             }
 
-            LoadSprites(assetLoader.Assets);
-            CreateDungeonFloor(assetLoader.Assets.FloorSheet);
+            runtimeAssets = assetLoader.Assets;
+            LoadSprites(runtimeAssets);
+            CreateDungeonFloor(runtimeAssets.FloorSheet);
             CreateBackdrop();
             CreatePlayer();
             isInitialized = true;
@@ -159,14 +163,12 @@ namespace ProjectDM
 
         private void LoadSprites(ProjectDMRuntimeAssets assets)
         {
-            if (assets.PlayerSheet != null)
+            ProjectDMSpriteCatalog spriteCatalog = assets.SpriteCatalog;
+            if (spriteCatalog != null)
             {
-                playerSprite = SliceGrid(assets.PlayerSheet, 1, 0, 4, 2, 96f);
-            }
-            if (assets.MonsterSheet != null)
-            {
-                slimeSprite = SliceGrid(assets.MonsterSheet, 0, 0, 2, 2, 64f);
-                skeletonSprite = SliceGrid(assets.MonsterSheet, 0, 1, 2, 2, 64f);
+                playerSprite = FirstFrame(spriteCatalog.playerDownFrames);
+                slimeSprite = FirstFrame(spriteCatalog.slimeFrames);
+                skeletonSprite = FirstFrame(spriteCatalog.skeletonFrames);
             }
             if (assets.GameplaySheet != null)
             {
@@ -182,9 +184,9 @@ namespace ProjectDM
             Texture2D extras = assets.ExtraMonsterSheet;
             if (extras != null)
             {
-                goblinSprite = Slice(extras, 0f, 2f / 3f, .5f, 1f / 3f); goblinFrame2 = Slice(extras, .5f, 2f / 3f, .5f, 1f / 3f);
-                mushroomSprite = Slice(extras, 0f, 1f / 3f, .5f, 1f / 3f); mushroomFrame2 = Slice(extras, .5f, 1f / 3f, .5f, 1f / 3f);
-                boarSprite = Slice(extras, 0f, 0f, .5f, 1f / 3f); boarFrame2 = Slice(extras, .5f, 0f, .5f, 1f / 3f);
+                goblinSprite = Slice(extras, 0f, 2f / 3f, .5f, 1f / 3f, 96f); goblinFrame2 = Slice(extras, .5f, 2f / 3f, .5f, 1f / 3f, 96f);
+                mushroomSprite = Slice(extras, 0f, 1f / 3f, .5f, 1f / 3f, 96f); mushroomFrame2 = Slice(extras, .5f, 1f / 3f, .5f, 1f / 3f, 96f);
+                boarSprite = Slice(extras, 0f, 0f, .5f, 1f / 3f, 96f); boarFrame2 = Slice(extras, .5f, 0f, .5f, 1f / 3f, 96f);
             }
 
             playerSprite ??= PixelSprite(new Color(0.45f, 0.18f, 0.8f), new Color(0.05f, 0.9f, 1f));
@@ -204,6 +206,11 @@ namespace ProjectDM
                 pixelsPerUnit,
                 0,
                 SpriteMeshType.FullRect);
+        }
+
+        private static Sprite FirstFrame(Sprite[] frames)
+        {
+            return frames != null && frames.Length > 0 ? frames[0] : null;
         }
 
         private static Sprite SliceGrid(Texture2D sheet, int column, int row, int columns, int rows, float pixelsPerUnit)
@@ -289,16 +296,16 @@ namespace ProjectDM
 
         private void CreatePlayer()
         {
-            GameObject avatar = new("Arcane Hunter");
+            GameObject avatar = Instantiate(runtimeAssets.PlayerPrefab);
+            avatar.name = "Arcane Hunter";
             avatar.transform.position = Vector3.zero;
             avatar.transform.localScale = Vector3.one * 0.95f;
-            SpriteRenderer renderer = avatar.AddComponent<SpriteRenderer>();
+            SpriteRenderer renderer = avatar.GetComponentInChildren<SpriteRenderer>();
             renderer.sortingOrder = 3;
             player = avatar.transform;
-            avatar.AddComponent<Animator>();
-            avatar.AddComponent<PlayerMovement>();
-            avatar.AddComponent<PlayerAnimation>();
-            playerController = avatar.AddComponent<Player>();
+            Animator animator = avatar.GetComponentInChildren<Animator>();
+            animator.applyRootMotion = false;
+            playerController = avatar.GetComponent<Player>();
             playerController.Initialize(
                 playerSprite,
                 playerAnimatorController);
@@ -328,18 +335,20 @@ namespace ProjectDM
                     direction = Vector2.right;
                 }
 
-                GameObject enemyObject = new("Void Slime");
+                GameObject enemyObject = objectPool.Rent(runtimeAssets.EnemyPrefab);
+                enemyObject.name = "Void Slime";
                 enemyObject.transform.position = (Vector2)player.position + direction * Random.Range(7.2f, 9.3f);
                 enemyObject.transform.localScale = Vector3.one * Random.Range(0.55f, 0.78f);
                 int monsterKind = Random.Range(0, 5);
                 bool skeleton = monsterKind == 1;
-                SpriteRenderer renderer = enemyObject.AddComponent<SpriteRenderer>();
+                SpriteRenderer renderer = enemyObject.GetComponentInChildren<SpriteRenderer>();
                 Sprite sprite = monsterKind switch { 1 => skeletonSprite, 2 => goblinSprite, 3 => mushroomSprite, 4 => boarSprite, _ => slimeSprite };
                 Sprite alternate = monsterKind switch { 2 => goblinFrame2, 3 => mushroomFrame2, 4 => boarFrame2, _ => null };
                 renderer.sprite = sprite ?? slimeSprite;
                 renderer.sortingOrder = 2;
-                Animator animator = enemyObject.AddComponent<Animator>();
+                Animator animator = enemyObject.GetComponentInChildren<Animator>();
                 animator.runtimeAnimatorController = skeleton ? skeletonController : slimeController;
+                animator.applyRootMotion = false;
                 if (skeleton)
                 {
                     enemyObject.transform.localScale *= 0.9f;
@@ -379,15 +388,17 @@ namespace ProjectDM
 
             nextShot = time + Mathf.Max(0.18f, 0.62f - 0.035f * (hasteLevel + runHasteBonus));
             Vector2 direction = ((Vector2)target.transform.position - (Vector2)player.position).normalized;
-            GameObject bolt = new("Arcane Bolt");
+            GameObject bolt = objectPool.Rent(runtimeAssets.ProjectilePrefab);
+            bolt.name = "Arcane Bolt";
             bolt.transform.position = player.position;
             bolt.transform.localScale = Vector3.one * 0.32f;
-            SpriteRenderer renderer = bolt.AddComponent<SpriteRenderer>();
+            SpriteRenderer renderer = bolt.GetComponentInChildren<SpriteRenderer>();
             renderer.sprite = boltSprite;
             renderer.sortingOrder = 4;
             renderer.color = new Color(1f, 0.7f, 1f);
-            Animator animator = bolt.AddComponent<Animator>();
+            Animator animator = bolt.GetComponentInChildren<Animator>();
             animator.runtimeAnimatorController = boltController;
+            animator.applyRootMotion = false;
             projectiles.Add(new Projectile { transform = bolt.transform, direction = direction, damage = 1 + damageLevel + runDamageBonus, lifetime = 1.5f });
         }
 
@@ -442,7 +453,7 @@ namespace ProjectDM
                         if (enemy.hitPoints <= 0)
                         {
                             SpawnLoot(enemy.transform.position);
-                            Destroy(enemy.transform.gameObject);
+                            objectPool.Return(enemy.transform.gameObject);
                             enemies.RemoveAt(j);
                         }
 
@@ -452,7 +463,7 @@ namespace ProjectDM
 
                 if (hit || bolt.lifetime <= 0f)
                 {
-                    Destroy(bolt.transform.gameObject);
+                    objectPool.Return(bolt.transform.gameObject);
                     projectiles.RemoveAt(i);
                 }
             }
@@ -474,10 +485,17 @@ namespace ProjectDM
 
         private void CreatePickup(string name, Vector3 position, Sprite sprite, PickupKind kind, int amount, float scale)
         {
-            GameObject pickupObject = new(name);
+            GameObject prefab = kind switch
+            {
+                PickupKind.Gold => runtimeAssets.GoldPickupPrefab,
+                PickupKind.Chest => runtimeAssets.ChestPickupPrefab,
+                _ => runtimeAssets.ExperiencePickupPrefab
+            };
+            GameObject pickupObject = objectPool.Rent(prefab);
+            pickupObject.name = name;
             pickupObject.transform.position = position;
             pickupObject.transform.localScale = Vector3.one * scale;
-            SpriteRenderer renderer = pickupObject.AddComponent<SpriteRenderer>();
+            SpriteRenderer renderer = pickupObject.GetComponentInChildren<SpriteRenderer>();
             renderer.sprite = sprite;
             renderer.sortingOrder = 1;
             pickups.Add(new Pickup { transform = pickupObject.transform, kind = kind, amount = amount });
@@ -503,7 +521,7 @@ namespace ProjectDM
                 if (distance < 0.28f)
                 {
                     Collect(pickup);
-                    Destroy(pickup.transform.gameObject);
+                    objectPool.Return(pickup.transform.gameObject);
                     pickups.RemoveAt(i);
                 }
             }

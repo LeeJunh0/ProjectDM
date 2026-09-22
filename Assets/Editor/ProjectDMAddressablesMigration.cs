@@ -24,6 +24,7 @@ namespace ProjectDM.Editor
             EnsureFolder(ContentRoot, "Configuration");
 
             ProjectDMArtPipeline.RebuildGeneratedAssets();
+            ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
             ProjectDMAssetCatalog catalog = CreateOrLoadCatalog();
             AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
             AddressableAssetGroup bootstrap = settings.FindGroup(BootstrapGroupName)
@@ -33,6 +34,9 @@ namespace ProjectDM.Editor
             ConfigureCatalog(catalog);
             Register(settings, bootstrap, CatalogPath, "project-dm/catalog");
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Player_16Bit_v5.png", "art/player");
+            Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Player_Walk_4Frame_v6.png", "art/player-walk-cycle");
+            Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Player_Walk_SideRefined_v7.png", "art/player-walk-side-refined");
+            Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Player_Idle_4Frame_v1.png", "art/player-idle");
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Monsters_16Bit_v5.png", "art/monsters");
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_ExtraMonsters_16Bit_v1.png", "art/extra-monsters");
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Sprites_TopDown_v2.png", "art/gameplay");
@@ -41,6 +45,13 @@ namespace ProjectDM.Editor
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Slime.controller", "animation/slime");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Skeleton.controller", "animation/skeleton");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Bolt.controller", "animation/bolt");
+            Register(settings, bootstrap, ContentRoot + "/Configuration/ProjectDMSpriteCatalog.asset", "project-dm/sprites");
+            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/Player.prefab", "prefab/player");
+            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/Enemy.prefab", "prefab/enemy");
+            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/Projectile.prefab", "prefab/projectile");
+            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/ExperiencePickup.prefab", "prefab/pickup-experience");
+            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/GoldPickup.prefab", "prefab/pickup-gold");
+            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/ChestPickup.prefab", "prefab/pickup-chest");
 
             EditorUtility.SetDirty(catalog);
             EditorUtility.SetDirty(settings);
@@ -73,6 +84,13 @@ namespace ProjectDM.Editor
             catalog.slimeAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Slime.controller");
             catalog.skeletonAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Skeleton.controller");
             catalog.boltAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Bolt.controller");
+            catalog.spriteCatalog = Reference(ContentRoot + "/Configuration/ProjectDMSpriteCatalog.asset");
+            catalog.playerPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/Player.prefab");
+            catalog.enemyPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/Enemy.prefab");
+            catalog.projectilePrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/Projectile.prefab");
+            catalog.experiencePickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/ExperiencePickup.prefab");
+            catalog.goldPickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/GoldPickup.prefab");
+            catalog.chestPickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/ChestPickup.prefab");
         }
 
         private static AssetReferenceTexture2D TextureReference(string assetPath)
@@ -83,6 +101,11 @@ namespace ProjectDM.Editor
         private static AssetReference Reference(string assetPath)
         {
             return new AssetReference(AssetDatabase.AssetPathToGUID(assetPath));
+        }
+
+        private static AssetReferenceGameObject GameObjectReference(string assetPath)
+        {
+            return new AssetReferenceGameObject(AssetDatabase.AssetPathToGUID(assetPath));
         }
 
         private static void Register(AddressableAssetSettings settings, AddressableAssetGroup group, string assetPath, string address)

@@ -18,6 +18,13 @@ namespace ProjectDM
         public RuntimeAnimatorController SlimeAnimatorController { get; internal set; }
         public RuntimeAnimatorController SkeletonAnimatorController { get; internal set; }
         public RuntimeAnimatorController BoltAnimatorController { get; internal set; }
+        public GameObject PlayerPrefab { get; internal set; }
+        public GameObject EnemyPrefab { get; internal set; }
+        public GameObject ProjectilePrefab { get; internal set; }
+        public GameObject ExperiencePickupPrefab { get; internal set; }
+        public GameObject GoldPickupPrefab { get; internal set; }
+        public GameObject ChestPickupPrefab { get; internal set; }
+        public ProjectDMSpriteCatalog SpriteCatalog { get; internal set; }
     }
 
     /// <summary>Loads the game's bootstrap content once and releases its handles with the game root.</summary>
@@ -28,7 +35,7 @@ namespace ProjectDM
 
         public ProjectDMRuntimeAssets Assets { get; } = new();
         public string Error { get; private set; }
-        public bool IsReady => string.IsNullOrEmpty(Error) && Assets.PlayerSheet != null;
+        public bool IsReady => string.IsNullOrEmpty(Error) && Assets.PlayerSheet != null && Assets.SpriteCatalog != null;
 
         public IEnumerator LoadAsync()
         {
@@ -51,6 +58,13 @@ namespace ProjectDM
             yield return Load<RuntimeAnimatorController>(catalog.slimeAnimatorController, asset => Assets.SlimeAnimatorController = asset);
             yield return Load<RuntimeAnimatorController>(catalog.skeletonAnimatorController, asset => Assets.SkeletonAnimatorController = asset);
             yield return Load<RuntimeAnimatorController>(catalog.boltAnimatorController, asset => Assets.BoltAnimatorController = asset);
+            yield return Load<ProjectDMSpriteCatalog>(catalog.spriteCatalog, asset => Assets.SpriteCatalog = asset);
+            yield return Load<GameObject>(catalog.playerPrefab, asset => Assets.PlayerPrefab = asset);
+            yield return Load<GameObject>(catalog.enemyPrefab, asset => Assets.EnemyPrefab = asset);
+            yield return Load<GameObject>(catalog.projectilePrefab, asset => Assets.ProjectilePrefab = asset);
+            yield return Load<GameObject>(catalog.experiencePickupPrefab, asset => Assets.ExperiencePickupPrefab = asset);
+            yield return Load<GameObject>(catalog.goldPickupPrefab, asset => Assets.GoldPickupPrefab = asset);
+            yield return Load<GameObject>(catalog.chestPickupPrefab, asset => Assets.ChestPickupPrefab = asset);
         }
 
         private IEnumerator Load<T>(AssetReference reference, Action<T> assign) where T : UnityEngine.Object

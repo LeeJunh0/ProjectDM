@@ -66,3 +66,45 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  spriteCatalog:
+    m_AssetGUID: 846dc85a706084741a5ad93db4c7c75f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  playerPrefab:
+    m_AssetGUID: 0b4999fb554ae064e9e9519f9fe5db43
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  enemyPrefab:
+    m_AssetGUID: 7d662f08a6b27a34b9f010b4d599f90b
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  projectilePrefab:
+    m_AssetGUID: f5528b7a8c42398468f1e227f6e4157e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  experiencePickupPrefab:
+    m_AssetGUID: 267f5cc51b04f0a4197b43f5af704950
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  goldPickupPrefab:
+    m_AssetGUID: 42711d15bad77d747a885b4992a39757
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  chestPickupPrefab:
+    m_AssetGUID: c7d86bd2abbea5445aac2aeb0f77e549
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
