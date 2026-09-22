@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Bootstrap
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Bootstrap
+  m_GUID: b9bc2f2e4ad18c941b856a5aa5b441bd
+  m_SerializeEntries:
+  - m_GUID: 1df6fb62170413149b93763b42934bf3
+    m_Address: art/monsters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bf9385876300ff478af704d5ed92b6c
+    m_Address: art/extra-monsters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 502dc223c83ea6b4ebad6eefe15e9d07
+    m_Address: art/gameplay
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c9797eff1600d842beba09e6f5a47b6
+    m_Address: art/player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad983b563b2842d4784de62d1316bd0b
+    m_Address: art/floor
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b251ad2d203e87549b07846c4a5c0af3
+    m_Address: animation/player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0bdb26eb57352e449a3742c74e147ed
+    m_Address: animation/skeleton
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d55d5644a0735f244bae56fdba626211
+    m_Address: project-dm/catalog
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da19081a9a854764c8f8ff715b1fb8c6
+    m_Address: animation/bolt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0d5d46ed18e0e3449a3281c81718e7c
+    m_Address: animation/slime
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 91961769b6cbcca4d90b54640ca4d9b1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c1ff768dd97c5ed45b27441b4cd0a914, type: 2}
+    - {fileID: 11400000, guid: ffd0115463a6a3842a0a0c451d772ec4, type: 2}

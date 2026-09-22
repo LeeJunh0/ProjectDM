@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9fe021a8075d0140b5dbc311de5eb4c, type: 3}
+  m_Name: ProjectDMAssetCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.ProjectDMAssetCatalog
+  playerSheet:
+    m_AssetGUID: 9c9797eff1600d842beba09e6f5a47b6
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  monsterSheet:
+    m_AssetGUID: 1df6fb62170413149b93763b42934bf3
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  extraMonsterSheet:
+    m_AssetGUID: 4bf9385876300ff478af704d5ed92b6c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  gameplaySheet:
+    m_AssetGUID: 502dc223c83ea6b4ebad6eefe15e9d07
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  floorSheet:
+    m_AssetGUID: ad983b563b2842d4784de62d1316bd0b
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  playerAnimatorController:
+    m_AssetGUID: b251ad2d203e87549b07846c4a5c0af3
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  slimeAnimatorController:
+    m_AssetGUID: e0d5d46ed18e0e3449a3281c81718e7c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  skeletonAnimatorController:
+    m_AssetGUID: c0bdb26eb57352e449a3742c74e147ed
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  boltAnimatorController:
+    m_AssetGUID: da19081a9a854764c8f8ff715b1fb8c6
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
