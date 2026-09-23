@@ -18,14 +18,15 @@ namespace ProjectDM
         public AssetReference slimeAnimatorController;
         public AssetReference skeletonAnimatorController;
         public AssetReference boltAnimatorController;
+        public AssetReference chestPickupAnimatorController;
         public AssetReference spriteCatalog;
 
         [Header("Runtime prefabs")]
         public AssetReferenceGameObject playerPrefab;
         public AssetReferenceGameObject enemyPrefab;
         public AssetReferenceGameObject projectilePrefab;
-        public AssetReferenceGameObject experiencePickupPrefab;
-        public AssetReferenceGameObject goldPickupPrefab;
+        public AssetReferenceGameObject[] experiencePickupPrefabs = new AssetReferenceGameObject[5];
+        public AssetReferenceGameObject[] currencyPickupPrefabs = new AssetReferenceGameObject[5];
         public AssetReferenceGameObject chestPickupPrefab;
     }
 }

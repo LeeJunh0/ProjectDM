@@ -18,11 +18,12 @@ namespace ProjectDM
         public RuntimeAnimatorController SlimeAnimatorController { get; internal set; }
         public RuntimeAnimatorController SkeletonAnimatorController { get; internal set; }
         public RuntimeAnimatorController BoltAnimatorController { get; internal set; }
+        public RuntimeAnimatorController ChestPickupAnimatorController { get; internal set; }
         public GameObject PlayerPrefab { get; internal set; }
         public GameObject EnemyPrefab { get; internal set; }
         public GameObject ProjectilePrefab { get; internal set; }
-        public GameObject ExperiencePickupPrefab { get; internal set; }
-        public GameObject GoldPickupPrefab { get; internal set; }
+        public GameObject[] ExperiencePickupPrefabs { get; internal set; }
+        public GameObject[] CurrencyPickupPrefabs { get; internal set; }
         public GameObject ChestPickupPrefab { get; internal set; }
         public ProjectDMSpriteCatalog SpriteCatalog { get; internal set; }
     }
@@ -58,12 +59,13 @@ namespace ProjectDM
             yield return Load<RuntimeAnimatorController>(catalog.slimeAnimatorController, asset => Assets.SlimeAnimatorController = asset);
             yield return Load<RuntimeAnimatorController>(catalog.skeletonAnimatorController, asset => Assets.SkeletonAnimatorController = asset);
             yield return Load<RuntimeAnimatorController>(catalog.boltAnimatorController, asset => Assets.BoltAnimatorController = asset);
+            yield return LoadOptional<RuntimeAnimatorController>(catalog.chestPickupAnimatorController, asset => Assets.ChestPickupAnimatorController = asset);
             yield return Load<ProjectDMSpriteCatalog>(catalog.spriteCatalog, asset => Assets.SpriteCatalog = asset);
             yield return Load<GameObject>(catalog.playerPrefab, asset => Assets.PlayerPrefab = asset);
             yield return Load<GameObject>(catalog.enemyPrefab, asset => Assets.EnemyPrefab = asset);
             yield return Load<GameObject>(catalog.projectilePrefab, asset => Assets.ProjectilePrefab = asset);
-            yield return Load<GameObject>(catalog.experiencePickupPrefab, asset => Assets.ExperiencePickupPrefab = asset);
-            yield return Load<GameObject>(catalog.goldPickupPrefab, asset => Assets.GoldPickupPrefab = asset);
+            yield return LoadOptionalCollection<GameObject>(catalog.experiencePickupPrefabs, assets => Assets.ExperiencePickupPrefabs = assets);
+            yield return LoadOptionalCollection<GameObject>(catalog.currencyPickupPrefabs, assets => Assets.CurrencyPickupPrefabs = assets);
             yield return Load<GameObject>(catalog.chestPickupPrefab, asset => Assets.ChestPickupPrefab = asset);
         }
 
@@ -90,6 +92,55 @@ namespace ProjectDM
             }
 
             assign(handle.Result);
+        }
+
+        private IEnumerator LoadOptional<T>(AssetReference reference, Action<T> assign) where T : UnityEngine.Object
+        {
+            if (reference == null || !reference.RuntimeKeyIsValid())
+            {
+                yield break;
+            }
+
+            AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(reference);
+            handles.Add(handle);
+            yield return handle;
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                assign(handle.Result);
+            }
+            else
+            {
+                Debug.LogWarning($"Project DM could not load optional {typeof(T).Name} '{reference.RuntimeKey}': {handle.OperationException}");
+            }
+        }
+
+        private IEnumerator LoadOptionalCollection<T>(IEnumerable<AssetReference> references, Action<T[]> assign) where T : UnityEngine.Object
+        {
+            List<T> loadedAssets = new();
+            if (references != null)
+            {
+                foreach (AssetReference reference in references)
+                {
+                    if (reference == null || !reference.RuntimeKeyIsValid())
+                    {
+                        continue;
+                    }
+
+                    AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(reference);
+                    handles.Add(handle);
+                    yield return handle;
+                    if (handle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        loadedAssets.Add(handle.Result);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Project DM could not load optional {typeof(T).Name} '{reference.RuntimeKey}': {handle.OperationException}");
+                    }
+                }
+            }
+
+            assign(loadedAssets.ToArray());
         }
 
         private void OnDestroy()

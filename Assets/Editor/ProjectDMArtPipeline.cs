@@ -22,8 +22,16 @@ namespace ProjectDM.Editor
         private const string WalkCyclePlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Walk_4Frame_v6.png";
         private const string SideWalkPlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Walk_SideRefined_v7.png";
         private const string IdlePlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Idle_4Frame_v1.png";
-        private const string FloorSheetPath = "Assets/GameContent/Art/ProjectDM_FloorTiles_v1.png";
+        private const string FloorSheetPath = "Assets/GameContent/Art/ProjectDM_FloorTiles_Calm_v2.png";
+        private const string FloorBorderSheetPath = "Assets/GameContent/Art/ProjectDM_FloorBorderTiles_Calm_v2.png";
+        private const string PickupSheetPath = "Assets/GameContent/Art/ProjectDM_Pickups_4Frame_v1.png";
+        private const string CollectibleVariantsSheetPath = "Assets/GameContent/Art/ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png";
         private const string TileFolder = "Assets/GameContent/Tiles";
+        private const string BorderTileFolder = TileFolder + "/Borders";
+        // AI-generated atlases carry a wider dark divider than a conventional export.
+        // Eight pixels removes it completely; PPU compensation below preserves cell size.
+        private const float FloorTileGutterTrimPixels = 8f;
+        private const float FloorTileOverdrawScale = 1.03f;
         private const string AnimationFolder = "Assets/GameContent/Animation";
         private const string SpriteCatalogPath = "Assets/GameContent/Configuration/ProjectDMSpriteCatalog.asset";
         private const string ConfigurationTag = "ProjectDM_ArtPipeline_v2";
@@ -37,6 +45,9 @@ namespace ProjectDM.Editor
         public static void RebuildFromMenu()
         {
             Configure(force: true);
+            ImportFloorBorderTiles();
+            ImportPickupAnimations();
+            ImportCollectibleVariantAnimations();
         }
 
         [MenuItem("Project DM/Rebuild Generated Tiles and Animation")]
@@ -46,10 +57,97 @@ namespace ProjectDM.Editor
             CreateRequiredFolder("Assets/GameContent", "Tiles");
             CreateRequiredFolder("Assets/GameContent", "Animation");
             CreateFloorTiles();
+            ImportFloorBorderTiles();
+            ImportPickupAnimations();
+            ImportCollectibleVariantAnimations();
             CreateAnimationsAndControllers();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log("Project DM generated Tile and Animation assets are ready.");
+        }
+
+        [MenuItem("Project DM/Import Floor Border Tiles")]
+        public static void ImportFloorBorderTiles()
+        {
+            TextureImporter importer = AssetImporter.GetAtPath(FloorBorderSheetPath) as TextureImporter;
+            Texture2D borderSheet = AssetDatabase.LoadAssetAtPath<Texture2D>(FloorBorderSheetPath);
+            if (importer == null || borderSheet == null)
+            {
+                Debug.LogWarning("Project DM floor border sheet is missing.");
+                return;
+            }
+
+            ConfigureFloorImporter(importer, borderSheet, "FloorBorder");
+            CreateRequiredFolder("Assets", "GameContent");
+            CreateRequiredFolder("Assets/GameContent", "Tiles");
+            CreateRequiredFolder(TileFolder, "Borders");
+            CreateBorderTiles();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            ApplyBorderTilesToOpenTilemaps();
+            Debug.Log("Project DM floor border tiles are ready.");
+        }
+
+        [MenuItem("Project DM/Import Pickup Animations")]
+        public static void ImportPickupAnimations()
+        {
+            TextureImporter importer = AssetImporter.GetAtPath(PickupSheetPath) as TextureImporter;
+            Texture2D pickupSheet = AssetDatabase.LoadAssetAtPath<Texture2D>(PickupSheetPath);
+            if (importer == null || pickupSheet == null)
+            {
+                Debug.LogWarning("Project DM pickup animation sheet is missing.");
+                return;
+            }
+
+            ConfigurePickupImporter(importer, pickupSheet);
+            CreateRequiredFolder("Assets", "GameContent");
+            CreateRequiredFolder("Assets/GameContent", "Animation");
+            CreateAnimationsAndControllers();
+            ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM pickup sprites now use Multiple import and four-frame animation controllers.");
+        }
+
+        [MenuItem("Project DM/Import Experience and Currency Variants")]
+        public static void ImportCollectibleVariantAnimations()
+        {
+            TextureImporter importer = AssetImporter.GetAtPath(CollectibleVariantsSheetPath) as TextureImporter;
+            Texture2D sheet = AssetDatabase.LoadAssetAtPath<Texture2D>(CollectibleVariantsSheetPath);
+            if (importer == null || sheet == null)
+            {
+                Debug.LogWarning("Project DM experience and currency variant sheet is missing.");
+                return;
+            }
+
+            ConfigureCollectibleVariantsImporter(importer, sheet);
+            CreateRequiredFolder("Assets", "GameContent");
+            CreateRequiredFolder("Assets/GameContent", "Animation");
+            CreateAnimationsAndControllers();
+            ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM experience and currency variants are ready: five types per collection.");
+        }
+
+        [MenuItem("Project DM/Fix Floor Tile Seams")]
+        public static void FixFloorTileSeams()
+        {
+            string[] guids = AssetDatabase.FindAssets("t:Tile", new[] { TileFolder });
+            foreach (string guid in guids)
+            {
+                Tile tile = AssetDatabase.LoadAssetAtPath<Tile>(AssetDatabase.GUIDToAssetPath(guid));
+                if (tile == null)
+                {
+                    continue;
+                }
+
+                tile.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one * FloorTileOverdrawScale);
+                EditorUtility.SetDirty(tile);
+            }
+
+            AssetDatabase.SaveAssets();
+            Debug.Log("Project DM floor tiles now overlap by 3% to remove visible background seams.");
         }
 
         [MenuItem("Project DM/Sync Character and Monster Slices")]
@@ -143,6 +241,24 @@ namespace ProjectDM.Editor
 
         private static void ConfigureIfNeeded()
         {
+            TextureImporter borderImporter = AssetImporter.GetAtPath(FloorBorderSheetPath) as TextureImporter;
+            if (borderImporter != null && borderImporter.userData != ConfigurationTag)
+            {
+                ImportFloorBorderTiles();
+            }
+
+            TextureImporter pickupImporter = AssetImporter.GetAtPath(PickupSheetPath) as TextureImporter;
+            if (pickupImporter != null && pickupImporter.userData != ConfigurationTag)
+            {
+                ImportPickupAnimations();
+            }
+
+            TextureImporter collectibleVariantsImporter = AssetImporter.GetAtPath(CollectibleVariantsSheetPath) as TextureImporter;
+            if (collectibleVariantsImporter != null && collectibleVariantsImporter.userData != ConfigurationTag)
+            {
+                ImportCollectibleVariantAnimations();
+            }
+
             Configure(force: false);
         }
 
@@ -212,7 +328,7 @@ namespace ProjectDM.Editor
             importer.SaveAndReimport();
         }
 
-        private static void ConfigureFloorImporter(TextureImporter importer, Texture2D texture)
+        private static void ConfigureFloorImporter(TextureImporter importer, Texture2D texture, string tilePrefix = "Floor")
         {
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Multiple;
@@ -220,8 +336,43 @@ namespace ProjectDM.Editor
             importer.mipmapEnabled = false;
             importer.alphaIsTransparency = false;
             importer.textureCompression = TextureImporterCompression.Uncompressed;
-            importer.spritePixelsPerUnit = 64;
-            SetSpriteRects(importer, FloorSlices(texture.width, texture.height));
+            // The generated atlases have faint dark gutters between cells. Trim them away, then
+            // compensate PPU so every cropped sprite still occupies exactly one Tilemap cell.
+            float croppedCellWidth = texture.width / 4f - FloorTileGutterTrimPixels * 2f;
+            importer.spritePixelsPerUnit = croppedCellWidth;
+            SetSpriteRects(importer, FloorSlices(texture.width, texture.height, tilePrefix, FloorTileGutterTrimPixels));
+            importer.userData = ConfigurationTag;
+            importer.SaveAndReimport();
+        }
+
+        private static void ConfigurePickupImporter(TextureImporter importer, Texture2D texture)
+        {
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            // Each source cell is deliberately imported as a two-unit pickup, matching
+            // the visual scale used by the existing pooled loot prefabs.
+            importer.spritePixelsPerUnit = texture.width / 8f;
+            SetSpriteRects(importer, PickupSlices(texture.width, texture.height));
+            importer.userData = ConfigurationTag;
+            importer.SaveAndReimport();
+        }
+
+        private static void ConfigureCollectibleVariantsImporter(TextureImporter importer, Texture2D texture)
+        {
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            // The artwork has four frames across and ten narrow rows. Use the row height
+            // so each visual reads at the same in-game size as the original pickup art.
+            importer.spritePixelsPerUnit = texture.height / 10f;
+            SetSpriteRects(importer, CollectibleVariantSlices(texture.width, texture.height));
             importer.userData = ConfigurationTag;
             importer.SaveAndReimport();
         }
@@ -502,7 +653,64 @@ namespace ProjectDM.Editor
             };
         }
 
-        private static SpriteMetaData[] FloorSlices(int width, int height)
+        private static SpriteMetaData[] PickupSlices(int width, int height)
+        {
+            string[] pickupNames = { "ExperienceGem", "GoldCoin", "TreasureChest" };
+            List<SpriteMetaData> slices = new();
+            float cellWidth = width / 4f;
+            float cellHeight = height / pickupNames.Length;
+            const float inset = 1f;
+            for (int row = 0; row < pickupNames.Length; row++)
+            {
+                for (int frame = 0; frame < 4; frame++)
+                {
+                    slices.Add(new SpriteMetaData
+                    {
+                        name = $"Pickup_{pickupNames[row]}_{frame}",
+                        rect = new Rect(
+                            frame * cellWidth + inset,
+                            height - (row + 1) * cellHeight + inset,
+                            cellWidth - inset * 2f,
+                            cellHeight - inset * 2f),
+                        alignment = (int)SpriteAlignment.BottomCenter,
+                        pivot = new Vector2(.5f, 0f)
+                    });
+                }
+            }
+
+            return slices.ToArray();
+        }
+
+        private static SpriteMetaData[] CollectibleVariantSlices(int width, int height)
+        {
+            List<SpriteMetaData> slices = new();
+            float cellWidth = width / 4f;
+            float cellHeight = height / 10f;
+            const float inset = 1f;
+            for (int row = 0; row < 10; row++)
+            {
+                string collection = row < 5 ? "Experience" : "Currency";
+                int variant = row % 5 + 1;
+                for (int frame = 0; frame < 4; frame++)
+                {
+                    slices.Add(new SpriteMetaData
+                    {
+                        name = $"{collection}_{variant:00}_{frame}",
+                        rect = new Rect(
+                            frame * cellWidth + inset,
+                            height - (row + 1) * cellHeight + inset,
+                            cellWidth - inset * 2f,
+                            cellHeight - inset * 2f),
+                        alignment = (int)SpriteAlignment.BottomCenter,
+                        pivot = new Vector2(.5f, 0f)
+                    });
+                }
+            }
+
+            return slices.ToArray();
+        }
+
+        private static SpriteMetaData[] FloorSlices(int width, int height, string tilePrefix = "Floor", float gutterTrim = 0f)
         {
             List<SpriteMetaData> tiles = new();
             float cellWidth = width / 4f;
@@ -512,10 +720,14 @@ namespace ProjectDM.Editor
                 for (int column = 0; column < 4; column++)
                 {
                     // Unity sprite rects use a bottom-left origin; generated rows are read top-to-bottom.
-                    Rect rect = new(column * cellWidth, height - (row + 1) * cellHeight, cellWidth, cellHeight);
+                    Rect rect = new(
+                        column * cellWidth + gutterTrim,
+                        height - (row + 1) * cellHeight + gutterTrim,
+                        cellWidth - gutterTrim * 2f,
+                        cellHeight - gutterTrim * 2f);
                     tiles.Add(new SpriteMetaData
                     {
-                        name = $"Floor_{row}_{column}",
+                        name = $"{tilePrefix}_{row}_{column}",
                         rect = rect,
                         alignment = (int)SpriteAlignment.Center,
                         pivot = new Vector2(.5f, .5f)
@@ -653,16 +865,59 @@ namespace ProjectDM.Editor
                     AssetDatabase.CreateAsset(tile, path);
                 }
 
-                tile.sprite = pair.Value;
-                tile.colliderType = Tile.ColliderType.None;
-                EditorUtility.SetDirty(tile);
+                ConfigureFloorTile(tile, pair.Value);
             }
+        }
+
+        private static void CreateBorderTiles()
+        {
+            Dictionary<string, Sprite> sprites = SpriteMap(FloorBorderSheetPath);
+            foreach (KeyValuePair<string, Sprite> pair in sprites)
+            {
+                string path = $"{BorderTileFolder}/{pair.Key}.asset";
+                Tile tile = AssetDatabase.LoadAssetAtPath<Tile>(path);
+                if (tile == null)
+                {
+                    tile = ScriptableObject.CreateInstance<Tile>();
+                    AssetDatabase.CreateAsset(tile, path);
+                }
+
+                ConfigureFloorTile(tile, pair.Value);
+            }
+        }
+
+        private static void ApplyBorderTilesToOpenTilemaps()
+        {
+            TileBase[] borderTiles = new TileBase[16];
+            for (int row = 0; row < 4; row++)
+            {
+                for (int column = 0; column < 4; column++)
+                {
+                    borderTiles[row * 4 + column] = AssetDatabase.LoadAssetAtPath<TileBase>($"{BorderTileFolder}/FloorBorder_{row}_{column}.asset");
+                }
+            }
+
+            foreach (DungeonFloorTilemap floor in Object.FindObjectsByType<DungeonFloorTilemap>(FindObjectsSortMode.None))
+            {
+                floor.SetBorderTilePalette(borderTiles);
+                EditorUtility.SetDirty(floor);
+            }
+        }
+
+        private static void ConfigureFloorTile(Tile tile, Sprite sprite)
+        {
+            tile.sprite = sprite;
+            tile.colliderType = Tile.ColliderType.None;
+            tile.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one * FloorTileOverdrawScale);
+            EditorUtility.SetDirty(tile);
         }
 
         private static void CreateAnimationsAndControllers()
         {
             Dictionary<string, Sprite> actors = SpriteMap(ActorSheetPath);
             Dictionary<string, Sprite> items = SpriteMap(SpriteSheetPath);
+            Dictionary<string, Sprite> pickupFrames = SpriteMap(PickupSheetPath);
+            Dictionary<string, Sprite> collectibleVariantFrames = SpriteMap(CollectibleVariantsSheetPath);
             Dictionary<string, Sprite> walkCycleFrames = SpriteMap(WalkCyclePlayerSheetPath);
             Dictionary<string, Sprite> refinedSideWalkFrames = SpriteMap(SideWalkPlayerSheetPath);
             Dictionary<string, Sprite> idleFrames = SpriteMap(IdlePlayerSheetPath);
@@ -674,6 +929,10 @@ namespace ProjectDM.Editor
             Sprite[] idleDown = PlayerFrames(idleFrames, "Idle", "Down");
             Sprite[] idleRight = PlayerFrames(idleFrames, "Idle", "Right");
             Sprite[] idleUp = PlayerFrames(idleFrames, "Idle", "Up");
+            // Pickup content is intentionally independent of character-sheet validity.
+            // That keeps loot animation importable while character art is being adjusted.
+            CreatePickupAnimationControllers(pickupFrames);
+            CreateCollectibleVariantAnimationControllers(collectibleVariantFrames);
             if (left == null || down == null || right == null || up == null)
             {
                 List<Sprite> playerFrames = SpriteMap(CutePlayerSheetPath).Values
@@ -708,7 +967,7 @@ namespace ProjectDM.Editor
             AnimationClip boltLoop = CreateSpriteClip("ProjectDM_BoltLoop", new[] { items["Arcane_Bolt"] }, 8f);
 
             CreateCutePlayerController(
-                CreateSpriteClip("ProjectDM_IdleDown", idleDown, 5f),
+                CreateSpriteClip("ProjectDM_IdleDown", RepeatFrame(idleDown[0]), 5f),
                 CreateSpriteClip("ProjectDM_IdleLeft", idleLeft, 5f),
                 CreateSpriteClip("ProjectDM_IdleRight", idleRight, 5f),
                 CreateSpriteClip("ProjectDM_IdleUp", idleUp, 5f),
@@ -720,6 +979,51 @@ namespace ProjectDM.Editor
             CreateSingleClipController("ProjectDM_Slime", slimePulse);
             CreateSingleClipController("ProjectDM_Bolt", boltLoop);
             CreateSpriteCatalog(left, down, right, up, slime, skeleton);
+        }
+
+        private static void CreatePickupAnimationControllers(Dictionary<string, Sprite> sprites)
+        {
+            CreatePickupAnimationController(sprites, "ExperienceGem", "ProjectDM_PickupExperience", 7f);
+            CreatePickupAnimationController(sprites, "GoldCoin", "ProjectDM_PickupGold", 9f);
+            CreatePickupAnimationController(sprites, "TreasureChest", "ProjectDM_PickupChest", 4f);
+        }
+
+        private static void CreateCollectibleVariantAnimationControllers(Dictionary<string, Sprite> sprites)
+        {
+            for (int variant = 1; variant <= 5; variant++)
+            {
+                CreateCollectibleVariantAnimationController(sprites, "Experience", variant, 7f);
+                CreateCollectibleVariantAnimationController(sprites, "Currency", variant, 8f);
+            }
+        }
+
+        private static void CreateCollectibleVariantAnimationController(Dictionary<string, Sprite> sprites, string collection, int variant, float frameRate)
+        {
+            Sprite[] frames = new Sprite[4];
+            for (int frame = 0; frame < frames.Length; frame++)
+            {
+                if (!sprites.TryGetValue($"{collection}_{variant:00}_{frame}", out frames[frame]))
+                {
+                    return;
+                }
+            }
+
+            string controllerName = $"ProjectDM_{collection}_{variant:00}";
+            CreateSingleClipController(controllerName, CreateSpriteClip($"{controllerName}Loop", frames, frameRate));
+        }
+
+        private static void CreatePickupAnimationController(Dictionary<string, Sprite> sprites, string pickupName, string controllerName, float frameRate)
+        {
+            Sprite[] frames = new Sprite[4];
+            for (int frame = 0; frame < frames.Length; frame++)
+            {
+                if (!sprites.TryGetValue($"Pickup_{pickupName}_{frame}", out frames[frame]))
+                {
+                    return;
+                }
+            }
+
+            CreateSingleClipController(controllerName, CreateSpriteClip($"{controllerName}Loop", frames, frameRate));
         }
 
         private static void CreateSpriteCatalog(Sprite[] left, Sprite[] down, Sprite[] right, Sprite[] up, Sprite[] slime, Sprite[] skeleton)

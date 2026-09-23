@@ -1,0 +1,1037 @@
+fileFormatVersion: 2
+guid: 447a4b775ebd2f440a89a316f4c82b54
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 102.4
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Experience_01_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 922.6
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d0222168c39d60489300be20acd1108
+      internalID: -1684607207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_01_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 922.6
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2d664d0ec2ca4144aeefaa17cb7655f
+      internalID: -1664134741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_01_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 922.6
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e296be9e99397be4da01166376e64b00
+      internalID: 460947377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_01_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 922.6
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8479b28d039617c4a9b7e54f4e1cdc5c
+      internalID: -184559522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_02_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 820.2
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5999070638d2c8429551696264d2432
+      internalID: 769015586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_02_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 820.2
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4468c8a4d128abe4197e66df62a62986
+      internalID: 1441195858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_02_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 820.2
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70971ad5274c71a43925623e94b31fad
+      internalID: 1153954183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_02_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 820.2
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63055467a6993324a8094b6d33d13ced
+      internalID: 1842988997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_03_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 717.8
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 649d29dd99d45e74ea3c99eb352bda6b
+      internalID: -1427689070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_03_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 717.8
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cb1859bd4ae9f147ab0655ebc18a198
+      internalID: 582270085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_03_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 717.8
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 194c15297b32478499f3035a13efec29
+      internalID: 921316110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_03_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 717.8
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60c91807cea01214f9dcf1220949d2db
+      internalID: 1662014065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_04_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 615.4
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8935f575ba3a9f4b9579349cba8ec48
+      internalID: 1376407223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_04_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 615.4
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f4183b91a2a4a942b58c2c87185fcf1
+      internalID: -949346560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_04_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 615.4
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0ce2e4e5d4a614ab74ed06ed64a19d
+      internalID: -451820799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_04_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 615.4
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b57c199e22901714aabd34bedb5fd681
+      internalID: -691230038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_05_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 513
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4c64ce236a026442b1140f5dca5b2a8
+      internalID: -1364299254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_05_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 513
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ffb22f0441d96349b33488fbd7dde05
+      internalID: -124846622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_05_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 513
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 594de7b1981ce1d499a7c6ad0a4a9898
+      internalID: -641541491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Experience_05_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 513
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3db23e8ae8f245441b2e0a038d4d5d77
+      internalID: 539335580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_01_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 410.59998
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dac8f6b10b3613c49bb9e63593f5ef21
+      internalID: -833033003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_01_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 410.59998
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 404cbb7d0250faf45b8a43ee27664983
+      internalID: -1685888497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_01_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 410.59998
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b6fb3ecffee7dc43b3462d5bdcdd8f3
+      internalID: 233129195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_01_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 410.59998
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03ad7beb2ce2d4048ba4671ead39c8f3
+      internalID: 1228737488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_02_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 308.19998
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e71a1f84d83ad4e9aaa0ee641de25b
+      internalID: -635592588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_02_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 308.19998
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a17d83c5080514e48b1a82127ec69722
+      internalID: -1149622259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_02_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 308.19998
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d25ff39a678a2034fabf5cac2f8cb7fb
+      internalID: -1106867682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_02_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 308.19998
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34df5b7f74733e645945fddf1835f218
+      internalID: 1943949360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_03_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 205.79999
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ae2d1c7ebcda134eb6e04a0b235f22a
+      internalID: -915352930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_03_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 205.79999
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9cb69b2404565e4bb15d20752c67d37
+      internalID: 2030345841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_03_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 205.79999
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2ee4c316d00667419c30fa9c5a8fdb2
+      internalID: -1744299528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_03_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 205.79999
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba676939c8b965244a2c7945b28b237d
+      internalID: -439352404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_04_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 103.39999
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed4c42ce938df394f8aba6e777886694
+      internalID: 1155826235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_04_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 103.39999
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57e8ea2e2aa953c4b8e44cf0892db181
+      internalID: -282675436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_04_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 103.39999
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a005e5c0c63beff4386a9382fa31defd
+      internalID: 6841790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_04_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 103.39999
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3621599299fb1f94181f224924a64b63
+      internalID: -1025657959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_05_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0.99998474
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5c95fa5f7ac1ee47baa655be3d20ad3
+      internalID: 1716960981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_05_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 0.99998474
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76d782d1e6954ff479ac7e529ddc62ff
+      internalID: -1608941097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_05_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 0.99998474
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b97283968a89a76479bca72a617e45b1
+      internalID: -1417966086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Currency_05_3
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 0.99998474
+        width: 254
+        height: 100.4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e84a8d01011a78b45be1b2df6d0ea7ec
+      internalID: -1376099639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: aa8bf3822bab6df4ba5d304102d5a1b6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Currency_01_0: -833033003
+      Currency_01_1: -1685888497
+      Currency_01_2: 233129195
+      Currency_01_3: 1228737488
+      Currency_02_0: -635592588
+      Currency_02_1: -1149622259
+      Currency_02_2: -1106867682
+      Currency_02_3: 1943949360
+      Currency_03_0: -915352930
+      Currency_03_1: 2030345841
+      Currency_03_2: -1744299528
+      Currency_03_3: -439352404
+      Currency_04_0: 1155826235
+      Currency_04_1: -282675436
+      Currency_04_2: 6841790
+      Currency_04_3: -1025657959
+      Currency_05_0: 1716960981
+      Currency_05_1: -1608941097
+      Currency_05_2: -1417966086
+      Currency_05_3: -1376099639
+      Experience_01_0: -1684607207
+      Experience_01_1: -1664134741
+      Experience_01_2: 460947377
+      Experience_01_3: -184559522
+      Experience_02_0: 769015586
+      Experience_02_1: 1441195858
+      Experience_02_2: 1153954183
+      Experience_02_3: 1842988997
+      Experience_03_0: -1427689070
+      Experience_03_1: 582270085
+      Experience_03_2: 921316110
+      Experience_03_3: 1662014065
+      Experience_04_0: 1376407223
+      Experience_04_1: -949346560
+      Experience_04_2: -451820799
+      Experience_04_3: -691230038
+      Experience_05_0: -1364299254
+      Experience_05_1: -124846622
+      Experience_05_2: -641541491
+      Experience_05_3: 539335580
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: ProjectDM_ArtPipeline_v2
+  assetBundleName: 
+  assetBundleVariant: 

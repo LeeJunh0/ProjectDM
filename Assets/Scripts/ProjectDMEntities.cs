@@ -30,5 +30,5 @@ namespace ProjectDM
         public int amount;
     }
 
-    internal enum PickupKind { Experience, Gold, Chest }
+    internal enum PickupKind { Experience, Currency, Chest }
 }

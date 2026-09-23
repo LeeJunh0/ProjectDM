@@ -40,18 +40,25 @@ namespace ProjectDM.Editor
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Monsters_16Bit_v5.png", "art/monsters");
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_ExtraMonsters_16Bit_v1.png", "art/extra-monsters");
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Sprites_TopDown_v2.png", "art/gameplay");
-            Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_FloorTiles_v1.png", "art/floor");
+            Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_FloorTiles_Calm_v2.png", "art/floor");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Player_Cute_v4.controller", "animation/player");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Slime.controller", "animation/slime");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Skeleton.controller", "animation/skeleton");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Bolt.controller", "animation/bolt");
+            Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_PickupChest.controller", "animation/pickup-chest");
             Register(settings, bootstrap, ContentRoot + "/Configuration/ProjectDMSpriteCatalog.asset", "project-dm/sprites");
             Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/Player.prefab", "prefab/player");
             Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/Enemy.prefab", "prefab/enemy");
             Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/Projectile.prefab", "prefab/projectile");
-            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/ExperiencePickup.prefab", "prefab/pickup-experience");
-            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/GoldPickup.prefab", "prefab/pickup-gold");
             Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/ChestPickup.prefab", "prefab/pickup-chest");
+            for (int variant = 1; variant <= 5; variant++)
+            {
+                string suffix = variant.ToString("00");
+                Register(settings, bootstrap, ContentRoot + $"/Animation/ProjectDM_Experience_{suffix}.controller", $"animation/experience-{suffix}");
+                Register(settings, bootstrap, ContentRoot + $"/Animation/ProjectDM_Currency_{suffix}.controller", $"animation/currency-{suffix}");
+                Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + $"/ExperiencePickup_{suffix}.prefab", $"prefab/experience-{suffix}");
+                Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + $"/CurrencyPickup_{suffix}.prefab", $"prefab/currency-{suffix}");
+            }
 
             EditorUtility.SetDirty(catalog);
             EditorUtility.SetDirty(settings);
@@ -79,18 +86,30 @@ namespace ProjectDM.Editor
             catalog.monsterSheet = TextureReference(ContentRoot + "/Art/ProjectDM_Monsters_16Bit_v5.png");
             catalog.extraMonsterSheet = TextureReference(ContentRoot + "/Art/ProjectDM_ExtraMonsters_16Bit_v1.png");
             catalog.gameplaySheet = TextureReference(ContentRoot + "/Art/ProjectDM_Sprites_TopDown_v2.png");
-            catalog.floorSheet = TextureReference(ContentRoot + "/Art/ProjectDM_FloorTiles_v1.png");
+            catalog.floorSheet = TextureReference(ContentRoot + "/Art/ProjectDM_FloorTiles_Calm_v2.png");
             catalog.playerAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Player_Cute_v4.controller");
             catalog.slimeAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Slime.controller");
             catalog.skeletonAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Skeleton.controller");
             catalog.boltAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Bolt.controller");
+            catalog.chestPickupAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_PickupChest.controller");
             catalog.spriteCatalog = Reference(ContentRoot + "/Configuration/ProjectDMSpriteCatalog.asset");
             catalog.playerPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/Player.prefab");
             catalog.enemyPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/Enemy.prefab");
             catalog.projectilePrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/Projectile.prefab");
-            catalog.experiencePickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/ExperiencePickup.prefab");
-            catalog.goldPickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/GoldPickup.prefab");
+            catalog.experiencePickupPrefabs = PickupReferences("ExperiencePickup");
+            catalog.currencyPickupPrefabs = PickupReferences("CurrencyPickup");
             catalog.chestPickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/ChestPickup.prefab");
+        }
+
+        private static AssetReferenceGameObject[] PickupReferences(string prefix)
+        {
+            AssetReferenceGameObject[] references = new AssetReferenceGameObject[5];
+            for (int variant = 1; variant <= references.Length; variant++)
+            {
+                references[variant - 1] = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + $"/{prefix}_{variant:00}.prefab");
+            }
+
+            return references;
         }
 
         private static AssetReferenceTexture2D TextureReference(string assetPath)

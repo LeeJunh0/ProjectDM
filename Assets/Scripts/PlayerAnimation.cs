@@ -7,8 +7,10 @@ namespace ProjectDM
     {
         private Animator animator;
         private SpriteRenderer spriteRenderer;
+        private Transform visualTransform;
         private string currentState;
         private string facing = "Down";
+        private Vector3 restingScale = Vector3.one;
 
         private void Awake()
         {
@@ -17,6 +19,8 @@ namespace ProjectDM
             if (animator != null)
             {
                 animator.applyRootMotion = false;
+                visualTransform = animator.transform;
+                restingScale = visualTransform.localScale;
             }
         }
 
@@ -45,11 +49,14 @@ namespace ProjectDM
             }
 
             PlayState(isMoving);
+            UpdateBreathing(isMoving);
         }
 
         private void PlayState(bool isMoving)
         {
-            string nextState = $"{(isMoving ? "Walk" : "Idle")}_{facing}";
+            // The player always settles into the same front-facing breathing pose at rest.
+            // Facing direction is only meaningful while walking.
+            string nextState = isMoving ? $"Walk_{facing}" : "Idle_Down";
             if (nextState == currentState)
             {
                 return;
@@ -57,6 +64,28 @@ namespace ProjectDM
 
             currentState = nextState;
             animator.Play(nextState);
+        }
+
+        private void UpdateBreathing(bool isMoving)
+        {
+            if (visualTransform == null)
+            {
+                return;
+            }
+
+            if (isMoving)
+            {
+                visualTransform.localScale = restingScale;
+                return;
+            }
+
+            // The animator is attached to the Visual child, not the player root.
+            // This gives a gentle breath without changing gameplay coordinates.
+            float breath = Mathf.Sin(Time.time * 2.2f) * 0.0125f;
+            visualTransform.localScale = new Vector3(
+                restingScale.x * (1f - breath * .25f),
+                restingScale.y * (1f + breath),
+                restingScale.z);
         }
     }
 }

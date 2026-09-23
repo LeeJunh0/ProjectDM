@@ -19,6 +19,11 @@ namespace ProjectDM
             animationController.Initialize(sprite, controller);
         }
 
+        public void SetMovementBounds(Vector2 bounds, Vector2 center)
+        {
+            movement.SetMovementBounds(bounds, center);
+        }
+
         public void Tick(float deltaTime, float speed)
         {
             Vector2 input = movement.ReadAndMove(deltaTime, speed);

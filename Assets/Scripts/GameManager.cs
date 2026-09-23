@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace ProjectDM
 {
@@ -12,10 +11,25 @@ namespace ProjectDM
     [DefaultExecutionOrder(-100)]
     public sealed class GameManager : MonoBehaviour
     {
-        private const string MetaGoldKey = "PROJECT_DM_META_GOLD";
+        // Keep the legacy key so existing incremental progress remains intact.
+        private const string MetaCurrencyKey = "PROJECT_DM_META_GOLD";
         private const string DamageKey = "PROJECT_DM_DAMAGE_LEVEL";
         private const string HasteKey = "PROJECT_DM_HASTE_LEVEL";
         private const string FortuneKey = "PROJECT_DM_FORTUNE_LEVEL";
+
+        [Header("Scene Layout (Edit Mode Preview)")]
+        [SerializeField] private Camera gameplayCamera;
+        [SerializeField] private GameFieldBounds fieldBounds;
+        [SerializeField] private Transform playerSpawnPoint;
+        [SerializeField] private MonsterSpawnAreaPreview monsterSpawnArea;
+        [SerializeField] private PlayerMovementAreaPreview playerMovementArea;
+        [SerializeField] private DungeonFloorTilemap dungeonFloor;
+        [SerializeField, HideInInspector] private Vector2 fieldSize = new(25f, 17f);
+
+        [SerializeField, HideInInspector] private Vector2 playerMovementBounds = new(8.4f, 4.8f);
+
+        [SerializeField, HideInInspector] private float monsterSpawnMinimumDistance = 10f;
+        [SerializeField, HideInInspector] private float monsterSpawnMaximumDistance = 12f;
 
         private readonly List<Enemy> enemies = new();
         private readonly List<Projectile> projectiles = new();
@@ -46,8 +60,8 @@ namespace ProjectDM
         private int level = 1;
         private int experience;
         private int experienceToNext = 7;
-        private int runGold;
-        private int metaGold;
+        private int runCurrency;
+        private int metaCurrency;
         private int damageLevel;
         private int hasteLevel;
         private int fortuneLevel;
@@ -63,6 +77,27 @@ namespace ProjectDM
         private GUIStyle statStyle;
         private GUIStyle cardStyle;
         private bool isInitialized;
+
+        /// <summary>Called by the Main scene setup utility to connect edit-time layout objects.</summary>
+        public void ConfigureSceneLayout(
+            GameFieldBounds field,
+            Transform playerStart,
+            MonsterSpawnAreaPreview spawnArea,
+            PlayerMovementAreaPreview movementArea,
+            DungeonFloorTilemap floor)
+        {
+            fieldBounds = field;
+            playerSpawnPoint = playerStart;
+            monsterSpawnArea = spawnArea;
+            playerMovementArea = movementArea;
+            dungeonFloor = floor;
+        }
+
+        /// <summary>Assigns the camera that is authored in the Main scene.</summary>
+        public void ConfigureSceneCamera(Camera sceneCamera)
+        {
+            gameplayCamera = sceneCamera;
+        }
 
         private void Awake()
         {
@@ -85,7 +120,6 @@ namespace ProjectDM
 
             runtimeAssets = assetLoader.Assets;
             LoadSprites(runtimeAssets);
-            CreateDungeonFloor(runtimeAssets.FloorSheet);
             CreateBackdrop();
             CreatePlayer();
             isInitialized = true;
@@ -111,6 +145,10 @@ namespace ProjectDM
             float dt = Time.deltaTime;
             elapsed += dt;
             MovePlayer(dt);
+            if (monsterSpawnArea != null)
+            {
+                monsterSpawnArea.transform.position = player.position;
+            }
             SpawnEnemies(elapsed);
             FireAtNearestEnemy(elapsed);
             UpdateEnemies(dt);
@@ -120,17 +158,18 @@ namespace ProjectDM
 
         private void SetupCamera()
         {
-            Camera camera = Camera.main;
+            Camera camera = gameplayCamera != null ? gameplayCamera : Camera.main;
             if (camera == null)
             {
                 camera = new GameObject("Main Camera").AddComponent<Camera>();
                 camera.tag = "MainCamera";
+                camera.orthographic = true;
+                camera.orthographicSize = 5.5f;
+                camera.transform.position = new Vector3(0f, 0f, -10f);
+                camera.backgroundColor = new Color(0.025f, 0.018f, 0.07f);
             }
 
-            camera.orthographic = true;
-            camera.orthographicSize = 5.5f;
-            camera.transform.position = new Vector3(0f, 0f, -10f);
-            camera.backgroundColor = new Color(0.025f, 0.018f, 0.07f);
+            gameplayCamera = camera;
             // Preserve the intended 1920×1080 composition on any monitor by letter/pillarboxing the camera.
             const float targetAspect = 16f / 9f;
             float windowAspect = (float)Screen.width / Screen.height;
@@ -146,7 +185,7 @@ namespace ProjectDM
 
         private void LoadMetaProgress()
         {
-            metaGold = PlayerPrefs.GetInt(MetaGoldKey, 0);
+            metaCurrency = PlayerPrefs.GetInt(MetaCurrencyKey, 0);
             damageLevel = PlayerPrefs.GetInt(DamageKey, 0);
             hasteLevel = PlayerPrefs.GetInt(HasteKey, 0);
             fortuneLevel = PlayerPrefs.GetInt(FortuneKey, 0);
@@ -154,7 +193,7 @@ namespace ProjectDM
 
         private void SaveMetaProgress()
         {
-            PlayerPrefs.SetInt(MetaGoldKey, metaGold);
+            PlayerPrefs.SetInt(MetaCurrencyKey, metaCurrency);
             PlayerPrefs.SetInt(DamageKey, damageLevel);
             PlayerPrefs.SetInt(HasteKey, hasteLevel);
             PlayerPrefs.SetInt(FortuneKey, fortuneLevel);
@@ -213,20 +252,6 @@ namespace ProjectDM
             return frames != null && frames.Length > 0 ? frames[0] : null;
         }
 
-        private static Sprite SliceGrid(Texture2D sheet, int column, int row, int columns, int rows, float pixelsPerUnit)
-        {
-            const float inset = 1f;
-            float cellWidth = sheet.width / (float)columns;
-            float cellHeight = sheet.height / (float)rows;
-            return Sprite.Create(
-                sheet,
-                new Rect(column * cellWidth + inset, sheet.height - (row + 1) * cellHeight + inset, cellWidth - inset * 2f, cellHeight - inset * 2f),
-                new Vector2(.5f, .5f),
-                pixelsPerUnit,
-                0,
-                SpriteMeshType.FullRect);
-        }
-
         private static Sprite PixelSprite(Color fill, Color core)
         {
             const int size = 16;
@@ -258,47 +283,11 @@ namespace ProjectDM
             }
         }
 
-        private void CreateDungeonFloor(Texture2D floorSheet)
-        {
-            if (floorSheet == null)
-            {
-                return;
-            }
-
-            TileBase[] tiles = new TileBase[16];
-            for (int row = 0; row < 4; row++)
-            {
-                for (int column = 0; column < 4; column++)
-                {
-                    Tile tile = ScriptableObject.CreateInstance<Tile>();
-                    tile.sprite = SliceGrid(floorSheet, column, row, 4, 4, 64f);
-                    tiles[row * 4 + column] = tile;
-                }
-            }
-
-            GameObject gridObject = new("Dungeon Floor Grid");
-            Grid grid = gridObject.AddComponent<Grid>();
-            grid.cellSize = Vector3.one;
-            GameObject tilemapObject = new("Dungeon Floor Tilemap");
-            tilemapObject.transform.SetParent(gridObject.transform);
-            Tilemap tilemap = tilemapObject.AddComponent<Tilemap>();
-            TilemapRenderer tilemapRenderer = tilemapObject.AddComponent<TilemapRenderer>();
-            tilemapRenderer.sortingOrder = -10;
-            for (int x = -12; x <= 12; x++)
-            {
-                for (int y = -8; y <= 8; y++)
-                {
-                    int tileIndex = Mathf.Abs(x * 17 + y * 31) % tiles.Length;
-                    tilemap.SetTile(new Vector3Int(x, y, 0), tiles[tileIndex]);
-                }
-            }
-        }
-
         private void CreatePlayer()
         {
             GameObject avatar = Instantiate(runtimeAssets.PlayerPrefab);
             avatar.name = "Arcane Hunter";
-            avatar.transform.position = Vector3.zero;
+            avatar.transform.position = playerSpawnPoint != null ? playerSpawnPoint.position : Vector3.zero;
             avatar.transform.localScale = Vector3.one * 0.95f;
             SpriteRenderer renderer = avatar.GetComponentInChildren<SpriteRenderer>();
             renderer.sortingOrder = 3;
@@ -309,6 +298,9 @@ namespace ProjectDM
             playerController.Initialize(
                 playerSprite,
                 playerAnimatorController);
+            Vector2 movementCenter = playerMovementArea != null ? playerMovementArea.transform.position : Vector2.zero;
+            Vector2 movementBounds = playerMovementArea != null ? playerMovementArea.HalfExtents : playerMovementBounds;
+            playerController.SetMovementBounds(movementBounds, movementCenter);
         }
 
         private void MovePlayer(float dt)
@@ -337,7 +329,9 @@ namespace ProjectDM
 
                 GameObject enemyObject = objectPool.Rent(runtimeAssets.EnemyPrefab);
                 enemyObject.name = "Void Slime";
-                enemyObject.transform.position = (Vector2)player.position + direction * Random.Range(7.2f, 9.3f);
+                float minimumDistance = monsterSpawnArea != null ? monsterSpawnArea.MinimumDistance : monsterSpawnMinimumDistance;
+                float maximumDistance = monsterSpawnArea != null ? monsterSpawnArea.MaximumDistance : monsterSpawnMaximumDistance;
+                enemyObject.transform.position = (Vector2)player.position + direction * Random.Range(minimumDistance, maximumDistance);
                 enemyObject.transform.localScale = Vector3.one * Random.Range(0.55f, 0.78f);
                 int monsterKind = Random.Range(0, 5);
                 bool skeleton = monsterKind == 1;
@@ -471,10 +465,10 @@ namespace ProjectDM
 
         private void SpawnLoot(Vector3 position)
         {
-            CreatePickup("Experience Gem", position, gemSprite, PickupKind.Experience, 1, 0.28f);
+            CreatePickup("Experience", position, gemSprite, PickupKind.Experience, 1, 0.28f);
             if (Random.value < 0.28f + 0.025f * (fortuneLevel + runFortuneBonus))
             {
-                CreatePickup("Gold", position + (Vector3)Random.insideUnitCircle * 0.25f, coinSprite, PickupKind.Gold, 1, 0.23f);
+                CreatePickup("Currency", position + (Vector3)Random.insideUnitCircle * 0.25f, coinSprite, PickupKind.Currency, 1, 0.23f);
             }
 
             if (Random.value < 0.018f + 0.003f * (fortuneLevel + runFortuneBonus))
@@ -485,20 +479,46 @@ namespace ProjectDM
 
         private void CreatePickup(string name, Vector3 position, Sprite sprite, PickupKind kind, int amount, float scale)
         {
-            GameObject prefab = kind switch
+            GameObject prefab = SelectPickupPrefab(kind);
+            if (prefab == null)
             {
-                PickupKind.Gold => runtimeAssets.GoldPickupPrefab,
-                PickupKind.Chest => runtimeAssets.ChestPickupPrefab,
-                _ => runtimeAssets.ExperiencePickupPrefab
-            };
+                Debug.LogWarning($"Project DM could not spawn {kind}: no pooled prefab is configured.");
+                return;
+            }
             GameObject pickupObject = objectPool.Rent(prefab);
             pickupObject.name = name;
             pickupObject.transform.position = position;
             pickupObject.transform.localScale = Vector3.one * scale;
             SpriteRenderer renderer = pickupObject.GetComponentInChildren<SpriteRenderer>();
-            renderer.sprite = sprite;
             renderer.sortingOrder = 1;
+            Animator animator = pickupObject.GetComponentInChildren<Animator>();
+            if (animator != null && animator.runtimeAnimatorController != null)
+            {
+                animator.applyRootMotion = false;
+                animator.Rebind();
+                animator.Play("Loop", 0, 0f);
+            }
+            else
+            {
+                // Keeps old catalog/builds playable while the new controllers are being imported.
+                renderer.sprite = sprite;
+            }
             pickups.Add(new Pickup { transform = pickupObject.transform, kind = kind, amount = amount });
+        }
+
+        private GameObject SelectPickupPrefab(PickupKind kind)
+        {
+            if (kind == PickupKind.Chest)
+            {
+                return runtimeAssets.ChestPickupPrefab;
+            }
+
+            GameObject[] variants = kind == PickupKind.Currency
+                ? runtimeAssets.CurrencyPickupPrefabs
+                : runtimeAssets.ExperiencePickupPrefabs;
+            return variants != null && variants.Length > 0
+                ? variants[Random.Range(0, variants.Length)]
+                : null;
         }
 
         private void UpdatePickups(float dt)
@@ -542,9 +562,9 @@ namespace ProjectDM
                 return;
             }
 
-            int gold = pickup.amount;
-            runGold += gold;
-            metaGold += gold;
+            int currency = pickup.amount;
+            runCurrency += currency;
+            metaCurrency += currency;
             SaveMetaProgress();
         }
 
@@ -577,12 +597,12 @@ namespace ProjectDM
                 _ => fortuneLevel
             };
             int cost = MetaCost(currentLevel);
-            if (metaGold < cost)
+            if (metaCurrency < cost)
             {
                 return;
             }
 
-            metaGold -= cost;
+            metaCurrency -= cost;
             switch (upgrade)
             {
                 case MetaUpgrade.Damage: damageLevel++; break;
@@ -605,7 +625,7 @@ namespace ProjectDM
             }
 
             GUI.Label(new Rect(20, 16, 620, 38), "PROJECT DM  //  ARCANE SURVIVOR", titleStyle);
-            GUI.Label(new Rect(22, 56, 600, 28), $"Level {level}    XP {experience}/{experienceToNext}    Run Gold +{runGold}    Permanent Gold {metaGold}", statStyle);
+            GUI.Label(new Rect(22, 56, 600, 28), $"Level {level}    경험치 {experience}/{experienceToNext}    획득 재화 +{runCurrency}    영구 재화 {metaCurrency}", statStyle);
             GUI.Label(new Rect(22, 84, 650, 26), $"Arcane Bolt {1 + damageLevel + runDamageBonus} DMG   |   Cast {Mathf.Max(0.18f, 0.62f - 0.035f * (hasteLevel + runHasteBonus)):0.00}s   |   Fortune +{(fortuneLevel + runFortuneBonus) * 3}%", statStyle);
 
             if (GUI.Button(new Rect(Screen.width - 190, 20, 165, 36), "META TREE  [TAB]"))
@@ -661,7 +681,7 @@ namespace ProjectDM
             {
                 ChooseRunUpgrade(RunUpgrade.Haste);
             }
-            if (GUI.Button(new Rect(x + (width + 15f) * 2f, Screen.height * 0.38f, width, 150), "GILDED FATE\n\nMore gold and chest drops", cardStyle))
+            if (GUI.Button(new Rect(x + (width + 15f) * 2f, Screen.height * 0.38f, width, 150), "GILDED FATE\n\nMore currency and chest drops", cardStyle))
             {
                 ChooseRunUpgrade(RunUpgrade.Fortune);
             }
@@ -672,8 +692,8 @@ namespace ProjectDM
             float panelWidth = Mathf.Min(620, Screen.width - 60);
             float x = (Screen.width - panelWidth) / 2f;
             float y = 135f;
-            GUI.Box(new Rect(x, y, panelWidth, 360), "PERMANENT GROWTH — spends saved gold", new GUIStyle(GUI.skin.box) { fontSize = 20, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter, padding = new RectOffset(10, 10, 16, 10) });
-            GUI.Label(new Rect(x + 28, y + 55, panelWidth - 56, 32), $"Available permanent gold: {metaGold}", titleStyle);
+            GUI.Box(new Rect(x, y, panelWidth, 360), "영구 성장 — 저장된 재화 사용", new GUIStyle(GUI.skin.box) { fontSize = 20, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter, padding = new RectOffset(10, 10, 16, 10) });
+            GUI.Label(new Rect(x + 28, y + 55, panelWidth - 56, 32), $"보유 영구 재화: {metaCurrency}", titleStyle);
             DrawMetaButton(x + 28, y + 105, MetaUpgrade.Damage, "ARCANE ROOT", "Start each run with +1 bolt damage", damageLevel);
             DrawMetaButton(x + 28, y + 175, MetaUpgrade.Haste, "SWIFT ROOT", "Start each run with faster casting", hasteLevel);
             DrawMetaButton(x + 28, y + 245, MetaUpgrade.Fortune, "GILDED ROOT", "Start each run with +3% loot chance", fortuneLevel);
@@ -688,7 +708,7 @@ namespace ProjectDM
             int cost = MetaCost(currentLevel);
             GUI.Label(new Rect(x, y, 260, 25), $"{name}  Lv.{currentLevel}", titleStyle);
             GUI.Label(new Rect(x, y + 28, 330, 24), description, statStyle);
-            if (GUI.Button(new Rect(x + 355, y + 8, 195, 45), $"UNLOCK  {cost} gold"))
+            if (GUI.Button(new Rect(x + 355, y + 8, 195, 45), $"UNLOCK  {cost} 재화"))
             {
                 BuyMetaUpgrade(upgrade);
             }

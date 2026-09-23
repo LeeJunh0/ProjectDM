@@ -1,0 +1,485 @@
+fileFormatVersion: 2
+guid: fe478d1f56fd515479fe33cc76e70b7f
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 299.25
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FloorBorder_0_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 943.25
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b718d6e2320958549aadd29db6c04fb9
+      internalID: 1121783356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_0_1
+      rect:
+        serializedVersion: 2
+        x: 323.25
+        y: 943.25
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20117e2928daaed4b96f129f7d5e327c
+      internalID: -1693963088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_0_2
+      rect:
+        serializedVersion: 2
+        x: 638.5
+        y: 943.25
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b37aaca2e65da445938cb4ee3cfe2b6
+      internalID: 998124449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_0_3
+      rect:
+        serializedVersion: 2
+        x: 953.75
+        y: 943.25
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b317b8cedf4fa2b41a2574ec03247b27
+      internalID: 503262667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_1_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 631.5
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a290a71f83afb7448f388cab9e55f7a
+      internalID: -154434986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_1_1
+      rect:
+        serializedVersion: 2
+        x: 323.25
+        y: 631.5
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 688945489d464d644ba5cb1c895cc3a1
+      internalID: -584115078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_1_2
+      rect:
+        serializedVersion: 2
+        x: 638.5
+        y: 631.5
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdc6ac9d311fbbd43b42d1c74888a885
+      internalID: -1484283205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_1_3
+      rect:
+        serializedVersion: 2
+        x: 953.75
+        y: 631.5
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a54a0505bf57f640bfd2cdda41de678
+      internalID: 628000162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_2_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 319.75
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10306901874f8e94f9c0611c6bb852e0
+      internalID: -972877269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_2_1
+      rect:
+        serializedVersion: 2
+        x: 323.25
+        y: 319.75
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3d3f9aa1a9b098408aa02dd027dd7b0
+      internalID: -235801224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_2_2
+      rect:
+        serializedVersion: 2
+        x: 638.5
+        y: 319.75
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e3b8f7b1e064f147bfc98cefda29b1b
+      internalID: -960314670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_2_3
+      rect:
+        serializedVersion: 2
+        x: 953.75
+        y: 319.75
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4570cd942ea841a478bf5a4895163bdf
+      internalID: 1780813323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_3_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 8
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a262ffe0902e57b4eb85cb428fbecb79
+      internalID: -2064618350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_3_1
+      rect:
+        serializedVersion: 2
+        x: 323.25
+        y: 8
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00cc9c2faf584bf4d8c0b9bef15ead59
+      internalID: 917905261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_3_2
+      rect:
+        serializedVersion: 2
+        x: 638.5
+        y: 8
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 318739030e43ee948bd6a80d71253ebb
+      internalID: -338405508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorBorder_3_3
+      rect:
+        serializedVersion: 2
+        x: 953.75
+        y: 8
+        width: 299.25
+        height: 295.75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 086a6519bb6e9ff4ca3b7b2efab71dcd
+      internalID: 2098315312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9664d81a7fc9b454d841226f7b2223d9
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FloorBorder_0_0: 1121783356
+      FloorBorder_0_1: -1693963088
+      FloorBorder_0_2: 998124449
+      FloorBorder_0_3: 503262667
+      FloorBorder_1_0: -154434986
+      FloorBorder_1_1: -584115078
+      FloorBorder_1_2: -1484283205
+      FloorBorder_1_3: 628000162
+      FloorBorder_2_0: -972877269
+      FloorBorder_2_1: -235801224
+      FloorBorder_2_2: -960314670
+      FloorBorder_2_3: 1780813323
+      FloorBorder_3_0: -2064618350
+      FloorBorder_3_1: 917905261
+      FloorBorder_3_2: -338405508
+      FloorBorder_3_3: 2098315312
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: ProjectDM_ArtPipeline_v2
+  assetBundleName: 
+  assetBundleVariant: 
