@@ -8,6 +8,7 @@ namespace ProjectDM.Editor
     public static class ProjectDMPrefabFactory
     {
         public const string PrefabFolder = "Assets/GameContent/Prefabs";
+        private const string CollectibleVariantsSheetPath = "Assets/GameContent/Art/ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png";
 
         public static void CreateOrUpdatePrefabs()
         {
@@ -21,15 +22,17 @@ namespace ProjectDM.Editor
             });
             CreatePrefab("Enemy", root => CreateVisual(root, true));
             CreatePrefab("Projectile", root => CreateVisual(root, true));
+            EnsureAnimator("Projectile", "ProjectDM_Bolt");
             CreatePrefab("ChestPickup", root => CreateVisual(root, false));
-            EnsurePickupAnimator("ChestPickup", "ProjectDM_PickupChest");
+            EnsureAnimator("ChestPickup", "ProjectDM_PickupChest");
+            EnsureChestInteractionVisual();
             for (int variant = 1; variant <= 5; variant++)
             {
                 string suffix = variant.ToString("00");
                 CreatePrefab($"ExperiencePickup_{suffix}", root => CreateVisual(root, false));
                 CreatePrefab($"CurrencyPickup_{suffix}", root => CreateVisual(root, false));
-                EnsurePickupAnimator($"ExperiencePickup_{suffix}", $"ProjectDM_Experience_{suffix}");
-                EnsurePickupAnimator($"CurrencyPickup_{suffix}", $"ProjectDM_Currency_{suffix}");
+                EnsureStaticPickupVisual($"ExperiencePickup_{suffix}", $"Experience_{suffix}_1");
+                EnsureStaticPickupVisual($"CurrencyPickup_{suffix}", $"Currency_{suffix}_1");
             }
         }
 
@@ -59,7 +62,7 @@ namespace ProjectDM.Editor
             }
         }
 
-        private static void EnsurePickupAnimator(string prefabName, string controllerName)
+        private static void EnsureAnimator(string prefabName, string controllerName)
         {
             string path = $"{PrefabFolder}/{prefabName}.prefab";
             GameObject root = PrefabUtility.LoadPrefabContents(path);
@@ -87,6 +90,74 @@ namespace ProjectDM.Editor
             }
 
             PrefabUtility.UnloadPrefabContents(root);
+        }
+
+        private static void EnsureStaticPickupVisual(string prefabName, string spriteName)
+        {
+            string path = $"{PrefabFolder}/{prefabName}.prefab";
+            GameObject root = PrefabUtility.LoadPrefabContents(path);
+            Transform visual = root.transform.Find("Visual");
+            if (visual == null)
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+                return;
+            }
+
+            bool changed = false;
+            SpriteRenderer renderer = visual.GetComponent<SpriteRenderer>();
+            Sprite sprite = LoadCollectibleSprite(spriteName);
+            if (renderer != null && sprite != null && renderer.sprite != sprite)
+            {
+                renderer.sprite = sprite;
+                changed = true;
+            }
+
+            Animator animator = visual.GetComponent<Animator>();
+            if (animator != null)
+            {
+                UnityEngine.Object.DestroyImmediate(animator);
+                changed = true;
+            }
+
+            if (visual.GetComponent<PickupFloatVisual>() == null)
+            {
+                visual.gameObject.AddComponent<PickupFloatVisual>();
+                changed = true;
+            }
+
+            if (changed)
+            {
+                PrefabUtility.SaveAsPrefabAsset(root, path);
+            }
+
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+
+        private static void EnsureChestInteractionVisual()
+        {
+            const string path = PrefabFolder + "/ChestPickup.prefab";
+            GameObject root = PrefabUtility.LoadPrefabContents(path);
+            Transform visual = root.transform.Find("Visual");
+            if (visual != null && visual.GetComponent<PickupInteractionVisual>() == null)
+            {
+                visual.gameObject.AddComponent<PickupInteractionVisual>();
+                PrefabUtility.SaveAsPrefabAsset(root, path);
+            }
+
+            PrefabUtility.UnloadPrefabContents(root);
+        }
+
+        private static Sprite LoadCollectibleSprite(string spriteName)
+        {
+            foreach (UnityEngine.Object asset in AssetDatabase.LoadAllAssetRepresentationsAtPath(CollectibleVariantsSheetPath))
+            {
+                if (asset is Sprite sprite && sprite.name == spriteName)
+                {
+                    return sprite;
+                }
+            }
+
+            return null;
         }
 
         private static void EnsureFolder()

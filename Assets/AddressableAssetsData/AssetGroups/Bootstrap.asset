@@ -21,8 +21,26 @@ MonoBehaviour:
     m_SerializedLabels:
     - bootstrap
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e3f45b0509db8143b145acb29fceecd
+    m_Address: prefab/experience-01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 161195030100cd24da63f4d504019b16
+    m_Address: prefab/experience-02
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1df6fb62170413149b93763b42934bf3
     m_Address: art/monsters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 238b0c0ce5575b0409d702f4ef2ceb3f
+    m_Address: prefab/experience-05
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap
@@ -35,6 +53,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 342104ef5671c2543bd4bb7861815b6e
     m_Address: art/player-walk-cycle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e4f53aa7b96c6948af17199e74d20fd
+    m_Address: prefab/currency-02
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap
@@ -57,8 +81,26 @@ MonoBehaviour:
     m_SerializedLabels:
     - bootstrap
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ed4c87fa52d86d4582b8708718ac671
+    m_Address: prefab/experience-04
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 502dc223c83ea6b4ebad6eefe15e9d07
     m_Address: art/gameplay
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5853911e06538a244a20f0b7d3e4113e
+    m_Address: prefab/experience-03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 63dc7966d935efc448dd06f5e2b30a11
+    m_Address: prefab/currency-04
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap
@@ -71,6 +113,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 846dc85a706084741a5ad93db4c7c75f
     m_Address: project-dm/sprites
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9694395420f6a824bab44ad5dc661cc2
+    m_Address: prefab/currency-03
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap
@@ -95,6 +143,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b251ad2d203e87549b07846c4a5c0af3
     m_Address: animation/player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b71679a55d8a11946aa4abe40a63725d
+    m_Address: prefab/currency-05
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap
@@ -131,6 +185,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f5528b7a8c42398468f1e227f6e4157e
     m_Address: prefab/projectile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff53b1d5eef3fc7428143bc32fb75d51
+    m_Address: prefab/currency-01
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap

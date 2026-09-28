@@ -28,6 +28,8 @@ namespace ProjectDM
         public Transform transform;
         public PickupKind kind;
         public int amount;
+        public bool isInteracting;
+        public float interactionRemaining;
     }
 
     internal enum PickupKind { Experience, Currency, Chest }

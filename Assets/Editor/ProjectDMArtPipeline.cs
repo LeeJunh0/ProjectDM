@@ -35,6 +35,8 @@ namespace ProjectDM.Editor
         private const string AnimationFolder = "Assets/GameContent/Animation";
         private const string SpriteCatalogPath = "Assets/GameContent/Configuration/ProjectDMSpriteCatalog.asset";
         private const string ConfigurationTag = "ProjectDM_ArtPipeline_v2";
+        private const string SpriteSheetConfigurationTag = "ProjectDM_ProjectileSlices_v1";
+        private const string CollectibleVariantsConfigurationTag = "ProjectDM_ExperienceCurrencySlices_v2";
 
         static ProjectDMArtPipeline()
         {
@@ -64,6 +66,25 @@ namespace ProjectDM.Editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log("Project DM generated Tile and Animation assets are ready.");
+        }
+
+        [MenuItem("Project DM/Import 4-Frame Projectile Animation")]
+        public static void ImportProjectileAnimation()
+        {
+            TextureImporter importer = AssetImporter.GetAtPath(SpriteSheetPath) as TextureImporter;
+            Texture2D sheet = AssetDatabase.LoadAssetAtPath<Texture2D>(SpriteSheetPath);
+            if (importer == null || sheet == null)
+            {
+                Debug.LogWarning("Project DM could not import projectile animation because its source sheet is missing.");
+                return;
+            }
+
+            ConfigureCharacterImporter(importer, sheet);
+            CreateAnimationsAndControllers();
+            ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM four-frame projectile animation and prefab are ready.");
         }
 
         [MenuItem("Project DM/Import Floor Border Tiles")]
@@ -127,7 +148,7 @@ namespace ProjectDM.Editor
             ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log("Project DM experience and currency variants are ready: five types per collection.");
+            Debug.Log("Project DM experience and currency variants are ready: five static types per collection with a floating visual.");
         }
 
         [MenuItem("Project DM/Fix Floor Tile Seams")]
@@ -254,12 +275,49 @@ namespace ProjectDM.Editor
             }
 
             TextureImporter collectibleVariantsImporter = AssetImporter.GetAtPath(CollectibleVariantsSheetPath) as TextureImporter;
-            if (collectibleVariantsImporter != null && collectibleVariantsImporter.userData != ConfigurationTag)
+            if (collectibleVariantsImporter != null && collectibleVariantsImporter.userData != CollectibleVariantsConfigurationTag)
             {
                 ImportCollectibleVariantAnimations();
             }
 
+            if (NeedsStaticPickupVisuals())
+            {
+                ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
+
+            EnsureBoltPulseAnimation();
             Configure(force: false);
+        }
+
+        private static bool NeedsStaticPickupVisuals()
+        {
+            GameObject pickupPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{ProjectDMPrefabFactory.PrefabFolder}/ExperiencePickup_01.prefab");
+            if (pickupPrefab == null || pickupPrefab.GetComponentInChildren<PickupFloatVisual>() == null)
+            {
+                return true;
+            }
+
+            SpriteRenderer experienceRenderer = pickupPrefab.GetComponentInChildren<SpriteRenderer>();
+            GameObject chestPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{ProjectDMPrefabFactory.PrefabFolder}/ChestPickup.prefab");
+            return experienceRenderer == null || experienceRenderer.sprite == null || experienceRenderer.sprite.name != "Experience_01_1"
+                || chestPrefab == null || chestPrefab.GetComponentInChildren<PickupInteractionVisual>() == null;
+        }
+
+        private static void EnsureBoltPulseAnimation()
+        {
+            const string boltClipPath = AnimationFolder + "/ProjectDM_BoltLoop.anim";
+            AnimationClip boltClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(boltClipPath);
+            if (boltClip == null || AnimationUtility.GetEditorCurve(
+                    boltClip,
+                    EditorCurveBinding.FloatCurve("", typeof(Transform), "m_LocalScale.x")) != null)
+            {
+                return;
+            }
+
+            AddScalePulse(boltClip, 0.88f, 1.12f, 0.25f);
+            AssetDatabase.SaveAssets();
         }
 
         private static void Configure(bool force)
@@ -281,7 +339,7 @@ namespace ProjectDM.Editor
             }
 
             bool idleIsConfigured = idleImporter == null || idleImporter.userData == ConfigurationTag;
-            if (!force && spriteImporter.userData == ConfigurationTag && actorImporter.userData == ConfigurationTag && cutePlayerImporter.userData == ConfigurationTag && floorImporter.userData == ConfigurationTag && idleIsConfigured)
+            if (!force && spriteImporter.userData == SpriteSheetConfigurationTag && actorImporter.userData == ConfigurationTag && cutePlayerImporter.userData == ConfigurationTag && floorImporter.userData == ConfigurationTag && idleIsConfigured)
             {
                 return;
             }
@@ -309,6 +367,7 @@ namespace ProjectDM.Editor
             CreateRequiredFolder("Assets/GameContent", "Animation");
             CreateFloorTiles();
             CreateAnimationsAndControllers();
+            ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log("Project DM art pipeline: sprites, Tile assets, clips, and controllers are ready.");
@@ -324,7 +383,7 @@ namespace ProjectDM.Editor
             importer.textureCompression = TextureImporterCompression.Uncompressed;
             importer.spritePixelsPerUnit = 64;
             SetSpriteRects(importer, CharacterSlices(texture.width, texture.height));
-            importer.userData = ConfigurationTag;
+            importer.userData = SpriteSheetConfigurationTag;
             importer.SaveAndReimport();
         }
 
@@ -373,7 +432,7 @@ namespace ProjectDM.Editor
             // so each visual reads at the same in-game size as the original pickup art.
             importer.spritePixelsPerUnit = texture.height / 10f;
             SetSpriteRects(importer, CollectibleVariantSlices(texture.width, texture.height));
-            importer.userData = ConfigurationTag;
+            importer.userData = CollectibleVariantsConfigurationTag;
             importer.SaveAndReimport();
         }
 
@@ -632,7 +691,7 @@ namespace ProjectDM.Editor
         private static SpriteMetaData[] CharacterSlices(int width, int height)
         {
             // The source was generated at 2:1. Fractions make this resilient to a later re-export.
-            return new[]
+            List<SpriteMetaData> slices = new()
             {
                 Slice("Player_Back", width, height, .175f, .665f, .125f, .31f),
                 Slice("Player_Left", width, height, .350f, .665f, .135f, .31f),
@@ -646,11 +705,42 @@ namespace ProjectDM.Editor
                 Slice("Slime_1", width, height, .350f, .115f, .165f, .255f),
                 Slice("Slime_2", width, height, .530f, .115f, .165f, .255f),
                 Slice("Slime_3", width, height, .700f, .115f, .165f, .255f),
-                Slice("Arcane_Bolt", width, height, .020f, .025f, .100f, .180f),
                 Slice("Experience_Gem", width, height, .385f, .025f, .080f, .180f),
                 Slice("Gold_Coin", width, height, .545f, .025f, .060f, .160f),
                 Slice("Treasure_Chest", width, height, .690f, .025f, .100f, .180f)
             };
+            // The projectile artwork occupies four uneven frames along the lower-left edge.
+            // These artwork bounds preserve each frame's glow and particle falloff instead of
+            // cutting the sheet into equally sized cells.
+            slices.AddRange(ProjectileSlices(width, height));
+            return slices.ToArray();
+        }
+
+        private static SpriteMetaData[] ProjectileSlices(int width, int height)
+        {
+            // Bounds are authored from ProjectDM_Sprites_TopDown_v2.png (1774 x 887), then
+            // normalized so a future re-export keeps the same frame layout.
+            float[] startsX = { 45f, 143f, 283f, 466f };
+            float[] startsY = { 59f, 53f, 57f, 39f };
+            float[] widths = { 120f, 155f, 177f, 190f };
+            float[] heights = { 110f, 114f, 102f, 138f };
+            SpriteMetaData[] slices = new SpriteMetaData[4];
+            for (int frame = 0; frame < slices.Length; frame++)
+            {
+                slices[frame] = new SpriteMetaData
+                {
+                    name = $"Projectile_Bolt_{frame}",
+                    rect = new Rect(
+                        width * (startsX[frame] / 1774f),
+                        height * (startsY[frame] / 887f),
+                        width * (widths[frame] / 1774f),
+                        height * (heights[frame] / 887f)),
+                    alignment = (int)SpriteAlignment.Center,
+                    pivot = new Vector2(.5f, .5f)
+                };
+            }
+
+            return slices;
         }
 
         private static SpriteMetaData[] PickupSlices(int width, int height)
@@ -684,23 +774,31 @@ namespace ProjectDM.Editor
         private static SpriteMetaData[] CollectibleVariantSlices(int width, int height)
         {
             List<SpriteMetaData> slices = new();
-            float cellWidth = width / 4f;
-            float cellHeight = height / 10f;
-            const float inset = 1f;
+            // This sheet has transparent gutters around a centered 4-by-10 sprite layout;
+            // dividing the full image into equal columns leaves the outer frames empty and
+            // cuts particles from the inner frames. These bounds follow the artwork itself.
+            float[] frameCentersX = { 498f / 1402f, 639f / 1402f, 765f / 1402f, 900f / 1402f };
+            float[] frameWidths = { 144f / 1402f, 126f / 1402f, 120f / 1402f, 144f / 1402f };
+            float[] rowStartsYFromTop = { 13f, 124f, 245f, 342f, 459f, 579f, 685f, 788f, 891f, 999f };
+            float[] rowHeights = { 103f, 108f, 95f, 117f, 117f, 101f, 102f, 103f, 108f, 111f };
             for (int row = 0; row < 10; row++)
             {
                 string collection = row < 5 ? "Experience" : "Currency";
                 int variant = row % 5 + 1;
                 for (int frame = 0; frame < 4; frame++)
                 {
+                    float frameWidth = width * frameWidths[frame];
+                    float centerX = width * frameCentersX[frame];
+                    float rowStartYFromTop = height * (rowStartsYFromTop[row] / 1122f);
+                    float rowHeight = height * (rowHeights[row] / 1122f);
                     slices.Add(new SpriteMetaData
                     {
                         name = $"{collection}_{variant:00}_{frame}",
                         rect = new Rect(
-                            frame * cellWidth + inset,
-                            height - (row + 1) * cellHeight + inset,
-                            cellWidth - inset * 2f,
-                            cellHeight - inset * 2f),
+                            centerX - frameWidth * 0.5f,
+                            height - rowStartYFromTop - rowHeight,
+                            frameWidth,
+                            rowHeight),
                         alignment = (int)SpriteAlignment.BottomCenter,
                         pivot = new Vector2(.5f, 0f)
                     });
@@ -917,7 +1015,6 @@ namespace ProjectDM.Editor
             Dictionary<string, Sprite> actors = SpriteMap(ActorSheetPath);
             Dictionary<string, Sprite> items = SpriteMap(SpriteSheetPath);
             Dictionary<string, Sprite> pickupFrames = SpriteMap(PickupSheetPath);
-            Dictionary<string, Sprite> collectibleVariantFrames = SpriteMap(CollectibleVariantsSheetPath);
             Dictionary<string, Sprite> walkCycleFrames = SpriteMap(WalkCyclePlayerSheetPath);
             Dictionary<string, Sprite> refinedSideWalkFrames = SpriteMap(SideWalkPlayerSheetPath);
             Dictionary<string, Sprite> idleFrames = SpriteMap(IdlePlayerSheetPath);
@@ -929,10 +1026,10 @@ namespace ProjectDM.Editor
             Sprite[] idleDown = PlayerFrames(idleFrames, "Idle", "Down");
             Sprite[] idleRight = PlayerFrames(idleFrames, "Idle", "Right");
             Sprite[] idleUp = PlayerFrames(idleFrames, "Idle", "Up");
+            Sprite[] boltFrames = NumberedFrames(items, "Projectile_Bolt");
             // Pickup content is intentionally independent of character-sheet validity.
             // That keeps loot animation importable while character art is being adjusted.
             CreatePickupAnimationControllers(pickupFrames);
-            CreateCollectibleVariantAnimationControllers(collectibleVariantFrames);
             if (left == null || down == null || right == null || up == null)
             {
                 List<Sprite> playerFrames = SpriteMap(CutePlayerSheetPath).Values
@@ -949,7 +1046,7 @@ namespace ProjectDM.Editor
             }
             if (!actors.ContainsKey("Actor_Slime_0") || !actors.ContainsKey("Actor_Slime_1")
                 || !actors.ContainsKey("Actor_Skeleton_0") || !actors.ContainsKey("Actor_Skeleton_1")
-                || !items.ContainsKey("Arcane_Bolt") || left == null || down == null || right == null || up == null)
+                || boltFrames == null || left == null || down == null || right == null || up == null)
             {
                 Debug.LogWarning("Project DM could not create animations because the expected player or monster frames are missing.");
                 return;
@@ -964,7 +1061,8 @@ namespace ProjectDM.Editor
 
             AnimationClip skeletonWalk = CreateSpriteClip("ProjectDM_SkeletonWalk", skeleton, 6f);
             AnimationClip slimePulse = CreateSpriteClip("ProjectDM_SlimePulse", slime, 6f);
-            AnimationClip boltLoop = CreateSpriteClip("ProjectDM_BoltLoop", new[] { items["Arcane_Bolt"] }, 8f);
+            AnimationClip boltLoop = CreateSpriteClip("ProjectDM_BoltLoop", boltFrames, 12f);
+            AddScalePulse(boltLoop, 0.92f, 1.06f, boltFrames.Length / 12f);
 
             CreateCutePlayerController(
                 CreateSpriteClip("ProjectDM_IdleDown", RepeatFrame(idleDown[0]), 5f),
@@ -985,34 +1083,10 @@ namespace ProjectDM.Editor
         {
             CreatePickupAnimationController(sprites, "ExperienceGem", "ProjectDM_PickupExperience", 7f);
             CreatePickupAnimationController(sprites, "GoldCoin", "ProjectDM_PickupGold", 9f);
-            CreatePickupAnimationController(sprites, "TreasureChest", "ProjectDM_PickupChest", 4f);
+            CreatePickupAnimationController(sprites, "TreasureChest", "ProjectDM_PickupChest", 4f, loop: false);
         }
 
-        private static void CreateCollectibleVariantAnimationControllers(Dictionary<string, Sprite> sprites)
-        {
-            for (int variant = 1; variant <= 5; variant++)
-            {
-                CreateCollectibleVariantAnimationController(sprites, "Experience", variant, 7f);
-                CreateCollectibleVariantAnimationController(sprites, "Currency", variant, 8f);
-            }
-        }
-
-        private static void CreateCollectibleVariantAnimationController(Dictionary<string, Sprite> sprites, string collection, int variant, float frameRate)
-        {
-            Sprite[] frames = new Sprite[4];
-            for (int frame = 0; frame < frames.Length; frame++)
-            {
-                if (!sprites.TryGetValue($"{collection}_{variant:00}_{frame}", out frames[frame]))
-                {
-                    return;
-                }
-            }
-
-            string controllerName = $"ProjectDM_{collection}_{variant:00}";
-            CreateSingleClipController(controllerName, CreateSpriteClip($"{controllerName}Loop", frames, frameRate));
-        }
-
-        private static void CreatePickupAnimationController(Dictionary<string, Sprite> sprites, string pickupName, string controllerName, float frameRate)
+        private static void CreatePickupAnimationController(Dictionary<string, Sprite> sprites, string pickupName, string controllerName, float frameRate, bool loop = true)
         {
             Sprite[] frames = new Sprite[4];
             for (int frame = 0; frame < frames.Length; frame++)
@@ -1023,7 +1097,12 @@ namespace ProjectDM.Editor
                 }
             }
 
-            CreateSingleClipController(controllerName, CreateSpriteClip($"{controllerName}Loop", frames, frameRate));
+            AnimationClip clip = CreateSpriteClip($"{controllerName}Loop", frames, frameRate);
+            AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
+            settings.loopTime = loop;
+            AnimationUtility.SetAnimationClipSettings(clip, settings);
+            EditorUtility.SetDirty(clip);
+            CreateSingleClipController(controllerName, clip);
         }
 
         private static void CreateSpriteCatalog(Sprite[] left, Sprite[] down, Sprite[] right, Sprite[] up, Sprite[] slime, Sprite[] skeleton)
@@ -1048,6 +1127,17 @@ namespace ProjectDM.Editor
         private static Sprite[] PlayerWalkFrames(Dictionary<string, Sprite> sprites, string direction)
         {
             return PlayerFrames(sprites, "Walk", direction);
+        }
+
+        private static Sprite[] NumberedFrames(Dictionary<string, Sprite> sprites, string prefix)
+        {
+            List<Sprite> frames = new();
+            for (int frame = 0; sprites.TryGetValue($"{prefix}_{frame}", out Sprite sprite); frame++)
+            {
+                frames.Add(sprite);
+            }
+
+            return frames.Count > 0 ? frames.ToArray() : null;
         }
 
         private static Sprite[] PlayerFrames(Dictionary<string, Sprite> sprites, string prefix, string direction)
@@ -1090,6 +1180,24 @@ namespace ProjectDM.Editor
             AnimationUtility.SetAnimationClipSettings(clip, settings);
             EditorUtility.SetDirty(clip);
             return clip;
+        }
+
+        private static void AddScalePulse(AnimationClip clip, float minimum, float maximum, float duration)
+        {
+            Keyframe[] pulse =
+            {
+                new(0f, minimum),
+                new(duration * 0.5f, maximum),
+                new(duration, minimum)
+            };
+            AnimationUtility.SetEditorCurve(clip, EditorCurveBinding.FloatCurve("", typeof(Transform), "m_LocalScale.x"), new AnimationCurve(pulse));
+            AnimationUtility.SetEditorCurve(clip, EditorCurveBinding.FloatCurve("", typeof(Transform), "m_LocalScale.y"), new AnimationCurve(pulse));
+            AnimationUtility.SetEditorCurve(clip, EditorCurveBinding.FloatCurve("", typeof(Transform), "m_LocalScale.z"), new AnimationCurve(pulse));
+            AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
+            settings.stopTime = duration;
+            settings.loopTime = true;
+            AnimationUtility.SetAnimationClipSettings(clip, settings);
+            EditorUtility.SetDirty(clip);
         }
 
         private static void CreatePlayerController(AnimationClip idle, AnimationClip walk)

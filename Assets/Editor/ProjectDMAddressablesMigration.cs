@@ -67,6 +67,32 @@ namespace ProjectDM.Editor
             Debug.Log("Project DM Addressables are configured. Bootstrap content now loads through ProjectDMAssetCatalog.");
         }
 
+        /// <summary>Updates only animated pickup references without rebuilding unrelated game content.</summary>
+        public static void ConfigurePickupContent()
+        {
+            ProjectDMAssetCatalog catalog = CreateOrLoadCatalog();
+            catalog.experiencePickupPrefabs = PickupReferences("ExperiencePickup");
+            catalog.currencyPickupPrefabs = PickupReferences("CurrencyPickup");
+
+            AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
+            AddressableAssetGroup bootstrap = settings.FindGroup(BootstrapGroupName)
+                ?? settings.CreateGroup(BootstrapGroupName, true, false, false, null,
+                    typeof(BundledAssetGroupSchema), typeof(ContentUpdateGroupSchema));
+            Register(settings, bootstrap, CatalogPath, "project-dm/catalog");
+            for (int variant = 1; variant <= 5; variant++)
+            {
+                string suffix = variant.ToString("00");
+                Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + $"/ExperiencePickup_{suffix}.prefab", $"prefab/experience-{suffix}");
+                Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + $"/CurrencyPickup_{suffix}.prefab", $"prefab/currency-{suffix}");
+            }
+
+            EditorUtility.SetDirty(catalog);
+            EditorUtility.SetDirty(settings);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("Project DM animated pickup prefabs and catalog references are configured.");
+        }
+
         private static ProjectDMAssetCatalog CreateOrLoadCatalog()
         {
             ProjectDMAssetCatalog catalog = AssetDatabase.LoadAssetAtPath<ProjectDMAssetCatalog>(CatalogPath);

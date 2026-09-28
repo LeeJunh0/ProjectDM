@@ -93,6 +93,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -112,7 +125,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a8d233fbf61f724396962c463bf9068
+      spriteID: 381bbdc9dc9f9d742b0f4d858c811848
       internalID: 3287342229799063595
       vertices: []
       indices: 
@@ -134,7 +147,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0b2142521bc2b841bc3b36c4bb98a74
+      spriteID: 5e4e3b2063d19c447bf0577db0268713
       internalID: -1796082761614054225
       vertices: []
       indices: 
@@ -156,7 +169,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f481ab28fbd313b47a408fb5d3d3167f
+      spriteID: b8f8e00887ef472499851da76dd4e3ce
       internalID: 7854085430073032755
       vertices: []
       indices: 
@@ -178,7 +191,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a79eff23e798fb5419716c035ef0e389
+      spriteID: cee4869145ac5d24bbf51cc1bf181166
       internalID: -6921150233318476931
       vertices: []
       indices: 
@@ -200,7 +213,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db327b128abe77147bfc61be6ec3cc21
+      spriteID: ac9481c4d9dbeb748b65fe2b81dbdb9f
       internalID: 4354231566380549168
       vertices: []
       indices: 
@@ -222,7 +235,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b39efc5a8969794191d807881ee4a92
+      spriteID: 5fdb5c41d66fe5147a3c3a4e0504654e
       internalID: 5809030516613042957
       vertices: []
       indices: 
@@ -244,7 +257,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc244e56c4ee0b74da307d104edf7887
+      spriteID: 6d8305b27decce640a51a3466667debb
       internalID: 6682473901004932845
       vertices: []
       indices: 
@@ -266,7 +279,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1bd1a9154ca346438fe71f036e41908
+      spriteID: 05fba26a12ea6894cade200dde2dea72
       internalID: -6895646428441557691
       vertices: []
       indices: 
@@ -288,7 +301,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53560c7e4b0e99743896ae85c8d2ff24
+      spriteID: ee5ce4bebcdecc84aa4f605a448ab7ee
       internalID: -7282886668606283007
       vertices: []
       indices: 
@@ -310,7 +323,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc71226304b167747812e99bda21ddbe
+      spriteID: 5cb6854d6cb1d6045aa24435ccf364bc
       internalID: 4518187702968751635
       vertices: []
       indices: 
@@ -332,7 +345,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f962861a5861c984d976e54e993a90c5
+      spriteID: dc1d048c64db4644fa31b1267b8fa61d
       internalID: 7526866347251117655
       vertices: []
       indices: 
@@ -354,30 +367,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f865dcd29c7efb49a246dd3b1e14b87
+      spriteID: 48800e276f57a7e418ff5e1d55620770
       internalID: 169598284321861141
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arcane_Bolt
-      rect:
-        serializedVersion: 2
-        x: 35.48
-        y: 22.175001
-        width: 177.40001
-        height: 159.66
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc3de2fbd2385024686c93e5ec28c7a0
-      internalID: 6246995092482123410
       vertices: []
       indices: 
       edges: []
@@ -398,7 +389,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5211d3275b89b4b4bb02ea0d009a26b5
+      spriteID: 59bf0ec4c2d64cb469ea096d13a45c1e
       internalID: -5252421055456862097
       vertices: []
       indices: 
@@ -420,7 +411,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb846a2757727754a93131062d5a4c5b
+      spriteID: 9f9bb32fe74249c489b8b4547b8152c6
       internalID: -287246070730913912
       vertices: []
       indices: 
@@ -442,8 +433,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2ee0fe919ce34f4c89e0e68f7cf3e80
+      spriteID: d603434b2c1272d40a16bc470d405786
       internalID: 2518927427174286378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Projectile_Bolt_0
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 59
+        width: 120
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd7a705a9849f0e44a54e56e39d18bf3
+      internalID: -1132183327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Projectile_Bolt_1
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 53
+        width: 155
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bfedda0988e1404c80bf196de13fdab
+      internalID: 1982213110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Projectile_Bolt_2
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 57
+        width: 177
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be71f6b04d2dbf342a9b940b9cd90d7e
+      internalID: -1418005776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Projectile_Bolt_3
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 39
+        width: 190
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccc2532a3c70c264e898939609d42d9e
+      internalID: 1341735273
       vertices: []
       indices: 
       edges: []
@@ -462,13 +541,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Arcane_Bolt: 6246995092482123410
       Experience_Gem: -5252421055456862097
       Gold_Coin: -287246070730913912
       Player_Back: 3287342229799063595
       Player_ForwardHidden: -6921150233318476931
       Player_Left: -1796082761614054225
       Player_Right: 7854085430073032755
+      Projectile_Bolt_0: -1132183327
+      Projectile_Bolt_1: 1982213110
+      Projectile_Bolt_2: -1418005776
+      Projectile_Bolt_3: 1341735273
       Skeleton_0: 4354231566380549168
       Skeleton_1: 5809030516613042957
       Skeleton_2: 6682473901004932845
@@ -480,6 +562,6 @@ TextureImporter:
       Treasure_Chest: 2518927427174286378
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  userData: ProjectDM_ArtPipeline_v2
+  userData: ProjectDM_ProjectileSlices_v1
   assetBundleName: 
   assetBundleVariant: 

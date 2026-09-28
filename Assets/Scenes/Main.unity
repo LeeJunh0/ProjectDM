@@ -193,8 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90645742fa10cb141aa4c6c457ca24ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.MonsterSpawnAreaPreview
-  minimumDistance: 30
-  maximumDistance: 300
+  minimumDistance: 10
+  maximumDistance: 20
 --- !u!4 &582645110
 Transform:
   m_ObjectHideFlags: 0

@@ -31,6 +31,36 @@ namespace ProjectDM
         [SerializeField, HideInInspector] private float monsterSpawnMinimumDistance = 10f;
         [SerializeField, HideInInspector] private float monsterSpawnMaximumDistance = 12f;
 
+        [Header("Pickup Visual Scale")]
+        [SerializeField, Min(0.1f), Tooltip("Multiplier for experience pickup visuals. The default is three times the original size.")]
+        private float experiencePickupScaleMultiplier = 3f;
+        [SerializeField, Min(0.1f), Tooltip("Multiplier for currency pickup visuals. The default is three times the original size.")]
+        private float currencyPickupScaleMultiplier = 3f;
+        [SerializeField, Min(0.1f), Tooltip("Multiplier for treasure chest pickup visuals.")]
+        private float chestPickupScaleMultiplier = 1f;
+
+        [Header("Experience and Currency Float Motion")]
+        [SerializeField, Min(0f), Tooltip("Maximum local Y offset for the visual child float loop.")]
+        private float collectibleFloatYAmplitude = .06f;
+        [SerializeField, Min(0.05f), Tooltip("Seconds for one complete visual float loop.")]
+        private float collectibleFloatLoopDuration = 1.2f;
+        [SerializeField, Tooltip("Normalized local Y loop for experience pickup visuals.")]
+        private AnimationCurve experiencePickupFloatYCurve = new AnimationCurve(
+            new Keyframe(0f, 0f), new Keyframe(.25f, 1f), new Keyframe(.5f, 0f), new Keyframe(.75f, -.67f), new Keyframe(1f, 0f));
+        [SerializeField, Tooltip("Normalized local Y loop for currency pickup visuals.")]
+        private AnimationCurve currencyPickupFloatYCurve = new AnimationCurve(
+            new Keyframe(0f, 0f), new Keyframe(.25f, 1f), new Keyframe(.5f, 0f), new Keyframe(.75f, -.67f), new Keyframe(1f, 0f));
+
+        [Header("Treasure Chest Interaction Motion")]
+        [SerializeField, Min(0.05f), Tooltip("Seconds that the chest interaction animation plays before collection.")]
+        private float chestInteractionDuration = .8f;
+        [SerializeField, Tooltip("Local Y motion played on the chest visual when the player collects it.")]
+        private AnimationCurve chestInteractionYCurve = new AnimationCurve(
+            new Keyframe(0f, 0f), new Keyframe(.35f, .18f), new Keyframe(.7f, .06f), new Keyframe(1f, 0f));
+        [SerializeField, Tooltip("Visual scale motion played on the chest when the player collects it.")]
+        private AnimationCurve chestInteractionScaleCurve = new AnimationCurve(
+            new Keyframe(0f, 1f), new Keyframe(.28f, 1.15f), new Keyframe(.65f, .95f), new Keyframe(1f, 1f));
+
         private readonly List<Enemy> enemies = new();
         private readonly List<Projectile> projectiles = new();
         private readonly List<Pickup> pickups = new();
@@ -385,6 +415,9 @@ namespace ProjectDM
             GameObject bolt = objectPool.Rent(runtimeAssets.ProjectilePrefab);
             bolt.name = "Arcane Bolt";
             bolt.transform.position = player.position;
+            // The sprite is authored facing +X. Set this once at launch so pooled bolts retain
+            // their original firing direction instead of inheriting a prior instance rotation.
+            bolt.transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             bolt.transform.localScale = Vector3.one * 0.32f;
             SpriteRenderer renderer = bolt.GetComponentInChildren<SpriteRenderer>();
             renderer.sprite = boltSprite;
@@ -488,20 +521,38 @@ namespace ProjectDM
             GameObject pickupObject = objectPool.Rent(prefab);
             pickupObject.name = name;
             pickupObject.transform.position = position;
-            pickupObject.transform.localScale = Vector3.one * scale;
+            float pickupScaleMultiplier = kind == PickupKind.Experience
+                ? experiencePickupScaleMultiplier
+                : kind == PickupKind.Currency
+                    ? currencyPickupScaleMultiplier
+                    : chestPickupScaleMultiplier;
+            pickupObject.transform.localScale = Vector3.one * (scale * pickupScaleMultiplier);
             SpriteRenderer renderer = pickupObject.GetComponentInChildren<SpriteRenderer>();
             renderer.sortingOrder = 1;
+            PickupFloatVisual floatVisual = pickupObject.GetComponentInChildren<PickupFloatVisual>();
+            if (floatVisual != null)
+            {
+                AnimationCurve floatCurve = kind == PickupKind.Currency
+                    ? currencyPickupFloatYCurve
+                    : experiencePickupFloatYCurve;
+                // A randomized phase keeps nearby pickups from bobbing in lockstep.
+                floatVisual.Configure(floatCurve, collectibleFloatYAmplitude, collectibleFloatLoopDuration, Random.value);
+            }
             Animator animator = pickupObject.GetComponentInChildren<Animator>();
             if (animator != null && animator.runtimeAnimatorController != null)
             {
                 animator.applyRootMotion = false;
                 animator.Rebind();
                 animator.Play("Loop", 0, 0f);
+                animator.speed = kind == PickupKind.Chest ? 0f : 1f;
             }
             else
             {
-                // Keeps old catalog/builds playable while the new controllers are being imported.
-                renderer.sprite = sprite;
+                // Keeps old catalog/builds playable while preserving a static prefab-assigned variant sprite.
+                if (renderer.sprite == null)
+                {
+                    renderer.sprite = sprite;
+                }
             }
             pickups.Add(new Pickup { transform = pickupObject.transform, kind = kind, amount = amount });
         }
@@ -532,6 +583,18 @@ namespace ProjectDM
                     continue;
                 }
 
+                if (pickup.isInteracting)
+                {
+                    pickup.interactionRemaining -= dt;
+                    if (pickup.interactionRemaining <= 0f)
+                    {
+                        Collect(pickup);
+                        objectPool.Return(pickup.transform.gameObject);
+                        pickups.RemoveAt(i);
+                    }
+                    continue;
+                }
+
                 float distance = Vector2.Distance(player.position, pickup.transform.position);
                 if (distance < 2.0f)
                 {
@@ -540,10 +603,35 @@ namespace ProjectDM
 
                 if (distance < 0.28f)
                 {
+                    if (pickup.kind == PickupKind.Chest)
+                    {
+                        PlayChestInteraction(pickup);
+                        continue;
+                    }
+
                     Collect(pickup);
                     objectPool.Return(pickup.transform.gameObject);
                     pickups.RemoveAt(i);
                 }
+            }
+        }
+
+        private void PlayChestInteraction(Pickup pickup)
+        {
+            pickup.isInteracting = true;
+            pickup.interactionRemaining = chestInteractionDuration;
+            Animator animator = pickup.transform.GetComponentInChildren<Animator>();
+            if (animator != null && animator.runtimeAnimatorController != null)
+            {
+                animator.speed = 1f;
+                animator.Rebind();
+                animator.Play("Loop", 0, 0f);
+            }
+
+            PickupInteractionVisual interactionVisual = pickup.transform.GetComponentInChildren<PickupInteractionVisual>();
+            if (interactionVisual != null)
+            {
+                interactionVisual.Play(chestInteractionYCurve, chestInteractionScaleCurve, chestInteractionDuration);
             }
         }
 

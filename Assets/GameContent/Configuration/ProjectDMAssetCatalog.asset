@@ -66,6 +66,12 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  chestPickupAnimatorController:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   spriteCatalog:
     m_AssetGUID: 846dc85a706084741a5ad93db4c7c75f
     m_SubObjectName: 
@@ -90,14 +96,54 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  experiencePickupPrefab:
-    m_AssetGUID: 267f5cc51b04f0a4197b43f5af704950
+  experiencePickupPrefabs:
+  - m_AssetGUID: 0e3f45b0509db8143b145acb29fceecd
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  goldPickupPrefab:
-    m_AssetGUID: 42711d15bad77d747a885b4992a39757
+  - m_AssetGUID: 161195030100cd24da63f4d504019b16
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 5853911e06538a244a20f0b7d3e4113e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 4ed4c87fa52d86d4582b8708718ac671
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 238b0c0ce5575b0409d702f4ef2ceb3f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  currencyPickupPrefabs:
+  - m_AssetGUID: ff53b1d5eef3fc7428143bc32fb75d51
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 3e4f53aa7b96c6948af17199e74d20fd
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 9694395420f6a824bab44ad5dc661cc2
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 63dc7966d935efc448dd06f5e2b30a11
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: b71679a55d8a11946aa4abe40a63725d
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

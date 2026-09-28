@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 181
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -93,6 +93,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -101,9 +114,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 684
-        width: 254
-        height: 339
+        y: 725
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,7 +125,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c6f3362f3f001f4887d921efaf4da8a
+      spriteID: 81125f38d9c41d34b91f76c76c201912
       internalID: 267742201
       vertices: []
       indices: 
@@ -122,10 +135,10 @@ TextureImporter:
       name: Pickup_ExperienceGem_1
       rect:
         serializedVersion: 2
-        x: 257
-        y: 684
-        width: 254
-        height: 339
+        x: 363
+        y: 725
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,7 +147,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8e8a9bead2cffe42beede96c907491e
+      spriteID: 970ed7ef78484544bb61831f105ad8fb
       internalID: 416212062
       vertices: []
       indices: 
@@ -144,10 +157,10 @@ TextureImporter:
       name: Pickup_ExperienceGem_2
       rect:
         serializedVersion: 2
-        x: 513
-        y: 684
-        width: 254
-        height: 339
+        x: 725
+        y: 725
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,7 +169,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c6b840fb18c479449884c5d540e5751
+      spriteID: 0422734907008dd4d976e355483c943e
       internalID: -2133433758
       vertices: []
       indices: 
@@ -166,10 +179,10 @@ TextureImporter:
       name: Pickup_ExperienceGem_3
       rect:
         serializedVersion: 2
-        x: 769
-        y: 684
-        width: 254
-        height: 339
+        x: 1087
+        y: 725
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,7 +191,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8796a266d2bb6af4a82e83a638b907b1
+      spriteID: 70fb766491f85a64b9bc55c7a01bc326
       internalID: 850640508
       vertices: []
       indices: 
@@ -189,9 +202,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 343
-        width: 254
-        height: 339
+        y: 363
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,7 +213,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c59b19c47b46d54d9f78d77d7f3d5a3
+      spriteID: b68a79ef1bb3def4e8937b6d8080fb0a
       internalID: 1448230174
       vertices: []
       indices: 
@@ -210,10 +223,10 @@ TextureImporter:
       name: Pickup_GoldCoin_1
       rect:
         serializedVersion: 2
-        x: 257
-        y: 343
-        width: 254
-        height: 339
+        x: 363
+        y: 363
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,7 +235,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ce6acd94da5b8243af2f80d46c5917e
+      spriteID: 35edad5405b38814a8c402c4059ddc86
       internalID: 368293834
       vertices: []
       indices: 
@@ -232,10 +245,10 @@ TextureImporter:
       name: Pickup_GoldCoin_2
       rect:
         serializedVersion: 2
-        x: 513
-        y: 343
-        width: 254
-        height: 339
+        x: 725
+        y: 363
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,7 +257,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e627c56691da0944895fbad487c3eb66
+      spriteID: f6673df20b2cf19459aa273d1d722b42
       internalID: 276399207
       vertices: []
       indices: 
@@ -254,10 +267,10 @@ TextureImporter:
       name: Pickup_GoldCoin_3
       rect:
         serializedVersion: 2
-        x: 769
-        y: 343
-        width: 254
-        height: 339
+        x: 1087
+        y: 363
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,7 +279,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74c58d60c8631fd44a6e6cba30539d8f
+      spriteID: 5167a5d864890bc4a8adf87353f5d4ed
       internalID: 867346624
       vertices: []
       indices: 
@@ -277,9 +290,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 2
-        width: 254
-        height: 339
+        y: 1
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,7 +301,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d89f08ceaf6fe0d4dba7ca5c7896f5e0
+      spriteID: abca99572468d6544b8e1938b686b389
       internalID: 1832532741
       vertices: []
       indices: 
@@ -298,10 +311,10 @@ TextureImporter:
       name: Pickup_TreasureChest_1
       rect:
         serializedVersion: 2
-        x: 257
-        y: 2
-        width: 254
-        height: 339
+        x: 363
+        y: 1
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,7 +323,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5f70afea1f15214991b939825642eea
+      spriteID: 023f6d1dd13f3df41a784f442942db31
       internalID: 946709486
       vertices: []
       indices: 
@@ -320,10 +333,10 @@ TextureImporter:
       name: Pickup_TreasureChest_2
       rect:
         serializedVersion: 2
-        x: 513
-        y: 2
-        width: 254
-        height: 339
+        x: 725
+        y: 1
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -332,7 +345,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dfb3deb0f7a9ae42b49e4f76f73ffbb
+      spriteID: de7344bd6f4c07447869cfb18e1b479d
       internalID: -1763191425
       vertices: []
       indices: 
@@ -342,10 +355,10 @@ TextureImporter:
       name: Pickup_TreasureChest_3
       rect:
         serializedVersion: 2
-        x: 769
-        y: 2
-        width: 254
-        height: 339
+        x: 1087
+        y: 1
+        width: 360
+        height: 360
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -354,7 +367,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 148d03af77a395945a56885d79959ea6
+      spriteID: cea1243cbf052134899158111a449eb8
       internalID: -1221745156
       vertices: []
       indices: 
