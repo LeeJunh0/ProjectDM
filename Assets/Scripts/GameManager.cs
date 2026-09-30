@@ -17,13 +17,16 @@ namespace ProjectDM
         private const string HasteKey = "PROJECT_DM_HASTE_LEVEL";
         private const string FortuneKey = "PROJECT_DM_FORTUNE_LEVEL";
 
-        [Header("Scene Layout (Edit Mode Preview)")]
         [SerializeField] private Camera gameplayCamera;
         [SerializeField] private GameFieldBounds fieldBounds;
         [SerializeField] private Transform playerSpawnPoint;
         [SerializeField] private MonsterSpawnAreaPreview monsterSpawnArea;
         [SerializeField] private PlayerMovementAreaPreview playerMovementArea;
         [SerializeField] private DungeonFloorTilemap dungeonFloor;
+
+        [SerializeField, Min(0f), Tooltip("초당 카메라 이동 거리입니다. 0이면 카메라가 고정됩니다.")]
+        private float cameraFollowSpeed = 8f;
+
         [SerializeField, HideInInspector] private Vector2 fieldSize = new(25f, 17f);
 
         [SerializeField, HideInInspector] private Vector2 playerMovementBounds = new(8.4f, 4.8f);
@@ -31,35 +34,39 @@ namespace ProjectDM
         [SerializeField, HideInInspector] private float monsterSpawnMinimumDistance = 10f;
         [SerializeField, HideInInspector] private float monsterSpawnMaximumDistance = 12f;
 
-        [Header("Pickup Visual Scale")]
-        [SerializeField, Min(0.1f), Tooltip("Multiplier for experience pickup visuals. The default is three times the original size.")]
+        [SerializeField, Min(0.1f), Tooltip("경험치 픽업 비주얼의 크기 배율입니다. 기본값은 원본의 3배입니다.")]
         private float experiencePickupScaleMultiplier = 3f;
-        [SerializeField, Min(0.1f), Tooltip("Multiplier for currency pickup visuals. The default is three times the original size.")]
+        [SerializeField, Min(0.1f), Tooltip("재화 픽업 비주얼의 크기 배율입니다. 기본값은 원본의 3배입니다.")]
         private float currencyPickupScaleMultiplier = 3f;
-        [SerializeField, Min(0.1f), Tooltip("Multiplier for treasure chest pickup visuals.")]
+        [SerializeField, Min(0.1f), Tooltip("보물상자 픽업 비주얼의 크기 배율입니다.")]
         private float chestPickupScaleMultiplier = 1f;
 
-        [Header("Experience and Currency Float Motion")]
-        [SerializeField, Min(0f), Tooltip("Maximum local Y offset for the visual child float loop.")]
+        [SerializeField, Min(0f), Tooltip("비주얼 자식 오브젝트가 부유하는 로컬 Y축 최대 높이입니다.")]
         private float collectibleFloatYAmplitude = .06f;
-        [SerializeField, Min(0.05f), Tooltip("Seconds for one complete visual float loop.")]
+        [SerializeField, Min(0.05f), Tooltip("부유 모션이 한 번 반복되는 시간(초)입니다.")]
         private float collectibleFloatLoopDuration = 1.2f;
-        [SerializeField, Tooltip("Normalized local Y loop for experience pickup visuals.")]
+        [SerializeField, Tooltip("경험치 픽업 비주얼의 정규화된 로컬 Y축 부유 곡선입니다.")]
         private AnimationCurve experiencePickupFloatYCurve = new AnimationCurve(
             new Keyframe(0f, 0f), new Keyframe(.25f, 1f), new Keyframe(.5f, 0f), new Keyframe(.75f, -.67f), new Keyframe(1f, 0f));
-        [SerializeField, Tooltip("Normalized local Y loop for currency pickup visuals.")]
+        [SerializeField, Tooltip("재화 픽업 비주얼의 정규화된 로컬 Y축 부유 곡선입니다.")]
         private AnimationCurve currencyPickupFloatYCurve = new AnimationCurve(
             new Keyframe(0f, 0f), new Keyframe(.25f, 1f), new Keyframe(.5f, 0f), new Keyframe(.75f, -.67f), new Keyframe(1f, 0f));
 
-        [Header("Treasure Chest Interaction Motion")]
-        [SerializeField, Min(0.05f), Tooltip("Seconds that the chest interaction animation plays before collection.")]
+        [SerializeField, Min(0.05f), Tooltip("보물상자를 획득하기 전 상호작용 애니메이션이 재생되는 시간(초)입니다.")]
         private float chestInteractionDuration = .8f;
-        [SerializeField, Tooltip("Local Y motion played on the chest visual when the player collects it.")]
+        [SerializeField, Tooltip("플레이어가 보물상자를 획득할 때 비주얼에 적용되는 로컬 Y축 모션입니다.")]
         private AnimationCurve chestInteractionYCurve = new AnimationCurve(
             new Keyframe(0f, 0f), new Keyframe(.35f, .18f), new Keyframe(.7f, .06f), new Keyframe(1f, 0f));
-        [SerializeField, Tooltip("Visual scale motion played on the chest when the player collects it.")]
+        [SerializeField, Tooltip("플레이어가 보물상자를 획득할 때 비주얼에 적용되는 크기 모션입니다.")]
         private AnimationCurve chestInteractionScaleCurve = new AnimationCurve(
             new Keyframe(0f, 1f), new Keyframe(.28f, 1.15f), new Keyframe(.65f, .95f), new Keyframe(1f, 1f));
+
+        [SerializeField, Min(0.05f), Tooltip("경험치·재화 픽업이 몬스터 처치 지점에서 튀어나오는 시간(초)입니다.")]
+        private float pickupFountainDuration = .28f;
+        [SerializeField, Min(0f), Tooltip("픽업이 분수처럼 흩어져 착지하는 거리입니다.")]
+        private float pickupFountainDistance = .62f;
+        [SerializeField, Min(0f), Tooltip("픽업이 튀어나오는 동안 위로 솟는 포물선 높이입니다.")]
+        private float pickupFountainArcHeight = .34f;
 
         private readonly List<Enemy> enemies = new();
         private readonly List<Projectile> projectiles = new();
@@ -102,11 +109,51 @@ namespace ProjectDM
         private float nextShot;
         private bool choosingUpgrade;
         private bool showMetaTree;
+        private Vector2 metaTreePan;
+        private float metaTreeZoom = 1f;
+        private int selectedMetaTreeNode;
+        private int hoveredMetaTreeNode = -1;
+        private bool isPanningMetaTree;
+        private Vector2 metaTreeLastPointer;
         private float elapsed;
+        private float upgradeSelectionOpenedAt;
+        private readonly float[] upgradeCardHoverTilts = new float[TemporaryRunUpgrades.Length];
+        private readonly bool[] upgradeCardWasHovered = new bool[TemporaryRunUpgrades.Length];
         private GUIStyle titleStyle;
         private GUIStyle statStyle;
         private GUIStyle cardStyle;
+        private Texture2D upgradeCardFrameTexture;
         private bool isInitialized;
+
+        [SerializeField, Range(-25f, 0f), Tooltip("음수 값일수록 호버한 레벨업 카드가 왼쪽으로 더 기울어집니다.")]
+        private float upgradeCardHoverLeftTiltAngle = -4f;
+        [SerializeField, Min(1f), Tooltip("레벨업 카드가 호버 기울기까지 도달하는 속도입니다.")]
+        private float upgradeCardHoverTiltSpeed = 180f;
+        [SerializeField, Range(1f, 1.2f), Tooltip("레벨업 카드에 마우스를 올렸을 때 적용되는 확대 배율입니다.")]
+        private float upgradeCardHoverScale = 1.035f;
+
+        // Temporary presentation data. Replace this with the future skill/effect table without changing the selection UI.
+        private static readonly RunUpgradePresentation[] TemporaryRunUpgrades =
+        {
+            new(RunUpgrade.Damage, "✦", "BRONZE", "ARCANE EDGE", "Arcane Bolt damage  +1", new Color(.72f, .42f, .20f)),
+            new(RunUpgrade.Haste, "≫", "SILVER", "QUICKENING", "Cast interval  -0.035 sec", new Color(.72f, .76f, .81f)),
+            new(RunUpgrade.Fortune, "$", "GOLD", "GILDED FATE", "Currency & chest chance  +3%", new Color(.96f, .72f, .23f))
+        };
+
+        // UI-only placeholder layout. Future table rows can replace these entries directly.
+        private static readonly MetaTreeNodePresentation[] TemporaryMetaTreeNodes =
+        {
+            new("ROOT", "기원의 문", "영구 성장의 시작점", new Vector2(0f, 0f), -1, MetaTreeNodeState.Completed, new Color(.91f, .69f, .30f)),
+            new("COMBAT", "전투 경로", "공격 계열 노드 슬롯", new Vector2(-300f, -145f), 0, MetaTreeNodeState.Reachable, new Color(.87f, .37f, .30f)),
+            new("SURVIVAL", "생존 경로", "방어 계열 노드 슬롯", new Vector2(-265f, 175f), 0, MetaTreeNodeState.Reachable, new Color(.42f, .73f, .53f)),
+            new("GROWTH", "성장 경로", "재화 계열 노드 슬롯", new Vector2(300f, 155f), 0, MetaTreeNodeState.Reachable, new Color(.38f, .64f, .92f)),
+            new("ARCANE", "비전 노드", "효과 데이터 대기", new Vector2(-560f, -285f), 1, MetaTreeNodeState.Locked, new Color(.64f, .43f, .87f)),
+            new("PRECISION", "정밀 노드", "효과 데이터 대기", new Vector2(-555f, 15f), 1, MetaTreeNodeState.Locked, new Color(.88f, .52f, .39f)),
+            new("VITALITY", "활력 노드", "효과 데이터 대기", new Vector2(-55f, -420f), 1, MetaTreeNodeState.Locked, new Color(.42f, .78f, .60f)),
+            new("WARD", "수호 노드", "효과 데이터 대기", new Vector2(-20f, 415f), 2, MetaTreeNodeState.Locked, new Color(.33f, .67f, .64f)),
+            new("FORTUNE", "행운 노드", "효과 데이터 대기", new Vector2(565f, 15f), 3, MetaTreeNodeState.Locked, new Color(.94f, .72f, .27f)),
+            new("MASTERY", "숙련 노드", "효과 데이터 대기", new Vector2(535f, 325f), 3, MetaTreeNodeState.Locked, new Color(.45f, .65f, .96f))
+        };
 
         /// <summary>Called by the Main scene setup utility to connect edit-time layout objects.</summary>
         public void ConfigureSceneLayout(
@@ -131,7 +178,9 @@ namespace ProjectDM
 
         private void Awake()
         {
+            Time.timeScale = 1f;
             Application.targetFrameRate = 60;
+            upgradeCardFrameTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_UpgradeCardFrame_Neutral_v1");
             SetupCamera();
             LoadMetaProgress();
             objectPool = gameObject.AddComponent<GameObjectPool>();
@@ -162,19 +211,31 @@ namespace ProjectDM
                 return;
             }
 
+            if (choosingUpgrade)
+            {
+                HandleRunUpgradeShortcuts();
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 showMetaTree = !showMetaTree;
             }
 
-            if (choosingUpgrade || showMetaTree)
+            if (showMetaTree)
             {
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    showMetaTree = false;
+                }
+
                 return;
             }
 
             float dt = Time.deltaTime;
             elapsed += dt;
             MovePlayer(dt);
+            FollowPlayerWithCamera(dt);
             if (monsterSpawnArea != null)
             {
                 monsterSpawnArea.transform.position = player.position;
@@ -331,12 +392,55 @@ namespace ProjectDM
             Vector2 movementCenter = playerMovementArea != null ? playerMovementArea.transform.position : Vector2.zero;
             Vector2 movementBounds = playerMovementArea != null ? playerMovementArea.HalfExtents : playerMovementBounds;
             playerController.SetMovementBounds(movementBounds, movementCenter);
+            SnapCameraToPlayer();
         }
 
         private void MovePlayer(float dt)
         {
             float speed = 3.4f + 0.15f * (hasteLevel + runHasteBonus);
             playerController.Tick(dt, speed);
+        }
+
+        private void SnapCameraToPlayer()
+        {
+            if (gameplayCamera == null || player == null)
+            {
+                return;
+            }
+
+            Vector3 cameraPosition = gameplayCamera.transform.position;
+            gameplayCamera.transform.position = ClampCameraToFloor(new Vector3(player.position.x, player.position.y, cameraPosition.z));
+        }
+
+        private void FollowPlayerWithCamera(float dt)
+        {
+            if (gameplayCamera == null || player == null || cameraFollowSpeed <= 0f)
+            {
+                return;
+            }
+
+            Vector3 cameraPosition = gameplayCamera.transform.position;
+            Vector3 targetPosition = ClampCameraToFloor(new Vector3(player.position.x, player.position.y, cameraPosition.z));
+            gameplayCamera.transform.position = Vector3.MoveTowards(cameraPosition, targetPosition, cameraFollowSpeed * dt);
+        }
+
+        private Vector3 ClampCameraToFloor(Vector3 position)
+        {
+            if (gameplayCamera == null || dungeonFloor == null || !dungeonFloor.TryGetWorldBounds(out Bounds floorBounds))
+            {
+                return position;
+            }
+
+            float halfHeight = gameplayCamera.orthographicSize;
+            float halfWidth = halfHeight * gameplayCamera.aspect;
+            float minX = floorBounds.min.x + halfWidth;
+            float maxX = floorBounds.max.x - halfWidth;
+            float minY = floorBounds.min.y + halfHeight;
+            float maxY = floorBounds.max.y - halfHeight;
+
+            position.x = minX > maxX ? floorBounds.center.x : Mathf.Clamp(position.x, minX, maxX);
+            position.y = minY > maxY ? floorBounds.center.y : Mathf.Clamp(position.y, minY, maxY);
+            return position;
         }
 
         private void SpawnEnemies(float time)
@@ -501,7 +605,7 @@ namespace ProjectDM
             CreatePickup("Experience", position, gemSprite, PickupKind.Experience, 1, 0.28f);
             if (Random.value < 0.28f + 0.025f * (fortuneLevel + runFortuneBonus))
             {
-                CreatePickup("Currency", position + (Vector3)Random.insideUnitCircle * 0.25f, coinSprite, PickupKind.Currency, 1, 0.23f);
+                CreatePickup("Currency", position, coinSprite, PickupKind.Currency, 1, 0.23f);
             }
 
             if (Random.value < 0.018f + 0.003f * (fortuneLevel + runFortuneBonus))
@@ -554,7 +658,38 @@ namespace ProjectDM
                     renderer.sprite = sprite;
                 }
             }
-            pickups.Add(new Pickup { transform = pickupObject.transform, kind = kind, amount = amount });
+            Pickup pickup = new()
+            {
+                transform = pickupObject.transform,
+                kind = kind,
+                amount = amount,
+                baseScale = scale * pickupScaleMultiplier
+            };
+            BeginPickupFountain(pickup, position);
+            pickups.Add(pickup);
+        }
+
+        private void BeginPickupFountain(Pickup pickup, Vector3 origin)
+        {
+            if (pickup.kind == PickupKind.Chest)
+            {
+                return;
+            }
+
+            Vector2 direction = Random.insideUnitCircle;
+            if (direction.sqrMagnitude < .001f)
+            {
+                direction = Vector2.right;
+            }
+
+            float distance = Random.Range(pickupFountainDistance * .62f, pickupFountainDistance);
+            pickup.isLaunching = true;
+            pickup.launchOrigin = origin;
+            pickup.launchDestination = origin + (Vector3)(direction.normalized * distance);
+            pickup.launchElapsed = 0f;
+            pickup.launchDuration = Mathf.Max(.05f, pickupFountainDuration * Random.Range(.82f, 1.12f));
+            pickup.launchArcHeight = pickupFountainArcHeight * Random.Range(.78f, 1.18f);
+            pickup.transform.localScale = Vector3.one * (pickup.baseScale * .7f);
         }
 
         private GameObject SelectPickupPrefab(PickupKind kind)
@@ -592,6 +727,12 @@ namespace ProjectDM
                         objectPool.Return(pickup.transform.gameObject);
                         pickups.RemoveAt(i);
                     }
+                    continue;
+                }
+
+                if (pickup.isLaunching)
+                {
+                    UpdatePickupFountain(pickup, dt);
                     continue;
                 }
 
@@ -645,7 +786,7 @@ namespace ProjectDM
                     experience -= experienceToNext;
                     level++;
                     experienceToNext = 7 + level * 4;
-                    choosingUpgrade = true;
+                    OpenRunUpgradeSelection();
                 }
                 return;
             }
@@ -672,6 +813,66 @@ namespace ProjectDM
             }
 
             choosingUpgrade = false;
+            Time.timeScale = 1f;
+        }
+
+        private void OpenRunUpgradeSelection()
+        {
+            choosingUpgrade = true;
+            upgradeSelectionOpenedAt = Time.unscaledTime;
+            System.Array.Clear(upgradeCardHoverTilts, 0, upgradeCardHoverTilts.Length);
+            System.Array.Clear(upgradeCardWasHovered, 0, upgradeCardWasHovered.Length);
+            Time.timeScale = 0f;
+        }
+
+        private void TriggerDebugLevelUp()
+        {
+            if (choosingUpgrade)
+            {
+                return;
+            }
+
+            level++;
+            experienceToNext = 7 + level * 4;
+            OpenRunUpgradeSelection();
+        }
+
+        private void HandleRunUpgradeShortcuts()
+        {
+            for (int i = 0; i < TemporaryRunUpgrades.Length; i++)
+            {
+                KeyCode alphaKey = (KeyCode)((int)KeyCode.Alpha1 + i);
+                KeyCode keypadKey = (KeyCode)((int)KeyCode.Keypad1 + i);
+                if (Input.GetKeyDown(alphaKey) || Input.GetKeyDown(keypadKey))
+                {
+                    ChooseRunUpgrade(TemporaryRunUpgrades[i].upgrade);
+                    return;
+                }
+            }
+        }
+
+        private static void UpdatePickupFountain(Pickup pickup, float dt)
+        {
+            pickup.launchElapsed += dt;
+            float progress = Mathf.Clamp01(pickup.launchElapsed / pickup.launchDuration);
+            float easedProgress = 1f - Mathf.Pow(1f - progress, 3f);
+            Vector3 position = Vector3.LerpUnclamped(pickup.launchOrigin, pickup.launchDestination, easedProgress);
+            position.y += 4f * pickup.launchArcHeight * progress * (1f - progress);
+            pickup.transform.position = position;
+
+            float popScale = Mathf.Lerp(.7f, 1f, easedProgress) + Mathf.Sin(progress * Mathf.PI) * .08f;
+            pickup.transform.localScale = Vector3.one * (pickup.baseScale * popScale);
+            if (progress >= 1f)
+            {
+                pickup.transform.position = pickup.launchDestination;
+                pickup.transform.localScale = Vector3.one * pickup.baseScale;
+                pickup.isLaunching = false;
+            }
+        }
+
+        private void OnDisable()
+        {
+            Time.timeScale = 1f;
         }
 
         private int MetaCost(int currentLevel) => 8 + currentLevel * 7;
@@ -721,6 +922,11 @@ namespace ProjectDM
                 showMetaTree = !showMetaTree;
             }
 
+            if (!choosingUpgrade && !showMetaTree && GUI.Button(new Rect(Screen.width - 190, 64, 165, 30), "DEBUG LEVEL UP"))
+            {
+                TriggerDebugLevelUp();
+            }
+
             if (choosingUpgrade)
             {
                 DrawRunUpgradeSelection();
@@ -757,52 +963,481 @@ namespace ProjectDM
 
         private void DrawRunUpgradeSelection()
         {
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Label(new Rect(0, Screen.height * 0.20f, Screen.width, 48), "LEVEL UP — CHOOSE ONE", new GUIStyle(titleStyle) { alignment = TextAnchor.MiddleCenter, fontSize = 30 });
-            float width = 210f;
-            float x = (Screen.width - (width * 3 + 30f)) / 2f;
-            if (GUI.Button(new Rect(x, Screen.height * 0.38f, width, 150), "ARCANE EDGE\n\nArcane Bolt damage +1", cardStyle))
+            DrawSolidRect(new Rect(0, 0, Screen.width, Screen.height), new Color(.015f, .02f, .06f, .76f));
+
+            GUIStyle headingStyle = new GUIStyle(titleStyle)
             {
-                ChooseRunUpgrade(RunUpgrade.Damage);
-            }
-            if (GUI.Button(new Rect(x + width + 15f, Screen.height * 0.38f, width, 150), "QUICKENING\n\nCast interval -0.035 sec", cardStyle))
+                alignment = TextAnchor.MiddleCenter,
+                fontSize = 34,
+                normal = { textColor = new Color(.96f, .92f, 1f) }
+            };
+            GUIStyle subtitleStyle = new GUIStyle(statStyle)
             {
-                ChooseRunUpgrade(RunUpgrade.Haste);
-            }
-            if (GUI.Button(new Rect(x + (width + 15f) * 2f, Screen.height * 0.38f, width, 150), "GILDED FATE\n\nMore currency and chest drops", cardStyle))
+                alignment = TextAnchor.MiddleCenter,
+                fontSize = 13,
+                normal = { textColor = new Color(.67f, .71f, .86f) }
+            };
+            GUI.Label(new Rect(0, 74f, Screen.width, 46f), "LEVEL UP", headingStyle);
+            GUI.Label(new Rect(0, 118f, Screen.width, 26f), "CHOOSE ONE TEMPORARY BOON", subtitleStyle);
+
+            bool compactLayout = Screen.width < 820;
+            float gap = compactLayout ? 10f : 14f;
+            float cardWidth = compactLayout
+                ? Mathf.Min(460f, Screen.width - 40f)
+                : Mathf.Min(236f, (Screen.width - 92f) / TemporaryRunUpgrades.Length);
+            float cardHeight = compactLayout
+                ? Mathf.Min(178f, Mathf.Max(108f, (Screen.height - 208f - gap * 2f) / TemporaryRunUpgrades.Length))
+                : cardWidth * 1.5f;
+            float groupHeight = compactLayout
+                ? cardHeight * TemporaryRunUpgrades.Length + gap * (TemporaryRunUpgrades.Length - 1)
+                : cardHeight;
+            float startX = compactLayout
+                ? (Screen.width - cardWidth) * .5f
+                : (Screen.width - (cardWidth * TemporaryRunUpgrades.Length + gap * (TemporaryRunUpgrades.Length - 1))) * .5f;
+            float startY = Mathf.Max(164f, (Screen.height - groupHeight) * .5f + 34f);
+
+            for (int i = 0; i < TemporaryRunUpgrades.Length; i++)
             {
-                ChooseRunUpgrade(RunUpgrade.Fortune);
+                Rect targetCardRect = compactLayout
+                    ? new Rect(startX, startY + i * (cardHeight + gap), cardWidth, cardHeight)
+                    : new Rect(startX + i * (cardWidth + gap), startY, cardWidth, cardHeight);
+                float cardProgress = Mathf.Clamp01((Time.unscaledTime - upgradeSelectionOpenedAt - i * .075f) / .28f);
+                float arrival = EaseOutBack(cardProgress);
+                float belowScreenY = Screen.height + cardHeight + 36f;
+                Rect animatedCardRect = targetCardRect;
+                animatedCardRect.y = Mathf.LerpUnclamped(belowScreenY, targetCardRect.y, arrival);
+                DrawRunUpgradeCard(animatedCardRect, TemporaryRunUpgrades[i], i, compactLayout, cardProgress >= .96f);
             }
+        }
+
+        private void DrawRunUpgradeCard(Rect cardRect, RunUpgradePresentation presentation, int index, bool compactLayout, bool isInteractive)
+        {
+            bool hovered = isInteractive && cardRect.Contains(Event.current.mousePosition);
+            UpdateUpgradeCardHover(index, hovered);
+            float tilt = upgradeCardHoverTilts[index];
+            Matrix4x4 previousGuiMatrix = GUI.matrix;
+            GUIUtility.RotateAroundPivot(tilt, cardRect.center);
+            GUIUtility.ScaleAroundPivot(Vector2.one * (hovered ? upgradeCardHoverScale : 1f), cardRect.center);
+            DrawSolidRect(cardRect, new Color(.055f, .065f, .14f, .98f));
+            DrawUpgradeCardFrame(cardRect, presentation.accent);
+
+            bool longTitle = presentation.title.Length > 12;
+            GUIStyle nameStyle = new GUIStyle(titleStyle)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontSize = compactLayout ? 16 : (longTitle ? 18 : 22),
+                fontStyle = FontStyle.Bold,
+                wordWrap = true,
+                clipping = TextClipping.Clip,
+                normal = { textColor = new Color(.93f, .84f, .7f) }
+            };
+            GUIStyle iconStyle = new GUIStyle(titleStyle)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontSize = compactLayout ? 30 : 60,
+                normal = { textColor = presentation.accent }
+            };
+            GUIStyle descriptionStyle = new GUIStyle(statStyle)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontSize = compactLayout ? 13 : 14,
+                wordWrap = true,
+                normal = { textColor = new Color(.88f, .88f, .88f) }
+            };
+            GUIStyle footerStyle = new GUIStyle(statStyle)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontSize = 11,
+                fontStyle = FontStyle.Bold,
+                normal = { textColor = new Color(.68f, .68f, .68f) }
+            };
+
+            float horizontalPadding = compactLayout ? 30f : 34f;
+            float titleY = compactLayout ? 10f : 27f;
+            float titleHeight = compactLayout ? 22f : 52f;
+            float iconY = compactLayout ? 33f : 91f;
+            float iconHeight = compactLayout ? 30f : 82f;
+            float upperDividerY = compactLayout ? 69f : 186f;
+            float lowerDividerY = cardRect.height - (compactLayout ? 31f : 52f);
+            GUI.Label(new Rect(cardRect.x + horizontalPadding, cardRect.y + titleY, cardRect.width - horizontalPadding * 2f, titleHeight), presentation.title, nameStyle);
+            GUI.Label(new Rect(cardRect.x + horizontalPadding, cardRect.y + iconY, cardRect.width - horizontalPadding * 2f, iconHeight), presentation.icon, iconStyle);
+            DrawSolidRect(new Rect(cardRect.x + horizontalPadding, cardRect.y + upperDividerY, cardRect.width - horizontalPadding * 2f, 1f), new Color(presentation.accent.r, presentation.accent.g, presentation.accent.b, .45f));
+            GUI.Label(new Rect(cardRect.x + horizontalPadding, cardRect.y + upperDividerY + 12f, cardRect.width - horizontalPadding * 2f, lowerDividerY - upperDividerY - 18f), presentation.description, descriptionStyle);
+            DrawSolidRect(new Rect(cardRect.x + horizontalPadding, cardRect.y + lowerDividerY, cardRect.width - horizontalPadding * 2f, 1f), new Color(presentation.accent.r, presentation.accent.g, presentation.accent.b, .35f));
+            GUI.Label(new Rect(cardRect.x + horizontalPadding, cardRect.y + lowerDividerY + 7f, cardRect.width - horizontalPadding * 2f, 18f), $"{presentation.category}  ·  TEMP  [{index + 1}]", footerStyle);
+            GUI.matrix = previousGuiMatrix;
+
+            if (isInteractive && GUI.Button(cardRect, GUIContent.none, GUIStyle.none))
+            {
+                ChooseRunUpgrade(presentation.upgrade);
+            }
+        }
+
+        private void UpdateUpgradeCardHover(int index, bool hovered)
+        {
+            if (hovered && !upgradeCardWasHovered[index])
+            {
+                PlayUpgradeCardHoverSound();
+            }
+
+            upgradeCardWasHovered[index] = hovered;
+            if (Event.current.type != EventType.Repaint)
+            {
+                return;
+            }
+
+            float targetTilt = hovered ? upgradeCardHoverLeftTiltAngle : 0f;
+            upgradeCardHoverTilts[index] = Mathf.MoveTowards(
+                upgradeCardHoverTilts[index],
+                targetTilt,
+                upgradeCardHoverTiltSpeed * Time.unscaledDeltaTime);
+        }
+
+        private void PlayUpgradeCardHoverSound()
+        {
+            // Audio hook: assign and play the future hover clip here. Intentionally silent for UI debugging.
+        }
+
+        private static float EaseOutBack(float progress)
+        {
+            const float overshoot = 1.45f;
+            float offset = progress - 1f;
+            return 1f + (overshoot + 1f) * offset * offset * offset + overshoot * offset * offset;
+        }
+
+        private static void DrawSolidRect(Rect rect, Color color)
+        {
+            Color previousColor = GUI.color;
+            GUI.color = color;
+            GUI.DrawTexture(rect, Texture2D.whiteTexture);
+            GUI.color = previousColor;
+        }
+
+        private void DrawUpgradeCardFrame(Rect rect, Color accent)
+        {
+            if (upgradeCardFrameTexture != null)
+            {
+                Color previousColor = GUI.color;
+                GUI.color = accent;
+                GUI.DrawTexture(rect, upgradeCardFrameTexture, ScaleMode.StretchToFill, true);
+                GUI.color = previousColor;
+                return;
+            }
+
+            // A plain fallback preserves the choice UI if the optional frame asset is unavailable.
+            DrawOutline(rect, accent, 2f);
+            DrawOutline(new Rect(rect.x + 5f, rect.y + 5f, rect.width - 10f, rect.height - 10f), new Color(accent.r, accent.g, accent.b, .58f), 1f);
+        }
+
+        private static void DrawOutline(Rect rect, Color color, float thickness)
+        {
+            DrawSolidRect(new Rect(rect.x, rect.y, rect.width, thickness), color);
+            DrawSolidRect(new Rect(rect.x, rect.yMax - thickness, rect.width, thickness), color);
+            DrawSolidRect(new Rect(rect.x, rect.y, thickness, rect.height), color);
+            DrawSolidRect(new Rect(rect.xMax - thickness, rect.y, thickness, rect.height), color);
         }
 
         private void DrawMetaTree()
         {
-            float panelWidth = Mathf.Min(620, Screen.width - 60);
-            float x = (Screen.width - panelWidth) / 2f;
-            float y = 135f;
-            GUI.Box(new Rect(x, y, panelWidth, 360), "영구 성장 — 저장된 재화 사용", new GUIStyle(GUI.skin.box) { fontSize = 20, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter, padding = new RectOffset(10, 10, 16, 10) });
-            GUI.Label(new Rect(x + 28, y + 55, panelWidth - 56, 32), $"보유 영구 재화: {metaCurrency}", titleStyle);
-            DrawMetaButton(x + 28, y + 105, MetaUpgrade.Damage, "ARCANE ROOT", "Start each run with +1 bolt damage", damageLevel);
-            DrawMetaButton(x + 28, y + 175, MetaUpgrade.Haste, "SWIFT ROOT", "Start each run with faster casting", hasteLevel);
-            DrawMetaButton(x + 28, y + 245, MetaUpgrade.Fortune, "GILDED ROOT", "Start each run with +3% loot chance", fortuneLevel);
-            if (GUI.Button(new Rect(x + panelWidth - 130, y + 310, 100, 30), "CLOSE"))
+            // The tree owns the entire screen instead of appearing as an in-game popup.
+            DrawSolidRect(new Rect(0f, 0f, Screen.width, Screen.height), new Color(.075f, .038f, .014f, 1f));
+            Rect treeCanvas = new Rect(0f, 0f, Screen.width, Screen.height);
+            HandleMetaTreeInput(treeCanvas);
+            DrawMetaTreeCanvas(treeCanvas);
+        }
+
+        private void HandleMetaTreeInput(Rect canvas)
+        {
+            Event currentEvent = Event.current;
+            if (currentEvent == null)
             {
-                showMetaTree = false;
+                return;
+            }
+
+            if (currentEvent.type == EventType.ScrollWheel && canvas.Contains(currentEvent.mousePosition))
+            {
+                float previousZoom = metaTreeZoom;
+                metaTreeZoom = Mathf.Clamp(metaTreeZoom - currentEvent.delta.y * .06f, .62f, 1.45f);
+                Vector2 canvasCenter = canvas.size * .5f;
+                Vector2 pointer = currentEvent.mousePosition - canvas.position;
+                metaTreePan += (pointer - canvasCenter - metaTreePan) * (1f - metaTreeZoom / previousZoom);
+                currentEvent.Use();
+            }
+
+            if (currentEvent.type == EventType.MouseDown && currentEvent.button == 2 && canvas.Contains(currentEvent.mousePosition))
+            {
+                isPanningMetaTree = true;
+                metaTreeLastPointer = currentEvent.mousePosition;
+                currentEvent.Use();
+            }
+            else if (currentEvent.type == EventType.MouseDrag && isPanningMetaTree)
+            {
+                metaTreePan += currentEvent.mousePosition - metaTreeLastPointer;
+                metaTreeLastPointer = currentEvent.mousePosition;
+                currentEvent.Use();
+            }
+            else if (currentEvent.type == EventType.MouseUp && currentEvent.button == 2)
+            {
+                isPanningMetaTree = false;
+                currentEvent.Use();
             }
         }
 
-        private void DrawMetaButton(float x, float y, MetaUpgrade upgrade, string name, string description, int currentLevel)
+        private void DrawMetaTreeCanvas(Rect canvas)
         {
-            int cost = MetaCost(currentLevel);
-            GUI.Label(new Rect(x, y, 260, 25), $"{name}  Lv.{currentLevel}", titleStyle);
-            GUI.Label(new Rect(x, y + 28, 330, 24), description, statStyle);
-            if (GUI.Button(new Rect(x + 355, y + 8, 195, 45), $"UNLOCK  {cost} 재화"))
+            GUI.BeginGroup(canvas);
+            Vector2 canvasSize = canvas.size;
+            hoveredMetaTreeNode = -1;
+            Event currentEvent = Event.current;
+            Vector2 localPointer = currentEvent != null ? currentEvent.mousePosition - canvas.position : new Vector2(float.NegativeInfinity, float.NegativeInfinity);
+
+            for (int i = 0; i < TemporaryMetaTreeNodes.Length; i++)
             {
-                BuyMetaUpgrade(upgrade);
+                if (GetMetaTreeNodeHitRect(TemporaryMetaTreeNodes[i], canvasSize).Contains(localPointer))
+                {
+                    hoveredMetaTreeNode = i;
+                }
+            }
+
+            for (int i = 0; i < TemporaryMetaTreeNodes.Length; i++)
+            {
+                MetaTreeNodePresentation node = TemporaryMetaTreeNodes[i];
+                if (node.parentIndex < 0)
+                {
+                    continue;
+                }
+
+                MetaTreeNodePresentation parent = TemporaryMetaTreeNodes[node.parentIndex];
+                DrawMetaTreeConnector(GetMetaTreeNodeCenter(parent, canvasSize), GetMetaTreeNodeCenter(node, canvasSize), node.state == MetaTreeNodeState.Locked
+                    ? new Color(.28f, .18f, .11f, .85f)
+                    : new Color(.97f, .66f, .16f, .92f));
+            }
+
+            for (int i = 0; i < TemporaryMetaTreeNodes.Length; i++)
+            {
+                DrawMetaTreeNode(i, TemporaryMetaTreeNodes[i], canvasSize);
+            }
+
+            GUI.EndGroup();
+            DrawMetaTreeHoverDescription();
+        }
+
+        private Vector2 GetMetaTreeNodeCenter(MetaTreeNodePresentation node, Vector2 canvasSize)
+        {
+            return canvasSize * .5f + metaTreePan + node.position * metaTreeZoom;
+        }
+
+        private Rect GetMetaTreeNodeRect(MetaTreeNodePresentation node, Vector2 canvasSize)
+        {
+            Vector2 nodeSize = node.parentIndex < 0 ? new Vector2(82f, 82f) : new Vector2(66f, 66f);
+            nodeSize *= Mathf.Lerp(.9f, 1f, metaTreeZoom);
+            return new Rect(GetMetaTreeNodeCenter(node, canvasSize) - nodeSize * .5f, nodeSize);
+        }
+
+        private static Rect GetMetaTreeNodeLabelRect(Rect nodeRect)
+        {
+            return new Rect(nodeRect.x - 44f, nodeRect.yMax + 5f, nodeRect.width + 88f, 20f);
+        }
+
+        private Rect GetMetaTreeNodeHitRect(MetaTreeNodePresentation node, Vector2 canvasSize)
+        {
+            Rect nodeRect = GetMetaTreeNodeRect(node, canvasSize);
+            Rect labelRect = GetMetaTreeNodeLabelRect(nodeRect);
+            return Rect.MinMaxRect(
+                Mathf.Min(nodeRect.x, labelRect.x),
+                Mathf.Min(nodeRect.y, labelRect.y),
+                Mathf.Max(nodeRect.xMax, labelRect.xMax),
+                Mathf.Max(nodeRect.yMax, labelRect.yMax));
+        }
+
+        private static void DrawMetaTreeConnector(Vector2 from, Vector2 to, Color color)
+        {
+            Vector2 direction = to - from;
+            float length = direction.magnitude;
+            if (length < .01f)
+            {
+                return;
+            }
+
+            Matrix4x4 previousMatrix = GUI.matrix;
+            GUIUtility.RotateAroundPivot(Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg, from);
+            DrawSolidRect(new Rect(from.x, from.y - 1.5f, length, 3f), color);
+            GUI.matrix = previousMatrix;
+        }
+
+        private void DrawMetaTreeNode(int index, MetaTreeNodePresentation node, Vector2 canvasSize)
+        {
+            Rect nodeRect = GetMetaTreeNodeRect(node, canvasSize);
+            Rect labelRect = GetMetaTreeNodeLabelRect(nodeRect);
+            Rect hitRect = GetMetaTreeNodeHitRect(node, canvasSize);
+            bool isSelected = selectedMetaTreeNode == index;
+            bool isHovered = hoveredMetaTreeNode == index;
+            Color fill = node.state == MetaTreeNodeState.Locked
+                ? new Color(.105f, .064f, .035f, .99f)
+                : new Color(.16f, .083f, .027f, .99f);
+            Color border = node.state == MetaTreeNodeState.Locked
+                ? new Color(.36f, .27f, .18f, .9f)
+                : new Color(.96f, .66f, .19f);
+
+            if (isSelected)
+            {
+                fill = Color.Lerp(fill, node.accent, .15f);
+            }
+            if (isHovered)
+            {
+                fill = Color.Lerp(fill, new Color(1f, .73f, .23f), .2f);
+            }
+
+            DrawSolidRect(nodeRect, fill);
+            DrawOutline(nodeRect, border, isSelected || isHovered ? 2.5f : 1.25f);
+
+            GUIStyle icon = new GUIStyle(titleStyle)
+            {
+                fontSize = Mathf.RoundToInt((node.parentIndex < 0 ? 31f : 25f) * Mathf.Lerp(.9f, 1f, metaTreeZoom)),
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = node.state == MetaTreeNodeState.Locked ? new Color(.42f, .34f, .26f) : new Color(.99f, .77f, .31f) }
+            };
+            GUIStyle title = new GUIStyle(statStyle)
+            {
+                fontSize = Mathf.RoundToInt(12f * Mathf.Lerp(.9f, 1f, metaTreeZoom)),
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = node.state == MetaTreeNodeState.Locked ? new Color(.46f, .37f, .29f) : new Color(.9f, .74f, .49f) }
+            };
+            GUI.Label(nodeRect, MetaTreeNodeIcon(node.id), icon);
+            GUI.Label(labelRect, node.title, title);
+
+            if (GUI.Button(hitRect, GUIContent.none, GUIStyle.none))
+            {
+                selectedMetaTreeNode = index;
+            }
+        }
+
+        private void DrawMetaTreeHoverDescription()
+        {
+            if (hoveredMetaTreeNode < 0 || Event.current == null)
+            {
+                return;
+            }
+
+            MetaTreeNodePresentation node = TemporaryMetaTreeNodes[hoveredMetaTreeNode];
+            const float width = 300f;
+            const float height = 102f;
+            Vector2 pointer = Event.current.mousePosition;
+            float tooltipX = pointer.x + 22f;
+            float tooltipY = pointer.y + 20f;
+            if (tooltipX + width > Screen.width - 18f)
+            {
+                tooltipX = pointer.x - width - 22f;
+            }
+            if (tooltipY + height > Screen.height - 18f)
+            {
+                tooltipY = pointer.y - height - 20f;
+            }
+
+            Rect rect = new Rect(Mathf.Clamp(tooltipX, 18f, Screen.width - width - 18f), Mathf.Clamp(tooltipY, 18f, Screen.height - height - 18f), width, height);
+            DrawSolidRect(rect, new Color(.075f, .038f, .014f, .99f));
+            DrawOutline(rect, node.state == MetaTreeNodeState.Locked ? new Color(.42f, .29f, .17f, .95f) : new Color(.98f, .66f, .17f, .98f), 1.5f);
+
+            GUIStyle section = new GUIStyle(statStyle)
+            {
+                fontSize = 11,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleLeft,
+                normal = { textColor = new Color(.98f, .67f, .19f) }
+            };
+            GUIStyle nodeName = new GUIStyle(titleStyle)
+            {
+                fontSize = 18,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleLeft,
+                normal = { textColor = new Color(.96f, .82f, .61f) }
+            };
+            GUIStyle body = new GUIStyle(statStyle)
+            {
+                fontSize = 12,
+                alignment = TextAnchor.MiddleLeft,
+                normal = { textColor = new Color(.72f, .58f, .43f) }
+            };
+
+            float x = rect.x + 22f;
+            GUI.Label(new Rect(x, rect.y + 10f, 120f, 20f), MetaTreeNodeStatus(node.state), section);
+            GUI.Label(new Rect(x, rect.y + 28f, rect.width - 44f, 26f), node.title, nodeName);
+            GUI.Label(new Rect(x, rect.y + 59f, rect.width - 44f, 32f), $"{node.subtitle}\n효과와 비용은 테이블 연결 후 표시됩니다.", body);
+        }
+
+        private static string MetaTreeNodeIcon(string id)
+        {
+            return id switch
+            {
+                "ROOT" => "◆",
+                "COMBAT" => "✦",
+                "SURVIVAL" => "+",
+                "GROWTH" => "$",
+                "ARCANE" => "✧",
+                "PRECISION" => "◈",
+                "VITALITY" => "♥",
+                "WARD" => "◇",
+                "FORTUNE" => "?",
+                _ => "○"
+            };
+        }
+
+        private static string MetaTreeNodeStatus(MetaTreeNodeState state)
+        {
+            return state switch
+            {
+                MetaTreeNodeState.Completed => "해금 완료",
+                MetaTreeNodeState.Reachable => "연결 가능",
+                _ => "데이터 대기"
+            };
+        }
+
+        private readonly struct RunUpgradePresentation
+        {
+            public readonly RunUpgrade upgrade;
+            public readonly string icon;
+            public readonly string category;
+            public readonly string title;
+            public readonly string description;
+            public readonly Color accent;
+
+            public RunUpgradePresentation(RunUpgrade upgrade, string icon, string category, string title, string description, Color accent)
+            {
+                this.upgrade = upgrade;
+                this.icon = icon;
+                this.category = category;
+                this.title = title;
+                this.description = description;
+                this.accent = accent;
+            }
+        }
+
+        private readonly struct MetaTreeNodePresentation
+        {
+            public readonly string id;
+            public readonly string title;
+            public readonly string subtitle;
+            public readonly Vector2 position;
+            public readonly int parentIndex;
+            public readonly MetaTreeNodeState state;
+            public readonly Color accent;
+
+            public MetaTreeNodePresentation(string id, string title, string subtitle, Vector2 position, int parentIndex, MetaTreeNodeState state, Color accent)
+            {
+                this.id = id;
+                this.title = title;
+                this.subtitle = subtitle;
+                this.position = position;
+                this.parentIndex = parentIndex;
+                this.state = state;
+                this.accent = accent;
             }
         }
 
         private enum RunUpgrade { Damage, Haste, Fortune }
         private enum MetaUpgrade { Damage, Haste, Fortune }
+        private enum MetaTreeNodeState { Completed, Reachable, Locked }
     }
 }

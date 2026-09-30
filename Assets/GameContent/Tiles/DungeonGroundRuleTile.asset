@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdb7ac7a33b0424e9a093701c277178, type: 3}
+  m_Name: DungeonGroundRuleTile
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.DungeonGroundRuleTile
+  floorTiles:
+  - {fileID: 11400000, guid: ab2f31ddbb6a6684682bf0046b435228, type: 2}
+  - {fileID: 11400000, guid: 0bc9f961262a782429bd99e8d4897b09, type: 2}
+  - {fileID: 11400000, guid: 17d0e041095de7c44a8da413d08c58e6, type: 2}
+  - {fileID: 11400000, guid: 4493b815f61dd764e9e3065f2cf98fcb, type: 2}
+  - {fileID: 11400000, guid: 55acff22fbc864f429b4ca968be8818e, type: 2}
+  - {fileID: 11400000, guid: 57713dedc3f31934fb96705efa976e72, type: 2}
+  - {fileID: 11400000, guid: d10e55a371024d841896237c25e3d7c5, type: 2}
+  - {fileID: 11400000, guid: 2df141fbdc5bcc24494fe18b154dd03a, type: 2}
+  - {fileID: 11400000, guid: 344321216ef815a48b1bfac13e01237d, type: 2}
+  - {fileID: 11400000, guid: a9f2a0055509aa948abf4cdce9c1e9ce, type: 2}
+  - {fileID: 11400000, guid: 4c863ede229619c4f8a6d6c7a7ba1c6c, type: 2}
+  - {fileID: 11400000, guid: 9808c69cffc8a7747aead2061d2f1b2b, type: 2}
+  - {fileID: 11400000, guid: 3eaf43e7c5e9c6044abfb7d4cadd6f28, type: 2}
+  - {fileID: 11400000, guid: f61ff00c1d13c0b4bb5ac4dd7355744e, type: 2}
+  - {fileID: 11400000, guid: b8e671b3b3f997d4e829f693bbad2b86, type: 2}
+  - {fileID: 11400000, guid: 934b3f7582c1f8a4285bda22b385c15b, type: 2}
+  borderTiles:
+  - {fileID: 11400000, guid: 00f9ca52af15db544baa44af2397c2ee, type: 2}
+  - {fileID: 11400000, guid: 28fb1fe2eb13d2c44882a1614a6e0ef4, type: 2}
+  - {fileID: 11400000, guid: f1ebb86da99537840bd8346ddb7803a7, type: 2}
+  - {fileID: 11400000, guid: 4e27285985b37b147b9b487d28ee62f6, type: 2}
+  - {fileID: 11400000, guid: 9cc1e5dfaa2a12943bba962dc17236f7, type: 2}
+  - {fileID: 11400000, guid: 6fbba39e55acde241b0a8eaaf4bd8200, type: 2}
+  - {fileID: 11400000, guid: 126532ed83f0b6743b5f3108e811959c, type: 2}
+  - {fileID: 11400000, guid: dc77971d3e455944ab0e59f9f9486ca9, type: 2}
+  - {fileID: 11400000, guid: dbfd0c11ad811154b9a342e3bd1b3603, type: 2}
+  - {fileID: 11400000, guid: 1c3784424b5fc1e44bdba0dc774f0049, type: 2}
+  - {fileID: 11400000, guid: d9e4c8ece83e18344a1ddf883bbd9231, type: 2}
+  - {fileID: 11400000, guid: 21e82fd746e82fd49a4f22ee81b7c164, type: 2}
+  - {fileID: 11400000, guid: 2d498896dcc6962428f653444bde1e5e, type: 2}
+  - {fileID: 11400000, guid: 6265279103a64c54ca1db5c3beeec143, type: 2}
+  - {fileID: 11400000, guid: 26108ae9b4e9bbb40a10e2a9d2266af5, type: 2}
+  - {fileID: 11400000, guid: a769854d9be1c9046ab9ca9743b68903, type: 2}
+  ruleTiles:
+  - {fileID: 11400000, guid: 1eb851d0762695b4d9ded8c81fae4d14, type: 2}
+  - {fileID: 11400000, guid: 50661bb1e70361d48bcaf849647ed98a, type: 2}
+  - {fileID: 11400000, guid: 2e728a1e6b1a4e3409bb5ab43fe2cefa, type: 2}
+  - {fileID: 11400000, guid: 12a83236e225e5f4490e3ee4c9333205, type: 2}
+  - {fileID: 11400000, guid: 51355894411484a4faf1f76db08e5651, type: 2}
+  - {fileID: 11400000, guid: a8e02e6e675cb134cbdeacfbef57eb39, type: 2}
+  - {fileID: 11400000, guid: 4d044e0c28a445b4f97d03a4d8b385f9, type: 2}
+  - {fileID: 11400000, guid: cdb730bed2b024c48bd383e068d7d236, type: 2}
+  - {fileID: 11400000, guid: 7847dcdd2416e384395ea939ccba0c9e, type: 2}
+  customRules:
+  - displayName: Top Left
+    conditions: 000000000200000000000000020000000000000000000000000000000000000000000000
+    outputTile: {fileID: 11400000, guid: 00f9ca52af15db544baa44af2397c2ee, type: 2}
+  - displayName: Top
+    conditions: 000000000200000000000000010000000000000001000000000000000000000000000000
+    outputTile: {fileID: 11400000, guid: 28fb1fe2eb13d2c44882a1614a6e0ef4, type: 2}
+  - displayName: Top Right
+    conditions: 000000000200000000000000000000000000000002000000000000000000000000000000
+    outputTile: {fileID: 11400000, guid: 4e27285985b37b147b9b487d28ee62f6, type: 2}
+  - displayName: Left
+    conditions: 000000000100000000000000020000000000000000000000000000000100000000000000
+    outputTile: {fileID: 11400000, guid: 9cc1e5dfaa2a12943bba962dc17236f7, type: 2}
+  - displayName: Right
+    conditions: 000000000000000000000000010000000000000002000000000000000100000000000000
+    outputTile: {fileID: 11400000, guid: dc77971d3e455944ab0e59f9f9486ca9, type: 2}
+  - displayName: Bottom Left
+    conditions: 000000000000000000000000020000000000000000000000000000000200000000000000
+    outputTile: {fileID: 11400000, guid: 2d498896dcc6962428f653444bde1e5e, type: 2}
+  - displayName: Bottom
+    conditions: 000000000000000000000000010000000000000001000000000000000200000000000000
+    outputTile: {fileID: 11400000, guid: 6265279103a64c54ca1db5c3beeec143, type: 2}
+  - displayName: Bottom Right
+    conditions: 000000000000000000000000000000000000000002000000000000000200000000000000
+    outputTile: {fileID: 11400000, guid: a769854d9be1c9046ab9ca9743b68903, type: 2}

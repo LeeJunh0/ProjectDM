@@ -30,6 +30,13 @@ namespace ProjectDM
         public int amount;
         public bool isInteracting;
         public float interactionRemaining;
+        public bool isLaunching;
+        public Vector3 launchOrigin;
+        public Vector3 launchDestination;
+        public float launchElapsed;
+        public float launchDuration;
+        public float launchArcHeight;
+        public float baseScale;
     }
 
     internal enum PickupKind { Experience, Currency, Chest }

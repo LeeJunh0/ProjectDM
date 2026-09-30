@@ -169,6 +169,12 @@ namespace ProjectDM.Editor
             }
             dungeonFloor.SetBorderTilePalette(borderTiles);
 
+            DungeonGroundRuleTile groundRuleTile = AssetDatabase.LoadAssetAtPath<DungeonGroundRuleTile>("Assets/GameContent/Tiles/DungeonGroundRuleTile.asset");
+            if (groundRuleTile != null)
+            {
+                dungeonFloor.SetGroundRuleTile(groundRuleTile);
+            }
+
             return dungeonFloor;
         }
     }

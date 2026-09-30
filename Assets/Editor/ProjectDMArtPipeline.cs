@@ -22,12 +22,15 @@ namespace ProjectDM.Editor
         private const string WalkCyclePlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Walk_4Frame_v6.png";
         private const string SideWalkPlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Walk_SideRefined_v7.png";
         private const string IdlePlayerSheetPath = "Assets/GameContent/Art/ProjectDM_Player_Idle_4Frame_v1.png";
-        private const string FloorSheetPath = "Assets/GameContent/Art/ProjectDM_FloorTiles_Calm_v2.png";
-        private const string FloorBorderSheetPath = "Assets/GameContent/Art/ProjectDM_FloorBorderTiles_Calm_v2.png";
+        private const string FloorSheetPath = "Assets/GameContent/Art/ProjectDM_FloorTiles_Calm_v3.png";
+        private const string FloorBorderSheetPath = "Assets/GameContent/Art/ProjectDM_FloorBorderTiles_Calm_v3.png";
+        private const string GroundRuleTileSheetPath = "Assets/GameContent/Art/ProjectDM_GroundRuleTiles_3x3_v1.png";
         private const string PickupSheetPath = "Assets/GameContent/Art/ProjectDM_Pickups_4Frame_v1.png";
         private const string CollectibleVariantsSheetPath = "Assets/GameContent/Art/ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png";
         private const string TileFolder = "Assets/GameContent/Tiles";
         private const string BorderTileFolder = TileFolder + "/Borders";
+        private const string GroundRuleTileFolder = TileFolder + "/GroundRule";
+        private const string GroundRuleTilePath = TileFolder + "/DungeonGroundRuleTile.asset";
         // AI-generated atlases carry a wider dark divider than a conventional export.
         // Eight pixels removes it completely; PPU compensation below preserves cell size.
         private const float FloorTileGutterTrimPixels = 8f;
@@ -48,6 +51,7 @@ namespace ProjectDM.Editor
         {
             Configure(force: true);
             ImportFloorBorderTiles();
+            ImportGroundRuleTiles();
             ImportPickupAnimations();
             ImportCollectibleVariantAnimations();
         }
@@ -59,7 +63,9 @@ namespace ProjectDM.Editor
             CreateRequiredFolder("Assets/GameContent", "Tiles");
             CreateRequiredFolder("Assets/GameContent", "Animation");
             CreateFloorTiles();
+            CreateOrUpdateGroundRuleTile();
             ImportFloorBorderTiles();
+            ImportGroundRuleTiles();
             ImportPickupAnimations();
             ImportCollectibleVariantAnimations();
             CreateAnimationsAndControllers();
@@ -107,6 +113,29 @@ namespace ProjectDM.Editor
             AssetDatabase.Refresh();
             ApplyBorderTilesToOpenTilemaps();
             Debug.Log("Project DM floor border tiles are ready.");
+        }
+
+        [MenuItem("Project DM/Import Ground Rule Tiles (3x3)")]
+        public static void ImportGroundRuleTiles()
+        {
+            TextureImporter importer = AssetImporter.GetAtPath(GroundRuleTileSheetPath) as TextureImporter;
+            Texture2D sheet = AssetDatabase.LoadAssetAtPath<Texture2D>(GroundRuleTileSheetPath);
+            if (importer == null || sheet == null)
+            {
+                Debug.LogWarning("Project DM 3x3 ground rule tile sheet is missing.");
+                return;
+            }
+
+            ConfigureGroundRuleTileImporter(importer, sheet);
+            CreateRequiredFolder("Assets", "GameContent");
+            CreateRequiredFolder("Assets/GameContent", "Tiles");
+            CreateRequiredFolder(TileFolder, "GroundRule");
+            CreateGroundRuleTiles();
+            CreateOrUpdateGroundRuleTile();
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            ApplyGroundRuleTileToOpenTilemaps();
+            Debug.Log("Project DM 3x3 ground rule tiles are ready.");
         }
 
         [MenuItem("Project DM/Import Pickup Animations")]
@@ -268,6 +297,12 @@ namespace ProjectDM.Editor
                 ImportFloorBorderTiles();
             }
 
+            TextureImporter groundRuleImporter = AssetImporter.GetAtPath(GroundRuleTileSheetPath) as TextureImporter;
+            if (groundRuleImporter != null && groundRuleImporter.userData != ConfigurationTag)
+            {
+                ImportGroundRuleTiles();
+            }
+
             TextureImporter pickupImporter = AssetImporter.GetAtPath(PickupSheetPath) as TextureImporter;
             if (pickupImporter != null && pickupImporter.userData != ConfigurationTag)
             {
@@ -275,7 +310,7 @@ namespace ProjectDM.Editor
             }
 
             TextureImporter collectibleVariantsImporter = AssetImporter.GetAtPath(CollectibleVariantsSheetPath) as TextureImporter;
-            if (collectibleVariantsImporter != null && collectibleVariantsImporter.userData != CollectibleVariantsConfigurationTag)
+            if (collectibleVariantsImporter != null && (collectibleVariantsImporter.userData != CollectibleVariantsConfigurationTag || !HasCollectibleVariantSlices(collectibleVariantsImporter)))
             {
                 ImportCollectibleVariantAnimations();
             }
@@ -289,6 +324,8 @@ namespace ProjectDM.Editor
 
             EnsureBoltPulseAnimation();
             Configure(force: false);
+            CreateOrUpdateGroundRuleTile();
+            ApplyGroundRuleTileToOpenTilemaps();
         }
 
         private static bool NeedsStaticPickupVisuals()
@@ -303,6 +340,31 @@ namespace ProjectDM.Editor
             GameObject chestPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{ProjectDMPrefabFactory.PrefabFolder}/ChestPickup.prefab");
             return experienceRenderer == null || experienceRenderer.sprite == null || experienceRenderer.sprite.name != "Experience_01_1"
                 || chestPrefab == null || chestPrefab.GetComponentInChildren<PickupInteractionVisual>() == null;
+        }
+
+        private static bool HasCollectibleVariantSlices(TextureImporter importer)
+        {
+            SpriteRect[] spriteRects = CurrentSpriteRects(importer);
+            if (spriteRects.Length != 40)
+            {
+                return false;
+            }
+
+            for (int variant = 1; variant <= 5; variant++)
+            {
+                for (int frame = 0; frame < 4; frame++)
+                {
+                    string experienceName = $"Experience_{variant:00}_{frame}";
+                    string currencyName = $"Currency_{variant:00}_{frame}";
+                    if (!spriteRects.Any(sprite => sprite.name == experienceName)
+                        || !spriteRects.Any(sprite => sprite.name == currencyName))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         private static void EnsureBoltPulseAnimation()
@@ -366,6 +428,7 @@ namespace ProjectDM.Editor
             CreateRequiredFolder("Assets/GameContent", "Tiles");
             CreateRequiredFolder("Assets/GameContent", "Animation");
             CreateFloorTiles();
+            CreateOrUpdateGroundRuleTile();
             CreateAnimationsAndControllers();
             ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
             AssetDatabase.SaveAssets();
@@ -404,6 +467,20 @@ namespace ProjectDM.Editor
             importer.SaveAndReimport();
         }
 
+        private static void ConfigureGroundRuleTileImporter(TextureImporter importer, Texture2D texture)
+        {
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Multiple;
+            importer.filterMode = FilterMode.Point;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = false;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.spritePixelsPerUnit = texture.width / 3f;
+            SetSpriteRects(importer, GroundRuleTileSlices(texture.width, texture.height));
+            importer.userData = ConfigurationTag;
+            importer.SaveAndReimport();
+        }
+
         private static void ConfigurePickupImporter(TextureImporter importer, Texture2D texture)
         {
             importer.textureType = TextureImporterType.Sprite;
@@ -432,6 +509,7 @@ namespace ProjectDM.Editor
             // so each visual reads at the same in-game size as the original pickup art.
             importer.spritePixelsPerUnit = texture.height / 10f;
             SetSpriteRects(importer, CollectibleVariantSlices(texture.width, texture.height));
+            ClearSliceOnImportMetadata(importer);
             importer.userData = CollectibleVariantsConfigurationTag;
             importer.SaveAndReimport();
         }
@@ -835,6 +913,28 @@ namespace ProjectDM.Editor
             return tiles.ToArray();
         }
 
+        private static SpriteMetaData[] GroundRuleTileSlices(int width, int height)
+        {
+            List<SpriteMetaData> tiles = new();
+            float cellWidth = width / 3f;
+            float cellHeight = height / 3f;
+            for (int row = 0; row < 3; row++)
+            {
+                for (int column = 0; column < 3; column++)
+                {
+                    tiles.Add(new SpriteMetaData
+                    {
+                        name = $"GroundRule_{row}_{column}",
+                        rect = new Rect(column * cellWidth, height - (row + 1) * cellHeight, cellWidth, cellHeight),
+                        alignment = (int)SpriteAlignment.Center,
+                        pivot = new Vector2(.5f, .5f)
+                    });
+                }
+            }
+
+            return tiles.ToArray();
+        }
+
         private static SpriteMetaData[] ActorSlices(int width, int height)
         {
             float cellWidth = width / 2f;
@@ -941,6 +1041,35 @@ namespace ProjectDM.Editor
             dataProvider.Apply();
         }
 
+        private static void ClearSliceOnImportMetadata(TextureImporter importer)
+        {
+            // Unity 6 can persist the Sprite Editor's "Slice on Import" setting in the
+            // importer metadata. When enabled, its postprocessor replaces our authored
+            // rectangles with automatic opaque-region slices during SaveAndReimport().
+            SerializedObject serializedImporter = new(importer);
+            SerializedProperty entries = serializedImporter.FindProperty("m_SpriteSheet.m_SpriteCustomMetadata.m_Entries");
+            if (entries == null)
+            {
+                return;
+            }
+
+            bool changed = false;
+            for (int index = entries.arraySize - 1; index >= 0; index--)
+            {
+                string key = entries.GetArrayElementAtIndex(index).FindPropertyRelative("m_Key").stringValue;
+                if (key is "SpriteEditor.SliceOnImport" or "SpriteEditor.SliceSettings")
+                {
+                    entries.DeleteArrayElementAtIndex(index);
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                serializedImporter.ApplyModifiedPropertiesWithoutUndo();
+            }
+        }
+
         private static SpriteRect[] CurrentSpriteRects(TextureImporter importer)
         {
             SpriteDataProviderFactories factories = new();
@@ -986,6 +1115,107 @@ namespace ProjectDM.Editor
 
         private static void ApplyBorderTilesToOpenTilemaps()
         {
+            TileBase[] borderTiles = LoadBorderTilePalette();
+            DungeonGroundRuleTile groundRuleTile = CreateOrUpdateGroundRuleTile();
+
+            foreach (DungeonFloorTilemap floor in Object.FindObjectsByType<DungeonFloorTilemap>(FindObjectsSortMode.None))
+            {
+                floor.SetBorderTilePalette(borderTiles);
+                if (groundRuleTile != null)
+                {
+                    floor.SetGroundRuleTile(groundRuleTile);
+                }
+                EditorUtility.SetDirty(floor);
+            }
+        }
+
+        private static void CreateGroundRuleTiles()
+        {
+            Dictionary<string, Sprite> sprites = SpriteMap(GroundRuleTileSheetPath);
+            foreach (KeyValuePair<string, Sprite> pair in sprites)
+            {
+                string path = $"{GroundRuleTileFolder}/{pair.Key}.asset";
+                Tile tile = AssetDatabase.LoadAssetAtPath<Tile>(path);
+                if (tile == null)
+                {
+                    tile = ScriptableObject.CreateInstance<Tile>();
+                    AssetDatabase.CreateAsset(tile, path);
+                }
+
+                tile.sprite = pair.Value;
+                tile.colliderType = Tile.ColliderType.None;
+                tile.transform = Matrix4x4.identity;
+                EditorUtility.SetDirty(tile);
+            }
+        }
+
+        private static DungeonGroundRuleTile CreateOrUpdateGroundRuleTile()
+        {
+            TileBase[] groundRuleTiles = LoadGroundRuleTilePalette();
+            if (HasCompleteRulePalette(groundRuleTiles))
+            {
+                DungeonGroundRuleTile threeByThreeRuleTile = AssetDatabase.LoadAssetAtPath<DungeonGroundRuleTile>(GroundRuleTilePath);
+                if (threeByThreeRuleTile == null)
+                {
+                    threeByThreeRuleTile = ScriptableObject.CreateInstance<DungeonGroundRuleTile>();
+                    AssetDatabase.CreateAsset(threeByThreeRuleTile, GroundRuleTilePath);
+                }
+
+                threeByThreeRuleTile.ConfigureRuleTilePalette(groundRuleTiles);
+                EditorUtility.SetDirty(threeByThreeRuleTile);
+                return threeByThreeRuleTile;
+            }
+
+            TileBase[] floorTiles = LoadFloorTilePalette();
+            TileBase[] borderTiles = LoadBorderTilePalette();
+            if (!HasCompletePalette(floorTiles) || !HasCompletePalette(borderTiles))
+            {
+                return null;
+            }
+
+            DungeonGroundRuleTile ruleTile = AssetDatabase.LoadAssetAtPath<DungeonGroundRuleTile>(GroundRuleTilePath);
+            if (ruleTile == null)
+            {
+                ruleTile = ScriptableObject.CreateInstance<DungeonGroundRuleTile>();
+                AssetDatabase.CreateAsset(ruleTile, GroundRuleTilePath);
+            }
+
+            ruleTile.ConfigureLegacyPalette(floorTiles, borderTiles);
+            EditorUtility.SetDirty(ruleTile);
+            return ruleTile;
+        }
+
+        private static void ApplyGroundRuleTileToOpenTilemaps()
+        {
+            DungeonGroundRuleTile groundRuleTile = CreateOrUpdateGroundRuleTile();
+            if (groundRuleTile == null)
+            {
+                return;
+            }
+
+            foreach (DungeonFloorTilemap floor in Object.FindObjectsByType<DungeonFloorTilemap>(FindObjectsSortMode.None))
+            {
+                floor.SetGroundRuleTile(groundRuleTile);
+                EditorUtility.SetDirty(floor);
+            }
+        }
+
+        private static TileBase[] LoadFloorTilePalette()
+        {
+            TileBase[] floorTiles = new TileBase[16];
+            for (int row = 0; row < 4; row++)
+            {
+                for (int column = 0; column < 4; column++)
+                {
+                    floorTiles[row * 4 + column] = AssetDatabase.LoadAssetAtPath<TileBase>($"{TileFolder}/Floor_{column}_{row}.asset");
+                }
+            }
+
+            return floorTiles;
+        }
+
+        private static TileBase[] LoadBorderTilePalette()
+        {
             TileBase[] borderTiles = new TileBase[16];
             for (int row = 0; row < 4; row++)
             {
@@ -995,11 +1225,31 @@ namespace ProjectDM.Editor
                 }
             }
 
-            foreach (DungeonFloorTilemap floor in Object.FindObjectsByType<DungeonFloorTilemap>(FindObjectsSortMode.None))
+            return borderTiles;
+        }
+
+        private static TileBase[] LoadGroundRuleTilePalette()
+        {
+            TileBase[] ruleTiles = new TileBase[9];
+            for (int row = 0; row < 3; row++)
             {
-                floor.SetBorderTilePalette(borderTiles);
-                EditorUtility.SetDirty(floor);
+                for (int column = 0; column < 3; column++)
+                {
+                    ruleTiles[row * 3 + column] = AssetDatabase.LoadAssetAtPath<TileBase>($"{GroundRuleTileFolder}/GroundRule_{row}_{column}.asset");
+                }
             }
+
+            return ruleTiles;
+        }
+
+        private static bool HasCompletePalette(TileBase[] palette)
+        {
+            return palette != null && palette.Length == 16 && palette.All(tile => tile != null);
+        }
+
+        private static bool HasCompleteRulePalette(TileBase[] palette)
+        {
+            return palette != null && palette.Length == 9 && palette.All(tile => tile != null);
         }
 
         private static void ConfigureFloorTile(Tile tile, Sprite sprite)
