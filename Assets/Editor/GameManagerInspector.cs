@@ -11,6 +11,15 @@ namespace ProjectDM.Editor
         {
             serializedObject.Update();
 
+            DrawSection("런 진행 시간");
+            DrawProperty("runDuration", "진행 제한 시간 (초)", "메인 게임 한 회차의 제한 시간입니다. 레벨업 선택과 성장 지도에서는 시간이 멈춥니다. 변경한 값은 다음 회차에 적용됩니다.");
+
+            DrawSection("결과 통계 연출");
+            DrawProperty("resultCountUpDuration", "숫자 증가 시간 (초)", "각 통계 숫자가 0에서 실제 값까지 올라가는 시간입니다. 0이면 즉시 표시합니다.");
+            DrawProperty("resultCountUpStagger", "숫자 시작 간격 (초)", "재화부터 몬스터별 처치 수까지 차례로 증가를 시작하는 간격입니다. 0이면 동시에 시작합니다.");
+            DrawProperty("resultGlowIntensity", "주황빛 세기", "결과창 위·아래 그라데이션의 불투명도입니다. 0이면 빛을 숨깁니다.");
+            DrawProperty("resultGlowPulseDuration", "빛 밝기 반복 시간 (초)", "빛이 천천히 밝아졌다 어두워지는 주기입니다. 0이면 밝기를 고정합니다.");
+
             DrawSection("씬 배치 (에디터 미리보기)");
             DrawProperty("gameplayCamera", "게임플레이 카메라", "게임 화면을 표시하는 메인 카메라입니다.");
             DrawProperty("fieldBounds", "필드 범위", "게임 필드와 카메라 제한의 기준이 되는 범위입니다.");

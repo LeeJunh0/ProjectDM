@@ -25676,6 +25676,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76b198bfc7d1a8e489026505d8be0b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.GameManager
+  runDuration: 5
+  resultCountUpDuration: 1.1
+  resultCountUpStagger: 0.07
+  resultGlowIntensity: 0.16
+  resultGlowPulseDuration: 3
   gameplayCamera: {fileID: 1164057716}
   fieldBounds: {fileID: 1500771409}
   playerSpawnPoint: {fileID: 1457486754}

@@ -1,0 +1,48 @@
+{
+  "version": "proposal-v1",
+  "player": {"damage": 1, "attack_interval": 0.62, "projectile_speed": 9, "projectile_lifetime": 1.5, "run_seconds": 40},
+  "simulation": {
+    "accuracy": 0.9, "collection_rate": 0.85,
+    "collection_delay": 0.45, "collection_delay_per_distance": 0.16,
+    "spawn_radius": [5, 8], "initial_radius": [3, 5], "enemy_stop_radius": [0.6, 3.0],
+    "xp_first": 7, "xp_growth": 1.5, "run_damage_step": 0.1, "run_speed_step": 0.1,
+    "run_proc_step": 0.02, "max_run_proc_rank": 4
+  },
+  "chest": {"chance": 0.018, "coins": 6, "interaction_seconds": 0.8},
+  "monsters": [
+    {"id": "slime", "name": "슬라임", "hp": 3, "speed": 1.0, "xp": 1, "coins": 1, "bonus_chance": 0.1, "bonus_coins": 1, "next_unlock_kills": 80},
+    {"id": "skeleton", "name": "스켈레톤", "hp": 6, "speed": 0.9, "xp": 2, "coins": 2, "bonus_chance": 0.1, "bonus_coins": 1, "next_unlock_kills": 60},
+    {"id": "goblin", "name": "고블린", "hp": 10, "speed": 1.35, "xp": 3, "coins": 3, "bonus_chance": 0.1, "bonus_coins": 2, "next_unlock_kills": 120},
+    {"id": "mushroom", "name": "버섯", "hp": 18, "speed": 0.75, "xp": 5, "coins": 5, "bonus_chance": 0.1, "bonus_coins": 2, "next_unlock_kills": 180},
+    {"id": "boar", "name": "멧돼지", "hp": 32, "speed": 1.15, "xp": 9, "coins": 9, "bonus_chance": 0.1, "bonus_coins": 3, "next_unlock_kills": null}
+  ],
+  "stages": [
+    {"initial": 12, "target": 14, "cap": 18, "refill_seconds": 0.7, "batch": 3, "weights": [100, 0, 0, 0, 0]},
+    {"initial": 18, "target": 22, "cap": 28, "refill_seconds": 0.55, "batch": 4, "weights": [70, 30, 0, 0, 0]},
+    {"initial": 24, "target": 30, "cap": 38, "refill_seconds": 0.4, "batch": 5, "weights": [50, 30, 20, 0, 0]},
+    {"initial": 30, "target": 38, "cap": 48, "refill_seconds": 0.3, "batch": 6, "weights": [40, 25, 20, 15, 0]},
+    {"initial": 36, "target": 46, "cap": 58, "refill_seconds": 0.25, "batch": 7, "weights": [30, 25, 20, 15, 10]}
+  ],
+  "effects": {
+    "chain": {"chance": 0.12, "damage_ratio": 0.65, "targets": 2, "range": 3.0},
+    "splash": {"chance": 0.12, "damage_ratio": 0.8, "radius": 1.65},
+    "meteor": {"chance": 0.04, "damage_ratio": 3.5, "radius": 2.0, "delay": 0.65}
+  },
+  "upgrades": {
+    "damage": {"name": "공격력", "base_cost": 14, "cost_growth": 1.85, "max_rank": 14, "min_stage": 0, "step": 1},
+    "speed": {"name": "공격속도", "base_cost": 16, "cost_growth": 1.7, "max_rank": 12, "min_stage": 0, "step": 0.12},
+    "time": {"name": "진행시간", "base_cost": 30, "cost_growth": 1.85, "max_rank": 8, "min_stage": 0, "step": 8},
+    "yield": {"name": "재화 획득량", "base_cost": 24, "cost_growth": 1.9, "max_rank": 6, "min_stage": 0, "step": 0.1},
+    "multishot": {"name": "추가 투사체", "base_cost": 150, "cost_growth": 2.5, "max_rank": 2, "min_stage": 1, "step": 1, "damage_ratio": 0.7},
+    "chain": {"name": "연쇄 번개 해금", "base_cost": 50, "cost_growth": 1, "max_rank": 1, "min_stage": 1},
+    "splash": {"name": "스플래쉬 해금", "base_cost": 140, "cost_growth": 1, "max_rank": 1, "min_stage": 2},
+    "meteor": {"name": "운석 해금", "base_cost": 280, "cost_growth": 1, "max_rank": 1, "min_stage": 3},
+    "proc": {"name": "발동 확률", "base_cost": 65, "cost_growth": 1.8, "max_rank": 6, "min_stage": 1, "requires": "chain", "step": 0.02}
+  },
+  "policies": {
+    "balanced": {"damage": 1, "speed": 1, "time": 1, "yield": 0.8, "multishot": 0.85, "chain": 1.4, "splash": 1.4, "meteor": 1.4, "proc": 1.2},
+    "damage": {"damage": 2.5, "speed": 0.6, "time": 0.6, "yield": 0.4, "multishot": 0.8, "chain": 0.7, "splash": 0.7, "meteor": 0.7, "proc": 0.6},
+    "speed_proc": {"damage": 0.75, "speed": 2, "time": 0.6, "yield": 0.4, "multishot": 1.4, "chain": 2, "splash": 2, "meteor": 2, "proc": 2},
+    "time": {"damage": 0.65, "speed": 0.65, "time": 2.5, "yield": 0.5, "multishot": 0.8, "chain": 1, "splash": 1, "meteor": 1, "proc": 0.8}
+  }
+}

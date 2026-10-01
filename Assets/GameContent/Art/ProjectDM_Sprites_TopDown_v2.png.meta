@@ -399,10 +399,10 @@ TextureImporter:
       name: Gold_Coin
       rect:
         serializedVersion: 2
-        x: 966.83
-        y: 22.175001
-        width: 106.439995
-        height: 141.92
+        x: 960
+        y: 58
+        width: 82
+        height: 88
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

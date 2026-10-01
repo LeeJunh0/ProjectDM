@@ -17,6 +17,18 @@ namespace ProjectDM
         private const string HasteKey = "PROJECT_DM_HASTE_LEVEL";
         private const string FortuneKey = "PROJECT_DM_FORTUNE_LEVEL";
 
+        [SerializeField, Min(1f), Tooltip("한 회차의 플레이 제한 시간(초)입니다. 변경한 값은 다음 회차부터 적용됩니다.")]
+        private float runDuration = 40f;
+
+        [SerializeField, Min(0f), Tooltip("각 통계 숫자가 0에서 실제 값에 도달하는 시간(초)입니다. 0이면 즉시 표시합니다.")]
+        private float resultCountUpDuration = 1.1f;
+        [SerializeField, Min(0f), Tooltip("재화, 총 처치, 몬스터별 처치 숫자의 등장 간격(초)입니다. 0이면 함께 시작합니다.")]
+        private float resultCountUpStagger = .07f;
+        [SerializeField, Range(0f, 1f), Tooltip("결과창 위·아래 주황빛 그라데이션의 불투명도입니다. 0이면 숨깁니다.")]
+        private float resultGlowIntensity = .16f;
+        [SerializeField, Min(0f), Tooltip("주황빛이 은은하게 밝아졌다 어두워지는 주기(초)입니다. 0이면 밝기를 고정합니다.")]
+        private float resultGlowPulseDuration = 3f;
+
         [SerializeField] private Camera gameplayCamera;
         [SerializeField] private GameFieldBounds fieldBounds;
         [SerializeField] private Transform playerSpawnPoint;
@@ -116,6 +128,27 @@ namespace ProjectDM
         private bool isPanningMetaTree;
         private Vector2 metaTreeLastPointer;
         private float elapsed;
+        private float activeRunDuration;
+        private float remainingTimeFraction = 1f;
+        private bool runEnded;
+        private readonly int[] monsterKillCounts = new int[5];
+        private GUIStyle timerTrackStyle;
+        private Texture2D timerIconTexture;
+        private Texture2D timerTrackTexture;
+        private Texture2D timerFillTexture;
+        private Texture2D resultPanelTexture;
+        private Texture2D resultSecondaryButtonTexture;
+        private Texture2D resultPrimaryButtonTexture;
+        private Texture2D resultGlowTexture;
+        private float resultPresentationOpenedAt;
+
+        // UV crops select the artwork within the generated transparent canvases, preserving source PNGs.
+        private static readonly Rect TimerIconUv = new Rect(129f / 1254f, 39f / 1254f, 994f / 1254f, 1152f / 1254f);
+        private static readonly Rect TimerTrackUv = new Rect(40f / 2172f, 309f / 724f, 2092f / 2172f, 119f / 724f);
+        private static readonly Rect TimerFillUv = new Rect(40f / 1774f, 411f / 887f, 1694f / 1774f, 65f / 887f);
+        private static readonly Rect ResultPanelUv = new Rect(56f / 1205f, 59f / 1305f, 1095f / 1205f, 1188f / 1305f);
+        private static readonly Rect ResultSecondaryButtonUv = new Rect(83f / 2036f, 177f / 772f, 1870f / 2036f, 416f / 772f);
+        private static readonly Rect ResultPrimaryButtonUv = new Rect(91f / 2146f, 156f / 733f, 1964f / 2146f, 421f / 733f);
         private float upgradeSelectionOpenedAt;
         private readonly float[] upgradeCardHoverTilts = new float[TemporaryRunUpgrades.Length];
         private readonly bool[] upgradeCardWasHovered = new bool[TemporaryRunUpgrades.Length];
@@ -181,6 +214,13 @@ namespace ProjectDM
             Time.timeScale = 1f;
             Application.targetFrameRate = 60;
             upgradeCardFrameTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_UpgradeCardFrame_Neutral_v1");
+            timerIconTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_TimerIcon_v1");
+            timerTrackTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_TimerTrack_v1");
+            timerFillTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_TimerFill_v1");
+            resultPanelTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_ResultPanel_v1");
+            resultSecondaryButtonTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_ResultButtonSecondary_v1");
+            resultPrimaryButtonTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_ResultButtonPrimary_v1");
+            resultGlowTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_ResultGlowOrange_v1");
             SetupCamera();
             LoadMetaProgress();
             objectPool = gameObject.AddComponent<GameObjectPool>();
@@ -201,6 +241,7 @@ namespace ProjectDM
             LoadSprites(runtimeAssets);
             CreateBackdrop();
             CreatePlayer();
+            BeginRun();
             isInitialized = true;
         }
 
@@ -219,7 +260,7 @@ namespace ProjectDM
 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                showMetaTree = !showMetaTree;
+                ToggleMetaTree();
             }
 
             if (showMetaTree)
@@ -227,13 +268,18 @@ namespace ProjectDM
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     showMetaTree = false;
+                    RefreshPauseState();
                 }
 
                 return;
             }
 
-            float dt = Time.deltaTime;
+            // A completed run remains frozen, but the growth screen can still be opened and closed.
+            if (runEnded) return;
+
+            float dt = Mathf.Min(Time.deltaTime, Mathf.Max(0f, activeRunDuration - elapsed));
             elapsed += dt;
+            remainingTimeFraction = Mathf.Clamp01(1f - elapsed / activeRunDuration);
             MovePlayer(dt);
             FollowPlayerWithCamera(dt);
             if (monsterSpawnArea != null)
@@ -245,6 +291,76 @@ namespace ProjectDM
             UpdateEnemies(dt);
             UpdateProjectiles(dt);
             UpdatePickups(dt);
+            if (elapsed >= activeRunDuration)
+            {
+                EndRun();
+            }
+        }
+
+        private void BeginRun()
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                if (enemy.transform != null) objectPool.Return(enemy.transform.gameObject);
+            }
+            foreach (Projectile projectile in projectiles)
+            {
+                if (projectile.transform != null) objectPool.Return(projectile.transform.gameObject);
+            }
+            foreach (Pickup pickup in pickups)
+            {
+                if (pickup.transform != null) objectPool.Return(pickup.transform.gameObject);
+            }
+            enemies.Clear();
+            projectiles.Clear();
+            pickups.Clear();
+            System.Array.Clear(monsterKillCounts, 0, monsterKillCounts.Length);
+            level = 1;
+            experience = 0;
+            experienceToNext = 7;
+            runCurrency = 0;
+            runDamageBonus = runHasteBonus = runFortuneBonus = 0;
+            elapsed = nextSpawn = nextShot = 0f;
+            activeRunDuration = Mathf.Max(1f, runDuration);
+            remainingTimeFraction = 1f;
+            runEnded = choosingUpgrade = showMetaTree = isPanningMetaTree = false;
+            player.position = playerSpawnPoint != null ? playerSpawnPoint.position : Vector3.zero;
+            playerController.Initialize(playerSprite, playerAnimatorController);
+            SnapCameraToPlayer();
+            RefreshPauseState();
+        }
+
+        private void EndRun()
+        {
+            if (runEnded) return;
+            elapsed = activeRunDuration;
+            remainingTimeFraction = 0f;
+            runEnded = true;
+            resultPresentationOpenedAt = Time.unscaledTime;
+            choosingUpgrade = showMetaTree = isPanningMetaTree = false;
+            RefreshPauseState();
+            // Collected currency is already saved by Collect. Do not award it again here.
+        }
+
+        private void ToggleMetaTree()
+        {
+            if (choosingUpgrade) return;
+            showMetaTree = !showMetaTree;
+            isPanningMetaTree = false;
+            RefreshPauseState();
+        }
+
+        private void ReturnToGrowthMap()
+        {
+            showMetaTree = true;
+            isPanningMetaTree = false;
+            hoveredMetaTreeNode = -1;
+            RefreshPauseState();
+        }
+
+        private void RefreshPauseState()
+        {
+            Time.timeScale = runEnded || choosingUpgrade || showMetaTree ? 0f : 1f;
         }
 
         private void SetupCamera()
@@ -303,7 +419,8 @@ namespace ProjectDM
             if (assets.GameplaySheet != null)
             {
                 gemSprite = Slice(assets.GameplaySheet, .385f, .025f, .080f, .180f, 64f);
-                coinSprite = Slice(assets.GameplaySheet, .545f, .025f, .060f, .160f, 64f);
+                // First coin only: measured in the 1774 x 887 source atlas, excluding the next frame.
+                coinSprite = Slice(assets.GameplaySheet, 960f / 1774f, 58f / 887f, 82f / 1774f, 88f / 887f, 64f);
                 boltSprite = Slice(assets.GameplaySheet, .020f, .025f, .100f, .180f, 64f);
             }
 
@@ -481,7 +598,7 @@ namespace ProjectDM
                 {
                     enemyObject.transform.localScale *= 0.9f;
                 }
-                enemies.Add(new Enemy { transform = enemyObject.transform, renderer = renderer, baseSprite = renderer.sprite, alternateSprite = alternate, hitPoints = Mathf.CeilToInt((skeleton ? 3f : 2f) + difficulty), speed = (skeleton ? 0.82f : 1f) + difficulty * 0.12f });
+                enemies.Add(new Enemy { kind = (MonsterKind)monsterKind, transform = enemyObject.transform, renderer = renderer, baseSprite = renderer.sprite, alternateSprite = alternate, hitPoints = Mathf.CeilToInt((skeleton ? 3f : 2f) + difficulty), speed = (skeleton ? 0.82f : 1f) + difficulty * 0.12f });
             }
         }
 
@@ -583,6 +700,7 @@ namespace ProjectDM
                         hit = true;
                         if (enemy.hitPoints <= 0)
                         {
+                            monsterKillCounts[(int)enemy.kind]++;
                             SpawnLoot(enemy.transform.position);
                             objectPool.Return(enemy.transform.gameObject);
                             enemies.RemoveAt(j);
@@ -799,6 +917,7 @@ namespace ProjectDM
 
         private void ChooseRunUpgrade(RunUpgrade upgrade)
         {
+            if (runEnded) return;
             switch (upgrade)
             {
                 case RunUpgrade.Damage:
@@ -813,21 +932,22 @@ namespace ProjectDM
             }
 
             choosingUpgrade = false;
-            Time.timeScale = 1f;
+            RefreshPauseState();
         }
 
         private void OpenRunUpgradeSelection()
         {
+            if (runEnded) return;
             choosingUpgrade = true;
             upgradeSelectionOpenedAt = Time.unscaledTime;
             System.Array.Clear(upgradeCardHoverTilts, 0, upgradeCardHoverTilts.Length);
             System.Array.Clear(upgradeCardWasHovered, 0, upgradeCardWasHovered.Length);
-            Time.timeScale = 0f;
+            RefreshPauseState();
         }
 
         private void TriggerDebugLevelUp()
         {
-            if (choosingUpgrade)
+            if (choosingUpgrade || runEnded || showMetaTree)
             {
                 return;
             }
@@ -913,13 +1033,25 @@ namespace ProjectDM
                 return;
             }
 
-            GUI.Label(new Rect(20, 16, 620, 38), "PROJECT DM  //  ARCANE SURVIVOR", titleStyle);
-            GUI.Label(new Rect(22, 56, 600, 28), $"Level {level}    경험치 {experience}/{experienceToNext}    획득 재화 +{runCurrency}    영구 재화 {metaCurrency}", statStyle);
-            GUI.Label(new Rect(22, 84, 650, 26), $"Arcane Bolt {1 + damageLevel + runDamageBonus} DMG   |   Cast {Mathf.Max(0.18f, 0.62f - 0.035f * (hasteLevel + runHasteBonus)):0.00}s   |   Fortune +{(fortuneLevel + runFortuneBonus) * 3}%", statStyle);
+            if (showMetaTree)
+            {
+                DrawMetaTree();
+                return;
+            }
+
+            if (runEnded)
+            {
+                DrawRunTimer();
+                DrawRunResults();
+                return;
+            }
+
+            DrawRunHudInformation();
+            DrawRunTimer();
 
             if (GUI.Button(new Rect(Screen.width - 190, 20, 165, 36), "META TREE  [TAB]"))
             {
-                showMetaTree = !showMetaTree;
+                ToggleMetaTree();
             }
 
             if (!choosingUpgrade && !showMetaTree && GUI.Button(new Rect(Screen.width - 190, 64, 165, 30), "DEBUG LEVEL UP"))
@@ -932,10 +1064,219 @@ namespace ProjectDM
                 DrawRunUpgradeSelection();
             }
 
-            if (showMetaTree)
+        }
+
+        private void DrawRunHudInformation()
+        {
+            float width = Mathf.Min(650f, Screen.width - 44f);
+            float x = Screen.width - width - 22f;
+            float y = Screen.height - 78f;
+            GUIStyle informationStyle = new GUIStyle(statStyle)
             {
-                DrawMetaTree();
+                alignment = TextAnchor.MiddleRight,
+                fontSize = Screen.width < 650 ? 12 : 15
+            };
+            GUI.Label(new Rect(x, y, width, 28f), $"Level {level}    경험치 {experience}/{experienceToNext}    획득 재화 +{runCurrency}    영구 재화 {metaCurrency}", informationStyle);
+            GUI.Label(new Rect(x, y + 28f, width, 26f), $"Arcane Bolt {1 + damageLevel + runDamageBonus} DMG   |   Cast {Mathf.Max(0.18f, 0.62f - 0.035f * (hasteLevel + runHasteBonus)):0.00}s   |   Fortune +{(fortuneLevel + runFortuneBonus) * 3}%", informationStyle);
+        }
+
+        private void DrawRunTimer()
+        {
+            float width = Mathf.Min(480f, Mathf.Max(140f, Screen.width - 234f));
+            float y = 24f;
+            float x = 22f;
+            float remaining = Mathf.Max(0f, activeRunDuration - elapsed);
+            float fraction = remainingTimeFraction;
+            Color accent = remaining <= 10f ? new Color(.96f, .38f, .23f) : new Color(.95f, .72f, .28f);
+
+            Color artworkTint = remaining <= 10f ? new Color(1f, .52f, .35f) : Color.white;
+            if (timerIconTexture != null)
+            {
+                DrawTimerTexture(new Rect(x, y - 3f, 26f, 30f), timerIconTexture, TimerIconUv, artworkTint);
             }
+            Rect track = new Rect(x + 36f, y, width - 119f, 24f);
+            DrawTimerTrack(track);
+            Rect fill = new Rect(track.x + 5f, track.y + 4f, Mathf.Max(0f, track.width - 10f), track.height - 8f);
+            if (timerFillTexture != null && fraction > 0f)
+            {
+                Rect fillUv = TimerFillUv;
+                fillUv.width *= fraction;
+                fill.width *= fraction;
+                DrawTimerTexture(fill, timerFillTexture, fillUv, artworkTint);
+            }
+
+            // Display-only slider: no handle, keyboard focus or pointer interaction.
+            timerTrackStyle ??= new GUIStyle(GUIStyle.none) { fixedHeight = 24f };
+            bool wasEnabled = GUI.enabled;
+            GUI.enabled = false;
+            GUI.HorizontalSlider(track, fraction, 0f, 1f, timerTrackStyle, GUIStyle.none);
+            GUI.enabled = wasEnabled;
+
+            GUIStyle timeStyle = new GUIStyle(statStyle)
+            {
+                fontSize = 21,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleRight,
+                normal = { textColor = accent }
+            };
+            GUI.Label(new Rect(track.xMax + 12f, y - 3f, 71f, 30f), remaining.ToString("00.00", System.Globalization.CultureInfo.InvariantCulture), timeStyle);
+        }
+
+        private void DrawTimerTrack(Rect rect)
+        {
+            if (timerTrackTexture == null) return;
+            // Three horizontal slices keep the end caps intact when the HUD width changes.
+            float capWidth = Mathf.Min(8f, rect.width * .5f);
+            float uvCapWidth = 36f / 2172f;
+            DrawTimerTexture(new Rect(rect.x, rect.y, capWidth, rect.height), timerTrackTexture,
+                new Rect(TimerTrackUv.x, TimerTrackUv.y, uvCapWidth, TimerTrackUv.height), Color.white);
+            DrawTimerTexture(new Rect(rect.x + capWidth, rect.y, rect.width - capWidth * 2f, rect.height), timerTrackTexture,
+                new Rect(TimerTrackUv.x + uvCapWidth, TimerTrackUv.y, TimerTrackUv.width - uvCapWidth * 2f, TimerTrackUv.height), Color.white);
+            DrawTimerTexture(new Rect(rect.xMax - capWidth, rect.y, capWidth, rect.height), timerTrackTexture,
+                new Rect(TimerTrackUv.xMax - uvCapWidth, TimerTrackUv.y, uvCapWidth, TimerTrackUv.height), Color.white);
+        }
+
+        private static void DrawTimerTexture(Rect rect, Texture2D texture, Rect uv, Color tint)
+        {
+            Color previousColor = GUI.color;
+            GUI.color = previousColor * tint;
+            GUI.DrawTextureWithTexCoords(rect, texture, uv, true);
+            GUI.color = previousColor;
+        }
+
+        private void DrawRunResults()
+        {
+            DrawSolidRect(new Rect(0f, 0f, Screen.width, Screen.height), new Color(.015f, .018f, .04f, .6f));
+            // The approved preview has a tall panel; scale the complete composition from 1920 x 1080.
+            const float panelWidth = 720f;
+            const float panelHeight = 780f;
+            float scale = Mathf.Min(Screen.width / 1920f, Screen.height / 1080f);
+            Matrix4x4 previousMatrix = GUI.matrix;
+            GUI.matrix = previousMatrix * Matrix4x4.TRS(new Vector3((Screen.width - panelWidth * scale) * .5f, (Screen.height - panelHeight * scale) * .5f, 0f), Quaternion.identity, Vector3.one * scale);
+            bool returnToMap = false;
+            bool restart = false;
+            try
+            {
+                DrawResultArtwork(new Rect(0f, 0f, panelWidth, panelHeight), resultPanelTexture, ResultPanelUv, Color.white);
+                float presentationElapsed = Mathf.Max(0f, Time.unscaledTime - resultPresentationOpenedAt);
+                DrawResultEdgeGlow(panelWidth, panelHeight, presentationElapsed);
+                Color ivory = new Color(.96f, .94f, .87f);
+                Color subdued = new Color(.49f, .48f, .48f);
+                GUIStyle heading = new GUIStyle(titleStyle) { fontSize = 36, alignment = TextAnchor.MiddleCenter, normal = { textColor = ivory } };
+                GUIStyle body = new GUIStyle(statStyle) { fontSize = 26, alignment = TextAnchor.MiddleLeft, normal = { textColor = ivory } };
+                GUIStyle value = new GUIStyle(body) { alignment = TextAnchor.MiddleRight };
+                GUIStyle section = new GUIStyle(body) { fontSize = 30, fontStyle = FontStyle.Bold };
+                GUIStyle mutedBody = new GUIStyle(body) { normal = { textColor = subdued } };
+                GUIStyle mutedValue = new GUIStyle(value) { normal = { textColor = subdued } };
+                GUI.Label(new Rect(44f, 24f, 632f, 48f), "진행 종료", heading);
+                DrawResultDivider(92f);
+                GUI.Label(new Rect(44f, 116f, 632f, 34f), "획득 재화", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(.58f, .55f, .50f) } });
+
+                GUIStyle currencyStyle = new GUIStyle(heading) { fontSize = 68, alignment = TextAnchor.MiddleLeft, normal = { textColor = new Color(.92f, .68f, .34f) } };
+                // Reserve the final value's width, so the centered coin/value group never shifts as digits increase.
+                string finalAmount = $"+{runCurrency:N0}";
+                string amount = $"+{AnimatedResultCount(runCurrency, 0, presentationElapsed):N0}";
+                float amountWidth = Mathf.Min(500f, currencyStyle.CalcSize(new GUIContent(finalAmount)).x);
+                // Fit unusually large balances without letting the text escape the panel.
+                while (currencyStyle.fontSize > 24 && currencyStyle.CalcSize(new GUIContent(finalAmount)).x > 500f) currencyStyle.fontSize--;
+                amountWidth = Mathf.Min(amountWidth, currencyStyle.CalcSize(new GUIContent(finalAmount)).x);
+                float currencyX = (panelWidth - amountWidth - 82f) * .5f;
+                DrawResultSprite(new Rect(currencyX, 163f, 64f, 64f), coinSprite);
+                GUI.Label(new Rect(currencyX + 82f, 151f, amountWidth + 4f, 90f), amount, currencyStyle);
+                DrawResultDivider(258f);
+
+                int totalKills = 0;
+                foreach (int count in monsterKillCounts) totalKills += count;
+                GUI.Label(new Rect(62f, 280f, 350f, 42f), "총 처치", section);
+                GUI.Label(new Rect(446f, 280f, 210f, 42f), $"{AnimatedResultCount(totalKills, 1, presentationElapsed):N0}", new GUIStyle(value) { fontSize = 30, fontStyle = FontStyle.Bold });
+                for (int i = 0; i < monsterKillCounts.Length; i++)
+                {
+                    float rowY = 342f + i * 57f;
+                    bool empty = monsterKillCounts[i] == 0;
+                    Color previousColor = GUI.color;
+                    GUI.color = previousColor * (empty ? new Color(.5f, .5f, .5f) : Color.white);
+                    DrawMonsterResultIcon(new Rect(74f, rowY + 3f, 36f, 36f), (MonsterKind)i);
+                    GUI.color = previousColor;
+                    GUI.Label(new Rect(136f, rowY, 300f, 42f), MonsterDisplayName((MonsterKind)i), empty ? mutedBody : body);
+                    GUI.Label(new Rect(446f, rowY, 210f, 42f), $"{AnimatedResultCount(monsterKillCounts[i], i + 2, presentationElapsed):N0}", empty ? mutedValue : value);
+                }
+                DrawResultDivider(632f);
+                returnToMap = DrawResultButton(new Rect(38f, 658f, 310f, 78f), "돌아가기", false);
+                restart = DrawResultButton(new Rect(372f, 658f, 310f, 78f), "다시 시작", true);
+            }
+            finally { GUI.matrix = previousMatrix; }
+            if (returnToMap) ReturnToGrowthMap();
+            else if (restart) BeginRun();
+        }
+
+        private static void DrawResultDivider(float y)
+        {
+            DrawSolidRect(new Rect(46f, y, 628f, 2f), new Color(.55f, .50f, .43f, .65f));
+        }
+
+        private int AnimatedResultCount(int target, int sequence, float elapsedTime)
+        {
+            if (resultCountUpDuration <= 0f) return target;
+            return RunResultPresentation.CountUp(target, elapsedTime, resultCountUpDuration, sequence * Mathf.Max(0f, resultCountUpStagger));
+        }
+
+        private void DrawResultEdgeGlow(float panelWidth, float panelHeight, float elapsedTime)
+        {
+            if (resultGlowTexture == null || resultGlowIntensity <= 0f) return;
+            // Unscaled time keeps the count-up and glow playing while EndRun pauses gameplay.
+            float fadeIn = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsedTime / .35f));
+            float pulse = resultGlowPulseDuration > 0f
+                ? .9f + .1f * Mathf.Sin(elapsedTime * Mathf.PI * 2f / resultGlowPulseDuration)
+                : 1f;
+            Color tint = new Color(1f, 1f, 1f, resultGlowIntensity * fadeIn * pulse);
+            Rect uv = new Rect(0f, 0f, 1f, 1f);
+            // Draw beneath all labels and buttons: their colors and hit areas remain unchanged.
+            DrawTimerTexture(new Rect(-70f, -85f, panelWidth + 140f, 170f), resultGlowTexture, uv, tint);
+            DrawTimerTexture(new Rect(-70f, panelHeight - 85f, panelWidth + 140f, 170f), resultGlowTexture, uv, tint);
+        }
+
+        private static void DrawResultArtwork(Rect rect, Texture2D texture, Rect uv, Color tint)
+        {
+            if (texture != null) DrawTimerTexture(rect, texture, uv, tint);
+            else
+            {
+                DrawSolidRect(rect, new Color(.055f, .065f, .095f));
+                DrawOutline(rect, new Color(.72f, .52f, .25f), 2f);
+            }
+        }
+
+        private bool DrawResultButton(Rect rect, string label, bool primary)
+        {
+            bool hovered = rect.Contains(Event.current.mousePosition);
+            DrawResultArtwork(rect, primary ? resultPrimaryButtonTexture : resultSecondaryButtonTexture,
+                primary ? ResultPrimaryButtonUv : ResultSecondaryButtonUv, hovered ? new Color(1.12f, 1.12f, 1.12f) : Color.white);
+            bool clicked = GUI.Button(rect, GUIContent.none, GUIStyle.none);
+            GUI.Label(rect, label, new GUIStyle(statStyle) { fontSize = 28, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(.96f, .94f, .87f) } });
+            return clicked;
+        }
+
+        private void DrawMonsterResultIcon(Rect rect, MonsterKind kind)
+        {
+            Sprite sprite = kind switch { MonsterKind.Skeleton => skeletonSprite, MonsterKind.Goblin => goblinSprite, MonsterKind.Mushroom => mushroomSprite, MonsterKind.Boar => boarSprite, _ => slimeSprite };
+            DrawResultSprite(rect, sprite);
+        }
+
+        private static void DrawResultSprite(Rect rect, Sprite sprite)
+        {
+            if (sprite == null) return;
+            Rect pixels = sprite.textureRect;
+            Texture2D texture = sprite.texture;
+            Rect uv = new Rect(pixels.x / texture.width, pixels.y / texture.height, pixels.width / texture.width, pixels.height / texture.height);
+            float aspect = pixels.width / pixels.height;
+            Rect image = aspect > 1f
+                ? new Rect(rect.x, rect.center.y - rect.width / aspect * .5f, rect.width, rect.width / aspect)
+                : new Rect(rect.center.x - rect.height * aspect * .5f, rect.y, rect.height * aspect, rect.height);
+            GUI.DrawTextureWithTexCoords(image, texture, uv);
+        }
+
+        private static string MonsterDisplayName(MonsterKind kind)
+        {
+            return kind switch { MonsterKind.Skeleton => "스켈레톤", MonsterKind.Goblin => "고블린", MonsterKind.Mushroom => "버섯", MonsterKind.Boar => "멧돼지", _ => "슬라임" };
         }
 
         private void SetupGuiStyles()
@@ -1144,6 +1485,13 @@ namespace ProjectDM
             Rect treeCanvas = new Rect(0f, 0f, Screen.width, Screen.height);
             HandleMetaTreeInput(treeCanvas);
             DrawMetaTreeCanvas(treeCanvas);
+            // This is a navigation button, not a popup/header; the graph still owns the whole screen.
+            Rect navigation = new Rect(Screen.width - 202f, Screen.height - 66f, 180f, 44f);
+            if (DrawResultButton(navigation, runEnded ? "플레이 시작" : "플레이로 복귀", true))
+            {
+                if (runEnded) BeginRun();
+                else ToggleMetaTree();
+            }
         }
 
         private void HandleMetaTreeInput(Rect canvas)

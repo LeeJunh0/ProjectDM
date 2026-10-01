@@ -784,7 +784,8 @@ namespace ProjectDM.Editor
                 Slice("Slime_2", width, height, .530f, .115f, .165f, .255f),
                 Slice("Slime_3", width, height, .700f, .115f, .165f, .255f),
                 Slice("Experience_Gem", width, height, .385f, .025f, .080f, .180f),
-                Slice("Gold_Coin", width, height, .545f, .025f, .060f, .160f),
+                // Keep the imported coin and GameManager's runtime slice on the same single frame.
+                Slice("Gold_Coin", width, height, 960f / 1774f, 58f / 887f, 82f / 1774f, 88f / 887f),
                 Slice("Treasure_Chest", width, height, .690f, .025f, .100f, .180f)
             };
             // The projectile artwork occupies four uneven frames along the lower-left edge.

@@ -13,6 +13,7 @@ namespace ProjectDM
         public bool showAlternate;
         public int hitPoints;
         public float speed;
+        public MonsterKind kind;
     }
 
     internal sealed class Projectile
@@ -40,4 +41,5 @@ namespace ProjectDM
     }
 
     internal enum PickupKind { Experience, Currency, Chest }
+    internal enum MonsterKind { Slime, Skeleton, Goblin, Mushroom, Boar }
 }
