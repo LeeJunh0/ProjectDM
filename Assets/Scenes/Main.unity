@@ -25890,6 +25890,33 @@ MonoBehaviour:
   upgradeCardHoverLeftTiltAngle: -4
   upgradeCardHoverTiltSpeed: 180
   upgradeCardHoverScale: 1.035
+  prototypeBalanceTable: {fileID: 0}
+  prototypeSkillTable: {fileID: 0}
+  prototypeGrowthTable: {fileID: 0}
+  useTableRunDuration: 1
+  useTableSpawnDistances: 1
+  enablePrototypeDebug: 1
+  prototypeSandbox: 1
+  showCombatDamage: 1
+  combatDamageDuration: 2
+  combatDamageHeight: 0.35
+  combatDamageRise: 0.65
+  combatDamageScatter: 0.22
+  combatDamageFontSize: 42
+  combatDamageStartScale: 0.55
+  combatDamagePeakScale: 1.3
+  combatDamageEndScale: 0.05
+  combatDamageGrowDuration: 0.1
+  combatDamagePeakHoldDuration: 0.04
+  combatDamageShrinkDuration: 0.3
+  combatDamageScaleSpeed: 1
+  combatCriticalScale: 1.4
+  combatDamageMaximum: 128
+  combatAttackColor: {r: 0.95, g: 0.96, b: 1, a: 1}
+  combatReceivedColor: {r: 1, g: 0.32, b: 0.28, a: 1}
+  combatCriticalColor: {r: 1, g: 0.78, b: 0.22, a: 1}
+  enableCriticalHits: 1
+  enablePlayerContactDamage: 1
 --- !u!4 &1763096504
 Transform:
   m_ObjectHideFlags: 0

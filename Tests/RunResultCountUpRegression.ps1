@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$helperSource = Get-Content (Join-Path $projectRoot 'Assets/Scripts/RunResultPresentation.cs') -Raw
-$compiledType = Add-Type -TypeDefinition $helperSource -PassThru
+$helperSource = Get-Content (Join-Path $projectRoot 'Assets/Scripts/Systems/UI/Results/RunResultPresentation.cs') -Raw
+$compiledType = Add-Type -TypeDefinition $helperSource -PassThru | Where-Object FullName -eq 'ProjectDM.RunResultPresentation'
 $countMethod = $compiledType.GetMethod('CountUp', [Reflection.BindingFlags]'NonPublic,Static')
 function Get-Count([int] $target, [double] $elapsed, [double] $duration = 1.1, [double] $delay = 0) {
     return $countMethod.Invoke($null, [object[]]@($target, $elapsed, $duration, $delay))
@@ -26,10 +26,11 @@ if ((Get-Count 128 -1) -ne 0) { throw 'Negative elapsed time must stay at zero.'
 if ((Get-Count -1 2) -ne 0) { throw 'Negative targets must stay at zero.' }
 if ((Get-Count 128 .2) -le 0 -or (Get-Count 128 .2) -ge 128) { throw 'Intermediate count is not animated.' }
 
-$manager = Get-Content (Join-Path $projectRoot 'Assets/Scripts/GameManager.cs') -Raw
+$manager = (Get-Content (Join-Path $projectRoot 'Assets/Scripts/Systems/Run/RunController.cs') -Raw) +
+    (Get-Content (Join-Path $projectRoot 'Assets/Scripts/Systems/UI/Results/RunResultView.cs') -Raw)
 if ($manager -notmatch 'resultPresentationOpenedAt = Time\.unscaledTime' -or
-    $manager -notmatch 'Time\.unscaledTime - resultPresentationOpenedAt') { throw 'Paused results must use unscaled time.' }
-foreach ($pattern in @('AnimatedResultCount\(runCurrency, 0', 'AnimatedResultCount\(totalKills, 1', 'AnimatedResultCount\(monsterKillCounts\[i\], i \+ 2')) {
+    $manager -notmatch 'Time\.unscaledTime - run.resultPresentationOpenedAt') { throw 'Paused results must use unscaled time.' }
+foreach ($pattern in @('AnimatedResultCount\(run.runCurrency, 0', 'AnimatedResultCount\(totalKills, 1', 'AnimatedResultCount\(run.monsterKillCounts\[i\], i \+ 2')) {
     if ($manager -notmatch $pattern) { throw "Unanimated statistic: $pattern" }
 }
 Write-Output 'Count-up: zero start, stagger, monotonic range, intermediate values, exact completion, zero duration, zero/large counts: PASS'

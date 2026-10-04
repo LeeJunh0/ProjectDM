@@ -1,0 +1,134 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+namespace ProjectDM
+{
+    /// <summary>Owns the run clock, pause/navigation state and result counters.</summary>
+    internal sealed class RunController
+    {
+        private readonly GameSettings settings;
+        private readonly SaveService save;
+        private readonly GameTables tables;
+        private readonly ProgressionService progression;
+        private readonly PlayerWorld playerWorld;
+        private readonly Action resetWorld;
+        private readonly Action spawnInitial;
+        private readonly Action snapCamera;
+        private readonly Action resetNavigation;
+        private readonly Action closeSelection;
+        private readonly Func<bool> isChoosing;
+
+        internal RunController(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, PlayerWorld playerWorld, Action resetWorld, Action spawnInitial, Action snapCamera, Action resetNavigation, Action closeSelection, Func<bool> isChoosing)
+        {
+            this.settings = settings;
+            this.save = save;
+            this.tables = tables;
+            this.progression = progression;
+            this.playerWorld = playerWorld;
+            this.resetWorld = resetWorld;
+            this.spawnInitial = spawnInitial;
+            this.snapCamera = snapCamera;
+            this.resetNavigation = resetNavigation;
+            this.closeSelection = closeSelection;
+            this.isChoosing = isChoosing;
+        }
+
+        internal int runCurrency;
+
+        internal bool showMetaTree;
+
+        internal float elapsed;
+
+        internal float activeRunDuration;
+
+        internal float remainingTimeFraction = 1f;
+
+        internal bool runEnded;
+
+        internal readonly int[] monsterKillCounts = new int[5];
+        internal readonly int[] permanentKillsAtRunStart = new int[5];
+        internal readonly int[] resultPermanentKillCounts = new int[5];
+        internal int resultMonsterStage;
+
+        internal float resultPresentationOpenedAt;
+
+        internal void EndRun()
+        {
+            if (runEnded) return;
+            remainingTimeFraction = Mathf.Clamp01((activeRunDuration - elapsed) / initialRunSeconds);
+            runEnded = true;
+            Array.Copy(save.progress.kills, resultPermanentKillCounts, resultPermanentKillCounts.Length);
+            resultMonsterStage = PrototypeRules.Stage(tables.balance, save.progress);
+            resultPresentationOpenedAt = Time.unscaledTime;
+            showMetaTree = false;
+            closeSelection();
+            resetNavigation();
+            RefreshPauseState();
+            save.progress.completedRuns++;
+            save.progress.playedSeconds += elapsed;
+            save.MarkPrototypeProgressDirty();
+            save.FlushPrototypeProgress();
+            // Collected currency is already saved by pickupsSystem.Collect. Do not award it again here.
+        }
+
+        internal void ToggleMetaTree()
+        {
+            if (isChoosing()) return;
+            showMetaTree = !showMetaTree;
+            resetNavigation();
+            RefreshPauseState();
+        }
+
+        internal void ReturnToGrowthMap()
+        {
+            showMetaTree = true;
+            resetNavigation();
+            RefreshPauseState();
+        }
+
+        internal void RefreshPauseState()
+        {
+            Time.timeScale = runEnded || isChoosing() || showMetaTree ? 0f : 1f;
+        }
+
+        internal float initialRunSeconds;
+
+        internal float timeRewardsThisRun;
+
+        internal void BeginRun()
+        {
+            resetWorld();
+            Array.Clear(monsterKillCounts, 0, monsterKillCounts.Length);
+            Array.Copy(save.progress.kills, permanentKillsAtRunStart, permanentKillsAtRunStart.Length);
+            Array.Copy(save.progress.kills, resultPermanentKillCounts, resultPermanentKillCounts.Length);
+            resultMonsterStage = PrototypeRules.Stage(tables.balance, save.progress);
+            runCurrency = 0;
+            elapsed = 0f;
+            initialRunSeconds = Mathf.Min(tables.balance.bossElapsedSeconds, Mathf.Max(1f,
+                (settings.useTableRunDuration ? tables.balance.initialSeconds : settings.runDuration) + progression.PermanentAmount("time")));
+            activeRunDuration = initialRunSeconds;
+            remainingTimeFraction = 1f;
+            runEnded = showMetaTree = false;
+            resetNavigation();
+            playerWorld.ResetPosition();
+            snapCamera();
+            RefreshPauseState();
+            spawnInitial();
+        }
+
+        internal float TickClock(float deltaTime)
+        {
+            float dt = Mathf.Min(deltaTime, Mathf.Max(0f, Mathf.Min(tables.balance.bossElapsedSeconds, activeRunDuration) - elapsed));
+            elapsed += dt;
+            return dt;
+        }
+        internal void CompleteIfDue(Action arriveAtBoss)
+        {
+            remainingTimeFraction = Mathf.Clamp01((activeRunDuration - elapsed) / initialRunSeconds);
+            if (PrototypeRules.BossDue(elapsed, tables.balance.bossElapsedSeconds)) arriveAtBoss();
+            else if (elapsed >= activeRunDuration) EndRun();
+        }
+    }
+}

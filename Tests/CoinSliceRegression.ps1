@@ -32,7 +32,7 @@ try {
     }
 } finally { $bitmap.Dispose() }
 
-$runtime = Get-Content (Join-Path $projectRoot 'Assets/Scripts/GameManager.cs') -Raw
+$runtime = Get-Content (Join-Path $projectRoot 'Assets/Scripts/Systems/Assets/WorldArtAssets.cs') -Raw
 $pipeline = Get-Content (Join-Path $projectRoot 'Assets/Editor/ProjectDMArtPipeline.cs') -Raw
 $runtimeMatch = [regex]::Match($runtime, 'coinSprite\s*=\s*Slice\(assets\.GameplaySheet,\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),')
 $pipelineMatch = [regex]::Match($pipeline, 'Slice\("Gold_Coin", width, height,\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\)]+)\)')

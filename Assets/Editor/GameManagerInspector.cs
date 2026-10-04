@@ -11,8 +11,39 @@ namespace ProjectDM.Editor
         {
             serializedObject.Update();
 
+            DrawSection("프로토타입 테이블");
+            DrawProperty("prototypeBalanceTable", "기본·몬스터·스폰 테이블", "비워두면 Resources/ProjectDM/Data/PrototypeBalance.json을 사용합니다. 수정한 테이블은 플레이 재시작 시 적용됩니다.");
+            DrawProperty("prototypeSkillTable", "런 스킬 테이블", "비워두면 PrototypeSkills.json을 사용합니다. 레벨업 선택 조건과 실제 공격 효과 수치입니다.");
+            DrawProperty("prototypeGrowthTable", "영구 성장 그래프 테이블", "비워두면 PrototypeGrowth.json을 사용합니다. 가격, 최대 단계, 해금 조건, 그래프 위치를 지정합니다.");
+            DrawProperty("useTableRunDuration", "테이블 시작 시간 사용", "켜면 기본 40초 + 영구 시간 성장입니다. 끄면 아래 진행 제한 시간 + 영구 시간 성장을 사용합니다.");
+            DrawProperty("useTableSpawnDistances", "테이블 스폰 거리 사용", "켜면 초기 3~5, 리필 5~8 거리입니다. 끄면 기존 씬의 스폰 영역 설정을 사용합니다.");
+            DrawProperty("enablePrototypeDebug", "런 디버그 버튼 표시", "레벨업, 재화 지급, 임시 스킬 획득, 발동 100%, 스폰 단계, 보스 도달 테스트 도구입니다.");
+            DrawProperty("prototypeSandbox", "실험 모드 (저장하지 않음)", "플레이 시작 전에 켜세요. 기존 진행을 읽지만 실험 중 얻은 재화·처치·구매는 실제 저장하지 않습니다. 플레이 도중 변경은 다음 플레이 시작에 적용됩니다.");
+
             DrawSection("런 진행 시간");
-            DrawProperty("runDuration", "진행 제한 시간 (초)", "메인 게임 한 회차의 제한 시간입니다. 레벨업 선택과 성장 지도에서는 시간이 멈춥니다. 변경한 값은 다음 회차에 적용됩니다.");
+            DrawProperty("runDuration", "시작 시간 수동 설정 (초)", "테이블 시작 시간 사용을 끈 경우의 기본 시간입니다. 영구 시간 성장이 더해집니다. 변경한 값은 다음 회차에 적용됩니다.");
+
+            DrawSection("전투 데미지 숫자");
+            DrawProperty("showCombatDamage", "데미지 숫자 표시", "실제 적중 지점에 받은 피해량을 표시합니다.");
+            DrawProperty("combatDamageDuration", "숫자 표시 시간 (초)", "숫자가 떠오른 뒤 사라지는 시간입니다. 일시정지 중에는 멈춥니다.");
+            DrawProperty("combatDamageFontSize", "기본 숫자 크기", "1920×1080 기준 글꼴 크기입니다.");
+            DrawProperty("combatDamageStartScale", "시작 크기 배율", "기본 숫자 크기에 곱하는 등장 크기입니다. 기본 0.55배로 작게 시작합니다.");
+            DrawProperty("combatDamagePeakScale", "최대 크기 배율", "커지는 연출의 목표 크기입니다. 기본 1.3배입니다.");
+            DrawProperty("combatDamageEndScale", "마지막 크기 배율", "작아진 뒤 사라질 때까지 유지하는 크기입니다. 기본 0.55배입니다.");
+            DrawProperty("combatDamageGrowDuration", "커지는 시간 (초)", "작게 등장한 숫자가 최대 크기에 도달하는 시간입니다. 짧을수록 빠릅니다. 0이면 즉시 커집니다.");
+            DrawProperty("combatDamagePeakHoldDuration", "최대 크기 유지 시간 (초)", "최대 크기에서 잠깐 멈추는 시간입니다. 0이면 바로 작아집니다.");
+            DrawProperty("combatDamageShrinkDuration", "작아지는 시간 (초)", "최대 크기에서 마지막 크기까지 줄어드는 시간입니다. 0이면 즉시 작아집니다.");
+            DrawProperty("combatDamageScaleSpeed", "크기 연출 속도 배율", "1은 기본 속도, 2는 두 배 속도입니다. 커짐·유지·줄어듦에 적용하며 숫자 표시 시간과 이동 속도는 바꾸지 않습니다. 연출 합계가 표시 시간보다 길면 전체 구간을 비례 축소합니다.");
+            DrawProperty("combatDamageHeight", "등장 높이", "적중 지점보다 위에 나타나는 월드 높이입니다.");
+            DrawProperty("combatDamageRise", "떠오르는 거리", "숫자가 사라질 때까지 위로 이동하는 거리입니다.");
+            DrawProperty("combatDamageScatter", "좌우 분산 거리", "겹치는 숫자를 좌우로 흩어 표시합니다. 전투 확률 판정에는 영향을 주지 않습니다.");
+            DrawProperty("combatCriticalScale", "치명타 크기 배율", "치명타 표시의 크기 배율입니다. 실제 치명타 판정은 별도 전투 규칙입니다.");
+            DrawProperty("combatDamageMaximum", "동시 표시 최대 수", "숫자 표시만 제한하며 실제 피해나 스킬 발동은 제한하지 않습니다.");
+            DrawProperty("combatAttackColor", "공격 피해 숫자 색상", "몬스터에게 가한 피해의 숫자 색상입니다.");
+            DrawProperty("combatReceivedColor", "플레이어 피격 숫자 색상", "플레이어가 받은 실제 피해의 숫자 색상입니다.");
+            DrawProperty("combatCriticalColor", "치명타 숫자 색상", "실제로 치명타가 발생한 적중의 숫자 색상입니다.");
+            DrawProperty("enableCriticalHits", "기본 공격 치명타 사용", "치명타 확률과 배율은 기본 테이블의 criticalChance/criticalMultiplier입니다. 다중 공격의 각 적중도 따로 판정합니다.");
+            DrawProperty("enablePlayerContactDamage", "플레이어 접촉 피해 사용", "체력·접촉 판정 거리·피격 무적 시간과 몬스터 접촉 피해량은 기본 테이블에서 설정합니다.");
 
             DrawSection("결과 통계 연출");
             DrawProperty("resultCountUpDuration", "숫자 증가 시간 (초)", "각 통계 숫자가 0에서 실제 값까지 올라가는 시간입니다. 0이면 즉시 표시합니다.");

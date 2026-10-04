@@ -64,8 +64,8 @@ namespace ProjectDM
             yield return Load<GameObject>(catalog.playerPrefab, asset => Assets.PlayerPrefab = asset);
             yield return Load<GameObject>(catalog.enemyPrefab, asset => Assets.EnemyPrefab = asset);
             yield return Load<GameObject>(catalog.projectilePrefab, asset => Assets.ProjectilePrefab = asset);
-            yield return LoadOptionalCollection<GameObject>(catalog.experiencePickupPrefabs, assets => Assets.ExperiencePickupPrefabs = assets);
-            yield return LoadOptionalCollection<GameObject>(catalog.currencyPickupPrefabs, assets => Assets.CurrencyPickupPrefabs = assets);
+            yield return LoadGradeCollection<GameObject>(catalog.experiencePickupPrefabs, assets => Assets.ExperiencePickupPrefabs = assets);
+            yield return LoadGradeCollection<GameObject>(catalog.currencyPickupPrefabs, assets => Assets.CurrencyPickupPrefabs = assets);
             yield return Load<GameObject>(catalog.chestPickupPrefab, asset => Assets.ChestPickupPrefab = asset);
         }
 
@@ -114,7 +114,7 @@ namespace ProjectDM
             }
         }
 
-        private IEnumerator LoadOptionalCollection<T>(IEnumerable<AssetReference> references, Action<T[]> assign) where T : UnityEngine.Object
+        private IEnumerator LoadGradeCollection<T>(IEnumerable<AssetReference> references, Action<T[]> assign) where T : UnityEngine.Object
         {
             List<T> loadedAssets = new();
             if (references != null)
@@ -123,6 +123,8 @@ namespace ProjectDM
                 {
                     if (reference == null || !reference.RuntimeKeyIsValid())
                     {
+                        loadedAssets.Add(null); // Grade indices must not shift when a slot is missing.
+                        Error = "드롭 등급 프리팹이 누락되었습니다. 에셋 카탈로그의 등급 순서를 확인하세요.";
                         continue;
                     }
 
@@ -135,11 +137,14 @@ namespace ProjectDM
                     }
                     else
                     {
-                        Debug.LogWarning($"Project DM could not load optional {typeof(T).Name} '{reference.RuntimeKey}': {handle.OperationException}");
+                        loadedAssets.Add(null);
+                        Error = "드롭 등급 프리팹을 불러오지 못했습니다: " + reference.RuntimeKey;
+                        Debug.LogWarning($"Project DM could not load drop grade {typeof(T).Name} '{reference.RuntimeKey}': {handle.OperationException}");
                     }
                 }
             }
 
+            if (loadedAssets.Count != 5) Error = "재화/경험치 등급 프리팹은 각각 5개 슬롯을 유지해야 합니다.";
             assign(loadedAssets.ToArray());
         }
 

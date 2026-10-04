@@ -136,6 +136,22 @@ class Run:
     def chance(self, key):
         return min(1, self.config["effects"][key]["chance"] + self.progress.ranks.get("proc", 0) * self.config["upgrades"]["proc"]["step"] + self.run_proc * self.options["run_proc_step"])
 
+    def attack_speed(self):
+        return 1 + self.progress.ranks.get("speed", 0) * self.config["upgrades"]["speed"]["step"] + self.run_speed * self.options["run_speed_step"]
+
+    def direct_hit_damage(self, damage):
+        return damage
+
+    def extra_event(self, kind, payload):
+        pass
+
+    def monster_rewards(self, enemy):
+        monster = self.config["monsters"][enemy.kind]
+        coins = monster["coins"] + (monster["bonus_coins"] if self.rng.random() < monster["bonus_chance"] else 0)
+        multiplier = 1 + self.progress.ranks.get("yield", 0) * self.config["upgrades"]["yield"]["step"]
+        raw = coins * multiplier
+        return math.floor(raw) + (self.rng.random() < raw % 1), monster["xp"]
+
     def hurt(self, uid, damage, source="basic"):
         enemy = self.enemies.get(uid)
         if enemy is None:
@@ -159,17 +175,15 @@ class Run:
             self.progress.stage += 1
             self.unlocks.append({"stage": self.progress.stage, "seconds": round(self.time, 2)})
         monster = self.config["monsters"][enemy.kind]
-        coins = monster["coins"] + (monster["bonus_coins"] if self.rng.random() < monster["bonus_chance"] else 0)
+        coins, xp = self.monster_rewards(enemy)
         multiplier = 1 + self.progress.ranks.get("yield", 0) * self.config["upgrades"]["yield"]["step"]
-        raw = coins * multiplier
-        coins = math.floor(raw) + (self.rng.random() < raw % 1)
         self.dropped_coins += coins
         # Independent collection of coin and XP bundles; late drops can remain uncollected.
         delay = self.options["collection_delay"] + enemy.radius * self.options["collection_delay_per_distance"]
         if self.rng.random() < self.options["collection_rate"]:
             self.schedule(self.time + delay, "coins", coins)
         if self.rng.random() < self.options["collection_rate"]:
-            self.schedule(self.time + delay, "xp", monster["xp"])
+            self.schedule(self.time + delay, "xp", xp)
         chest = self.config.get("chest")
         if chest and self.rng.random() < chest["chance"]:
             raw = chest["coins"] * multiplier
@@ -198,7 +212,7 @@ class Run:
         origin = enemy.position()
         # Roll all effects before damage so a killing hit still has every independent roll.
         triggered = [key for key in self.owned if self.rng.random() < self.chance(key)]
-        self.hurt(uid, damage)
+        self.hurt(uid, self.direct_hit_damage(damage))
         for key in triggered:
             self.procs[key] += 1
             effect = self.config["effects"][key]
@@ -282,8 +296,10 @@ class Run:
                         if travel <= self.config["player"]["projectile_lifetime"]:
                             ratio = 1 if projectile == 0 else self.config["upgrades"]["multishot"]["damage_ratio"]
                             self.schedule(self.time + travel, "hit", (target.uid, self.main_damage() * ratio))
-                speed = 1 + self.progress.ranks.get("speed", 0) * self.config["upgrades"]["speed"]["step"] + self.run_speed * self.options["run_speed_step"]
+                speed = self.attack_speed()
                 self.schedule(self.time + self.config["player"]["attack_interval"] / speed, "attack", None)
+            else:
+                self.extra_event(kind, payload)
             self.peak = max(self.peak, len(self.enemies))
         self.occupancy += len(self.enemies) * (self.duration - self.time)
         self.empty_ticks += self.duration - self.time if not self.enemies else 0

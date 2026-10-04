@@ -1,0 +1,253 @@
+{
+  "version": "prototype-v2-boss-arrival",
+  "baseDamage": 1,
+  "attackInterval": 0.62,
+  "projectileSpeed": 9,
+  "projectileLifetime": 1.5,
+  "moveSpeed": 3.4,
+  "initialSeconds": 40,
+  "bossElapsedSeconds": 180,
+  "timeRewardChance": 0.08,
+  "timeRewardSeconds": 1,
+  "firstDamageBonus": 0.46,
+  "latePriceScale": 3.5,
+  "xpFirst": 7,
+  "xpGrowth": 1.5,
+  "initialSpawnMin": 3,
+  "initialSpawnMax": 5,
+  "refillSpawnMin": 5,
+  "refillSpawnMax": 8,
+  "chestChance": 0.018,
+  "chestCoins": 6,
+  "playerHealth": 100,
+  "playerInvulnerability": 0.6,
+  "playerContactRadius": 0.55,
+  "criticalChance": 0.05,
+  "criticalMultiplier": 2,
+  "lootGrades": [
+    {
+      "grade": 1,
+      "unlockStage": 0,
+      "prefabIndex": 0,
+      "currencyAmount": 1,
+      "experienceAmount": 1,
+      "currencyName": "동화",
+      "experienceName": "푸른 결정"
+    },
+    {
+      "grade": 2,
+      "unlockStage": 1,
+      "prefabIndex": 1,
+      "currencyAmount": 2,
+      "experienceAmount": 2,
+      "currencyName": "은화",
+      "experienceName": "청록 결정"
+    },
+    {
+      "grade": 3,
+      "unlockStage": 2,
+      "prefabIndex": 2,
+      "currencyAmount": 3,
+      "experienceAmount": 3,
+      "currencyName": "금화",
+      "experienceName": "보라 구슬"
+    },
+    {
+      "grade": 4,
+      "unlockStage": 3,
+      "prefabIndex": 3,
+      "currencyAmount": 5,
+      "experienceAmount": 5,
+      "currencyName": "에메랄드 화폐",
+      "experienceName": "초록 불꽃"
+    },
+    {
+      "grade": 5,
+      "unlockStage": 4,
+      "prefabIndex": 4,
+      "currencyAmount": 9,
+      "experienceAmount": 9,
+      "currencyName": "자수정 화폐",
+      "experienceName": "황금 별"
+    }
+  ],
+  "monsters": [
+    {
+      "id": "slime",
+      "name": "슬라임",
+      "hp": 3,
+      "speed": 1,
+      "xp": 1,
+      "coins": 1,
+      "bonusChance": 0.1,
+      "bonusCoins": 1,
+      "nextUnlockKills": 120,
+      "contactDamage": 1,
+      "currencyGrade": 1,
+      "experienceGrade": 1,
+      "currencyChances": [
+        0.9,
+        0.07,
+        0.02,
+        0.008,
+        0.002
+      ]
+    },
+    {
+      "id": "skeleton",
+      "name": "스켈레톤",
+      "hp": 6,
+      "speed": 0.9,
+      "xp": 2,
+      "coins": 2,
+      "bonusChance": 0.1,
+      "bonusCoins": 1,
+      "nextUnlockKills": 300,
+      "contactDamage": 2,
+      "currencyGrade": 2,
+      "experienceGrade": 2,
+      "currencyChances": [
+        0.03,
+        0.92,
+        0.035,
+        0.012,
+        0.003
+      ]
+    },
+    {
+      "id": "goblin",
+      "name": "고블린",
+      "hp": 10,
+      "speed": 1.35,
+      "xp": 3,
+      "coins": 3,
+      "bonusChance": 0.1,
+      "bonusCoins": 2,
+      "nextUnlockKills": 600,
+      "contactDamage": 4,
+      "currencyGrade": 3,
+      "experienceGrade": 3,
+      "currencyChances": [
+        0.01,
+        0.025,
+        0.935,
+        0.025,
+        0.005
+      ]
+    },
+    {
+      "id": "mushroom",
+      "name": "버섯",
+      "hp": 18,
+      "speed": 0.75,
+      "xp": 5,
+      "coins": 5,
+      "bonusChance": 0.1,
+      "bonusCoins": 2,
+      "nextUnlockKills": 1000,
+      "contactDamage": 3,
+      "currencyGrade": 4,
+      "experienceGrade": 4,
+      "currencyChances": [
+        0.005,
+        0.01,
+        0.025,
+        0.95,
+        0.01
+      ]
+    },
+    {
+      "id": "boar",
+      "name": "멧돼지",
+      "hp": 32,
+      "speed": 1.15,
+      "xp": 9,
+      "coins": 9,
+      "bonusChance": 0.1,
+      "bonusCoins": 3,
+      "nextUnlockKills": 0,
+      "contactDamage": 6,
+      "currencyGrade": 5,
+      "experienceGrade": 5,
+      "currencyChances": [
+        0.002,
+        0.003,
+        0.01,
+        0.03,
+        0.955
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "initial": 12,
+      "target": 14,
+      "cap": 18,
+      "refillSeconds": 0.7,
+      "batch": 3,
+      "weights": [
+        100,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "initial": 18,
+      "target": 22,
+      "cap": 28,
+      "refillSeconds": 0.55,
+      "batch": 4,
+      "weights": [
+        70,
+        30,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "initial": 24,
+      "target": 30,
+      "cap": 38,
+      "refillSeconds": 0.4,
+      "batch": 5,
+      "weights": [
+        50,
+        30,
+        20,
+        0,
+        0
+      ]
+    },
+    {
+      "initial": 30,
+      "target": 38,
+      "cap": 48,
+      "refillSeconds": 0.3,
+      "batch": 6,
+      "weights": [
+        40,
+        25,
+        20,
+        15,
+        0
+      ]
+    },
+    {
+      "initial": 36,
+      "target": 46,
+      "cap": 58,
+      "refillSeconds": 0.25,
+      "batch": 7,
+      "weights": [
+        30,
+        25,
+        20,
+        15,
+        10
+      ]
+    }
+  ]
+}

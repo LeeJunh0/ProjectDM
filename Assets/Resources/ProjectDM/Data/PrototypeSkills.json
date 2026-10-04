@@ -1,0 +1,10 @@
+{
+  "rows": [
+    { "id": "damage", "name": "공격력 강화", "description": "이번 런의 기본 공격력 +10%", "icon": "bolt", "rarity": "bronze", "maxRank": 200, "step": 0.1 },
+    { "id": "speed", "name": "공격속도 강화", "description": "이번 런의 공격 빈도 +10%", "icon": "bolt", "rarity": "silver", "maxRank": 150, "step": 0.1 },
+    { "id": "proc", "name": "발동 확률 강화", "description": "획득한 공격 효과의 발동 확률 +2%p", "icon": "gem", "rarity": "gold", "maxRank": 4, "step": 0.02 },
+    { "id": "chain", "name": "연쇄 번개", "description": "적중마다 12% 확률로 가까운 적 2명에게 공격력 65% 번개", "unlock": "chain", "icon": "bolt", "rarity": "silver", "maxRank": 1, "chance": 0.12, "damageRatio": 0.65, "targets": 2, "range": 3 },
+    { "id": "splash", "name": "스플래쉬", "description": "적중마다 12% 확률로 반경 1.65의 적에게 공격력 80% 피해", "unlock": "splash", "icon": "gem", "rarity": "bronze", "maxRank": 1, "chance": 0.12, "damageRatio": 0.8, "radius": 1.65 },
+    { "id": "meteor", "name": "운석", "description": "적중마다 4% 확률로 0.65초 후 반경 2에 공격력 350% 운석", "unlock": "meteor", "icon": "bolt", "rarity": "gold", "maxRank": 1, "chance": 0.04, "damageRatio": 3.5, "radius": 2, "delay": 0.65 }
+  ]
+}

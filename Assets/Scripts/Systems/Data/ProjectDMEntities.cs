@@ -11,7 +11,8 @@ namespace ProjectDM
         public Sprite alternateSprite;
         public float animationTime;
         public bool showAlternate;
-        public int hitPoints;
+        public float hitPoints;
+        public bool dead;
         public float speed;
         public MonsterKind kind;
     }
@@ -20,7 +21,7 @@ namespace ProjectDM
     {
         public Transform transform;
         public Vector2 direction;
-        public int damage;
+        public float damage;
         public float lifetime;
     }
 
@@ -28,7 +29,8 @@ namespace ProjectDM
     {
         public Transform transform;
         public PickupKind kind;
-        public int amount;
+        public int grade;
+        public float amount;
         public bool isInteracting;
         public float interactionRemaining;
         public bool isLaunching;
