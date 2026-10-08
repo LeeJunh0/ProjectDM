@@ -3,7 +3,7 @@ import copy
 import unittest
 
 from simulate import Enemy, Progress
-from simulate_current import CurrentRun, campaign, current_price, load_current, node_block, shop_current, summarize, resolve_grade, grade_base, currency_probabilities, resolve_currency_grade
+from simulate_current import CurrentRun, campaign, current_price, load_current, node_block, shop_current, summarize, resolve_grade, grade_base, currency_probabilities, resolve_currency_grade, player_attribute
 
 
 class CurrentTests(unittest.TestCase):
@@ -44,6 +44,17 @@ class CurrentTests(unittest.TestCase):
         self.assertAlmostEqual(run.chance("chain"), .14)
         self.assertAlmostEqual(run.chance("splash"), .12)
         self.assertAlmostEqual(run.chance("meteor"), .04)
+
+    def test_player_growth_attributes(self):
+        ranks = {key: 3 for key in ("health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet")}
+        for key, expected in {"health": 160, "movement": 4.216, "criticalChance": .14,
+                              "criticalDamage": 2.75, "invulnerability": .9, "magnet": 3.5}.items():
+            self.assertAlmostEqual(player_attribute(self.config, ranks, key), expected, places=5)
+        run = self.model(ranks)
+        self.assertEqual(run.player_health, 160)
+        run.config["runtime_balance"]["criticalChance"] = 1
+        self.assertEqual(run.direct_hit_damage(10), 27.5)
+        self.assertAlmostEqual(run.chance("chain"), .12)
 
     def test_temporary_and_permanent_attack_speed_multiply(self):
         run = self.model({"speed": 5})

@@ -39,8 +39,10 @@ namespace ProjectDM
         {
             int stage = enemiesSystem.SpawnStage;
             GUIStyle style = new GUIStyle(graphics.statStyle) { fontSize = 12, normal = { textColor = new Color(.9f, .8f, .6f) } };
-            string unlock = stage < 4 ? $"{tables.balance.monsters[stage].name} {save.progress.kills[stage]}/{tables.balance.monsters[stage].nextUnlockKills}" : "일반 몬스터 모두 해금";
-            GUI.Label(new Rect(22, 60, Screen.width - 245, 25), $"{stage + 1}단계 · {unlock} · 보스까지 {(tables.balance.bossElapsedSeconds - run.elapsed):0.0}초", style);
+            string name = run.stages?.Current != null ? run.stages.Current.monsters[stage].displayName : tables.balance.monsters[stage].name;
+            string unlock = stage < 4 ? $"{name} {save.progress.kills[stage]}/{tables.balance.monsters[stage].nextUnlockKills}" : "일반 몬스터 모두 해금";
+            string field = run.stages?.Current != null ? run.stages.Current.displayName : "프로토타입";
+            GUI.Label(new Rect(22, 60, Screen.width - 245, 25), $"{field} · 몬스터 {stage + 1}단계 · {unlock} · 보스까지 {(tables.balance.bossElapsedSeconds - run.elapsed):0.0}초", style);
             if (skills.RunRank("chain") + skills.RunRank("splash") + skills.RunRank("meteor") > 0)
             {
                 string effects = "";
@@ -71,7 +73,7 @@ namespace ProjectDM
             skills.forceAttackEffects = GUI.Toggle(new Rect(panel.x + 10, panel.y + 101, 205, 24), skills.forceAttackEffects, "공격 효과 100% (이번 런)");
             if (GUI.Button(new Rect(panel.x + 10, panel.y + 127, 205, 28), $"스폰 단계 변경 · 현재 {enemiesSystem.SpawnStage + 1}"))
                 enemiesSystem.debugStageOverride = (enemiesSystem.SpawnStage + 1) % 5;
-            if (GUI.Button(new Rect(panel.x + 10, panel.y + 162, 205, 28), "최종보스 도달 미리보기")) boss.ArriveAtPrototypeBoss(true);
+            if (GUI.Button(new Rect(panel.x + 10, panel.y + 162, 205, 28), "스테이지 보스 도달 미리보기")) boss.ArriveAtPrototypeBoss(true);
             if (GUI.Button(new Rect(panel.x + 10, panel.y + 195, 205, 28), "플레이어 피격 테스트 (-10)")) playerCombat.ApplyPlayerDamage(10);
             combat.forceCriticalHits = GUI.Toggle(new Rect(panel.x + 10, panel.y + 229, 205, 24), combat.forceCriticalHits, "치명타 100% (이번 런)");
         }

@@ -40,7 +40,7 @@ namespace ProjectDM.Editor
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Monsters_16Bit_v5.png", "art/monsters");
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_ExtraMonsters_16Bit_v1.png", "art/extra-monsters");
             Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_Sprites_TopDown_v2.png", "art/gameplay");
-            Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_FloorTiles_Calm_v2.png", "art/floor");
+            Register(settings, bootstrap, ContentRoot + "/Art/ProjectDM_FloorTiles_Calm_v3.png", "art/floor");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Player_Cute_v4.controller", "animation/player");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Slime.controller", "animation/slime");
             Register(settings, bootstrap, ContentRoot + "/Animation/ProjectDM_Skeleton.controller", "animation/skeleton");
@@ -112,7 +112,7 @@ namespace ProjectDM.Editor
             catalog.monsterSheet = TextureReference(ContentRoot + "/Art/ProjectDM_Monsters_16Bit_v5.png");
             catalog.extraMonsterSheet = TextureReference(ContentRoot + "/Art/ProjectDM_ExtraMonsters_16Bit_v1.png");
             catalog.gameplaySheet = TextureReference(ContentRoot + "/Art/ProjectDM_Sprites_TopDown_v2.png");
-            catalog.floorSheet = TextureReference(ContentRoot + "/Art/ProjectDM_FloorTiles_Calm_v2.png");
+            catalog.floorSheet = TextureReference(ContentRoot + "/Art/ProjectDM_FloorTiles_Calm_v3.png");
             catalog.playerAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Player_Cute_v4.controller");
             catalog.slimeAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Slime.controller");
             catalog.skeletonAnimatorController = Reference(ContentRoot + "/Animation/ProjectDM_Skeleton.controller");

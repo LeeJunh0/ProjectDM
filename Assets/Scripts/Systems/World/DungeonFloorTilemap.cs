@@ -21,6 +21,7 @@ namespace ProjectDM
         {
             get
             {
+                if (groundRuleTile != null && groundRuleTile.HasCompletePalette) return true;
                 if (floorTiles == null || floorTiles.Length != 16)
                 {
                     return false;
@@ -208,7 +209,7 @@ namespace ProjectDM
 
         private void SynchronizeRuleTilePalette()
         {
-            if (groundRuleTile != null)
+            if (groundRuleTile != null && !groundRuleTile.HasRuleTilePalette)
             {
                 groundRuleTile.ConfigureLegacyPalette(floorTiles, borderTiles);
             }

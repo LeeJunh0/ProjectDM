@@ -40,13 +40,15 @@ namespace ProjectDM
                 GameObject instance = new GameObject("최종보스 도달 미리보기 (전투 미구현)");
                 prototypeBoss = instance.transform;
                 SpriteRenderer renderer = instance.AddComponent<SpriteRenderer>();
-                renderer.sprite = art.boarSprite ?? art.slimeSprite;
-                renderer.color = new Color(1f, .55f, .35f);
                 renderer.sortingOrder = 8;
             }
+            SpriteRenderer bossRenderer = prototypeBoss.GetComponent<SpriteRenderer>();
+            bossRenderer.sprite = art.stage != null ? art.stage.bossFrames[0] : art.boarSprite ?? art.slimeSprite;
+            bossRenderer.color = art.stage != null ? Color.white : new Color(1f, .55f, .35f);
+            prototypeBoss.name = (art.stage != null ? art.stage.bossName : "보스") + " 도달 미리보기 (전투 미구현)";
             prototypeBoss.gameObject.SetActive(true);
             prototypeBoss.position = playerWorld.player.position + Vector3.up * 2f;
-            prototypeBoss.localScale = Vector3.one * 1.8f;
+            prototypeBoss.localScale = Vector3.one * (art.stage != null ? art.stage.bossScale : 1.8f);
             run.EndRun(); // Arrival milestone only; boss combat is outside the current prototype.
         }
 

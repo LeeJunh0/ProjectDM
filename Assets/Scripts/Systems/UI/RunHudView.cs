@@ -131,8 +131,8 @@ namespace ProjectDM
             if (!settings.enablePlayerContactDamage) return;
             Rect bar = new Rect(22, Screen.height - 42, Mathf.Min(200, Screen.width - 44), 10);
             UiGraphics.DrawSolidRect(bar, new Color(.06f, .03f, .04f, .9f));
-            UiGraphics.DrawSolidRect(new Rect(bar.x + 1, bar.y + 1, (bar.width - 2) * Mathf.Clamp01(playerCombat.playerHealth / tables.balance.playerHealth), 8), new Color(.85f, .25f, .22f));
-            GUI.Label(new Rect(bar.x, bar.y - 24, bar.width, 22), $"체력 {playerCombat.playerHealth:0.##}/{tables.balance.playerHealth:0.##}",
+            UiGraphics.DrawSolidRect(new Rect(bar.x + 1, bar.y + 1, (bar.width - 2) * Mathf.Clamp01(playerCombat.playerHealth / playerCombat.MaxHealth), 8), new Color(.85f, .25f, .22f));
+            GUI.Label(new Rect(bar.x, bar.y - 24, bar.width, 22), $"체력 {playerCombat.playerHealth:0.##}/{playerCombat.MaxHealth:0.##}",
                 new GUIStyle(graphics.statStyle) { fontSize = 14, normal = { textColor = new Color(1, .78f, .74f) } });
         }
     }

@@ -20,7 +20,9 @@ namespace ProjectDM
         private readonly Action closeSelection;
         private readonly Func<bool> isChoosing;
 
-        internal RunController(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, PlayerWorld playerWorld, Action resetWorld, Action spawnInitial, Action snapCamera, Action resetNavigation, Action closeSelection, Func<bool> isChoosing)
+        internal readonly StageSession stages;
+
+        internal RunController(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, PlayerWorld playerWorld, Action resetWorld, Action spawnInitial, Action snapCamera, Action resetNavigation, Action closeSelection, Func<bool> isChoosing, StageSession stages = null)
         {
             this.settings = settings;
             this.save = save;
@@ -33,6 +35,7 @@ namespace ProjectDM
             this.resetNavigation = resetNavigation;
             this.closeSelection = closeSelection;
             this.isChoosing = isChoosing;
+            this.stages = stages;
         }
 
         internal int runCurrency;

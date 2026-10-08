@@ -11,12 +11,14 @@ namespace ProjectDM
         private readonly GameSettings settings;
         private readonly GameTables tables;
         private readonly WorldArtAssets art;
+        private readonly PlayerStats stats;
 
-        internal PlayerWorld(GameSettings settings, GameTables tables, WorldArtAssets art)
+        internal PlayerWorld(GameSettings settings, GameTables tables, WorldArtAssets art, PlayerStats stats)
         {
             this.settings = settings;
             this.tables = tables;
             this.art = art;
+            this.stats = stats;
         }
 
         internal Transform player;
@@ -46,7 +48,7 @@ namespace ProjectDM
 
         internal void MovePlayer(float dt)
         {
-            float speed = tables.balance.moveSpeed;
+            float speed = stats.MoveSpeed;
             playerController.Tick(dt, speed);
         }
 

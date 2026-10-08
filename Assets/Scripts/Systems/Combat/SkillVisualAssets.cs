@@ -1,0 +1,40 @@
+using UnityEngine;
+
+namespace ProjectDM
+{
+    /// <summary>Approved artwork and presentation-only settings. Never changes combat tables.</summary>
+    [CreateAssetMenu(menuName = "Project DM/스킬 이펙트 설정", fileName = "SkillVisuals")]
+    public sealed class SkillVisualAssets : ScriptableObject
+    {
+        [Header("사용 리소스")]
+        [InspectorName("연쇄 번개 스프라이트")] public Sprite chain;
+        [InspectorName("스플래쉬 스프라이트")] public Sprite splash;
+        [InspectorName("운석 스프라이트")] public Sprite meteor;
+        [InspectorName("운석 충돌 색상 변환 머티리얼")] public Material impactMaterial;
+
+        [Header("연쇄 번개")]
+        [InspectorName("번개 시작 위치 (이미지 비율)")] public Vector2 chainStart = new(.14f, .11f);
+        [InspectorName("번개 끝 위치 (이미지 비율)")] public Vector2 chainEnd = new(.9f, .88f);
+        [InspectorName("번개 표시 시간"), Min(.01f)] public float chainDuration = .18f;
+        [InspectorName("번개 투명도"), Range(0, 1)] public float chainOpacity = .9f;
+
+        [Header("스플래쉬·충돌 확산")]
+        [InspectorName("스플래쉬 표시 시간"), Min(.01f)] public float splashDuration = .3f;
+        [InspectorName("스플래쉬 투명도"), Range(0, 1)] public float splashOpacity = .75f;
+        [InspectorName("확산 시작 크기"), Range(.01f, 1)] public float burstStartScale = .18f;
+        [InspectorName("이미지 속 원형 영역의 지름 비율"), Range(.1f, 1)] public float burstArtworkDiameter = .9f;
+
+        [Header("운석")]
+        [InspectorName("운석 낙하 높이"), Min(0)] public float meteorFallHeight = 3;
+        [InspectorName("운석 이미지 너비"), Min(.01f)] public float meteorWidth = 1.45f;
+        [InspectorName("운석 낙하 회전 각도")] public float meteorRotation = 55;
+        [InspectorName("운석 타격점 (이미지 비율)")] public Vector2 meteorAnchor = new(.35f, .3f);
+        [InspectorName("운석 예고 투명도"), Range(0, 1)] public float warningOpacity = .12f;
+        [InspectorName("운석 충돌 표시 시간"), Min(.01f)] public float impactDuration = .4f;
+        [InspectorName("운석 충돌 투명도"), Range(0, 1)] public float impactOpacity = .8f;
+        [InspectorName("운석 충돌 색상")] public Color impactColor = new(1, .4f, .08f, 1);
+
+        [Header("성능")]
+        [InspectorName("최대 동시 스프라이트 수"), Min(1)] public int maxActiveEffects = 128;
+    }
+}

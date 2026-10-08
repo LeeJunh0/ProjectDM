@@ -14,13 +14,13 @@ function Get-Row([string] $id) { return $growth.rows | Where-Object id -eq $id }
 function Get-Source([string] $id) { if ($id -in @('chainChance','splashChance','meteorChance')) { return $proposal.upgrades.proc }; return $proposal.upgrades.($id) }
 Assert-True ($null -eq [ProjectDM.PrototypeRules]::Validate($balance, $skills, $growth)) 'Runtime tables must validate.'
 Assert-True ($balance.initialSeconds -eq 40 -and $balance.bossElapsedSeconds -eq 180) 'V2 initial time / prototype cap mismatch.'
-Assert-True ($growth.rows.Count -eq 20 -and $skills.rows.Count -eq 6) 'Missing growth or skill rows.'
+Assert-True ($growth.rows.Count -eq 26 -and $skills.rows.Count -eq 6) 'Missing growth or skill rows.'
 
 # Compression keeps the approved maximum effects; intermediate purchases are now larger and interleaved.
 $proposal = Get-Content (Join-Path $projectRoot 'Tools/Balance/progression_v2.json') -Raw | ConvertFrom-Json
 foreach ($row in $growth.rows) {
     $source = Get-Source $row.id
-    if ($null -eq $source) { Assert-True ($row.id -in @('silverDropChance','goldDropChance','emeraldDropChance','amethystDropChance','experienceGradeChance')) 'Unknown new growth'; continue }
+    if ($null -eq $source) { Assert-True ($row.id -in @('silverDropChance','goldDropChance','emeraldDropChance','amethystDropChance','experienceGradeChance','health','movement','criticalChance','criticalDamage','invulnerability','magnet')) 'Unknown new growth'; continue }
     $separateChance = $row.id.EndsWith('Chance')
     Assert-True ($row.maxRank -le $source.max_rank -and (($separateChance -and $row.baseCost -eq 10) -or
         (-not $separateChance -and $row.baseCost -eq $source.base_cost -and $row.minStage -eq $source.min_stage))) "V2 growth cap/cost/stage mismatch: $($row.id)"
@@ -95,7 +95,7 @@ $brokenGrowth = [ProjectDM.PrototypeGrowthTable](Get-Content (Join-Path $dataRoo
 $brokenGrowth.rows[0].parent = 'damage'
 Assert-True ($null -ne [ProjectDM.PrototypeRules]::Validate($balance, $skills, $brokenGrowth)) 'Validation must reject graph cycles.'
 # Split presentation nodes keep the original saved rank and continuous cost curve.
-Assert-True ($growth.nodes.Count -eq 80) 'Expected 80 radial growth nodes excluding root.'
+Assert-True ($growth.nodes.Count -eq 86) 'Expected 86 radial growth nodes excluding root.'
 foreach ($row in $growth.rows) {
     $segments = @($growth.nodes | Where-Object growthId -eq $row.id | Sort-Object startRank)
     $end = 0
@@ -139,19 +139,33 @@ foreach ($issue in @('overlap', 'gap', 'missing_parent', 'cycle', 'missing_growt
 }
 Assert-True ($balance.playerHealth -eq 100 -and [Math]::Abs($balance.criticalChance - .05) -lt .000001 -and $balance.criticalMultiplier -eq 2) 'Temporary combat defaults mismatch.'
 Assert-True ($balance.playerInvulnerability -gt 0 -and $balance.playerContactRadius -gt 0) 'Contact damage requires positive radius and immunity.'
-foreach ($issue in @('criticalChance', 'criticalMultiplier', 'playerHealth', 'contactDamage')) {
+foreach ($issue in @('criticalChance', 'criticalMultiplier', 'playerHealth', 'contactDamage', 'pickupMagnetRadius')) {
     $broken = [ProjectDM.PrototypeBalance](Get-Content (Join-Path $dataRoot 'PrototypeBalance.json') -Raw | ConvertFrom-Json)
     switch ($issue) {
         'criticalChance' { $broken.criticalChance = 1.1 }
         'criticalMultiplier' { $broken.criticalMultiplier = .9 }
         'playerHealth' { $broken.playerHealth = 0 }
         'contactDamage' { $broken.monsters[0].contactDamage = -1 }
+        'pickupMagnetRadius' { $broken.pickupMagnetRadius = 0 }
     }
     Assert-True ($null -ne [ProjectDM.PrototypeRules]::Validate($broken, $skills, $growth)) "Invalid combat config accepted: $issue"
 }
 # Every repeatable branch now mixes different growth types and has a real purchase gate.
+$playerGrowthIds = @('health','movement','criticalChance','criticalDamage','invulnerability','magnet')
+foreach ($id in $playerGrowthIds) {
+    $row = Get-Row $id
+    Assert-True ($row.maxRank -eq 3 -and @($growth.nodes | Where-Object growthId -eq $id).Count -eq 1) "Player growth must have exactly one three-purchase node: $id"
+}
+$legacyGrowth = [ProjectDM.PrototypeGrowthTable](Get-Content (Join-Path $dataRoot 'PrototypeGrowth.json') -Raw | ConvertFrom-Json)
+$legacyGrowth.rows = @($legacyGrowth.rows | Where-Object id -notin $playerGrowthIds)
+$legacyGrowth.nodes = @($legacyGrowth.nodes | Where-Object growthId -notin $playerGrowthIds)
+Assert-True ($null -eq [ProjectDM.PrototypeRules]::Validate($balance, $skills, $legacyGrowth)) 'Previously authored growth tables without player attributes must still validate.'
+Assert-True ((Get-Row 'criticalDamage').name -eq '치명타 피해량') 'Critical damage uses the requested Korean display name.'
+foreach ($id in @('playerContactRadius','projectileSpeed','projectileLifetime')) {
+    Assert-True (@($growth.rows | Where-Object id -eq $id).Count -eq 0) "Excluded attribute became a growth: $id"
+}
 $totalPurchases = ($growth.rows | Measure-Object maxRank -Sum).Sum
-Assert-True ($totalPurchases -eq 222) 'Unexpected radial total purchase count.'
+Assert-True ($totalPurchases -eq 240) 'Unexpected radial total purchase count.'
 foreach ($node in $growth.nodes) {
     Assert-True ($node.ranks -le 3) "Node still requires excessive repeated purchases: $($node.id)"
     if ($node.parent -ne 'ROOT') {

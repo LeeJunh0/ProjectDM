@@ -15,8 +15,9 @@ namespace ProjectDM
         private readonly EnemySystem enemiesSystem;
         private readonly CombatSystem combat;
         private readonly DamagePresentation presentation;
+        private readonly PlayerStats stats;
 
-        internal PlayerCombatSystem(GameSettings settings, GameTables tables, PlayerWorld playerWorld, RunController run, EnemySystem enemiesSystem, CombatSystem combat, DamagePresentation presentation)
+        internal PlayerCombatSystem(GameSettings settings, GameTables tables, PlayerWorld playerWorld, RunController run, EnemySystem enemiesSystem, CombatSystem combat, DamagePresentation presentation, PlayerStats stats)
         {
             this.settings = settings;
             this.tables = tables;
@@ -25,6 +26,7 @@ namespace ProjectDM
             this.enemiesSystem = enemiesSystem;
             this.combat = combat;
             this.presentation = presentation;
+            this.stats = stats;
         }
 
         internal float playerHealth;
@@ -32,10 +34,11 @@ namespace ProjectDM
         internal float playerInvulnerabilityRemaining;
 
         internal bool playerDefeated;
+        internal float MaxHealth => stats.MaxHealth;
 
         internal void ResetPlayerCombat()
         {
-            playerHealth = tables.balance.playerHealth;
+            playerHealth = MaxHealth;
             playerInvulnerabilityRemaining = 0;
             playerDefeated = combat.forceCriticalHits = false;
         }
@@ -56,7 +59,7 @@ namespace ProjectDM
         {
             if (run.runEnded || playerDefeated || playerInvulnerabilityRemaining > 0 || damage <= 0) return;
             playerHealth = Mathf.Max(0, playerHealth - damage);
-            playerInvulnerabilityRemaining = tables.balance.playerInvulnerability;
+            playerInvulnerabilityRemaining = stats.Invulnerability;
             presentation.ShowCombatDamage(playerWorld.player.position, damage, CombatDamageKind.Received);
             if (playerHealth > 0) return;
             playerDefeated = true;

@@ -61,11 +61,12 @@ namespace ProjectDM.Editor
                 Check(retained.progress.Rank("currencyGradeChance") == 4 && retained.progress.currencyDropsVersion == 1, "Archive previous ranks and mark migration once");
                 SaveService save = new SaveService(tables, store, true); save.Load();
                 ProgressionService progression = new ProgressionService(save, tables); progression.ResetSnapshot();
-                PlayerWorld world = new PlayerWorld(settings, tables, art);
+                PlayerStats playerStats = new PlayerStats(tables, progression);
+                PlayerWorld world = new PlayerWorld(settings, tables, art, playerStats);
                 RunController run = new RunController(settings, save, tables, progression, world, () => { }, () => { }, () => { }, () => { }, () => { }, () => false);
                 float xp = 0;
                 GameObjectPool pool = root.AddComponent<GameObjectPool>();
-                PickupSystem pickups = new PickupSystem(settings, save, tables, progression, art, world, run, pool, amount => xp += amount);
+                PickupSystem pickups = new PickupSystem(settings, save, tables, progression, art, world, run, pool, amount => xp += amount, playerStats);
                 GrowthGraphView view = new GrowthGraphView(settings, save, tables, progression, art, run, new GameNotifications(), new UiGraphics());
                 Check(view.GrowthAmountText(tables.GrowthRow("experienceGradeChance"), 1).Contains("2% / 한 단계 상승"), "XP promotion tooltip changed");
                 for (int grade = 2; grade <= 5; grade++)

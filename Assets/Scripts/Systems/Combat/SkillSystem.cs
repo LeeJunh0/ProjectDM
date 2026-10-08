@@ -16,8 +16,9 @@ namespace ProjectDM
         private readonly PrototypeSkillVisuals skillVisuals;
         private readonly Func<bool> criticalRoll;
         private readonly Func<float> mainDamage;
+        private readonly PlayerStats playerStats;
 
-        internal SkillSystem(GameTables tables, ProgressionService progression, WorldArtAssets art, RunController run, EnemySystem enemiesSystem, PrototypeSkillVisuals skillVisuals, Func<bool> criticalRoll, Func<float> mainDamage)
+        internal SkillSystem(GameTables tables, ProgressionService progression, WorldArtAssets art, RunController run, EnemySystem enemiesSystem, PrototypeSkillVisuals skillVisuals, Func<bool> criticalRoll, Func<float> mainDamage, PlayerStats playerStats)
         {
             this.tables = tables;
             this.progression = progression;
@@ -27,6 +28,7 @@ namespace ProjectDM
             this.skillVisuals = skillVisuals;
             this.criticalRoll = criticalRoll;
             this.mainDamage = mainDamage;
+            this.playerStats = playerStats;
         }
 
         internal readonly Dictionary<string, int> runSkillRanks = new();
@@ -63,7 +65,7 @@ namespace ProjectDM
             // Capture independent rolls BEFORE a lethal direct hit. Damage effects never call this method.
             bool chain = RollAttackEffect("chain"), splash = RollAttackEffect("splash"), meteor = RollAttackEffect("meteor");
             bool critical = criticalRoll();
-            enemiesSystem.DamagePrototypeEnemyWithPresentation(target, damage * (critical ? tables.balance.criticalMultiplier : 1),
+            enemiesSystem.DamagePrototypeEnemyWithPresentation(target, damage * (critical ? playerStats.CriticalDamage : 1),
                 critical ? CombatDamageKind.Critical : CombatDamageKind.Attack);
             if (chain) TriggerPrototypeChain(origin, target);
             if (splash)
@@ -128,7 +130,7 @@ namespace ProjectDM
                 PendingMeteor meteor = meteors[i];
                 if (run.elapsed < meteor.impactAt) continue;
                 DamagePrototypeArea(meteor.center, meteor.radius, meteor.damage);
-                skillVisuals.Burst(meteor.center, meteor.radius, new Color(1f, .45f, .12f), .4f);
+                skillVisuals.MeteorImpact(meteor.center, meteor.radius);
                 meteors.RemoveAt(i);
             }
         }
@@ -137,7 +139,7 @@ namespace ProjectDM
         {
             runSkillRanks.Clear(); meteors.Clear(); forceAttackEffects = false;
             skillVisuals.Clear();
-            skillVisuals.Configure(art.boltSprite ?? art.slimeSprite, art.gemSprite ?? art.slimeSprite);
+            skillVisuals.Configure(art.boltSprite ?? art.slimeSprite, art.gemSprite ?? art.slimeSprite, art.skillVisualAssets);
         }
     }
 }

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9db2543a1f2c491f9f43b22e35172838, type: 3}
+  m_Name: Stage1_Meadow
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.StageDefinition
+  stageId: 1
+  displayName: "\uCD08\uC6D0"
+  ground: {fileID: 11400000, guid: 14d3f0253e5493143abcc5946fb6c8af, type: 2}
+  background: {r: 0.22, g: 0.17, b: 0.1, a: 1}
+  monsters:
+  - displayName: "\uD480 \uC2AC\uB77C\uC784"
+    frames:
+    - {fileID: -243069175, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -1586343806, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    animatorController: {fileID: 0}
+  - displayName: "\uC0C8\uC2F9 \uC815\uB839"
+    frames:
+    - {fileID: -1057819321, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -833135354, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    animatorController: {fileID: 0}
+  - displayName: "\uB4E4\uD310 \uACE0\uBE14\uB9B0"
+    frames:
+    - {fileID: 391696013, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -747367936, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    animatorController: {fileID: 0}
+  - displayName: "\uBC84\uC12F \uC694\uC815"
+    frames:
+    - {fileID: -1759911009, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -262982664, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    animatorController: {fileID: 0}
+  - displayName: "\uBA67\uB3FC\uC9C0"
+    frames:
+    - {fileID: 1076004570, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -164211046, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    animatorController: {fileID: 0}
+  bossName: "\uACE0\uBAA9 \uC218\uD638\uC790"
+  bossFrames:
+  - {fileID: -2033015403, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+  - {fileID: 943566511, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+  bossScale: 0.47734806

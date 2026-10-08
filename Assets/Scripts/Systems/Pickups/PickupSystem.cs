@@ -17,8 +17,9 @@ namespace ProjectDM
         private readonly RunController run;
         private readonly GameObjectPool objectPool;
         private readonly Action<float> addExperience;
+        private readonly PlayerStats playerStats;
 
-        internal PickupSystem(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, RunController run, GameObjectPool objectPool, Action<float> addExperience)
+        internal PickupSystem(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, RunController run, GameObjectPool objectPool, Action<float> addExperience, PlayerStats playerStats)
         {
             this.settings = settings;
             this.save = save;
@@ -29,6 +30,7 @@ namespace ProjectDM
             this.run = run;
             this.objectPool = objectPool;
             this.addExperience = addExperience;
+            this.playerStats = playerStats;
         }
 
         internal readonly List<Pickup> pickups = new();
@@ -156,9 +158,10 @@ namespace ProjectDM
                 }
 
                 float distance = Vector2.Distance(playerWorld.player.position, pickup.transform.position);
-                if (distance < 2.0f)
+                float magnetRadius = playerStats.MagnetRadius;
+                if (distance < magnetRadius)
                 {
-                    pickup.transform.position = Vector3.MoveTowards(pickup.transform.position, playerWorld.player.position, (2.5f + (2f - distance) * 6f) * dt);
+                    pickup.transform.position = Vector3.MoveTowards(pickup.transform.position, playerWorld.player.position, (2.5f + (1 - distance / magnetRadius) * 12f) * dt);
                 }
 
                 if (distance < 0.28f)

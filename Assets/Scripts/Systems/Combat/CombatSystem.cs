@@ -17,8 +17,9 @@ namespace ProjectDM
         private readonly SkillSystem skills;
         private readonly CombatStats stats;
         private readonly GameObjectPool objectPool;
+        private readonly PlayerStats playerStats;
 
-        internal CombatSystem(GameSettings settings, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, EnemySystem enemiesSystem, SkillSystem skills, CombatStats stats, GameObjectPool objectPool)
+        internal CombatSystem(GameSettings settings, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, EnemySystem enemiesSystem, SkillSystem skills, CombatStats stats, GameObjectPool objectPool, PlayerStats playerStats)
         {
             this.settings = settings;
             this.tables = tables;
@@ -29,6 +30,7 @@ namespace ProjectDM
             this.skills = skills;
             this.stats = stats;
             this.objectPool = objectPool;
+            this.playerStats = playerStats;
         }
 
         internal readonly List<Projectile> projectiles = new();
@@ -120,8 +122,8 @@ namespace ProjectDM
         internal bool RollCriticalHit()
         {
             if (!settings.enableCriticalHits) return false;
-            return forceCriticalHits || tables.balance.criticalChance >= 1 ||
-                (tables.balance.criticalChance > 0 && UnityEngine.Random.value < tables.balance.criticalChance);
+            return forceCriticalHits || playerStats.CriticalChance >= 1 ||
+                (playerStats.CriticalChance > 0 && UnityEngine.Random.value < playerStats.CriticalChance);
         }
 
         internal void Reset()

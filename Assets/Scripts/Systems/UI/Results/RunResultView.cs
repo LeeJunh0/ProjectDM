@@ -63,7 +63,7 @@ namespace ProjectDM
                 GUIStyle section = new GUIStyle(body) { fontSize = 30, fontStyle = FontStyle.Bold };
                 GUIStyle mutedBody = new GUIStyle(body) { normal = { textColor = subdued } };
                 GUIStyle mutedValue = new GUIStyle(value) { normal = { textColor = subdued } };
-                GUI.Label(new Rect(44f, 24f, 632f, 48f), boss.bossArrived ? "최종보스 도달" : playerCombat.playerDefeated ? "플레이어 쓰러짐" : "진행 종료", heading);
+                GUI.Label(new Rect(44f, 24f, 632f, 48f), boss.bossArrived ? "스테이지 보스 도달" : playerCombat.playerDefeated ? "플레이어 쓰러짐" : "진행 종료", heading);
                 UiGraphics.DrawResultDivider(92f);
                 GUI.Label(new Rect(44f, 116f, 632f, 34f), "획득 재화", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(.58f, .55f, .50f) } });
 
@@ -95,7 +95,7 @@ namespace ProjectDM
                     GUI.color = previousColor * (empty ? new Color(.5f, .5f, .5f) : Color.white);
                     DrawMonsterResultIcon(new Rect(74f, rowY + 3f, 36f, 36f), (MonsterKind)i);
                     GUI.color = previousColor;
-                    DrawFittedLabel(new Rect(136f, rowY, 285f, 30f), tables.balance.monsters[i].name, empty ? mutedBody : body, 18);
+                    DrawFittedLabel(new Rect(136f, rowY, 285f, 30f), art.MonsterName(i, tables.balance), empty ? mutedBody : body, 18);
                     DrawFittedLabel(new Rect(426f, rowY, 230f, 30f), $"이번 런 +{AnimatedResultCount(run.monsterKillCounts[i], i + 2, presentationElapsed):N0}",
                         new GUIStyle(empty ? mutedValue : value) { fontSize = 22 }, 12);
                     string cumulative = progress.HasTarget
@@ -186,7 +186,7 @@ namespace ProjectDM
 
         internal void DrawMonsterResultIcon(Rect rect, MonsterKind kind)
         {
-            Sprite sprite = kind switch { MonsterKind.Skeleton => art.skeletonSprite, MonsterKind.Goblin => art.goblinSprite, MonsterKind.Mushroom => art.mushroomSprite, MonsterKind.Boar => art.boarSprite, _ => art.slimeSprite };
+            Sprite sprite = art.MonsterSprite(kind);
             UiGraphics.DrawResultSprite(rect, sprite);
         }
     }

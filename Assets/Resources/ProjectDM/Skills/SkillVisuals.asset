@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fde6b75486649c18c423e456ff64ee6, type: 3}
+  m_Name: SkillVisuals
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.SkillVisualAssets
+  chain: {fileID: 21300000, guid: 759c3d159d9a466db35d70439e2a16bb, type: 3}
+  splash: {fileID: 21300000, guid: 29a19885a1914c08a9e8d17452c84cba, type: 3}
+  meteor: {fileID: 21300000, guid: 56d7ec2a4c2848ff8a449b2a0a49c384, type: 3}
+  impactMaterial: {fileID: 2100000, guid: 5218c33bcb8144868cf3b6992e5c6620, type: 2}
+  chainStart: {x: 0.14, y: 0.11}
+  chainEnd: {x: 0.9, y: 0.88}
+  chainDuration: 0.18
+  chainOpacity: 0.9
+  splashDuration: 0.3
+  splashOpacity: 0.75
+  burstStartScale: 0.18
+  burstArtworkDiameter: 0.9
+  meteorFallHeight: 3
+  meteorWidth: 1.45
+  meteorRotation: 55
+  meteorAnchor: {x: 0.35, y: 0.3}
+  warningOpacity: 0.12
+  impactDuration: 0.4
+  impactOpacity: 0.8
+  impactColor: {r: 1, g: 0.4, b: 0.08, a: 1}
+  maxActiveEffects: 128

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdb7ac7a33b0424e9a093701c277178, type: 3}
+  m_Name: MeadowGroundRuleTile
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.DungeonGroundRuleTile
+  floorTiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  borderTiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ruleTiles:
+  - {fileID: 11400000, guid: c2d6a0dda60a69a4eb7bf9c3c117a332, type: 2}
+  - {fileID: 11400000, guid: 0102297bc39496c41a0d87d22ab925d7, type: 2}
+  - {fileID: 11400000, guid: 587e791c01d540f428f122d4efa4676f, type: 2}
+  - {fileID: 11400000, guid: a90e6275df1325f4890b4427674e53a6, type: 2}
+  - {fileID: 11400000, guid: e7c6bdd037d70e64da773f566cd4c57e, type: 2}
+  - {fileID: 11400000, guid: 0e0bfeb00fd6415418a6e57ab12d655c, type: 2}
+  - {fileID: 11400000, guid: 80405a2c572e19844af6270d800bf7f9, type: 2}
+  - {fileID: 11400000, guid: f2242a08f561d8340b09bc6c8ba3c041, type: 2}
+  - {fileID: 11400000, guid: 0cf3391c32477744e91502a3b93a8749, type: 2}
+  customRules: []

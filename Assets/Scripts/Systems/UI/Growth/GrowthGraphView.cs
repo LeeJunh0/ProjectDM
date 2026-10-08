@@ -55,6 +55,7 @@ namespace ProjectDM
             DrawPrototypeGrowthDetails();
             DrawGrowthWallet();
             DrawPrototypeGraphOverview();
+            DrawStageSelection();
             // This is a navigation button, not a popup/header; the graph still owns the whole screen.
             Rect navigationArea = GrowthNavigationRect;
             Rect navigation = new Rect(navigationArea.x, navigationArea.yMax - 44, navigationArea.width, 44);
@@ -63,9 +64,10 @@ namespace ProjectDM
                 run.BeginRun();
                 return;
             }
-            if (graphics.DrawResultButton(navigation, run.runEnded ? "플레이 시작" : "플레이로 복귀", true))
+            bool newStage = run.stages != null && run.stages.SelectionChanged;
+            if (graphics.DrawResultButton(navigation, run.runEnded || newStage ? "선택 스테이지 시작" : "플레이로 복귀", true))
             {
-                if (run.runEnded) run.BeginRun();
+                if (run.runEnded || newStage) run.BeginRun();
                 else run.ToggleMetaTree();
                 return;
             }
@@ -256,7 +258,7 @@ namespace ProjectDM
             }
             float inset = nodeRect.width * .19f;
             UiGraphics.DrawResultSprite(new Rect(nodeRect.x + inset, nodeRect.y + inset * .4f, nodeRect.width - inset * 2,
-                nodeRect.height * .42f), art.PrototypeIcon(node.id == "ROOT" ? "bolt" : isGoal ? goal.icon : tables.NodeGrowthRow(node.id).icon));
+                nodeRect.height * .42f), isGoal ? GoalIcon(goal) : art.PrototypeIcon(node.id == "ROOT" ? "bolt" : tables.NodeGrowthRow(node.id).icon));
             if (node.id == "ROOT" && nodeRect.width >= 36)
                 GUI.Label(new Rect(nodeRect.x, nodeRect.yMax - 18f, nodeRect.width, 12f), "1/1",
                     new GUIStyle(title) { fontSize = 9, wordWrap = false });
@@ -338,10 +340,30 @@ namespace ProjectDM
             if (GUI.Button(GrowthOverviewRect, "전체 보기")) FitPrototypeGraph(new Vector2(Screen.width, Screen.height));
         }
 
+        private static Rect StageSelectionRect => new Rect(142, 22, 240, 30);
+
+        private void DrawStageSelection()
+        {
+            if (run.stages == null || !run.stages.Ready) return;
+            Rect area = StageSelectionRect;
+            for (int id = 1; id <= 2; id++)
+            {
+                Rect button = new Rect(area.x + (id - 1) * 122, area.y, 118, area.height);
+                if (GUI.Button(button, (run.stages.SelectedId == id ? "● " : "") + (id == 1 ? "1 · 초원" : "2 · 석재 던전")))
+                    run.stages.Select(id);
+            }
+        }
+
+        private Sprite GoalIcon(PrototypeGoalNode goal)
+        {
+            StageDefinition stage = run.stages?.Definition(goal.stage);
+            return stage == null ? art.PrototypeIcon(goal.icon) : goal.kind == "boss" ? stage.bossFrames[0] : stage.monsters[0].frames[0];
+        }
+
         internal bool IsPrototypeGraphOverlay(Vector2 pointer)
         {
             // Pointer tests run for each node; do not allocate a rectangle array per test.
-            return GrowthOverviewRect.Contains(pointer) || GrowthWalletRect.Contains(pointer) ||
+            return GrowthOverviewRect.Contains(pointer) || StageSelectionRect.Contains(pointer) || GrowthWalletRect.Contains(pointer) ||
                 GrowthDetailsRect.Contains(pointer) || GrowthNavigationRect.Contains(pointer);
         }
 
@@ -356,7 +378,7 @@ namespace ProjectDM
 
         internal static Rect[] GetGrowthOverlayRects(Vector2 size, bool ended)
         {
-            return new[] { new Rect(22, 22, 110, 30), GetGrowthWalletRect(size), GetGrowthDetailsRect(size), GetGrowthNavigationRect(size, ended) };
+            return new[] { new Rect(22, 22, 110, 30), GetGrowthWalletRect(size), GetGrowthDetailsRect(size), GetGrowthNavigationRect(size, ended), StageSelectionRect };
         }
 
         internal Rect GrowthWalletRect => GetGrowthWalletRect(new Vector2(Screen.width, Screen.height));
@@ -418,13 +440,22 @@ namespace ProjectDM
             return $"{goal.description}\n{condition}";
         }
 
-        internal static string GoalStatus(PrototypeGoalNode goal) => goal.kind == "stage" && goal.stage == 1
-            ? "시작 스테이지 · 임시 목표 배치" : "임시 목표 · 스테이지 이동/보스전 준비 중";
+        internal static string GoalStatus(PrototypeGoalNode goal) => goal.kind == "stage"
+            ? "리소스 연결 완료 · 위의 스테이지 선택으로 새 런 시작" : "보스 외형 연결 완료 · 보스 전투/해금 조건 준비 중";
 
         internal string GrowthAmountText(PrototypeGrowth row, int rank, double partial = 0)
         {
             if (row.unit == "해금") return rank > 0 ? "해금됨 (런 레벨업에서 획득)" : "미해금";
             float amount = (float)PrototypeRules.Amount(tables.balance, row, rank, partial);
+            switch (row.id)
+            {
+                case "health": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##} HP";
+                case "movement": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##} / +{amount * 100:0.##}%";
+                case "criticalChance": return $"{PlayerStats.Calculate(tables.balance, row.id, amount) * 100:0.##}%";
+                case "criticalDamage": return $"기본 피해의 {PlayerStats.Calculate(tables.balance, row.id, amount) * 100:0.##}%";
+                case "invulnerability": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##}초";
+                case "magnet": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##}유닛";
+            }
             if (row.id == "extension") return $"{(tables.balance.timeRewardChance + amount) * 100:0.##}% / +{tables.balance.timeRewardSeconds:0.##}초";
             if (LootGradeRules.CurrencyGrowthGrade(row.id) > 0) return $"+{Mathf.Clamp01(amount) * 100:0.##}%p / 낮은 재화 확률에서 전환";
             if (row.id == "currencyGradeChance" || row.id == "experienceGradeChance") return $"{Mathf.Clamp01(amount) * 100:0.##}% / 한 단계 상승";

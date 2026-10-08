@@ -6,6 +6,7 @@ namespace ProjectDM
     internal sealed class GameSettings
     {
         internal float runDuration = 40f;
+        internal int initialStage = 1;
         internal float resultCountUpDuration = 1.1f;
         internal float resultCountUpStagger = .07f;
         internal float resultGlowIntensity = .16f;

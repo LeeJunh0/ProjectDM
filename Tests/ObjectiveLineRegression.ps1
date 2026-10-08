@@ -8,9 +8,9 @@ $growth = [ProjectDM.PrototypeGrowthTable](Get-Content -Raw (Join-Path $dataRoot
 $checks=0
 function Assert-True([bool]$condition,[string]$message) { if(-not $condition){throw $message};$script:checks++ }
 Assert-True ($null -eq [ProjectDM.PrototypeRules]::Validate($balance,$skills,$growth)) 'Goal line table must validate'
-Assert-True ($growth.goalLine.Count -eq 6 -and $growth.rows.Count -eq 20 -and $growth.nodes.Count -eq 80) 'Temporary goals must be separate from the unchanged 20 growth rows / 80 purchasing nodes'
+Assert-True ($growth.goalLine.Count -eq 4 -and $growth.rows.Count -eq 26 -and $growth.nodes.Count -eq 86) 'Two stage/boss pairs must be separate from 26 growth rows / 86 purchasing nodes'
 $layout=[ProjectDM.PrototypeRules]::CreateGraphLayout($growth)
-Assert-True ($layout.Count -eq 86) 'Layout must include both growth and goal lines'
+Assert-True ($layout.Count -eq $growth.nodes.Count + $growth.goalLine.Count) 'Layout must include both growth and goal lines'
 $parent='ROOT';$y=0
 for($i=0;$i -lt $growth.goalLine.Count;$i++) {
     $goal=$growth.goalLine[$i]

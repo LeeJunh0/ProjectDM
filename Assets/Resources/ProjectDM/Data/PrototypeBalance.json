@@ -24,6 +24,7 @@
   "playerContactRadius": 0.55,
   "criticalChance": 0.05,
   "criticalMultiplier": 2,
+  "pickupMagnetRadius": 2,
   "lootGrades": [
     {
       "grade": 1,

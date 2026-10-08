@@ -1,11 +1,9 @@
 {
   "goalLine": [
-    { "id": "GOAL_STAGE_01", "name": "스테이지 1", "description": "게임 목표 라인의 시작 스테이지입니다.", "kind": "stage", "stage": 1, "parent": "ROOT", "icon": "gem", "x": 0, "y": -180 },
-    { "id": "GOAL_BOSS_01", "name": "1스테이지 보스", "description": "첫 스테이지의 보스 목표입니다. 임시 노드이며 전투는 준비 중입니다.", "kind": "boss", "stage": 1, "parent": "GOAL_STAGE_01", "icon": "slime", "limitSeconds": 180, "x": 0, "y": -360 },
-    { "id": "GOAL_STAGE_02", "name": "스테이지 2", "description": "두 번째 스테이지의 임시 목표입니다.", "kind": "stage", "stage": 2, "parent": "GOAL_BOSS_01", "icon": "gem", "x": 0, "y": -600 },
-    { "id": "GOAL_BOSS_02", "name": "2스테이지 보스", "description": "두 번째 스테이지의 보스 목표입니다. 임시 노드이며 전투는 준비 중입니다.", "kind": "boss", "stage": 2, "parent": "GOAL_STAGE_02", "icon": "slime", "limitSeconds": 180, "x": 0, "y": -780 },
-    { "id": "GOAL_STAGE_03", "name": "스테이지 3", "description": "마지막 목표로 이어지는 임시 스테이지입니다.", "kind": "stage", "stage": 3, "parent": "GOAL_BOSS_02", "icon": "gem", "x": 0, "y": -990 },
-    { "id": "GOAL_BOSS_03", "name": "최종보스 (임시)", "description": "현재 목표 라인의 끝입니다. 실제 최종 스테이지 수와 보스 난이도는 추후 지정합니다.", "kind": "boss", "stage": 3, "parent": "GOAL_STAGE_03", "icon": "slime", "limitSeconds": 180, "final": true, "x": 0, "y": -1170 }
+    { "id": "GOAL_STAGE_01", "name": "1 · 초원", "description": "풀과 흙으로 이루어진 첫 스테이지입니다. 성장 지도에서 선택하여 새 런을 시작할 수 있습니다.", "kind": "stage", "stage": 1, "parent": "ROOT", "icon": "gem", "x": 0, "y": -180 },
+    { "id": "GOAL_BOSS_01", "name": "고목 수호자", "description": "초원의 보스 외형을 연결했습니다. 도달 미리보기만 가능하며 보스 전투는 준비 중입니다.", "kind": "boss", "stage": 1, "parent": "GOAL_STAGE_01", "icon": "slime", "limitSeconds": 180, "x": 0, "y": -360 },
+    { "id": "GOAL_STAGE_02", "name": "2 · 석재 던전", "description": "기존 어두운 석재 타일을 사용하는 두 번째 스테이지입니다. 테스트를 위해 직접 선택할 수 있습니다.", "kind": "stage", "stage": 2, "parent": "GOAL_BOSS_01", "icon": "gem", "x": 0, "y": -600 },
+    { "id": "GOAL_BOSS_02", "name": "골석 수호자", "description": "석재 던전의 보스 외형을 연결했습니다. 현재 두 스테이지만 구성하며 최종 스테이지 수는 미확정입니다.", "kind": "boss", "stage": 2, "parent": "GOAL_STAGE_02", "icon": "slime", "limitSeconds": 180, "final": true, "x": 0, "y": -780 }
   ],
   "rows": [
     {
@@ -338,6 +336,102 @@
       "maxRank": 9,
       "minStage": 4,
       "step": 0.003
+    },
+    {
+      "id": "health",
+      "name": "최대 체력",
+      "description": "최대 체력 +20. 구매 효과는 다음 런부터 적용하며 새 런을 최대 체력으로 시작합니다.",
+      "icon": "gem",
+      "unit": "HP",
+      "parent": "population",
+      "x": -270,
+      "y": 110,
+      "baseCost": 16,
+      "costGrowth": 1.12,
+      "maxRank": 3,
+      "minStage": 0,
+      "step": 20,
+      "costRampRanks": 2
+    },
+    {
+      "id": "movement",
+      "name": "이동속도",
+      "description": "기본 이동속도 대비 +8%p. 공격속도 및 투사체 속도와는 별개입니다.",
+      "icon": "bolt",
+      "unit": "%",
+      "parent": "time",
+      "x": 265,
+      "y": 105,
+      "baseCost": 18,
+      "costGrowth": 1.12,
+      "maxRank": 3,
+      "minStage": 0,
+      "step": 0.08,
+      "costRampRanks": 2
+    },
+    {
+      "id": "criticalChance",
+      "name": "치명타 확률",
+      "description": "기본 공격의 치명타 확률 +3%p. 다중 공격의 각 적중도 독립 판정합니다.",
+      "icon": "bolt",
+      "unit": "%p",
+      "parent": "speed",
+      "x": 270,
+      "y": -110,
+      "baseCost": 24,
+      "costGrowth": 1.15,
+      "maxRank": 3,
+      "minStage": 0,
+      "step": 0.03,
+      "costRampRanks": 2
+    },
+    {
+      "id": "criticalDamage",
+      "name": "치명타 피해량",
+      "description": "치명타가 주는 피해량 +25%p. 200%는 기본 피해의 2배이며 스킬 효과 피해는 별도입니다.",
+      "icon": "bolt",
+      "unit": "%p",
+      "parent": "chainChance",
+      "x": -275,
+      "y": -390,
+      "baseCost": 30,
+      "costGrowth": 1.15,
+      "maxRank": 3,
+      "minStage": 0,
+      "step": 0.25,
+      "costRampRanks": 2
+    },
+    {
+      "id": "invulnerability",
+      "name": "피격 후 무적 시간",
+      "description": "피격 후 무적 시간 +0.1초. 피격 판정 거리는 변경하지 않습니다.",
+      "icon": "gem",
+      "unit": "초",
+      "parent": "respawn",
+      "x": 380,
+      "y": -535,
+      "baseCost": 20,
+      "costGrowth": 1.12,
+      "maxRank": 3,
+      "minStage": 0,
+      "step": 0.1,
+      "costRampRanks": 2
+    },
+    {
+      "id": "magnet",
+      "name": "아이템 끌어오기 범위",
+      "description": "경험치·재화·상자 끌어오기 범위 +0.5유닛. 실제 획득 거리는 변경하지 않습니다.",
+      "icon": "coin",
+      "unit": "유닛",
+      "parent": "time",
+      "x": 380,
+      "y": 535,
+      "baseCost": 20,
+      "costGrowth": 1.12,
+      "maxRank": 3,
+      "minStage": 0,
+      "step": 0.5,
+      "costRampRanks": 2
     }
   ],
   "nodes": [
@@ -1220,6 +1314,72 @@
       "x": 687.18,
       "y": 299.17,
       "parentRanks": 3
+    },
+    {
+      "id": "health_1",
+      "growthId": "health",
+      "name": "최대 체력",
+      "parent": "population_1",
+      "startRank": 0,
+      "ranks": 3,
+      "x": -270,
+      "y": 110,
+      "parentRanks": 1
+    },
+    {
+      "id": "movement_1",
+      "growthId": "movement",
+      "name": "이동속도",
+      "parent": "time_1",
+      "startRank": 0,
+      "ranks": 3,
+      "x": 265,
+      "y": 105,
+      "parentRanks": 1
+    },
+    {
+      "id": "criticalChance_1",
+      "growthId": "criticalChance",
+      "name": "치명타 확률",
+      "parent": "speed_1",
+      "startRank": 0,
+      "ranks": 3,
+      "x": 270,
+      "y": -110,
+      "parentRanks": 1
+    },
+    {
+      "id": "criticalDamage_1",
+      "growthId": "criticalDamage",
+      "name": "치명타 피해량",
+      "parent": "chainChance_1",
+      "startRank": 0,
+      "ranks": 3,
+      "x": -275,
+      "y": -390,
+      "parentRanks": 1
+    },
+    {
+      "id": "invulnerability_1",
+      "growthId": "invulnerability",
+      "name": "피격 후 무적 시간",
+      "parent": "respawn_2",
+      "startRank": 0,
+      "ranks": 3,
+      "x": 380,
+      "y": -535,
+      "parentRanks": 1
+    },
+    {
+      "id": "magnet_1",
+      "growthId": "magnet",
+      "name": "아이템 끌어오기 범위",
+      "parent": "time_3",
+      "startRank": 0,
+      "ranks": 3,
+      "x": 380,
+      "y": 535,
+      "parentRanks": 1
     }
   ]
 }

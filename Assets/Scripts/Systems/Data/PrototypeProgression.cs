@@ -19,6 +19,7 @@ namespace ProjectDM
         public float playerContactRadius = .55f;
         public float criticalChance = .05f;
         public float criticalMultiplier = 2;
+        public float pickupMagnetRadius = 2;
         public PrototypeMonster[] monsters;
         public PrototypeStage[] stages;
         public PrototypeLootGrade[] lootGrades;
@@ -404,7 +405,7 @@ namespace ProjectDM
                 !Positive(b.latePriceScale) || b.latePriceScale < 1 || !FiniteNonnegative(b.firstDamageBonus) ||
                 !Probability(b.timeRewardChance) || !FiniteNonnegative(b.timeRewardSeconds) ||
                 !Probability(b.chestChance) || b.chestCoins < 0 || !Positive(b.playerHealth) ||
-                !Positive(b.playerInvulnerability) || !Positive(b.playerContactRadius) ||
+                !Positive(b.playerInvulnerability) || !Positive(b.playerContactRadius) || !Positive(b.pickupMagnetRadius) ||
                 !Probability(b.criticalChance) || !Positive(b.criticalMultiplier) || b.criticalMultiplier < 1 ||
                 !FiniteNonnegative(b.initialSpawnMin) || b.initialSpawnMin < .6f ||
                 !Positive(b.initialSpawnMax) || b.initialSpawnMax < b.initialSpawnMin ||
@@ -434,7 +435,8 @@ namespace ProjectDM
             }
             string lootError = LootGradeRules.Validate(b);
             if (lootError != null) return lootError;
-            string[] growthIds = { "damage", "speed", "time", "yield", "xp", "population", "respawn", "extension", "multishot", "chain", "splash", "meteor", "chainChance", "splashChance", "meteorChance", "currencyGradeChance", "experienceGradeChance", "silverDropChance", "goldDropChance", "emeraldDropChance", "amethystDropChance" };
+            string[] playerGrowthIds = { "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet" };
+            string[] growthIds = { "damage", "speed", "time", "yield", "xp", "population", "respawn", "extension", "multishot", "chain", "splash", "meteor", "chainChance", "splashChance", "meteorChance", "currencyGradeChance", "experienceGradeChance", "silverDropChance", "goldDropChance", "emeraldDropChance", "amethystDropChance", "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet" };
             HashSet<string> ids = new HashSet<string>();
             foreach (PrototypeGrowth r in growth.rows)
             {
@@ -445,9 +447,9 @@ namespace ProjectDM
                     !FiniteNonnegative(r.damageRatio) || float.IsNaN(r.x) || float.IsInfinity(r.x) ||
                     float.IsNaN(r.y) || float.IsInfinity(r.y)) return "성장 행 ID/수치 오류";
             }
-            // Older custom tables may omit the two newly added optional grade growths.
+            // Older custom tables may omit newly added grade and player growths.
             foreach (string id in growthIds)
-                if (id != "currencyGradeChance" && id != "experienceGradeChance" && LootGradeRules.CurrencyGrowthGrade(id) == 0 && !ids.Contains(id)) return "필수 성장 행이 누락되었습니다.";
+                if (id != "currencyGradeChance" && id != "experienceGradeChance" && LootGradeRules.CurrencyGrowthGrade(id) == 0 && Array.IndexOf(playerGrowthIds, id) < 0 && !ids.Contains(id)) return "필수 성장 행이 누락되었습니다.";
             foreach (PrototypeGrowth r in growth.rows)
             {
                 if ((!string.IsNullOrEmpty(r.requires) && !ids.Contains(r.requires)) ||

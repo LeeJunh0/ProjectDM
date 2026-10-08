@@ -27,7 +27,8 @@ namespace ProjectDM
             GUIStyle heading = new GUIStyle(graphics.titleStyle) { alignment = TextAnchor.MiddleCenter, fontSize = 32, normal = { textColor = new Color(1f, .76f, .38f) } };
             GUIStyle body = new GUIStyle(graphics.statStyle) { alignment = TextAnchor.MiddleCenter, fontSize = 14, wordWrap = true, normal = { textColor = Color.white } };
             float y = Screen.height * .6f;
-            GUI.Label(new Rect(20, y, Screen.width - 40, 48), boss.bossArrivalIsDebug ? "최종보스 도달 (미리보기)" : "최종보스 도달", heading);
+            string bossTitle = run.stages?.Current != null ? run.stages.Current.bossName : "보스";
+            GUI.Label(new Rect(20, y, Screen.width - 40, 48), bossTitle + (boss.bossArrivalIsDebug ? " (미리보기)" : " 도달"), heading);
             GUI.Label(new Rect(20, y + 52, Screen.width - 40, 56),
                 $"실제 런 진행 시간 {run.elapsed:0.00}초 / 리미트 {tables.balance.bossElapsedSeconds:0.##}초\n현재는 도달 확인용입니다. 보스 전투·난이도는 아직 적용하지 않았습니다.", body);
             float width = Mathf.Min(180, (Screen.width - 64) / 3f);

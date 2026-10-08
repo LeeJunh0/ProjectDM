@@ -12,6 +12,9 @@ namespace ProjectDM
         [SerializeField, Min(1f), Tooltip("한 회차의 플레이 제한 시간(초)입니다. 변경한 값은 다음 회차부터 적용됩니다.")]
         private float runDuration = 40f;
 
+        [SerializeField, Range(1, 2), Tooltip("기본 시작 스테이지입니다. 1은 초원, 2는 기존 어두운 석재 맵입니다. 플레이 중 변경하면 다음 런에 적용됩니다.")]
+        private int initialStage = 1;
+
         [SerializeField, Min(0f), Tooltip("각 통계 숫자가 0에서 실제 값에 도달하는 시간(초)입니다. 0이면 즉시 표시합니다.")]
         private float resultCountUpDuration = 1.1f;
 
@@ -166,6 +169,7 @@ namespace ProjectDM
         private CombatSystem combat;
         private SkillSystem skills;
         private CombatStats stats;
+        private PlayerStats playerStats;
         private PickupSystem pickupsSystem;
         private LevelUpController selection;
         private BossMilestone boss;
@@ -184,6 +188,7 @@ namespace ProjectDM
         private bool isInitialized;
         private string prototypeError;
         private Action onBossDue;
+        private StageSession stages;
 
         /// <summary>Called by the Main scene setup utility to connect edit-time layout objects.</summary>
         public void ConfigureSceneLayout(
@@ -209,6 +214,7 @@ namespace ProjectDM
         private void SynchronizeSettings()
         {
             settings.runDuration = runDuration;
+            settings.initialStage = initialStage;
             settings.resultCountUpDuration = resultCountUpDuration;
             settings.resultCountUpStagger = resultCountUpStagger;
             settings.resultGlowIntensity = resultGlowIntensity;
@@ -309,19 +315,21 @@ namespace ProjectDM
             objectPool = pool;
             art ??= new WorldArtAssets();
             graphics ??= new UiGraphics();
-            playerWorld = new PlayerWorld(settings, tables, art);
+            progression = new ProgressionService(save, tables);
+            playerStats = new PlayerStats(tables, progression);
+            playerWorld = new PlayerWorld(settings, tables, art, playerStats);
             cameraSystem = new GameplayCamera(settings, playerWorld);
             notifications = new GameNotifications();
-            progression = new ProgressionService(save, tables);
+            stages = new StageSession(settings, art);
             presentation = new DamagePresentation(settings);
-            run = new RunController(settings, save, tables, progression, playerWorld, ResetWorld, () => enemiesSystem.SpawnPrototypeInitialEnemies(), () => cameraSystem.SnapCameraToPlayer(), () => growthView?.ResetNavigation(), () => { if (selection != null) selection.choosingUpgrade = false; }, () => selection != null && selection.choosingUpgrade);
+            run = new RunController(settings, save, tables, progression, playerWorld, ResetWorld, () => enemiesSystem.SpawnPrototypeInitialEnemies(), () => cameraSystem.SnapCameraToPlayer(), () => growthView?.ResetNavigation(), () => { if (selection != null) selection.choosingUpgrade = false; }, () => selection != null && selection.choosingUpgrade, stages);
             boss = new BossMilestone(save, art, playerWorld, run);
-            pickupsSystem = new PickupSystem(settings, save, tables, progression, art, playerWorld, run, pool, amount => selection.AddExperience(amount));
+            pickupsSystem = new PickupSystem(settings, save, tables, progression, art, playerWorld, run, pool, amount => selection.AddExperience(amount), playerStats);
             enemiesSystem = new EnemySystem(settings, save, tables, progression, art, playerWorld, run, pickupsSystem, boss, notifications, pool, effects, presentation.ShowCombatDamage);
-            skills = new SkillSystem(tables, progression, art, run, enemiesSystem, effects, () => combat.RollCriticalHit(), () => stats.MainDamage);
+            skills = new SkillSystem(tables, progression, art, run, enemiesSystem, effects, () => combat.RollCriticalHit(), () => stats.MainDamage, playerStats);
             stats = new CombatStats(tables, progression, skills);
-            combat = new CombatSystem(settings, tables, progression, art, playerWorld, enemiesSystem, skills, stats, pool);
-            playerCombat = new PlayerCombatSystem(settings, tables, playerWorld, run, enemiesSystem, combat, presentation);
+            combat = new CombatSystem(settings, tables, progression, art, playerWorld, enemiesSystem, skills, stats, pool, playerStats);
+            playerCombat = new PlayerCombatSystem(settings, tables, playerWorld, run, enemiesSystem, combat, presentation, playerStats);
             selection = new LevelUpController(tables, progression, run, skills);
             hud = new RunHudView(settings, save, tables, run, enemiesSystem, stats, selection, playerCombat, graphics);
             results = new RunResultView(settings, tables, art, run, boss, playerCombat, graphics);
@@ -343,7 +351,8 @@ namespace ProjectDM
             }
             art.runtimeAssets = assetLoader.Assets;
             art.LoadSprites(art.runtimeAssets);
-            art.CreateBackdrop();
+            try { stages.LoadContent(); }
+            catch (Exception exception) { prototypeError = exception.Message; yield break; }
             playerWorld.CreatePlayer();
             cameraSystem.SnapCameraToPlayer();
             run.BeginRun();
@@ -361,6 +370,8 @@ namespace ProjectDM
             playerCombat.ResetPlayerCombat();
             selection.Reset();
             boss.Reset();
+            stages.ApplySelected();
+            dungeonFloor = settings.dungeonFloor;
             run.timeRewardsThisRun = 0;
         }
 

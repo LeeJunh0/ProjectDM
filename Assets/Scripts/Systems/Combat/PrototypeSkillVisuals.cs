@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ProjectDM
 {
-    /// <summary>Temporary pooled effects using the existing bolt/gem sprites, not generated artwork.</summary>
+    /// <summary>Pooled approved skill artwork; all timing/motion is presentation-only, with legacy fallbacks.</summary>
     internal sealed class PrototypeSkillVisuals : MonoBehaviour
     {
         private readonly Queue<SpriteRenderer> spritePool = new();
@@ -11,14 +11,16 @@ namespace ProjectDM
         private readonly Queue<TextMesh> textPool = new();
         private readonly List<FloatingText> texts = new();
         private Sprite bolt, gem;
+        private SkillVisualAssets artwork;
+        private Material defaultSpriteMaterial;
 
         private sealed class Visual
         {
             public SpriteRenderer renderer;
             public Color color;
             public Vector3 from, to, size;
-            public float age, duration;
-            public bool falling, expanding;
+            public float age, duration, startScale = .2f;
+            public bool falling, expanding, lightning, warning;
         }
 
         private sealed class FloatingText
@@ -28,21 +30,31 @@ namespace ProjectDM
             public float age;
         }
 
-        internal void Configure(Sprite boltSprite, Sprite gemSprite) { bolt = boltSprite; gem = gemSprite; }
-
-        private SpriteRenderer Rent(Sprite sprite)
+        internal void Configure(Sprite boltSprite, Sprite gemSprite, SkillVisualAssets assets = null)
         {
+            bolt = boltSprite; gem = gemSprite; artwork = assets;
+        }
+
+        private SpriteRenderer Rent(Sprite sprite, bool warmTint = false)
+        {
+            if (active.Count >= (artwork != null ? Mathf.Max(1, artwork.maxActiveEffects) : 128)) return null;
             SpriteRenderer renderer;
             if (spritePool.Count > 0) renderer = spritePool.Dequeue();
             else
             {
-                GameObject instance = new GameObject("임시 스킬 연출");
+                GameObject instance = new GameObject("스킬 이펙트");
                 instance.transform.SetParent(transform, false);
                 renderer = instance.AddComponent<SpriteRenderer>();
+                defaultSpriteMaterial ??= renderer.sharedMaterial;
             }
             renderer.sprite = sprite;
+            renderer.sharedMaterial = warmTint && artwork != null && artwork.impactMaterial != null
+                ? artwork.impactMaterial : defaultSpriteMaterial;
             renderer.sortingOrder = 6;
             renderer.transform.rotation = Quaternion.identity;
+            renderer.transform.localScale = Vector3.one;
+            renderer.color = Color.white;
+            renderer.flipX = renderer.flipY = false;
             renderer.gameObject.SetActive(true);
             return renderer;
         }
@@ -55,6 +67,30 @@ namespace ProjectDM
 
         internal void Link(Vector3 from, Vector3 to)
         {
+            Vector3 delta = to - from;
+            if (delta.sqrMagnitude < .0001f) return;
+            if (artwork != null && artwork.chain != null)
+            {
+                Sprite sprite = artwork.chain;
+                Vector3 localStart = Anchor(sprite, artwork.chainStart), localEnd = Anchor(sprite, artwork.chainEnd);
+                Vector3 authoredDirection = localEnd - localStart;
+                if (authoredDirection.sqrMagnitude > .0001f)
+                {
+                    SpriteRenderer renderer = Rent(sprite);
+                    if (renderer == null) return;
+                    float scale = delta.magnitude / authoredDirection.magnitude;
+                    float angle = Mathf.Atan2(delta.y, delta.x) - Mathf.Atan2(authoredDirection.y, authoredDirection.x);
+                    Quaternion rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+                    renderer.transform.rotation = rotation;
+                    renderer.transform.localScale = new Vector3(scale, scale, 1);
+                    renderer.transform.position = from - rotation * (localStart * scale);
+                    Color tint = new Color(1, 1, 1, Mathf.Clamp01(artwork.chainOpacity));
+                    renderer.color = tint;
+                    active.Add(new Visual { renderer = renderer, color = tint,
+                        size = renderer.transform.localScale, duration = Mathf.Max(.01f, artwork.chainDuration), lightning = true });
+                    return;
+                }
+            }
             // Three connected strokes create a readable zigzag with the default projectile sprite.
             Vector3 direction = to - from;
             Vector3 perpendicular = new Vector3(-direction.y, direction.x).normalized * .14f;
@@ -66,6 +102,7 @@ namespace ProjectDM
         private void Stroke(Vector3 from, Vector3 to)
         {
             SpriteRenderer renderer = Rent(bolt);
+            if (renderer == null) return;
             Vector3 direction = to - from;
             renderer.transform.position = (from + to) * .5f;
             renderer.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
@@ -78,35 +115,75 @@ namespace ProjectDM
 
         internal void Burst(Vector3 center, float radius, Color color, float duration)
         {
-            // Default gem flash marks the damaged area. Replace with effect art later without changing combat.
-            SpriteRenderer renderer = Rent(gem);
+            bool generated = artwork != null && artwork.splash != null;
+            Expand(center, radius, generated ? artwork.splash : gem,
+                generated ? new Color(1, 1, 1, Mathf.Clamp01(artwork.splashOpacity)) : new Color(color.r, color.g, color.b, .35f),
+                generated ? artwork.splashDuration : duration, false);
+        }
+
+        internal void MeteorImpact(Vector3 center, float radius)
+        {
+            bool generated = artwork != null && artwork.splash != null && artwork.impactMaterial != null;
+            Color color = generated ? artwork.impactColor : new Color(1, .45f, .12f);
+            color.a = generated ? Mathf.Clamp01(artwork.impactOpacity) : .35f;
+            Expand(center, radius, generated ? artwork.splash : gem, color,
+                generated ? artwork.impactDuration : .4f, generated);
+        }
+
+        private void Expand(Vector3 center, float radius, Sprite sprite, Color color, float duration, bool warmTint)
+        {
+            SpriteRenderer renderer = Rent(sprite, warmTint);
+            if (renderer == null) return;
             renderer.transform.position = center;
-            Vector3 size = SpriteScale(gem, radius * 2, radius * 2);
-            renderer.transform.localScale = size * .2f;
-            color.a = .35f;
+            float diameter = artwork != null && sprite == artwork.splash ? Mathf.Clamp(artwork.burstArtworkDiameter, .1f, 1) : 1;
+            Vector3 size = SpriteScale(sprite, radius * 2 / diameter, radius * 2 / diameter);
+            float start = artwork != null ? Mathf.Clamp(artwork.burstStartScale, .01f, 1) : .2f;
+            renderer.transform.localScale = size * start;
             renderer.color = color;
-            active.Add(new Visual { renderer = renderer, color = color, size = size, duration = duration, expanding = true });
+            active.Add(new Visual { renderer = renderer, color = color, size = size,
+                duration = Mathf.Max(.01f, duration), expanding = true, startScale = start });
         }
 
         internal void Meteor(Vector3 center, float radius, float delay)
         {
-            // A low-opacity ground marker and a falling default bolt, synchronized with the damage deadline.
-            SpriteRenderer marker = Rent(gem);
-            marker.transform.position = center;
-            Vector3 markerSize = SpriteScale(gem, radius * 2, radius * 2);
-            marker.transform.localScale = markerSize;
-            Color warning = new Color(1f, .4f, .1f, .22f);
-            marker.color = warning;
-            active.Add(new Visual { renderer = marker, color = warning, size = markerSize, duration = Mathf.Max(.01f, delay) });
-            SpriteRenderer falling = Rent(bolt);
-            falling.transform.rotation = Quaternion.Euler(0, 0, -90);
-            Vector3 size = SpriteScale(bolt, .9f, .55f);
+            // Motion uses the existing damage deadline, not a second combat timer.
+            bool generated = artwork != null && artwork.meteor != null;
+            bool warmMarker = generated && artwork.splash != null && artwork.impactMaterial != null;
+            Sprite markerSprite = warmMarker ? artwork.splash : gem;
+            SpriteRenderer marker = Rent(markerSprite, warmMarker);
+            if (marker != null)
+            {
+                marker.transform.position = center;
+                float diameter = warmMarker ? Mathf.Clamp(artwork.burstArtworkDiameter, .1f, 1) : 1;
+                Vector3 markerSize = SpriteScale(markerSprite, radius * 2 / diameter, radius * 2 / diameter);
+                marker.transform.localScale = markerSize;
+                marker.sortingOrder = 1;
+                Color warning = generated ? artwork.impactColor : new Color(1, .4f, .1f);
+                warning.a = generated ? Mathf.Clamp01(artwork.warningOpacity) : .22f;
+                marker.color = warning;
+                active.Add(new Visual { renderer = marker, color = warning, size = markerSize,
+                    duration = Mathf.Max(.01f, delay), warning = true });
+            }
+            Sprite sprite = generated ? artwork.meteor : bolt;
+            SpriteRenderer falling = Rent(sprite);
+            if (falling == null) return;
+            falling.transform.rotation = Quaternion.Euler(0, 0, generated ? artwork.meteorRotation : -90);
+            float width = generated ? Mathf.Max(.01f, artwork.meteorWidth) : .9f;
+            float height = generated ? width * sprite.rect.height / sprite.rect.width : .55f;
+            Vector3 size = SpriteScale(sprite, width, height);
             falling.transform.localScale = size;
-            falling.transform.position = center + Vector3.up * 3f;
-            falling.color = new Color(1f, .55f, .2f);
+            Vector3 offset = generated ? falling.transform.rotation * Vector3.Scale(Anchor(sprite, artwork.meteorAnchor), size) : Vector3.zero;
+            Vector3 end = center - offset;
+            falling.transform.position = end + Vector3.up * (generated ? Mathf.Max(0, artwork.meteorFallHeight) : 3);
+            falling.color = generated ? Color.white : new Color(1f, .55f, .2f);
             active.Add(new Visual { renderer = falling, color = falling.color, size = size,
-                from = falling.transform.position, to = center, duration = Mathf.Max(.01f, delay), falling = true });
+                from = falling.transform.position, to = end, duration = Mathf.Max(.01f, delay), falling = true });
         }
+
+        // Normalized anchors remain correct after import resizing and with non-central sprite pivots.
+        internal static Vector3 Anchor(Sprite sprite, Vector2 normalized) => new(
+            (normalized.x * sprite.rect.width - sprite.pivot.x) / sprite.pixelsPerUnit,
+            (normalized.y * sprite.rect.height - sprite.pivot.y) / sprite.pixelsPerUnit, 0);
 
         internal void TimeReward(Vector3 position, float seconds)
         {
@@ -131,15 +208,18 @@ namespace ProjectDM
 
         internal void Tick(float dt)
         {
+            if (dt <= 0) return;
             for (int i = active.Count - 1; i >= 0; i--)
             {
                 Visual visual = active[i];
                 visual.age += dt;
                 float progress = Mathf.Clamp01(visual.age / visual.duration);
                 if (visual.falling) visual.renderer.transform.position = Vector3.Lerp(visual.from, visual.to, progress * progress);
-                if (visual.expanding) visual.renderer.transform.localScale = visual.size * Mathf.Lerp(.2f, 1, progress);
+                if (visual.expanding) visual.renderer.transform.localScale = visual.size * Mathf.Lerp(visual.startScale, 1, 1 - Mathf.Pow(1 - progress, 3));
                 Color color = visual.color;
-                if (!visual.falling) color.a *= 1f - progress;
+                if (visual.warning) color.a *= .55f + .45f * progress;
+                else if (!visual.falling) color.a *= 1f - progress;
+                if (visual.lightning) color.a *= .7f + .3f * Mathf.Abs(Mathf.Sin(visual.age * 90));
                 visual.renderer.color = color;
                 if (progress < 1f) continue;
                 visual.renderer.gameObject.SetActive(false);

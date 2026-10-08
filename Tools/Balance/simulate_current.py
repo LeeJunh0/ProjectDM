@@ -75,6 +75,10 @@ def load_current():
         for key in CURRENCY_GROWTH_IDS:
             policy[key] = policy["yield"]
         policy["experienceGradeChance"] = policy["xp"]
+        for key in ("criticalChance", "criticalDamage"):
+            policy[key] = policy["damage"]
+        for key in ("health", "movement", "invulnerability", "magnet"):
+            policy[key] = .5  # Utility purchase preference, not measured encounter throughput.
     return config
 
 
@@ -183,6 +187,16 @@ def benefit(config, progress, key):
     ranks = progress.ranks
     row = config["upgrades"][key]
     rank = ranks.get(key, 0)
+    if key in ("criticalChance", "criticalDamage"):
+        chance = player_attribute(config, ranks, "criticalChance")
+        damage = player_attribute(config, ranks, "criticalDamage")
+        gain = row["step"] * (damage - 1 if key == "criticalChance" else chance)
+        return gain / (1 + chance * (damage - 1))
+    if key in ("health", "movement", "invulnerability", "magnet"):
+        # Utility heuristic only: movement/magnet gains do not change the approximate
+        # interception/collection profile. Do not present this as a live-play timing proof.
+        return .3 * row["step"] / (1 + rank * row["step"] if key == "movement"
+                                  else player_attribute(config, ranks, key))
     if key == "damage":
         bonus = config["first_damage_bonus"]
         return (row["step"] + (bonus if not rank else 0)) / (config["player"]["damage"] + rank * row["step"] + (bonus if rank else 0))
@@ -248,11 +262,21 @@ def shop_current(config, progress, policy):
         purchases.append({"upgrade": key, "node": node_id, "rank": progress.ranks[key], "cost": amount})
 
 
+def player_attribute(config, ranks, key):
+    balance = config["runtime_balance"]
+    amount = ranks.get(key, 0) * config["upgrades"].get(key, {}).get("step", 0)
+    if key == "movement": return balance["moveSpeed"] * (1 + amount)
+    if key == "criticalChance": return min(1, max(0, balance["criticalChance"] + amount))
+    field = {"health": "playerHealth", "criticalDamage": "criticalMultiplier",
+             "invulnerability": "playerInvulnerability", "magnet": "pickupMagnetRadius"}[key]
+    return balance.get(field, 2 if key == "magnet" else 0) + amount
+
+
 class CurrentRun(FrontierRun):
     def __init__(self, config, progress, seed, policy="balanced", profile=None):
         super().__init__(config, progress, seed, policy, profile)
         self.critical_hits = 0
-        self.player_health = config["runtime_balance"]["playerHealth"]
+        self.player_health = player_attribute(config, progress.ranks, "health")
         self.player_defeated = False
         self.next_contact = 0
 
@@ -280,9 +304,9 @@ class CurrentRun(FrontierRun):
             self.config["upgrades"][key + "Chance"]["step"] + self.run_proc * self.options["run_proc_step"])
 
     def direct_hit_damage(self, damage):
-        if self.rng.random() < self.config["runtime_balance"]["criticalChance"]:
+        if self.rng.random() < player_attribute(self.config, self.progress.ranks, "criticalChance"):
             self.critical_hits += 1
-            return damage * self.config["runtime_balance"]["criticalMultiplier"]
+            return damage * player_attribute(self.config, self.progress.ranks, "criticalDamage")
         return damage
 
     def level_up(self):
@@ -319,7 +343,7 @@ class CurrentRun(FrontierRun):
                           if enemy.radius <= balance["playerContactRadius"]), default=0)
             if damage > 0:
                 self.player_health = max(0, self.player_health - damage)
-                self.next_contact = self.time + balance["playerInvulnerability"]
+                self.next_contact = self.time + player_attribute(self.config, self.progress.ranks, "invulnerability")
                 if self.player_health <= 0:
                     self.player_defeated = True
                     self.duration = self.time
@@ -388,6 +412,7 @@ def main():
         "grade_rules_sha256": hashlib.sha256((ROOT / "Assets/Scripts/Systems/Pickups/LootGradeRules.cs").read_bytes()).hexdigest(),
         "assumptions": {"simulation": config["simulation"] | profiles[args.profile], "overhead": config["overhead"],
             "notes": ["No Unity movement/physics replay", "Default assumes evasion, stationary profile includes health/contact",
+                      "Movement/magnet utility purchases included, collection/kiting gains not simulated",
                       "Only new saves; first boss arrival, not victory; no offline income"]},
         "costs": {key: [current_price(config, key, rank) for rank in range(row["maxRank"])] for key, row in config["growth_rows"].items()},
         "policies": {}}

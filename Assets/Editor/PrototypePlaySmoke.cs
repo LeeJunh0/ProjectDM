@@ -64,7 +64,7 @@ namespace ProjectDM.Editor
                 if (loader != null && !string.IsNullOrEmpty(loader.Error)) throw new InvalidOperationException(loader.Error);
                 if (!(bool)Get(manager, "isInitialized")) return;
                 Verify(manager);
-                Finish("PASS: Main Play Mode, real Addressables/player/prefabs, table timer/population, cards/pause, effects, boss arrival, sandbox.", false);
+                Finish("PASS: Main Play Mode, real Addressables/player/prefabs, all five monster slots in both stages, world size, original Animator and manual frame loops, 2/1/2/1 pooled transitions, table timer/population, cards/pause, effects, boss arrival, sandbox.", false);
             }
             catch (Exception exception) { Finish("FAIL: " + exception, true); }
         }
@@ -84,11 +84,39 @@ namespace ProjectDM.Editor
                 Check(assets.ExperiencePickupPrefabs[i].GetComponentInChildren<SpriteRenderer>().sprite == xpPrefab.GetComponentInChildren<SpriteRenderer>().sprite, "Loaded XP grade order");
             }
             Check(Get(manager, "boltSprite") != null && Get(manager, "gemSprite") != null, "Existing default effect sprites loaded");
+            SkillVisualAssets skillArt = ((WorldArtAssets)Get(manager, "art")).skillVisualAssets;
+            Check(skillArt != null && skillArt.chain != null && skillArt.splash != null && skillArt.meteor != null && skillArt.impactMaterial != null,
+                "Real Main boot loads the approved generated skill artwork and impact material");
             Call(manager, "BeginRun");
             PrototypeBalance balance = (PrototypeBalance)Get(manager, "balance");
             Check((float)Get(manager, "activeRunDuration") >= balance.initialSeconds, "Table 40 seconds, not scene debug 5 seconds");
             Check((float)Get(manager, "remainingTimeFraction") == 1, "Timer begins full");
             Check(((IList)Get(manager, "enemies")).Count >= 12, "Real initial monsters");
+            StageSession stages = (StageSession)Get(manager, "stages");
+            Check(stages.Current.stageId == 1, "Default real Main run uses meadow stage");
+            PrototypeSave beforeStageChange = (PrototypeSave)Get(manager, "progress");
+            WorldArtAssets stageArt = (WorldArtAssets)Get(manager, "art");
+            foreach (int id in new[] { 2, 1, 2, 1 })
+            {
+                string beforeStageSave = JsonUtility.ToJson((PrototypeSave)Get(manager, "progress"));
+                stages.Select(id);
+                Call(manager, "BeginRun");
+                Check(stages.Current.stageId == id && stageArt.stage == stages.Current, "Real restart swaps ground and roster together");
+                Check(JsonUtility.ToJson((PrototypeSave)Get(manager, "progress")) == beforeStageSave, "Testing stage selection does not change progression or rewards");
+                IList population = (IList)Get(manager, "enemies");
+                foreach (object enemy in population)
+                {
+                    int slot = (int)(MonsterKind)RuntimeTestAccess.Get(enemy, "kind");
+                    Check((UnityEngine.Sprite)RuntimeTestAccess.Get(enemy, "baseSprite") == stages.Current.monsters[slot].frames[0], "Pooled monster uses current stage sprite");
+                    Check((UnityEngine.Sprite)RuntimeTestAccess.Get(enemy, "alternateSprite") == stageArt.MonsterAlternate((MonsterKind)slot), "Pooled monster uses current animation owner");
+                }
+                VerifyMonsterPresentation(manager, stageArt);
+                Call(manager, "ArriveAtPrototypeBoss", true);
+                Transform preview = (Transform)Get(manager, "prototypeBoss");
+                Check(preview.GetComponent<SpriteRenderer>().sprite == stages.Current.bossFrames[0], "Boss preview uses stage-specific artwork, including reused preview objects");
+                Check(Mathf.Approximately(preview.localScale.x, stages.Current.bossScale), "Boss preview uses its independent authored scale after pooling/stage swaps");
+                Call(manager, "BeginRun");
+            }
             Call(manager, "TriggerDebugLevelUp");
             Check((bool)Get(manager, "choosingUpgrade") && Time.timeScale == 0, "Card selection pauses run");
             Array cards = (Array)Get(manager, "runUpgradeChoices");
@@ -120,7 +148,48 @@ namespace ProjectDM.Editor
             Call(manager, "Update");
             Check((bool)Get(manager, "bossArrived") && progress.reachedBoss && (bool)Get(manager, "runEnded"), "Actual Update clock triggers boss at elapsed cap before timeout results");
             Call(manager, "BuildPrototypeGraph");
-            Check(((Array)Get(manager, "metaTreeNodes")).Length == 87, "Real graph contains root, 80 purchase nodes and six objective previews");
+            PrototypeGrowthTable growth = ((GameTables)Get(manager, "tables")).growthTable;
+            Check(((Array)Get(manager, "metaTreeNodes")).Length == growth.nodes.Length + 1 + growth.goalLine.Length, "Real graph contains root, all purchase nodes and objective previews");
+        }
+
+        private static void VerifyMonsterPresentation(GameManager manager, WorldArtAssets art)
+        {
+            EnemySystem system = (EnemySystem)Get(manager, "enemiesSystem");
+            PrototypeBalance balance = (PrototypeBalance)Get(manager, "balance");
+            var stage = balance.stages[4];
+            var weights = stage.weights;
+            int overrideBefore = system.debugStageOverride;
+            try
+            {
+                system.Reset(); system.debugStageOverride = 4;
+                // Force every monster slot without modifying progression or relying on random sampling.
+                for (int slot = 0; slot < 5; slot++)
+                {
+                    stage.weights = new int[5]; stage.weights[slot] = 1;
+                    system.SpawnPrototypeEnemy(true);
+                    Enemy enemy = system.enemies[slot];
+                    Check((int)enemy.kind == slot, "Forced visual slot spawned");
+                    Check(enemy.renderer.bounds.size.y >= 1f, "Live monster has readable world size");
+                    Animator animator = enemy.transform.GetComponentInChildren<Animator>();
+                    RuntimeAnimatorController controller = art.MonsterController(enemy.kind);
+                    Check(animator.runtimeAnimatorController == controller && animator.enabled == (controller != null), "Pooled Animator switches correctly between biomes");
+                    if (controller != null)
+                    {
+                        Check(enemy.alternateSprite == null, "Manual playback cannot overwrite Animator output");
+                        animator.Update(.18f);
+                        Check(enemy.renderer.sprite == art.stage.monsters[slot].frames[1], "Original Animator advances to the second actual frame");
+                        animator.Update(.17f);
+                        Check(enemy.renderer.sprite == enemy.baseSprite, "Original looping Animator returns to the first frame");
+                    }
+                }
+                system.UpdateEnemies(.17f);
+                foreach (Enemy enemy in system.enemies)
+                    if (enemy.alternateSprite != null) Check(enemy.renderer.sprite == enemy.alternateSprite, "Live two-frame sprite animation advances");
+                system.UpdateEnemies(.17f);
+                foreach (Enemy enemy in system.enemies)
+                    if (enemy.alternateSprite != null) Check(enemy.renderer.sprite == enemy.baseSprite, "Live two-frame sprite animation loops");
+            }
+            finally { stage.weights = weights; system.Reset(); system.debugStageOverride = overrideBefore; }
         }
 
         private static void Finish(string message, bool failed)

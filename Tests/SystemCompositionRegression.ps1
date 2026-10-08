@@ -27,7 +27,7 @@ foreach ($folder in @('Core','Data','Persistence','Run','Combat','Player','Picku
 }
 Assert-True (@(Get-ChildItem -LiteralPath $systemRoot -Filter '*.cs').Count -eq 0) 'System sources must live inside feature folders.'
 foreach ($name in @('RunController','SaveService','ProgressionService','EnemySystem','CombatSystem','SkillSystem','PickupSystem',
-    'GameplayCamera','PlayerWorld','PlayerCombatSystem','GrowthGraphView','LevelUpController','LevelUpView','RunHudView','RunResultView')) {
+    'GameplayCamera','PlayerWorld','PlayerStats','PlayerCombatSystem','GrowthGraphView','LevelUpController','LevelUpView','RunHudView','RunResultView')) {
     Assert-True ($sources.ContainsKey($name)) "Missing independent system: $name"
     $code = $sources[$name] -replace '(?m)//[^\r\n]*', ''
     Assert-True ($code -notmatch '\bGameManager\b|\bpartial\s+class\b|Find(?:Any|First)ObjectByType|GetComponent<GameManager>') "System must never receive/look up the coordinator: $name"
@@ -51,7 +51,7 @@ foreach ($name in $dependencies.Keys) { Test-NoCycle $name @() }
 $settings = $sources.GameSettings
 $inspector = Get-Content (Join-Path $projectRoot 'Assets/Editor/GameManagerInspector.cs') -Raw
 $properties = @([regex]::Matches($inspector, 'DrawProperty\("(\w+)"') | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique)
-Assert-True ($properties.Count -eq 55) 'Inspector property coverage changed unexpectedly.'
+Assert-True ($properties.Count -eq 56) 'Inspector property coverage changed unexpectedly.'
 foreach ($property in $properties) {
     Assert-True ($manager -match ('\bprivate\s+[\w<>]+\s+' + $property + '\b')) "Serialized Inspector binding lost: $property"
     Assert-True ($settings -match ('\binternal\s+[\w<>]+\s+' + $property + '\b')) "Injected setting missing: $property"

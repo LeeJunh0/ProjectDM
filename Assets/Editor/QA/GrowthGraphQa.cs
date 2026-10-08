@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -75,7 +76,7 @@ namespace ProjectDM.Editor
         {
             Fixture f = new Fixture();
             f.view.BuildPrototypeGraph();
-            Check(f.view.metaTreeNodes.Length == 87, "Graph must contain root plus all 80 growth nodes and six goal nodes");
+            Check(f.view.metaTreeNodes.Length == f.tables.growthTable.nodes.Length + 1 + f.tables.growthTable.goalLine.Length, "Graph must contain root plus all growth and goal nodes");
             Check(f.view.metaTreeNodes[0].title == "기본 공격 해금" && f.view.metaTreeNodes[0].state == MetaTreeNodeState.Completed, "Basic attack root is completed for free");
             Check(f.save.metaCurrency == 0, "Fresh graph must not invent currency");
             Check(f.view.GrowthPurchaseStatus(f.tables.GrowthRow("damage"), f.tables.GrowthNode("damage_1")) == "재화 부족", "Initial purchase status explains currency shortage");
@@ -92,7 +93,7 @@ namespace ProjectDM.Editor
             f.view.selectedMetaTreeNode = hidden;
             f.view.BuildPrototypeGraph();
             Check(f.view.selectedMetaTreeNode == -1, "Hidden selection must not leak into the details panel");
-            report.passed.Add("Fresh root, all 87 presentations, one-hop visibility, hidden metadata and stale-selection clearing.");
+            report.passed.Add("Fresh root, all presentations, one-hop visibility, hidden metadata and stale-selection clearing.");
         }
 
         private static void CheckPurchaseBoundaries()
@@ -127,7 +128,7 @@ namespace ProjectDM.Editor
             Fixture f = new Fixture(); f.view.BuildPrototypeGraph();
             string before = JsonUtility.ToJson(f.save.progress);
             int wallet = f.save.metaCurrency;
-            Check(f.tables.growthTable.goalLine.Length == 6, "Three stage/boss pairs in the temporary objective line");
+            Check(f.tables.growthTable.goalLine.Length == 4, "Two stage/boss pairs in the temporary objective line");
             int parent = 0;
             foreach (PrototypeGoalNode goal in f.tables.growthTable.goalLine)
             {
@@ -203,14 +204,14 @@ namespace ProjectDM.Editor
                         }
                     }
                 }
-                Check(bought == 222, "Purchase path deadlock, skipped rank or over-purchase: seed " + seed);
+                Check(bought == Array.ConvertAll(f.tables.growthTable.rows, row => row.maxRank).Sum(), "Purchase path deadlock, skipped rank or over-purchase: seed " + seed);
                 foreach (PrototypeGrowth row in f.tables.growthTable.rows)
                     Check(f.save.progress.Rank(row.id) == row.maxRank, "All growth rows finish: " + row.id);
                 f.view.BuildPrototypeGraph();
                 foreach (MetaTreeNodePresentation item in f.view.metaTreeNodes)
                     Check(f.tables.goalNodeLookup.ContainsKey(item.id) || item.state == MetaTreeNodeState.Completed, "Every growth node completed after legal full path; preview goals remain pending");
             }
-            report.passed.Add("12 shuffled legal routes through stages 1–5, all 222 purchases per route, reload every 11 purchases, no deadlock or lost purchase.");
+            report.passed.Add("12 shuffled legal routes through stages 1–5, all table purchases per route, reload every 11 purchases, no deadlock or lost purchase.");
         }
 
         private static void CheckSnapshotAndIndependentChances()
@@ -389,7 +390,7 @@ namespace ProjectDM.Editor
                 save = new SaveService(tables, new MemoryProgressStore(), false); save.Load();
                 progression = new ProgressionService(save, tables); progression.ResetSnapshot();
                 GameSettings settings = new GameSettings(); WorldArtAssets art = new WorldArtAssets();
-                run = new RunController(settings, save, tables, progression, new PlayerWorld(settings, tables, art),
+                run = new RunController(settings, save, tables, progression, new PlayerWorld(settings, tables, art, new PlayerStats(tables, progression)),
                     () => progression.ResetSnapshot(), () => { }, () => { }, () => { }, () => { }, () => false);
                 view = new GrowthGraphView(settings, save, tables, progression, art, run, new GameNotifications(), new UiGraphics());
             }

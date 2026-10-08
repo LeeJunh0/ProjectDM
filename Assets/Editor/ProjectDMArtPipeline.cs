@@ -768,25 +768,13 @@ namespace ProjectDM.Editor
 
         private static SpriteMetaData[] CharacterSlices(int width, int height)
         {
-            // The source was generated at 2:1. Fractions make this resilient to a later re-export.
+            // Player/monster art and chest animation have dedicated sheets now. Keep only the
+            // gameplay fallback icons and projectile animation slices; raw sheet pixels remain intact.
             List<SpriteMetaData> slices = new()
             {
-                Slice("Player_Back", width, height, .175f, .665f, .125f, .31f),
-                Slice("Player_Left", width, height, .350f, .665f, .135f, .31f),
-                Slice("Player_Right", width, height, .525f, .665f, .135f, .31f),
-                Slice("Player_ForwardHidden", width, height, .690f, .665f, .135f, .31f),
-                Slice("Skeleton_0", width, height, .165f, .360f, .155f, .30f),
-                Slice("Skeleton_1", width, height, .350f, .360f, .155f, .30f),
-                Slice("Skeleton_2", width, height, .530f, .360f, .155f, .30f),
-                Slice("Skeleton_3", width, height, .700f, .360f, .155f, .30f),
-                Slice("Slime_0", width, height, .165f, .115f, .165f, .255f),
-                Slice("Slime_1", width, height, .350f, .115f, .165f, .255f),
-                Slice("Slime_2", width, height, .530f, .115f, .165f, .255f),
-                Slice("Slime_3", width, height, .700f, .115f, .165f, .255f),
                 Slice("Experience_Gem", width, height, .385f, .025f, .080f, .180f),
                 // Keep the imported coin and GameManager's runtime slice on the same single frame.
-                Slice("Gold_Coin", width, height, 960f / 1774f, 58f / 887f, 82f / 1774f, 88f / 887f),
-                Slice("Treasure_Chest", width, height, .690f, .025f, .100f, .180f)
+                Slice("Gold_Coin", width, height, 960f / 1774f, 58f / 887f, 82f / 1774f, 88f / 887f)
             };
             // The projectile artwork occupies four uneven frames along the lower-left edge.
             // These artwork bounds preserve each frame's glow and particle falloff instead of
@@ -1023,13 +1011,14 @@ namespace ProjectDM.Editor
             factories.Init();
             ISpriteEditorDataProvider dataProvider = factories.GetSpriteEditorDataProviderFromObject(importer);
             dataProvider.InitSpriteEditorDataProvider();
+            Dictionary<string, GUID> existingIds = dataProvider.GetSpriteRects().ToDictionary(sprite => sprite.name, sprite => sprite.spriteID);
             SpriteRect[] spriteRects = metadata.Select(data => new SpriteRect
             {
                 name = data.name,
                 rect = data.rect,
                 alignment = (SpriteAlignment)data.alignment,
                 pivot = data.pivot,
-                spriteID = GUID.Generate()
+                spriteID = existingIds.TryGetValue(data.name, out GUID id) ? id : GUID.Generate()
             }).ToArray();
             dataProvider.SetSpriteRects(spriteRects);
 

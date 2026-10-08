@@ -9,6 +9,14 @@ namespace ProjectDM
     internal sealed class WorldArtAssets
     {
         internal WorldArtAssets() { }
+        internal StageDefinition stage;
+        internal string StageName => stage != null ? stage.displayName : "프로토타입";
+        internal string MonsterName(int slot, PrototypeBalance balance) => stage != null ? stage.monsters[slot].displayName : balance.monsters[slot].name;
+        internal RuntimeAnimatorController MonsterController(MonsterKind kind) => stage != null ? stage.monsters[(int)kind].animatorController
+            : kind switch { MonsterKind.Slime => slimeController, MonsterKind.Skeleton => skeletonController, _ => null };
+        // An Animator and the manual frame player must never both write the same renderer.
+        internal Sprite MonsterAlternate(MonsterKind kind) => MonsterController(kind) != null ? null : stage != null ? stage.monsters[(int)kind].frames[1]
+            : kind switch { MonsterKind.Goblin => goblinFrame2, MonsterKind.Mushroom => mushroomFrame2, MonsterKind.Boar => boarFrame2, _ => null };
 
         internal Sprite playerSprite;
 
@@ -33,6 +41,7 @@ namespace ProjectDM
         internal Sprite coinSprite;
 
         internal Sprite boltSprite;
+        internal SkillVisualAssets skillVisualAssets;
 
         internal RuntimeAnimatorController slimeController;
 
@@ -46,6 +55,7 @@ namespace ProjectDM
 
         internal void LoadSprites(ProjectDMRuntimeAssets assets)
         {
+            skillVisualAssets = Resources.Load<SkillVisualAssets>("ProjectDM/Skills/SkillVisuals");
             ProjectDMSpriteCatalog spriteCatalog = assets.SpriteCatalog;
             if (spriteCatalog != null)
             {
@@ -128,7 +138,7 @@ namespace ProjectDM
             }
         }
 
-        internal Sprite MonsterSprite(MonsterKind kind) => kind switch
+        internal Sprite MonsterSprite(MonsterKind kind) => stage != null ? stage.monsters[(int)kind].frames[0] : kind switch
         {
             MonsterKind.Skeleton => skeletonSprite, MonsterKind.Goblin => goblinSprite,
             MonsterKind.Mushroom => mushroomSprite, MonsterKind.Boar => boarSprite, _ => slimeSprite

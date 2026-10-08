@@ -135,7 +135,7 @@ MonoBehaviour:
     m_SerializedLabels:
     - bootstrap
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ad983b563b2842d4784de62d1316bd0b
+  - m_GUID: e2afedd2b1466574299d364fd8771168
     m_Address: art/floor
     m_ReadOnly: 0
     m_SerializedLabels:

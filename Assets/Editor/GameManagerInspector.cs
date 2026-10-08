@@ -11,6 +11,9 @@ namespace ProjectDM.Editor
         {
             serializedObject.Update();
 
+            DrawSection("스테이지");
+            DrawProperty("initialStage", "기본 시작 스테이지 (1: 초원 / 2: 석재 맵)", "플레이 중에는 성장 지도의 스테이지 선택으로 다음 런을 바꿀 수 있습니다. 보스 처치에 따른 자동 이동은 아직 적용하지 않았습니다.");
+
             DrawSection("프로토타입 테이블");
             DrawProperty("prototypeBalanceTable", "기본·몬스터·스폰 테이블", "비워두면 Resources/ProjectDM/Data/PrototypeBalance.json을 사용합니다. 수정한 테이블은 플레이 재시작 시 적용됩니다.");
             DrawProperty("prototypeSkillTable", "런 스킬 테이블", "비워두면 PrototypeSkills.json을 사용합니다. 레벨업 선택 조건과 실제 공격 효과 수치입니다.");
@@ -42,7 +45,7 @@ namespace ProjectDM.Editor
             DrawProperty("combatAttackColor", "공격 피해 숫자 색상", "몬스터에게 가한 피해의 숫자 색상입니다.");
             DrawProperty("combatReceivedColor", "플레이어 피격 숫자 색상", "플레이어가 받은 실제 피해의 숫자 색상입니다.");
             DrawProperty("combatCriticalColor", "치명타 숫자 색상", "실제로 치명타가 발생한 적중의 숫자 색상입니다.");
-            DrawProperty("enableCriticalHits", "기본 공격 치명타 사용", "치명타 확률과 배율은 기본 테이블의 criticalChance/criticalMultiplier입니다. 다중 공격의 각 적중도 따로 판정합니다.");
+            DrawProperty("enableCriticalHits", "기본 공격 치명타 사용", "치명타 확률과 치명타 피해량은 기본 테이블 값에 영구 성장 노드 값을 더합니다. 다중 공격의 각 적중도 따로 판정합니다.");
             DrawProperty("enablePlayerContactDamage", "플레이어 접촉 피해 사용", "체력·접촉 판정 거리·피격 무적 시간과 몬스터 접촉 피해량은 기본 테이블에서 설정합니다.");
 
             DrawSection("결과 통계 연출");

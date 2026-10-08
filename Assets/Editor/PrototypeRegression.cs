@@ -148,6 +148,59 @@ namespace ProjectDM.Editor
                 }
                 using (Fixture f = new Fixture())
                 {
+                    PlayerStats attributes = (PlayerStats)Get(f.manager, "playerStats");
+                    f.balance.criticalChance = .05f;
+                    Check(Near(attributes.MaxHealth, 100) && Near(attributes.MoveSpeed, 3.4f), "Fresh player keeps base health and movement speed");
+                    Check(Near(attributes.CriticalDamage, 2) && Near(attributes.Invulnerability, .6f) && Near(attributes.MagnetRadius, 2), "Fresh critical damage, immunity and magnet stay unchanged");
+                    string[] ids = { "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet" };
+                    int gold = 100000;
+                    foreach (string id in ids)
+                    {
+                        PrototypeGrowth row = Array.Find(f.growth.rows, r => r.id == id);
+                        PrototypeGrowthNode node = Array.Find(f.growth.nodes, n => n.growthId == id);
+                        PrototypeGrowthNode parent = Array.Find(f.growth.nodes, n => n.id == node.parent);
+                        f.save.SetRank(parent.growthId, Math.Max(f.save.Rank(parent.growthId), parent.startRank + node.parentRanks));
+                        for (int rank = 0; rank < 3; rank++)
+                            Check(PrototypeRules.TryPurchaseNode(f.balance, row, node, f.save, 0, ref gold, f.growth), "Actual player growth purchase: " + id);
+                        Check(!PrototypeRules.TryPurchaseNode(f.balance, row, node, f.save, 0, ref gold, f.growth), "Player growth cannot exceed three purchases: " + id);
+                    }
+                    Check(Near(attributes.MaxHealth, 100) && Near(attributes.CriticalDamage, 2) && Near(attributes.MagnetRadius, 2), "All player purchases wait for next-run snapshot");
+                    f.Call("ResetPrototypeRun");
+                    Check(Near(attributes.MaxHealth, 160) && Near((float)Get(f.manager, "playerHealth"), 160), "Next run restores grown maximum health");
+                    Check(Near(attributes.MoveSpeed, 4.216f) && Near(attributes.CriticalChance, .14f), "Movement multiplier and independent critical chance growth are active");
+                    Check(Near(attributes.CriticalDamage, 2.75f) && Near(attributes.Invulnerability, .9f) && Near(attributes.MagnetRadius, 3.5f), "Critical damage, immunity and magnet growth are active");
+                    f.Call("ApplyPlayerDamage", 10f);
+                    Check(Near((float)Get(f.manager, "playerHealth"), 150) && Near((float)Get(f.manager, "playerInvulnerabilityRemaining"), .9f), "Actual incoming hit uses grown immunity");
+                    Set(f.manager, "forceCriticalHits", true);
+                    object enemy = f.Enemy(Vector3.zero, 100);
+                    f.Call("ApplyPrototypeBasicHit", enemy, 10f);
+                    Check(Near((float)Get(enemy, "hitPoints"), 72.5f), "Actual direct critical hit uses 275% damage");
+                    Set(f.manager, "forceCriticalHits", false);
+                    bool sawGrowthOnlyCritical = false;
+                    for (int seed = 1; seed <= 100; seed++)
+                    {
+                        UnityEngine.Random.InitState(seed); float sample = UnityEngine.Random.value;
+                        UnityEngine.Random.InitState(seed);
+                        Check((bool)f.Call("RollCriticalHit") == (sample < .14f), "Critical roll uses grown probability");
+                        sawGrowthOnlyCritical |= sample >= .05f && sample < .14f;
+                    }
+                    Check(sawGrowthOnlyCritical, "At least one actual roll exercises the critical chance growth");
+                    PickupSystem pickups = (PickupSystem)Get(f.manager, "pickupsSystem");
+                    pickups.CreatePickup("Magnet test", Vector3.right * 2.4f, null, PickupKind.Currency, 1, 1);
+                    Pickup pickup = pickups.pickups[pickups.pickups.Count - 1];
+                    pickup.isLaunching = false;
+                    pickup.transform.position = Vector3.right * 2.4f;
+                    pickups.UpdatePickups(.01f);
+                    Check(pickup.transform.position.x < 2.4f && pickups.pickups.Contains(pickup), "Grown magnet pulls beyond old radius without remotely collecting");
+                    GrowthGraphView view = (GrowthGraphView)Get(f.manager, "growthView");
+                    Check(view.GrowthAmountText(Array.Find(f.growth.rows, r => r.id == "criticalDamage"), 3) == "기본 피해의 275%", "Critical damage preview uses total damage percentage, not a misleading bonus");
+                    Check(view.GrowthAmountText(Array.Find(f.growth.rows, r => r.id == "criticalChance"), 3) == "14%", "Critical chance preview is not looked up as an attack-effect skill");
+                    PrototypeSave restored = JsonUtility.FromJson<PrototypeSave>(JsonUtility.ToJson(f.save));
+                    foreach (string id in ids) Check(restored.Rank(id) == 3, "Player growth survives save round trip: " + id);
+                    Check(Near(f.balance.playerContactRadius, .55f) && Near(f.balance.projectileSpeed, 9) && Near(f.balance.projectileLifetime, 1.5f), "Excluded attributes are untouched");
+                }
+                using (Fixture f = new Fixture())
+                {
                     int preview = Array.FindIndex(f.growth.nodes, n => n.id == "chainChance_1") + 1;
                     int distant = Array.FindIndex(f.growth.nodes, n => n.id == "damage_4") + 1;
                     Set(f.manager, "selectedMetaTreeNode", distant);

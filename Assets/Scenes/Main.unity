@@ -25677,6 +25677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.GameManager
   runDuration: 5
+  initialStage: 1
   resultCountUpDuration: 1.1
   resultCountUpStagger: 0.07
   resultGlowIntensity: 0.16

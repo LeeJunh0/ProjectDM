@@ -137,7 +137,7 @@ namespace ProjectDM
             while (kind < weights.Length - 1 && roll >= weights[kind]) { roll -= weights[kind]; kind++; }
             PrototypeMonster row = tables.balance.monsters[kind];
             GameObject instance = objectPool.Rent(art.runtimeAssets.EnemyPrefab);
-            instance.name = row.name;
+            instance.name = art.MonsterName(kind, tables.balance);
             instance.transform.position = PrototypeSpawnPosition(initial);
             instance.transform.rotation = Quaternion.identity;
             instance.transform.localScale = Vector3.one * (kind == 4 ? .82f : kind == 3 ? .78f : .65f);
@@ -145,7 +145,8 @@ namespace ProjectDM
             Animator animator = instance.GetComponentInChildren<Animator>();
             if (animator != null)
             {
-                animator.runtimeAnimatorController = kind == 0 ? art.slimeController : kind == 1 ? art.skeletonController : null;
+                animator.enabled = false;
+                animator.runtimeAnimatorController = art.MonsterController((MonsterKind)kind);
                 animator.enabled = animator.runtimeAnimatorController != null;
                 animator.applyRootMotion = false;
                 if (animator.enabled) { animator.Rebind(); animator.Update(0f); }
@@ -154,7 +155,7 @@ namespace ProjectDM
             renderer.color = Color.white;
             renderer.flipX = false;
             renderer.sortingOrder = 2;
-            Sprite alternate = kind switch { 2 => art.goblinFrame2, 3 => art.mushroomFrame2, 4 => art.boarFrame2, _ => null };
+            Sprite alternate = art.MonsterAlternate((MonsterKind)kind);
             enemies.Add(new Enemy { kind = (MonsterKind)kind, transform = instance.transform, renderer = renderer,
                 baseSprite = renderer.sprite, alternateSprite = alternate, hitPoints = row.hp, speed = row.speed });
         }
@@ -179,7 +180,7 @@ namespace ProjectDM
             int oldStage = PrototypeRules.Stage(tables.balance, save.progress);
             if (save.progress.kills[kind] < int.MaxValue) save.progress.kills[kind]++;
             int newStage = PrototypeRules.Stage(tables.balance, save.progress);
-            if (newStage > oldStage) notifications.Notice(tables.balance.monsters[newStage].name + " 등장 해금! 기존 몬스터와 함께 출현합니다.");
+            if (newStage > oldStage) notifications.Notice(art.MonsterName(newStage, tables.balance) + " 등장 해금! 기존 몬스터와 함께 출현합니다.");
             pickupsSystem.SpawnPrototypeLoot(position, kind);
             // On-death roll is separate from on-hit effects and also runs for effect kills.
             double chance = PrototypeRules.Chance(tables.balance.timeRewardChance, progression.PermanentAmount("extension"), 0);

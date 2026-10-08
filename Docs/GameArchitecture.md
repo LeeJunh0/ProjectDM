@@ -15,6 +15,7 @@ Assets/Scripts/
     ├── Assets/        에셋 로딩, 카탈로그, 스프라이트
     ├── Persistence/   저장, 저장소 인터페이스
     ├── Run/           런 타이머·결과 집계, 보스 도달
+    ├── Stages/        스테이지 리소스 정의·선택·런 경계 적용
     ├── Combat/        몬스터, 공격, 스킬, 전투 수치·효과
     ├── Player/        플레이어 생성·이동·애니메이션·피격
     ├── World/         카메라, 필드 범위, 타일맵, 배치 미리보기
@@ -35,14 +36,19 @@ Assets/Scripts/
 | --- | --- | --- |
 | 데이터·저장·성장 | GameTables, SaveService, ProgressionService | 테이블 조회, 성장/목표 별도 인덱스와 표시 좌표, 영구 진행·저장 이관, 이번 런에 적용할 성장 스냅샷 |
 | 런·레벨업·보스 도달 | RunController, LevelUpController, BossMilestone | 타이머·결과 집계·일시정지, 경험치·선택 대기열, 보스 도달 상태 |
+| 스테이지 | StageDefinition, StageSession | 두 스테이지의 룰타일·몬스터/보스 외형, 다음 런 선택, 현재 스테이지. 보스 전투/처치 해금은 미구현 |
 | 월드·카메라 | PlayerWorld, GameplayCamera, WorldArtAssets | 플레이어 생성·이동, 추적·범위 제한, 기존 스프라이트·애니메이터 |
-| 전투 | EnemySystem, CombatSystem, SkillSystem, CombatStats, PlayerCombatSystem | 적 생성·사망, 투사체·치명타, 개별 발동 판정, 파생 공격 수치, 플레이어 피격 |
+| 전투·플레이어 수치 | EnemySystem, CombatSystem, SkillSystem, CombatStats, PlayerStats, PlayerCombatSystem | 적 생성·사망, 투사체·치명타, 개별 발동 판정, 파생 공격 수치, 플레이어 영구 성장 수치, 피격 |
 | 보상·연출 | PickupSystem, DamagePresentation, GameNotifications | 드롭·분수·획득, 피해 숫자, 알림 상태 |
 | 화면 | GrowthGraphView, LevelUpView, RunHudView, RunResultView, BossArrivalView, DebugView, UiGraphics | 성장 그래프, 카드, HUD, 결과창, 보스 도달 화면, 디버그, 공통 그리기 |
 
 기존 `GameObjectPool`, `ProjectDMAssetLoader`, `PrototypeSkillVisuals`는 Unity 컴포넌트로 유지하고 필요한 시스템에 주입한다. 효과 확률·구매 조건 등 순수 계산은 기존 `PrototypeRules`를 사용한다.
 
-`PrototypeGrowthTable.goalLine`은 임시 스테이지/보스 목표 경로이며 구매 가능한 성장 `rows/nodes`와 구분한다. `GameTables.graphLayoutNodes`는 중앙 12시 통로를 확보한 표시 좌표만 소유하고 구매 조건이나 저장 랭크를 바꾸지 않는다. `GrowthGraphView`는 두 종류를 하나의 카드 선택/툴팁/전체 보기로 표시하되 목표 칸을 클릭해도 구매·보스 처치·스테이지 이동을 기록하지 않는다. 실제 스테이지/보스전은 별도 구현 전 단계다.
+`PlayerStats`는 `GameTables/ProgressionService`만 주입받아 최대 체력·이동속도·치명타 확률/피해량·무적 시간·끌어오기 범위를 계산한다. 이동/전투/픽업 시스템에 같은 인스턴스를 주입하며, UI의 현재/다음 수치는 같은 계산식을 사용한다. 구매한 값은 `ResetSnapshot` 이후 다음 런에 적용되고 체력 HUD의 최대값도 함께 갱신한다.
+
+`PrototypeGrowthTable.goalLine`은 스테이지/보스 목표 경로이며 구매 가능한 성장 `rows/nodes`와 구분한다. `GameTables.graphLayoutNodes`는 중앙 12시 통로를 확보한 표시 좌표만 소유하고 구매 조건이나 저장 랭크를 바꾸지 않는다. `GrowthGraphView`는 두 종류를 하나의 카드 선택/툴팁/전체 보기로 표시하되 목표 칸을 클릭해도 구매·보스 처치를 기록하지 않는다. 스테이지 선택 UI는 별도로 `StageSession.Select`를 호출하며 실제 바닥/외형 교체는 다음 `BeginRun`의 리셋 경계에서 수행한다.
+
+`StageDefinition`은 Resources의 두 에셋을 통해 바닥 룰타일/몬스터 5슬롯/보스 외형을 참조한다. 기존 Addressables 부트스트랩과 원본 씬/던전 아트는 유지한다. `StageArtPipeline`은 새 초원 아트와 보스 시트를 슬라이스하며 2스테이지 일반 몬스터는 원래 SpriteCatalog/추가 몬스터 시트를 연결한다. 일반 몬스터의 PPU는 기존과 같은 96이다. 슬롯별 Animator 참조가 있으면 해당 컨트롤러를 재생하고, 없으면 2프레임 수동 재생으로 하나의 렌더러에 한 애니메이션 소유자만 둔다. 풀링된 객체도 스폰 때 이 선택을 초기화한다. 실제 스테이지 1·2와 몬스터/재화 해금 단계 0~4는 독립이며 기존 5슬롯의 영구 처치/수치/드롭 규칙은 공유한다.
 
 ## 주입 원칙
 
