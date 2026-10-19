@@ -13,7 +13,7 @@ function Assert-True([bool] $condition, [string] $message) {
 function Get-Row([string] $id) { return $growth.rows | Where-Object id -eq $id }
 function Get-Source([string] $id) { if ($id -in @('chainChance','splashChance','meteorChance')) { return $proposal.upgrades.proc }; return $proposal.upgrades.($id) }
 Assert-True ($null -eq [ProjectDM.PrototypeRules]::Validate($balance, $skills, $growth)) 'Runtime tables must validate.'
-Assert-True ($balance.initialSeconds -eq 40 -and $balance.bossElapsedSeconds -eq 180) 'V2 initial time / prototype cap mismatch.'
+Assert-True ($balance.ResolvedInitialMana -eq 40 -and $balance.basicAttackManaCost -eq 1 -and $balance.bossElapsedSeconds -eq 180) 'Initial mana / basic attack cost / independent boss cap mismatch.'
 Assert-True ($growth.rows.Count -eq 26 -and $skills.rows.Count -eq 6) 'Missing growth or skill rows.'
 
 # Compression keeps the approved maximum effects; intermediate purchases are now larger and interleaved.
@@ -27,7 +27,7 @@ foreach ($row in $growth.rows) {
     Assert-True ([Math]::Abs($row.costGrowth - $source.cost_growth) -lt 0.00001) "Cost growth mismatch: $($row.id)"
     if ($null -ne $source.step) { Assert-True ([Math]::Abs($row.step * $row.maxRank - $source.step * $source.max_rank) -lt 0.00001) "Maximum effect changed: $($row.id)" }
 }
-Assert-True ([Math]::Abs($balance.timeRewardChance - $proposal.time_reward.base_chance) -lt 0.000001) 'Time proc mismatch.'
+Assert-True ([Math]::Abs($balance.ResolvedManaAbsorbChance - $proposal.time_reward.base_chance) -lt 0.000001) 'Original recovery probability must carry over to mana absorption.'
 
 $save = [ProjectDM.PrototypeSave]::new()
 Assert-True ([ProjectDM.PrototypeRules]::Stage($balance, $save) -eq 0) 'New save starts with slimes.'
@@ -282,7 +282,7 @@ foreach ($issue in @('parent_overflow', 'implicit_cycle', 'cost_scale')) {
 $runtimeUI = Get-Content (Join-Path $projectRoot 'Assets/Scripts/Systems/UI/Growth/GrowthGraphView.cs') -Raw
 $runtimeGraph = $runtimeUI
 Assert-True ($runtimeGraph -match '(?s)internal Rect GetMetaTreeNodeHitRect\([^}]+return GetMetaTreeNodeRect\(node, canvasSize\);\s*}') 'Node pointer hit area must be card-only, excluding titles at every zoom.'
-Assert-True ($runtimeUI.Contains('"ROOT", "기본 공격 해금"') -and -not $runtimeUI.Contains('"기원의 문"')) 'Central node must represent basic attack unlock.'
+Assert-True ($runtimeUI.Contains('new MetaTreeNodePresentation("ROOT", personalGraph') -and $runtimeUI.Contains(': "기본 공격 해금"') -and -not $runtimeUI.Contains('"기원의 문"')) 'Central node must represent basic attack unlock, or the selected personal-magic character.'
 Assert-True ($runtimeUI.Contains('PrototypeRules.IsNodeRevealed(tables.growthTable, node, save.progress, stage)') -and
     $runtimeUI.Contains('revealed ? node.name : ""') -and $runtimeUI.Contains('revealed ? row.description : ""')) 'Hidden presentations must redact their title and description.'
 Assert-True ($runtimeGraph -match '(?s)if \(node.state == MetaTreeNodeState.Hidden\)\s*\{(?:(?!\}).)*return;\s*}') 'Hidden cards must return before drawing icon, text, or click controls.'

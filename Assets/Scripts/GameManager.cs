@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ProjectDM
 {
@@ -9,8 +10,8 @@ namespace ProjectDM
     [DefaultExecutionOrder(-100)]
     public sealed class GameManager : MonoBehaviour
     {
-        [SerializeField, Min(1f), Tooltip("한 회차의 플레이 제한 시간(초)입니다. 변경한 값은 다음 회차부터 적용됩니다.")]
-        private float runDuration = 40f;
+        [FormerlySerializedAs("runDuration"), SerializeField, Min(1f), Tooltip("한 회차의 기본 최대 마나입니다. 영구 마나 성장을 더해 다음 회차에 적용됩니다.")]
+        private float startingMana = 40f;
 
         [SerializeField, Range(1, 2), Tooltip("기본 시작 스테이지입니다. 1은 초원, 2는 기존 어두운 석재 맵입니다. 플레이 중 변경하면 다음 런에 적용됩니다.")]
         private int initialStage = 1;
@@ -108,7 +109,7 @@ namespace ProjectDM
 
         [SerializeField] private TextAsset prototypeGrowthTable;
 
-        [SerializeField] private bool useTableRunDuration = true;
+        [FormerlySerializedAs("useTableRunDuration"), SerializeField] private bool useTableStartingMana = true;
 
         [SerializeField] private bool useTableSpawnDistances = true;
 
@@ -165,6 +166,8 @@ namespace ProjectDM
         private PlayerWorld playerWorld;
         private GameplayCamera cameraSystem;
         private RunController run;
+        private RunMana mana;
+        private ManaBarRenderer manaBar;
         private EnemySystem enemiesSystem;
         private CombatSystem combat;
         private SkillSystem skills;
@@ -213,7 +216,7 @@ namespace ProjectDM
 
         private void SynchronizeSettings()
         {
-            settings.runDuration = runDuration;
+            settings.startingMana = startingMana;
             settings.initialStage = initialStage;
             settings.resultCountUpDuration = resultCountUpDuration;
             settings.resultCountUpStagger = resultCountUpStagger;
@@ -249,7 +252,7 @@ namespace ProjectDM
             settings.prototypeBalanceTable = prototypeBalanceTable;
             settings.prototypeSkillTable = prototypeSkillTable;
             settings.prototypeGrowthTable = prototypeGrowthTable;
-            settings.useTableRunDuration = useTableRunDuration;
+            settings.useTableStartingMana = useTableStartingMana;
             settings.useTableSpawnDistances = useTableSpawnDistances;
             settings.enablePrototypeDebug = enablePrototypeDebug;
             settings.prototypeSandbox = prototypeSandbox;
@@ -322,16 +325,18 @@ namespace ProjectDM
             notifications = new GameNotifications();
             stages = new StageSession(settings, art);
             presentation = new DamagePresentation(settings);
-            run = new RunController(settings, save, tables, progression, playerWorld, ResetWorld, () => enemiesSystem.SpawnPrototypeInitialEnemies(), () => cameraSystem.SnapCameraToPlayer(), () => growthView?.ResetNavigation(), () => { if (selection != null) selection.choosingUpgrade = false; }, () => selection != null && selection.choosingUpgrade, stages);
+            mana = new RunMana();
+            manaBar = new ManaBarRenderer(mana, Resources.Load<ManaBarSettings>("ProjectDM/UI/ManaBarSettings"));
+            run = new RunController(settings, save, tables, progression, playerWorld, ResetWorld, () => enemiesSystem.SpawnPrototypeInitialEnemies(), () => cameraSystem.SnapCameraToPlayer(), () => growthView?.ResetNavigation(), () => { if (selection != null) selection.choosingUpgrade = false; }, () => selection != null && selection.choosingUpgrade, mana, stages);
             boss = new BossMilestone(save, art, playerWorld, run);
             pickupsSystem = new PickupSystem(settings, save, tables, progression, art, playerWorld, run, pool, amount => selection.AddExperience(amount), playerStats);
             enemiesSystem = new EnemySystem(settings, save, tables, progression, art, playerWorld, run, pickupsSystem, boss, notifications, pool, effects, presentation.ShowCombatDamage);
             skills = new SkillSystem(tables, progression, art, run, enemiesSystem, effects, () => combat.RollCriticalHit(), () => stats.MainDamage, playerStats);
             stats = new CombatStats(tables, progression, skills);
-            combat = new CombatSystem(settings, tables, progression, art, playerWorld, enemiesSystem, skills, stats, pool, playerStats);
+            combat = new CombatSystem(settings, tables, progression, art, playerWorld, enemiesSystem, skills, stats, pool, playerStats, mana);
             playerCombat = new PlayerCombatSystem(settings, tables, playerWorld, run, enemiesSystem, combat, presentation, playerStats);
             selection = new LevelUpController(tables, progression, run, skills);
-            hud = new RunHudView(settings, save, tables, run, enemiesSystem, stats, selection, playerCombat, graphics);
+            hud = new RunHudView(settings, save, tables, run, enemiesSystem, stats, selection, playerCombat, graphics, manaBar);
             results = new RunResultView(settings, tables, art, run, boss, playerCombat, graphics);
             levelUpView = new LevelUpView(settings, art, selection, graphics);
             growthView = new GrowthGraphView(settings, save, tables, progression, art, run, notifications, graphics);
@@ -361,6 +366,7 @@ namespace ProjectDM
 
         private void ResetWorld()
         {
+            manaBar.Reset();
             enemiesSystem.Reset();
             combat.Reset();
             pickupsSystem.Reset();
@@ -372,13 +378,13 @@ namespace ProjectDM
             boss.Reset();
             stages.ApplySelected();
             dungeonFloor = settings.dungeonFloor;
-            run.timeRewardsThisRun = 0;
         }
 
         private void Update()
         {
             if (!isInitialized) return;
             SynchronizeSettings();
+            manaBar.Tick(run.runEnded || run.showMetaTree || selection.choosingUpgrade ? 0 : Time.deltaTime);
             save.FlushPrototypeProgressIfDue();
             if (selection.choosingUpgrade) { selection.HandleRunUpgradeShortcuts(); return; }
             if (Input.GetKeyDown(KeyCode.Tab)) run.ToggleMetaTree();
@@ -389,11 +395,13 @@ namespace ProjectDM
             }
             if (run.runEnded) return;
             float dt = run.TickClock(Time.deltaTime);
+            if (mana.IsDepleted) { run.CompleteIfDue(onBossDue); return; }
             playerWorld.MovePlayer(dt);
             cameraSystem.FollowPlayerWithCamera(dt);
             if (monsterSpawnArea != null) monsterSpawnArea.transform.position = playerWorld.player.position;
             enemiesSystem.SpawnEnemies(run.elapsed);
             combat.FireAtNearestEnemy(run.elapsed);
+            if (mana.IsDepleted) { run.CompleteIfDue(onBossDue); return; }
             enemiesSystem.UpdateEnemies(dt);
             combat.UpdateProjectiles(dt);
             presentation.Tick(dt);
@@ -424,14 +432,16 @@ namespace ProjectDM
 
             if (run.runEnded)
             {
-                hud.DrawRunTimer();
+                hud.DrawElapsedTime();
+                hud.DrawManaBar();
                 if (boss.bossArrived && !boss.showBossStatistics) bossView.DrawPrototypeBossArrival();
                 else results.DrawRunResults();
                 return;
             }
 
             hud.DrawRunHudInformation();
-            hud.DrawRunTimer();
+            hud.DrawElapsedTime();
+            hud.DrawManaBar();
             presentation.DrawCombatDamage();
             hud.DrawPlayerHealth();
 
@@ -445,6 +455,8 @@ namespace ProjectDM
         }
 
         private void OnApplicationPause(bool paused) { if (paused) save?.FlushPrototypeProgress(); }
+        public void SetManaVisualState(ManaVisualState state) => manaBar?.SetState(state);
+        private void OnDestroy() { manaBar?.Dispose(); }
         private void OnApplicationQuit() { save?.FlushPrototypeProgress(); }
         private void OnDisable() { save?.FlushPrototypeProgress(); Time.timeScale = 1f; }
     }

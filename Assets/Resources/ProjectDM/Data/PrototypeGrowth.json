@@ -42,10 +42,10 @@
     },
     {
       "id": "time",
-      "name": "시작 제한시간",
-      "description": "다음 런에 주어지는 시작 시간을 늘립니다.",
+      "name": "최대 마나",
+      "description": "다음 런의 최대 마나 +2 MP. 마나가 가득 찬 상태로 시작합니다.",
       "icon": "gem",
-      "unit": "초",
+      "unit": "MP",
       "parent": "ROOT",
       "x": 0,
       "y": -250,
@@ -59,8 +59,8 @@
     },
     {
       "id": "extension",
-      "name": "처치 시간 보충",
-      "description": "처치마다 시간 보충 확률 증가. 모든 피해원에 적용됩니다.",
+      "name": "처치 마나 흡수",
+      "description": "처치마다 마나 흡수 확률 +0.2%p. 모든 피해원에 적용하며 최대 마나를 넘지 않습니다.",
       "icon": "gem",
       "unit": "%p",
       "parent": "time",
@@ -460,7 +460,7 @@
     {
       "id": "time_1",
       "growthId": "time",
-      "name": "시작 제한시간 I",
+      "name": "최대 마나 I",
       "parent": "ROOT",
       "startRank": 0,
       "ranks": 3,
@@ -504,7 +504,7 @@
     {
       "id": "extension_1",
       "growthId": "extension",
-      "name": "처치 시간 보충 I",
+      "name": "처치 마나 흡수 I",
       "parent": "ROOT",
       "startRank": 0,
       "ranks": 3,
@@ -581,7 +581,7 @@
     {
       "id": "extension_2",
       "growthId": "extension",
-      "name": "처치 시간 보충 II",
+      "name": "처치 마나 흡수 II",
       "parent": "xp_1",
       "startRank": 3,
       "ranks": 3,
@@ -625,7 +625,7 @@
     {
       "id": "time_2",
       "growthId": "time",
-      "name": "시작 제한시간 II",
+      "name": "최대 마나 II",
       "parent": "extension_1",
       "startRank": 3,
       "ranks": 3,
@@ -724,7 +724,7 @@
     {
       "id": "time_3",
       "growthId": "time",
-      "name": "시작 제한시간 III",
+      "name": "최대 마나 III",
       "parent": "population_2",
       "startRank": 6,
       "ranks": 3,
@@ -757,7 +757,7 @@
     {
       "id": "extension_3",
       "growthId": "extension",
-      "name": "처치 시간 보충 III",
+      "name": "처치 마나 흡수 III",
       "parent": "multishot_1",
       "startRank": 6,
       "ranks": 3,
@@ -911,7 +911,7 @@
     {
       "id": "extension_4",
       "growthId": "extension",
-      "name": "처치 시간 보충 IV",
+      "name": "처치 마나 흡수 IV",
       "parent": "population_3",
       "startRank": 9,
       "ranks": 1,
@@ -933,7 +933,7 @@
     {
       "id": "time_4",
       "growthId": "time",
-      "name": "시작 제한시간 IV",
+      "name": "최대 마나 IV",
       "parent": "splash_1",
       "startRank": 9,
       "ranks": 1,

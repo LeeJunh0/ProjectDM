@@ -26,7 +26,7 @@ foreach ($folder in @('Core','Data','Persistence','Run','Combat','Player','Picku
     Assert-True (Test-Path -LiteralPath (Join-Path $systemRoot ($folder + '.meta'))) "Folder meta missing: $folder"
 }
 Assert-True (@(Get-ChildItem -LiteralPath $systemRoot -Filter '*.cs').Count -eq 0) 'System sources must live inside feature folders.'
-foreach ($name in @('RunController','SaveService','ProgressionService','EnemySystem','CombatSystem','SkillSystem','PickupSystem',
+foreach ($name in @('RunController','RunMana','SaveService','ProgressionService','EnemySystem','CombatSystem','SkillSystem','PickupSystem',
     'GameplayCamera','PlayerWorld','PlayerStats','PlayerCombatSystem','GrowthGraphView','LevelUpController','LevelUpView','RunHudView','RunResultView')) {
     Assert-True ($sources.ContainsKey($name)) "Missing independent system: $name"
     $code = $sources[$name] -replace '(?m)//[^\r\n]*', ''

@@ -9,7 +9,14 @@ namespace ProjectDM
     {
         public string version;
         public float baseDamage, attackInterval, projectileSpeed, projectileLifetime, moveSpeed;
-        public float initialSeconds, bossElapsedSeconds, timeRewardChance, timeRewardSeconds;
+        public float bossElapsedSeconds;
+        public float initialMana = -1, manaAbsorbChance = -1, manaAbsorbAmount = -1;
+        public float basicAttackManaCost = 1;
+        // Read-only compatibility with previously authored JSON tables; new tables use mana keys.
+        public float initialSeconds = 40, timeRewardChance = .08f, timeRewardSeconds = 1;
+        public float ResolvedInitialMana => initialMana == -1 ? initialSeconds : initialMana;
+        public float ResolvedManaAbsorbChance => manaAbsorbChance == -1 ? timeRewardChance : manaAbsorbChance;
+        public float ResolvedManaAbsorbAmount => manaAbsorbAmount == -1 ? timeRewardSeconds : manaAbsorbAmount;
         public float firstDamageBonus, latePriceScale, xpFirst, xpGrowth;
         public float initialSpawnMin, initialSpawnMax, refillSpawnMin, refillSpawnMax;
         public float chestChance;
@@ -103,6 +110,7 @@ namespace ProjectDM
     [Serializable]
     public sealed class PrototypeSave
     {
+        public string selectedCharacter = "projectile";
         public int version = 3;
         public int currencyDropsVersion;
         public int[] kills = new int[5];
@@ -291,7 +299,7 @@ namespace ProjectDM
                     string.IsNullOrEmpty(goal.description) || goal.parent != parent || goal.kind != (boss ? "boss" : "stage") ||
                     goal.stage != i / 2 + 1 || goal.x != 0 || float.IsNaN(goal.y) || float.IsInfinity(goal.y) ||
                     goal.y > previousY - 120 || goal.y < previousY - 380 ||
-                    (boss && (!Positive(goal.limitSeconds) || goal.limitSeconds < balance.initialSeconds)) ||
+                    (boss && !Positive(goal.limitSeconds)) ||
                     (!boss && goal.limitSeconds != 0) || (goal.final && (!boss || i != table.goalLine.Length - 1)))
                     return "목표 노드의 순서/12시 연결/스테이지/보스 리미트 설정 오류: " + (i + 1);
                 parent = goal.id; previousY = goal.y;
@@ -380,10 +388,11 @@ namespace ProjectDM
         public static double Chance(double baseChance, double permanent, double runBonus)
         { return Math.Min(1, Math.Max(0, baseChance + permanent + runBonus)); }
 
-        // Elapsed time never changes when remaining time is replenished. This is the boss trigger.
+        // Mana recovery never advances elapsed time. This is the independent boss trigger.
         public static bool BossDue(double elapsedSeconds, double capSeconds)
         { return elapsedSeconds >= capSeconds; }
 
+        // Historical balance-script compatibility only. Gameplay uses RunMana instead of a deadline.
         public static double ExtendDeadline(double deadline, double seconds, double bossCap)
         { return Math.Min(bossCap, deadline + Math.Max(0, seconds)); }
 
@@ -399,11 +408,11 @@ namespace ProjectDM
             if (b == null || skills == null || growth == null || skills.rows == null || growth.rows == null)
                 return "테이블이 비어 있습니다.";
             if (!Positive(b.baseDamage) || !Positive(b.attackInterval) || !Positive(b.projectileSpeed) ||
-                !Positive(b.projectileLifetime) || !Positive(b.moveSpeed) || !Positive(b.initialSeconds) ||
-                !Positive(b.bossElapsedSeconds) || b.bossElapsedSeconds < b.initialSeconds ||
+                !Positive(b.projectileLifetime) || !Positive(b.moveSpeed) || !Positive(b.ResolvedInitialMana) || !Positive(b.basicAttackManaCost) ||
+                !Positive(b.bossElapsedSeconds) ||
                 !Positive(b.xpFirst) || !Positive(b.xpGrowth) || b.xpGrowth < 1 ||
                 !Positive(b.latePriceScale) || b.latePriceScale < 1 || !FiniteNonnegative(b.firstDamageBonus) ||
-                !Probability(b.timeRewardChance) || !FiniteNonnegative(b.timeRewardSeconds) ||
+                !Probability(b.ResolvedManaAbsorbChance) || !FiniteNonnegative(b.ResolvedManaAbsorbAmount) ||
                 !Probability(b.chestChance) || b.chestCoins < 0 || !Positive(b.playerHealth) ||
                 !Positive(b.playerInvulnerability) || !Positive(b.playerContactRadius) || !Positive(b.pickupMagnetRadius) ||
                 !Probability(b.criticalChance) || !Positive(b.criticalMultiplier) || b.criticalMultiplier < 1 ||

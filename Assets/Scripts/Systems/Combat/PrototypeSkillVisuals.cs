@@ -10,6 +10,7 @@ namespace ProjectDM
         private readonly List<Visual> active = new();
         private readonly Queue<TextMesh> textPool = new();
         private readonly List<FloatingText> texts = new();
+        private readonly List<SpriteRenderer> frostShards = new();
         private Sprite bolt, gem;
         private SkillVisualAssets artwork;
         private Material defaultSpriteMaterial;
@@ -19,7 +20,7 @@ namespace ProjectDM
             public SpriteRenderer renderer;
             public Color color;
             public Vector3 from, to, size;
-            public float age, duration, startScale = .2f;
+            public float age, duration, expansionDuration, startScale = .2f;
             public bool falling, expanding, lightning, warning;
         }
 
@@ -37,20 +38,29 @@ namespace ProjectDM
 
         private SpriteRenderer Rent(Sprite sprite, bool warmTint = false)
         {
-            if (active.Count >= (artwork != null ? Mathf.Max(1, artwork.maxActiveEffects) : 128)) return null;
+            if (active.Count + frostShards.Count >= (artwork != null ? Mathf.Max(1, artwork.maxActiveEffects) : 128)) return null;
             SpriteRenderer renderer;
             if (spritePool.Count > 0) renderer = spritePool.Dequeue();
             else
             {
                 GameObject instance = new GameObject("스킬 이펙트");
                 instance.transform.SetParent(transform, false);
-                renderer = instance.AddComponent<SpriteRenderer>();
+                // Separate connection-axis scale from the diagonal artwork's local rotation.
+                // This lets lightning widen without moving either authored endpoint.
+                GameObject spriteObject = new GameObject("스프라이트");
+                spriteObject.transform.SetParent(instance.transform, false);
+                renderer = spriteObject.AddComponent<SpriteRenderer>();
                 defaultSpriteMaterial ??= renderer.sharedMaterial;
             }
             renderer.sprite = sprite;
             renderer.sharedMaterial = warmTint && artwork != null && artwork.impactMaterial != null
                 ? artwork.impactMaterial : defaultSpriteMaterial;
             renderer.sortingOrder = 6;
+            Transform frame = renderer.transform.parent;
+            frame.localPosition = Vector3.zero;
+            frame.localRotation = Quaternion.identity;
+            frame.localScale = Vector3.one;
+            renderer.transform.localPosition = Vector3.zero;
             renderer.transform.rotation = Quaternion.identity;
             renderer.transform.localScale = Vector3.one;
             renderer.color = Color.white;
@@ -63,6 +73,30 @@ namespace ProjectDM
         {
             Vector2 size = sprite != null ? sprite.bounds.size : Vector2.one;
             return new Vector3(width / Mathf.Max(.01f, size.x), height / Mathf.Max(.01f, size.y), 1);
+        }
+
+        internal void BeginFrostOrbit(int count, float radius)
+        {
+            EndFrostOrbit();
+            for (int i = 0; i < count; i++)
+            {
+                SpriteRenderer renderer = Rent(gem ?? bolt);
+                if (renderer == null) break; // Visual budget never changes combat's shard count.
+                renderer.transform.localScale = SpriteScale(renderer.sprite, radius * 2, radius * 2);
+                renderer.color = new Color(.65f, .95f, 1, .95f);
+                frostShards.Add(renderer);
+            }
+        }
+        internal void MoveFrostShard(int index, Vector3 position, float angle)
+        {
+            if (index >= frostShards.Count) return;
+            frostShards[index].transform.position = position;
+            frostShards[index].transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+        internal void EndFrostOrbit()
+        {
+            foreach (SpriteRenderer shard in frostShards) { shard.gameObject.SetActive(false); spritePool.Enqueue(shard); }
+            frostShards.Clear();
         }
 
         internal void Link(Vector3 from, Vector3 to)
@@ -79,11 +113,14 @@ namespace ProjectDM
                     SpriteRenderer renderer = Rent(sprite);
                     if (renderer == null) return;
                     float scale = delta.magnitude / authoredDirection.magnitude;
-                    float angle = Mathf.Atan2(delta.y, delta.x) - Mathf.Atan2(authoredDirection.y, authoredDirection.x);
-                    Quaternion rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
-                    renderer.transform.rotation = rotation;
-                    renderer.transform.localScale = new Vector3(scale, scale, 1);
-                    renderer.transform.position = from - rotation * (localStart * scale);
+                    Quaternion artworkRotation = Quaternion.Euler(0, 0,
+                        -Mathf.Atan2(authoredDirection.y, authoredDirection.x) * Mathf.Rad2Deg);
+                    Transform frame = renderer.transform.parent;
+                    frame.position = from;
+                    frame.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg);
+                    frame.localScale = new Vector3(scale, scale * Mathf.Max(.1f, artwork.chainWidthMultiplier), 1);
+                    renderer.transform.localRotation = artworkRotation;
+                    renderer.transform.localPosition = -(artworkRotation * localStart);
                     Color tint = new Color(1, 1, 1, Mathf.Clamp01(artwork.chainOpacity));
                     renderer.color = tint;
                     active.Add(new Visual { renderer = renderer, color = tint,
@@ -113,6 +150,26 @@ namespace ProjectDM
             active.Add(new Visual { renderer = renderer, color = color, size = size, duration = .18f });
         }
 
+        // Placeholder fan made from the existing projectile sprite. Its rays use the actual hit range/angle.
+        internal void FlameCone(Vector3 origin, Vector2 direction, float range, float fullAngle)
+        {
+            float heading = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            for (int i = 0; i <= 8; i++)
+            {
+                SpriteRenderer renderer = Rent(bolt, true);
+                if (renderer == null) break;
+                float angle = heading - fullAngle * .5f + fullAngle * i / 8f;
+                Vector3 ray = Quaternion.Euler(0, 0, angle) * Vector3.right;
+                renderer.transform.position = origin + ray * range * .5f;
+                renderer.transform.rotation = Quaternion.Euler(0, 0, angle);
+                Vector3 size = SpriteScale(bolt, range, .16f);
+                renderer.transform.localScale = size;
+                Color color = new Color(1, .35f, .06f, .65f);
+                renderer.color = color;
+                active.Add(new Visual { renderer = renderer, color = color, size = size, duration = .22f });
+            }
+        }
+
         internal void Burst(Vector3 center, float radius, Color color, float duration)
         {
             bool generated = artwork != null && artwork.splash != null;
@@ -140,8 +197,10 @@ namespace ProjectDM
             float start = artwork != null ? Mathf.Clamp(artwork.burstStartScale, .01f, 1) : .2f;
             renderer.transform.localScale = size * start;
             renderer.color = color;
+            float lifetime = Mathf.Max(.01f, duration);
             active.Add(new Visual { renderer = renderer, color = color, size = size,
-                duration = Mathf.Max(.01f, duration), expanding = true, startScale = start });
+                duration = lifetime, expansionDuration = Mathf.Clamp(artwork != null ? artwork.burstExpansionDuration : .06f,
+                    .001f, lifetime * .5f), expanding = true, startScale = start });
         }
 
         internal void Meteor(Vector3 center, float radius, float delay)
@@ -185,13 +244,13 @@ namespace ProjectDM
             (normalized.x * sprite.rect.width - sprite.pivot.x) / sprite.pixelsPerUnit,
             (normalized.y * sprite.rect.height - sprite.pivot.y) / sprite.pixelsPerUnit, 0);
 
-        internal void TimeReward(Vector3 position, float seconds)
+        internal void ManaAbsorb(Vector3 position, float amount)
         {
             TextMesh text;
             if (textPool.Count > 0) text = textPool.Dequeue();
             else
             {
-                GameObject instance = new GameObject("시간 보충 숫자");
+                GameObject instance = new GameObject("마나 흡수 숫자");
                 instance.transform.SetParent(transform, false);
                 text = instance.AddComponent<TextMesh>();
                 text.fontSize = 40;
@@ -200,8 +259,8 @@ namespace ProjectDM
                 text.GetComponent<MeshRenderer>().sortingOrder = 10;
             }
             text.gameObject.SetActive(true);
-            text.text = "+" + seconds.ToString("0.##") + "s";
-            text.color = new Color(.65f, 1f, .65f);
+            text.text = "+" + amount.ToString("0.##") + " MP";
+            text.color = new Color(.4f, .8f, 1f);
             text.transform.position = position + Vector3.up * .45f;
             texts.Add(new FloatingText { mesh = text, origin = text.transform.position });
         }
@@ -215,9 +274,15 @@ namespace ProjectDM
                 visual.age += dt;
                 float progress = Mathf.Clamp01(visual.age / visual.duration);
                 if (visual.falling) visual.renderer.transform.position = Vector3.Lerp(visual.from, visual.to, progress * progress);
-                if (visual.expanding) visual.renderer.transform.localScale = visual.size * Mathf.Lerp(visual.startScale, 1, 1 - Mathf.Pow(1 - progress, 3));
+                if (visual.expanding)
+                {
+                    float expansion = Mathf.Clamp01(visual.age / visual.expansionDuration);
+                    visual.renderer.transform.localScale = visual.size * Mathf.Lerp(visual.startScale, 1, 1 - Mathf.Pow(1 - expansion, 3));
+                }
                 Color color = visual.color;
                 if (visual.warning) color.a *= .55f + .45f * progress;
+                else if (visual.expanding) color.a *= 1 - Mathf.Clamp01((visual.age - visual.expansionDuration) /
+                    Mathf.Max(.001f, visual.duration - visual.expansionDuration));
                 else if (!visual.falling) color.a *= 1f - progress;
                 if (visual.lightning) color.a *= .7f + .3f * Mathf.Abs(Mathf.Sin(visual.age * 90));
                 visual.renderer.color = color;
@@ -231,7 +296,7 @@ namespace ProjectDM
                 FloatingText text = texts[i];
                 text.age += dt;
                 text.mesh.transform.position = text.origin + Vector3.up * text.age * .7f;
-                text.mesh.color = new Color(.65f, 1f, .65f, Mathf.Clamp01(1f - text.age / .7f));
+                text.mesh.color = new Color(.4f, .8f, 1f, Mathf.Clamp01(1f - text.age / .7f));
                 if (text.age < .7f) continue;
                 text.mesh.gameObject.SetActive(false);
                 textPool.Enqueue(text.mesh);
@@ -241,6 +306,7 @@ namespace ProjectDM
 
         internal void Clear()
         {
+            EndFrostOrbit();
             foreach (Visual visual in active) { visual.renderer.gameObject.SetActive(false); spritePool.Enqueue(visual.renderer); }
             active.Clear();
             foreach (FloatingText text in texts) { text.mesh.gameObject.SetActive(false); textPool.Enqueue(text.mesh); }

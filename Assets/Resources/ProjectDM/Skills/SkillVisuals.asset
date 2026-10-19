@@ -20,9 +20,11 @@ MonoBehaviour:
   chainEnd: {x: 0.9, y: 0.88}
   chainDuration: 0.18
   chainOpacity: 0.9
+  chainWidthMultiplier: 2.5
   splashDuration: 0.3
   splashOpacity: 0.75
   burstStartScale: 0.18
+  burstExpansionDuration: 0.06
   burstArtworkDiameter: 0.9
   meteorFallHeight: 3
   meteorWidth: 1.45

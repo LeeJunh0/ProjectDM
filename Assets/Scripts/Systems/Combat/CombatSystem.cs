@@ -18,8 +18,9 @@ namespace ProjectDM
         private readonly CombatStats stats;
         private readonly GameObjectPool objectPool;
         private readonly PlayerStats playerStats;
+        private readonly RunMana mana;
 
-        internal CombatSystem(GameSettings settings, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, EnemySystem enemiesSystem, SkillSystem skills, CombatStats stats, GameObjectPool objectPool, PlayerStats playerStats)
+        internal CombatSystem(GameSettings settings, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, EnemySystem enemiesSystem, SkillSystem skills, CombatStats stats, GameObjectPool objectPool, PlayerStats playerStats, RunMana mana)
         {
             this.settings = settings;
             this.tables = tables;
@@ -31,6 +32,7 @@ namespace ProjectDM
             this.stats = stats;
             this.objectPool = objectPool;
             this.playerStats = playerStats;
+            this.mana = mana;
         }
 
         internal readonly List<Projectile> projectiles = new();
@@ -57,8 +59,13 @@ namespace ProjectDM
             volleyTargets.Sort((a, b) => ((a.transform.position - playerWorld.player.position).sqrMagnitude)
                 .CompareTo((b.transform.position - playerWorld.player.position).sqrMagnitude));
             if (volleyTargets.Count == 0) return;
+            if (!skills.CanCastPersonalMagic(playerWorld.player.position, volleyTargets[0])) return;
+            // One payment for the entire volley. No targets/cooldown/extra projectiles do not charge again.
+            if (!mana.SpendForBasicAttack()) return;
             nextShot = time + stats.AttackInterval;
-            int count = 1 + Mathf.FloorToInt(progression.PermanentAmount("multishot"));
+            if (skills.Character != null && skills.Character.id != "projectile")
+            { skills.CastPersonalMagic(playerWorld.player.position, volleyTargets[0], playerWorld.player); return; }
+            int count = 1 + Mathf.FloorToInt(skills.Character != null ? skills.PersonalAmount("count") + progression.PermanentAmount("multishot") : progression.PermanentAmount("multishot"));
             for (int i = 0; i < count; i++)
             {
                 Enemy target = volleyTargets[i % volleyTargets.Count];
@@ -82,7 +89,8 @@ namespace ProjectDM
                     if (animator.enabled) { animator.Rebind(); animator.Update(0f); }
                 }
                 projectiles.Add(new Projectile { transform = bolt.transform, direction = direction,
-                    damage = stats.MainDamage * (i == 0 ? 1f : tables.GrowthRow("multishot").damageRatio), lifetime = tables.balance.projectileLifetime });
+                    damage = stats.MainDamage * (i == 0 ? 1f : tables.GrowthRow("multishot").damageRatio), lifetime = tables.balance.projectileLifetime,
+                    pierces = Mathf.FloorToInt(skills.PersonalAmount("pierce")) });
             }
         }
 
@@ -93,23 +101,41 @@ namespace ProjectDM
                 Projectile bolt = projectiles[i];
                 if (bolt.transform == null) { projectiles.RemoveAt(i); continue; }
                 Vector2 from = bolt.transform.position;
+                float homing = skills.PersonalAmount("homing");
+                if (homing > 0)
+                {
+                    Enemy nearest = null; float distance = float.MaxValue;
+                    foreach (Enemy enemy in enemiesSystem.enemies)
+                        if (EnemySystem.IsLive(enemy) && !bolt.hits.Contains(enemy) && ((Vector2)enemy.transform.position - from).sqrMagnitude < distance)
+                        { nearest = enemy; distance = ((Vector2)enemy.transform.position - from).sqrMagnitude; }
+                    if (nearest != null)
+                    {
+                        float turn = Mathf.Clamp(Vector2.SignedAngle(bolt.direction, (Vector2)nearest.transform.position - from), -homing * dt, homing * dt);
+                        bolt.direction = Quaternion.Euler(0, 0, turn) * bolt.direction;
+                        bolt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(bolt.direction.y, bolt.direction.x) * Mathf.Rad2Deg);
+                    }
+                }
                 Vector2 to = from + bolt.direction * tables.balance.projectileSpeed * dt;
                 bolt.transform.position = to;
                 bolt.lifetime -= dt;
                 // Swept collision prevents faster projectiles from tunneling past small targets.
                 Enemy hit = null;
-                float nearestAlong = float.MaxValue;
                 Vector2 segment = to - from;
-                foreach (Enemy enemy in enemiesSystem.enemies)
+                bool finished = false;
+                do
                 {
-                    if (!EnemySystem.IsLive(enemy)) continue;
-                    Vector2 center = enemy.transform.position;
-                    float along = segment.sqrMagnitude > .000001f ? Mathf.Clamp01(Vector2.Dot(center - from, segment) / segment.sqrMagnitude) : 0;
-                    if ((center - (from + segment * along)).sqrMagnitude < .55f * .55f && along < nearestAlong)
-                    { nearestAlong = along; hit = enemy; }
-                }
-                if (hit != null) skills.ApplyPrototypeBasicHit(hit, bolt.damage);
-                if (hit != null || bolt.lifetime <= 0)
+                    hit = null; float nearestAlong = float.MaxValue;
+                    foreach (Enemy enemy in enemiesSystem.enemies)
+                    {
+                        if (!EnemySystem.IsLive(enemy) || bolt.hits.Contains(enemy)) continue;
+                        Vector2 center = enemy.transform.position;
+                        float along = segment.sqrMagnitude > .000001f ? Mathf.Clamp01(Vector2.Dot(center - from, segment) / segment.sqrMagnitude) : 0;
+                        if ((center - (from + segment * along)).sqrMagnitude < .55f * .55f && along < nearestAlong)
+                        { nearestAlong = along; hit = enemy; }
+                    }
+                    if (hit != null) { bolt.hits.Add(hit); skills.ApplyPrototypeBasicHit(hit, bolt.damage); finished = bolt.pierces-- <= 0; }
+                } while (hit != null && !finished);
+                if (finished || bolt.lifetime <= 0)
                 {
                     objectPool.Return(bolt.transform.gameObject);
                     projectiles.RemoveAt(i);

@@ -63,7 +63,7 @@ namespace ProjectDM.Editor
                 ProgressionService progression = new ProgressionService(save, tables); progression.ResetSnapshot();
                 PlayerStats playerStats = new PlayerStats(tables, progression);
                 PlayerWorld world = new PlayerWorld(settings, tables, art, playerStats);
-                RunController run = new RunController(settings, save, tables, progression, world, () => { }, () => { }, () => { }, () => { }, () => { }, () => false);
+                RunController run = new RunController(settings, save, tables, progression, world, () => { }, () => { }, () => { }, () => { }, () => { }, () => false, new RunMana());
                 float xp = 0;
                 GameObjectPool pool = root.AddComponent<GameObjectPool>();
                 PickupSystem pickups = new PickupSystem(settings, save, tables, progression, art, world, run, pool, amount => xp += amount, playerStats);

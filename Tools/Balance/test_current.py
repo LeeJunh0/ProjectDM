@@ -64,6 +64,36 @@ class CurrentTests(unittest.TestCase):
     def test_first_damage_purchase_is_one_point_sixty_six(self):
         self.assertAlmostEqual(self.model({"damage": 1}).main_damage(), 1.66)
 
+    def test_mana_capacity_and_absorption_are_not_unlimited_deadline_growth(self):
+        run = self.model({"time": 2})
+        self.assertEqual(run.max_mana, 44)
+        self.assertEqual(run.current_mana, 44)
+        run.time_chance = 1
+        run.time = 0
+        run.enemies = {1: Enemy(1, 0, 1, 1, 1, 0, 1, 0)}
+        run.hurt(1, 1)
+        self.assertEqual(run.absorbed_mana, 0)
+        self.assertEqual(run.current_mana, 44)
+        run.time = 2
+        self.assertTrue(run.begin_basic_attack())
+        run.enemies = {2: Enemy(2, 0, 1, 1, 1, 0, 1, 0)}
+        run.hurt(2, 1)
+        self.assertEqual(run.absorbed_mana, 1)
+        self.assertEqual(run.current_mana, 44)
+        self.assertEqual(run.time, 2)
+
+    def test_mana_attack_cost_and_no_late_revive(self):
+        config = copy.deepcopy(self.config)
+        config["runtime_balance"]["basicAttackManaCost"] = 2
+        run = CurrentRun(config, Progress(), 77)
+        self.assertEqual(run.current_mana, 40)
+        for _ in range(20): self.assertTrue(run.begin_basic_attack())
+        run.time = 20; run.time_chance = 1
+        run.enemies = {1: Enemy(1, 0, 1, 1, 1, 0, 1, 0)}
+        run.hurt(1, 1)
+        self.assertEqual(sum(run.kills), 0)
+        self.assertEqual(run.current_mana, 0)
+
     def test_unlocked_skills_still_require_run_choice(self):
         run = self.model({"chain": 1, "splash": 1, "meteor": 1})
         self.assertEqual(run.owned, [])

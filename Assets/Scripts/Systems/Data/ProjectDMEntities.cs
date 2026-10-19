@@ -7,6 +7,7 @@ namespace ProjectDM
     {
         public Transform transform;
         public SpriteRenderer renderer;
+        public Animator animator;
         public Sprite baseSprite;
         public Sprite alternateSprite;
         public float animationTime;
@@ -15,6 +16,8 @@ namespace ProjectDM
         public bool dead;
         public float speed;
         public MonsterKind kind;
+        public int chillStacks;
+        public float chillRemaining, freezeRemaining, chillSlow;
     }
 
     internal sealed class Projectile
@@ -23,6 +26,8 @@ namespace ProjectDM
         public Vector2 direction;
         public float damage;
         public float lifetime;
+        public int pierces;
+        public readonly System.Collections.Generic.HashSet<Enemy> hits = new();
     }
 
     internal sealed class Pickup

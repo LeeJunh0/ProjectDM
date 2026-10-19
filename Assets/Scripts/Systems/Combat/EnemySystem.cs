@@ -59,9 +59,19 @@ namespace ProjectDM
                     continue;
                 }
 
+                float frozen = Mathf.Min(Mathf.Max(0, dt), enemy.freezeRemaining);
+                enemy.freezeRemaining = Mathf.Max(0, enemy.freezeRemaining - dt);
+                float slowed = Mathf.Clamp(enemy.chillRemaining - frozen, 0, Mathf.Max(0, dt - frozen));
+                float slowFraction = enemy.chillSlow;
+                enemy.chillRemaining = Mathf.Max(0, enemy.chillRemaining - dt);
+                if (enemy.chillRemaining <= 0) { enemy.chillStacks = 0; enemy.chillSlow = 0; }
+                float movementTime = Mathf.Max(0, dt - frozen) - slowed * slowFraction;
+                if (enemy.animator != null) enemy.animator.speed = enemy.freezeRemaining > 0 ? 0 : 1;
+                if (enemy.renderer != null) enemy.renderer.color = enemy.freezeRemaining > 0 ? new Color(.45f, .85f, 1) :
+                    enemy.chillRemaining > 0 ? new Color(.75f, .9f, 1) : Color.white;
                 Vector2 direction = ((Vector2)playerWorld.player.position - (Vector2)enemy.transform.position).normalized;
-                enemy.transform.position += (Vector3)(direction * enemy.speed * dt);
-                enemy.animationTime += dt;
+                enemy.transform.position += (Vector3)(direction * enemy.speed * movementTime);
+                enemy.animationTime += Mathf.Max(0, dt - frozen);
                 if (enemy.alternateSprite != null && enemy.animationTime > 0.16f)
                 {
                     enemy.animationTime = 0f;
@@ -149,6 +159,7 @@ namespace ProjectDM
                 animator.runtimeAnimatorController = art.MonsterController((MonsterKind)kind);
                 animator.enabled = animator.runtimeAnimatorController != null;
                 animator.applyRootMotion = false;
+                animator.speed = 1;
                 if (animator.enabled) { animator.Rebind(); animator.Update(0f); }
             }
             renderer.sprite = art.MonsterSprite((MonsterKind)kind) ?? art.slimeSprite;
@@ -156,7 +167,7 @@ namespace ProjectDM
             renderer.flipX = false;
             renderer.sortingOrder = 2;
             Sprite alternate = art.MonsterAlternate((MonsterKind)kind);
-            enemies.Add(new Enemy { kind = (MonsterKind)kind, transform = instance.transform, renderer = renderer,
+            enemies.Add(new Enemy { kind = (MonsterKind)kind, transform = instance.transform, renderer = renderer, animator = animator,
                 baseSprite = renderer.sprite, alternateSprite = alternate, hitPoints = row.hp, speed = row.speed });
         }
 
@@ -183,14 +194,11 @@ namespace ProjectDM
             if (newStage > oldStage) notifications.Notice(art.MonsterName(newStage, tables.balance) + " 등장 해금! 기존 몬스터와 함께 출현합니다.");
             pickupsSystem.SpawnPrototypeLoot(position, kind);
             // On-death roll is separate from on-hit effects and also runs for effect kills.
-            double chance = PrototypeRules.Chance(tables.balance.timeRewardChance, progression.PermanentAmount("extension"), 0);
+            double chance = PrototypeRules.Chance(tables.balance.ResolvedManaAbsorbChance, progression.PermanentAmount("extension"), 0);
             if (chance >= 1 || Random.value < chance)
             {
-                float oldDeadline = run.activeRunDuration;
-                run.activeRunDuration = (float)PrototypeRules.ExtendDeadline(run.activeRunDuration, tables.balance.timeRewardSeconds, tables.balance.bossElapsedSeconds);
-                float added = run.activeRunDuration - oldDeadline;
-                run.timeRewardsThisRun += added;
-                if (added > 0) visuals.TimeReward(position, added);
+                float added = run.runEnded ? 0 : run.mana.Absorb(tables.balance.ResolvedManaAbsorbAmount);
+                if (added > 0) visuals.ManaAbsorb(position, added);
             }
             enemies.Remove(enemy);
             objectPool.Return(enemy.transform.gameObject);

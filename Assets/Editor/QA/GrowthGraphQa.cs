@@ -391,7 +391,7 @@ namespace ProjectDM.Editor
                 progression = new ProgressionService(save, tables); progression.ResetSnapshot();
                 GameSettings settings = new GameSettings(); WorldArtAssets art = new WorldArtAssets();
                 run = new RunController(settings, save, tables, progression, new PlayerWorld(settings, tables, art, new PlayerStats(tables, progression)),
-                    () => progression.ResetSnapshot(), () => { }, () => { }, () => { }, () => { }, () => false);
+                    () => progression.ResetSnapshot(), () => { }, () => { }, () => { }, () => { }, () => false, new RunMana());
                 view = new GrowthGraphView(settings, save, tables, progression, art, run, new GameNotifications(), new UiGraphics());
             }
         }

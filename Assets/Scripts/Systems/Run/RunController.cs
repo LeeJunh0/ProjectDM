@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace ProjectDM
 {
-    /// <summary>Owns the run clock, pause/navigation state and result counters.</summary>
+    /// <summary>Owns the independent boss clock, mana lifecycle, pause/navigation and result counters.</summary>
     internal sealed class RunController
     {
         private readonly GameSettings settings;
@@ -21,8 +21,10 @@ namespace ProjectDM
         private readonly Func<bool> isChoosing;
 
         internal readonly StageSession stages;
+        internal readonly RunMana mana;
+        internal readonly CharacterSession characters;
 
-        internal RunController(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, PlayerWorld playerWorld, Action resetWorld, Action spawnInitial, Action snapCamera, Action resetNavigation, Action closeSelection, Func<bool> isChoosing, StageSession stages = null)
+        internal RunController(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, PlayerWorld playerWorld, Action resetWorld, Action spawnInitial, Action snapCamera, Action resetNavigation, Action closeSelection, Func<bool> isChoosing, RunMana mana, StageSession stages = null)
         {
             this.settings = settings;
             this.save = save;
@@ -36,6 +38,8 @@ namespace ProjectDM
             this.closeSelection = closeSelection;
             this.isChoosing = isChoosing;
             this.stages = stages;
+            this.mana = mana;
+            characters = tables.characters == null ? null : new CharacterSession(tables.characters, save.progress);
         }
 
         internal int runCurrency;
@@ -43,10 +47,6 @@ namespace ProjectDM
         internal bool showMetaTree;
 
         internal float elapsed;
-
-        internal float activeRunDuration;
-
-        internal float remainingTimeFraction = 1f;
 
         internal bool runEnded;
 
@@ -60,7 +60,6 @@ namespace ProjectDM
         internal void EndRun()
         {
             if (runEnded) return;
-            remainingTimeFraction = Mathf.Clamp01((activeRunDuration - elapsed) / initialRunSeconds);
             runEnded = true;
             Array.Copy(save.progress.kills, resultPermanentKillCounts, resultPermanentKillCounts.Length);
             resultMonsterStage = PrototypeRules.Stage(tables.balance, save.progress);
@@ -96,12 +95,9 @@ namespace ProjectDM
             Time.timeScale = runEnded || isChoosing() || showMetaTree ? 0f : 1f;
         }
 
-        internal float initialRunSeconds;
-
-        internal float timeRewardsThisRun;
-
         internal void BeginRun()
         {
+            characters?.ApplySelected();
             resetWorld();
             Array.Clear(monsterKillCounts, 0, monsterKillCounts.Length);
             Array.Copy(save.progress.kills, permanentKillsAtRunStart, permanentKillsAtRunStart.Length);
@@ -109,10 +105,8 @@ namespace ProjectDM
             resultMonsterStage = PrototypeRules.Stage(tables.balance, save.progress);
             runCurrency = 0;
             elapsed = 0f;
-            initialRunSeconds = Mathf.Min(tables.balance.bossElapsedSeconds, Mathf.Max(1f,
-                (settings.useTableRunDuration ? tables.balance.initialSeconds : settings.runDuration) + progression.PermanentAmount("time")));
-            activeRunDuration = initialRunSeconds;
-            remainingTimeFraction = 1f;
+            mana.Reset(Mathf.Max(1f, (settings.useTableStartingMana ? tables.balance.ResolvedInitialMana : settings.startingMana)
+                + progression.PermanentAmount("time")), characters?.Current.manaCost ?? tables.balance.basicAttackManaCost);
             runEnded = showMetaTree = false;
             resetNavigation();
             playerWorld.ResetPosition();
@@ -123,15 +117,16 @@ namespace ProjectDM
 
         internal float TickClock(float deltaTime)
         {
-            float dt = Mathf.Min(deltaTime, Mathf.Max(0f, Mathf.Min(tables.balance.bossElapsedSeconds, activeRunDuration) - elapsed));
+            if (runEnded || showMetaTree || isChoosing()) return 0;
+            float dt = Mathf.Min(Mathf.Max(0, deltaTime), Mathf.Max(0, tables.balance.bossElapsedSeconds - elapsed));
             elapsed += dt;
             return dt;
         }
         internal void CompleteIfDue(Action arriveAtBoss)
         {
-            remainingTimeFraction = Mathf.Clamp01((activeRunDuration - elapsed) / initialRunSeconds);
+            if (runEnded) return;
             if (PrototypeRules.BossDue(elapsed, tables.balance.bossElapsedSeconds)) arriveAtBoss();
-            else if (elapsed >= activeRunDuration) EndRun();
+            else if (mana.IsDepleted) EndRun();
         }
     }
 }

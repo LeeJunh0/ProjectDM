@@ -63,7 +63,7 @@ namespace ProjectDM
                 GUIStyle section = new GUIStyle(body) { fontSize = 30, fontStyle = FontStyle.Bold };
                 GUIStyle mutedBody = new GUIStyle(body) { normal = { textColor = subdued } };
                 GUIStyle mutedValue = new GUIStyle(value) { normal = { textColor = subdued } };
-                GUI.Label(new Rect(44f, 24f, 632f, 48f), boss.bossArrived ? "스테이지 보스 도달" : playerCombat.playerDefeated ? "플레이어 쓰러짐" : "진행 종료", heading);
+                GUI.Label(new Rect(44f, 24f, 632f, 48f), boss.bossArrived ? "스테이지 보스 도달" : playerCombat.playerDefeated ? "플레이어 쓰러짐" : run.mana.IsDepleted ? "마나 고갈" : "진행 종료", heading);
                 UiGraphics.DrawResultDivider(92f);
                 GUI.Label(new Rect(44f, 116f, 632f, 34f), "획득 재화", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(.58f, .55f, .50f) } });
 

@@ -5,7 +5,7 @@ namespace ProjectDM
     /// <summary>Configuration only, never runtime state. Refreshed from existing serialized GameManager fields.</summary>
     internal sealed class GameSettings
     {
-        internal float runDuration = 40f;
+        internal float startingMana = 40f;
         internal int initialStage = 1;
         internal float resultCountUpDuration = 1.1f;
         internal float resultCountUpStagger = .07f;
@@ -45,7 +45,7 @@ namespace ProjectDM
         internal TextAsset prototypeBalanceTable;
         internal TextAsset prototypeSkillTable;
         internal TextAsset prototypeGrowthTable;
-        internal bool useTableRunDuration = true;
+        internal bool useTableStartingMana = true;
         internal bool useTableSpawnDistances = true;
         internal bool enablePrototypeDebug = true;
         internal bool prototypeSandbox;

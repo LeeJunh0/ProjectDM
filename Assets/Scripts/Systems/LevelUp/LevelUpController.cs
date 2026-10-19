@@ -89,6 +89,7 @@ namespace ProjectDM
 
         internal void BuildPrototypeRunChoices()
         {
+            if (run.characters != null) { BuildPersonalChoices(); return; }
             List<PrototypeSkill> candidates = new();
             foreach (PrototypeSkill row in tables.skillTable.rows)
             {
@@ -131,6 +132,26 @@ namespace ProjectDM
             string scope = row.id == "chain" ? $"최대 {row.targets}명 / 연결 거리 {row.range:0.##}" : $"반경 {row.radius:0.##}";
             string delay = row.id == "meteor" ? $" / {row.delay:0.##}초 후" : "";
             return $"적중마다 {chance * 100:0.##}% 확률\n공격력 {ratio * 100:0.##}% / {scope}{delay}\n효과 피해는 재발동하지 않음";
+        }
+
+        private void BuildPersonalChoices()
+        {
+            CharacterDefinition character = run.characters.Current;
+            List<CharacterUpgrade> candidates = new();
+            foreach (CharacterUpgrade row in character.upgrades)
+                if (skills.RunRank(row.Key(character.id)) < row.maxRank &&
+                    !(character.id == "frost" && row.id == "chill" && skills.PersonalAmount("chill") >= character.chillThreshold - 1)) candidates.Add(row);
+            List<RunUpgradePresentation> choices = new();
+            while (choices.Count < 3 && candidates.Count > 0)
+            {
+                int index = Random.Range(0, candidates.Count);
+                CharacterUpgrade row = candidates[index]; candidates.RemoveAt(index);
+                string key = row.Key(character.id);
+                Color color = row.rarity == "gold" ? new Color(.96f, .72f, .23f) : row.rarity == "silver" ? new Color(.72f, .76f, .81f) : new Color(.72f, .42f, .2f);
+                choices.Add(new RunUpgradePresentation(key, row.icon, row.rarity == "gold" ? "금" : row.rarity == "silver" ? "은" : "동",
+                    row.name + $"  {skills.RunRank(key) + 1}단계", character.name + " · 이번 런 전용\n" + row.description, color));
+            }
+            runUpgradeChoices = choices.ToArray();
         }
 
         internal Action onOpened;

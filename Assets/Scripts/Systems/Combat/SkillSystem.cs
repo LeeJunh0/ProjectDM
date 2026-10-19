@@ -17,6 +17,7 @@ namespace ProjectDM
         private readonly Func<bool> criticalRoll;
         private readonly Func<float> mainDamage;
         private readonly PlayerStats playerStats;
+        private readonly CharacterMagicSystem personalMagic;
 
         internal SkillSystem(GameTables tables, ProgressionService progression, WorldArtAssets art, RunController run, EnemySystem enemiesSystem, PrototypeSkillVisuals skillVisuals, Func<bool> criticalRoll, Func<float> mainDamage, PlayerStats playerStats)
         {
@@ -29,6 +30,7 @@ namespace ProjectDM
             this.criticalRoll = criticalRoll;
             this.mainDamage = mainDamage;
             this.playerStats = playerStats;
+            personalMagic = new CharacterMagicSystem(run.characters, enemiesSystem, skillVisuals, mainDamage, PersonalAmount, ApplyPersonalHit);
         }
 
         internal readonly Dictionary<string, int> runSkillRanks = new();
@@ -48,6 +50,28 @@ namespace ProjectDM
         }
 
         internal int RunRank(string id) => runSkillRanks.TryGetValue(id, out int value) ? value : 0;
+        internal CharacterDefinition Character => run.characters?.Current;
+        internal float PersonalAmount(string id)
+        {
+            if (Character == null) return 0;
+            CharacterUpgrade row = System.Array.Find(Character.upgrades, u => u.id == id);
+            return row == null ? 0 : progression.PermanentAmount(row.Key(Character.id)) + RunRank(row.Key(Character.id)) * row.step;
+        }
+        internal FrostOrbitSystem Frost => personalMagic.frost;
+        internal void CastPersonalMagic(Vector3 origin, Enemy target, Transform caster) => personalMagic.Cast(origin, target, caster);
+        internal bool CanCastPersonalMagic(Vector3 origin, Enemy target)
+        {
+            if (Character?.id == "frost") return !Frost.Active && (target.transform.position - origin).sqrMagnitude <=
+                Mathf.Pow(Character.range + PersonalAmount("range") + Character.shardRadius + PersonalAmount("size") + .35f, 2);
+            return Character?.id != "flame" || (target.transform.position - origin).sqrMagnitude <= Mathf.Pow(Character.range + PersonalAmount("range"), 2);
+        }
+        internal void ApplyPersonalHit(Enemy target, float damage)
+        {
+            if (!EnemySystem.IsLive(target)) return;
+            bool critical = criticalRoll();
+            enemiesSystem.DamagePrototypeEnemyWithPresentation(target, damage * (critical ? playerStats.CriticalDamage : 1),
+                critical ? CombatDamageKind.Critical : CombatDamageKind.Attack);
+        }
 
         internal double AttackEffectChance(PrototypeSkill row)
         {
@@ -60,6 +84,7 @@ namespace ProjectDM
 
         internal void ApplyPrototypeBasicHit(Enemy target, float damage)
         {
+            if (Character != null) { ApplyPersonalHit(target, damage); return; }
             if (!EnemySystem.IsLive(target)) return;
             Vector3 origin = target.transform.position;
             // Capture independent rolls BEFORE a lethal direct hit. Damage effects never call this method.
@@ -125,6 +150,7 @@ namespace ProjectDM
         internal void UpdatePrototypeEffects(float dt)
         {
             skillVisuals.Tick(dt);
+            personalMagic.Tick(dt);
             for (int i = meteors.Count - 1; i >= 0; i--)
             {
                 PendingMeteor meteor = meteors[i];
@@ -137,6 +163,7 @@ namespace ProjectDM
 
         internal void Reset()
         {
+            personalMagic.Reset();
             runSkillRanks.Clear(); meteors.Clear(); forceAttackEffects = false;
             skillVisuals.Clear();
             skillVisuals.Configure(art.boltSprite ?? art.slimeSprite, art.gemSprite ?? art.slimeSprite, art.skillVisualAssets);

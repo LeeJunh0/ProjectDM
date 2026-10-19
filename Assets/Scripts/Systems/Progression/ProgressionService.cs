@@ -39,7 +39,7 @@ namespace ProjectDM
             save.FlushPrototypeProgress();
             activeGrowthRanks.Clear();
             activeGrowthPartialRanks.Clear();
-            foreach (PrototypeGrowth row in tables.growthTable.rows)
+            foreach (PrototypeGrowth row in tables.growthLookup.Values)
             {
                 activeGrowthRanks[row.id] = Mathf.Min(save.progress.Rank(row.id), row.maxRank);
                 activeGrowthPartialRanks[row.id] = save.progress.Rank(row.id) < row.maxRank ? save.progress.PartialRank(row.id) : 0;

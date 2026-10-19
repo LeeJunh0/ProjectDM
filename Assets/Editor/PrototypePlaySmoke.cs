@@ -64,7 +64,7 @@ namespace ProjectDM.Editor
                 if (loader != null && !string.IsNullOrEmpty(loader.Error)) throw new InvalidOperationException(loader.Error);
                 if (!(bool)Get(manager, "isInitialized")) return;
                 Verify(manager);
-                Finish("PASS: Main Play Mode, real Addressables/player/prefabs, all five monster slots in both stages, world size, original Animator and manual frame loops, 2/1/2/1 pooled transitions, table timer/population, cards/pause, effects, boss arrival, sandbox.", false);
+                Finish("PASS: Main Play Mode, real Addressables/player/prefabs, both stages, four personal-magic characters/casts/cards, higher-cost frost orbit, no retired shared procs, MP capacity/next-run snapshot, mana game-over/restart, independent boss clock, sandbox.", false);
             }
             catch (Exception exception) { Finish("FAIL: " + exception, true); }
         }
@@ -74,6 +74,8 @@ namespace ProjectDM.Editor
             Check((bool)Get(manager, "sandboxThisSession"), "Smoke check must never save player data.");
             Check(Get(manager, "player") != null, "Real player boot");
             Check(Get(manager, "runtimeAssets") != null, "Real Addressables boot");
+            RunController characterRun = (RunController)Get(manager, "run");
+            characterRun.characters.Select("projectile");
             ProjectDMRuntimeAssets assets = (ProjectDMRuntimeAssets)Get(manager, "runtimeAssets");
             Check(assets.CurrencyPickupPrefabs.Length == 5 && assets.ExperiencePickupPrefabs.Length == 5, "Addressables preserves all five grade slots");
             for (int i = 0; i < 5; i++)
@@ -89,8 +91,9 @@ namespace ProjectDM.Editor
                 "Real Main boot loads the approved generated skill artwork and impact material");
             Call(manager, "BeginRun");
             PrototypeBalance balance = (PrototypeBalance)Get(manager, "balance");
-            Check((float)Get(manager, "activeRunDuration") >= balance.initialSeconds, "Table 40 seconds, not scene debug 5 seconds");
-            Check((float)Get(manager, "remainingTimeFraction") == 1, "Timer begins full");
+            RunMana mana = (RunMana)Get(manager, "mana");
+            Check(mana.Maximum >= balance.ResolvedInitialMana, "Table 40 MP, not scene debug value");
+            Check(mana.Fraction == 1, "Mana begins full");
             Check(((IList)Get(manager, "enemies")).Count >= 12, "Real initial monsters");
             StageSession stages = (StageSession)Get(manager, "stages");
             Check(stages.Current.stageId == 1, "Default real Main run uses meadow stage");
@@ -131,7 +134,7 @@ namespace ProjectDM.Editor
             object victim = enemies[0];
             victim.GetType().GetField("hitPoints").SetValue(victim, 1f);
             Call(manager, "ApplyPrototypeBasicHit", victim, 1f);
-            Check(((IList)Get(manager, "meteors")).Count == 1, "Actual default resources support attack effects");
+            Check(((IList)Get(manager, "meteors")).Count == 0, "Personal magic does not trigger retired shared effects, even with archived ranks");
             PrototypeSave progress = (PrototypeSave)Get(manager, "progress");
             bool wasReached = progress.reachedBoss;
             Call(manager, "ArriveAtPrototypeBoss", true);
@@ -140,16 +143,65 @@ namespace ProjectDM.Editor
             Check(progress.reachedBoss == wasReached, "Debug preview does not claim real boss arrival");
             Call(manager, "BeginRun");
             Check(ranks.Count == 0 && !(bool)Get(manager, "runEnded") && Time.timeScale == 1, "Restart clears temporary skills/effects and resumes");
-            Set(manager, "activeRunDuration", balance.bossElapsedSeconds);
-            Set(manager, "elapsed", balance.initialSeconds);
+            mana.Reset(1000, 1);
+            Set(manager, "elapsed", balance.ResolvedInitialMana);
             Call(manager, "Update");
             Check(!(bool)Get(manager, "bossArrived"), "A deadline filled to the cap is not actual elapsed boss arrival");
             Set(manager, "elapsed", balance.bossElapsedSeconds);
             Call(manager, "Update");
             Check((bool)Get(manager, "bossArrived") && progress.reachedBoss && (bool)Get(manager, "runEnded"), "Actual Update clock triggers boss at elapsed cap before timeout results");
             Call(manager, "BuildPrototypeGraph");
-            PrototypeGrowthTable growth = ((GameTables)Get(manager, "tables")).growthTable;
+            PrototypeGrowthTable growth = ((GameTables)Get(manager, "tables")).characters.CommonGraph.growthTable;
             Check(((Array)Get(manager, "metaTreeNodes")).Length == growth.nodes.Length + 1 + growth.goalLine.Length, "Real graph contains root, all purchase nodes and objective previews");
+            int savedManaRank = progress.Rank("time");
+            double savedManaPartial = progress.PartialRank("time");
+            progress.SetRank("time", 0);
+            Call(manager, "BeginRun");
+            Check(mana.Current == mana.Maximum && Mathf.Approximately(mana.Maximum, balance.ResolvedInitialMana), "Real restart fills base MP");
+            progress.SetRank("time", 1);
+            Check(Mathf.Approximately(mana.Maximum, balance.ResolvedInitialMana), "Buying mana capacity does not modify the active run");
+            Call(manager, "BeginRun");
+            Check(Mathf.Approximately(mana.Current, balance.ResolvedInitialMana + 2), "Old time-growth saved rank now increases next-run mana capacity");
+            float beforeIdle = mana.Current;
+            Call(manager, "TickClock", .1f);
+            Check(mana.Current == beforeIdle, "Real run clock never drains mana while idle");
+            mana.Reset(balance.basicAttackManaCost, balance.basicAttackManaCost);
+            Call(manager, "FirePrototypeVolley", (float)Get(manager, "elapsed"));
+            Check(mana.IsDepleted, "Real affordable last basic volley spends the last MP");
+            int completedBefore = progress.completedRuns;
+            Call(manager, "Update");
+            Check((bool)Get(manager, "runEnded") && mana.IsDepleted && Time.timeScale == 0, "Actual GameManager Update ends immediately at zero MP");
+            Call(manager, "Update");
+            Check(progress.completedRuns == completedBefore + 1, "Mana game over records a single run");
+            progress.SetRank("time", savedManaRank, savedManaPartial);
+            Call(manager, "BeginRun");
+            Check(mana.Current == mana.Maximum && mana.AbsorbedThisRun == 0 && !(bool)Get(manager, "runEnded"), "Real restart clears depletion and absorption statistics");
+            ManaBarRenderer liquid = (ManaBarRenderer)Get(manager, "manaBar");
+            manager.SetManaVisualState(ManaVisualState.Awakened);
+            liquid.Tick(1);
+            Check(liquid.State == ManaVisualState.Awakened, "Public future awakening API switches only MP presentation");
+            manager.SetManaVisualState(ManaVisualState.Normal);
+            foreach (string character in new[] { "lightning", "flame", "frost", "projectile" })
+            {
+                characterRun.characters.Select(character); Call(manager, "BeginRun");
+                Check(characterRun.characters.Current.id == character, "Real restart applies selected personal magic");
+                EnemySystem enemySystem = (EnemySystem)Get(manager, "enemiesSystem");
+                Enemy target = enemySystem.enemies[0]; target.transform.position = ((Transform)Get(manager, "player")).position + Vector3.right;
+                target.hitPoints = 1000;
+                Call(manager, "FireAtNearestEnemy", 0f);
+                Check(mana.SpentThisRun == (character == "frost" ? 3 : 1), "Real personal magic pays its table-defined cast cost");
+                if (character == "frost")
+                {
+                    SkillSystem skills = (SkillSystem)Get(manager, "skills");
+                    skills.UpdatePrototypeEffects(.05f);
+                    IList shards = (IList)RuntimeTestAccess.Get(manager.GetComponent<PrototypeSkillVisuals>(), "frostShards");
+                    Check(skills.Frost.Active && shards.Count == 2 && ((SpriteRenderer)shards[0]).sprite != null, "Real frost orbit loads and positions existing sprite resources");
+                }
+                Call(manager, "TriggerDebugLevelUp");
+                foreach (RunUpgradePresentation card in (RunUpgradePresentation[])Get(manager, "runUpgradeChoices"))
+                    Check(card.upgrade.StartsWith("magic." + character + "."), "Real level-up pool contains only active personal magic");
+            }
+            Call(manager, "BeginRun");
         }
 
         private static void VerifyMonsterPresentation(GameManager manager, WorldArtAssets art)

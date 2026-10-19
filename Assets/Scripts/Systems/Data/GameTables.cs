@@ -25,6 +25,7 @@ namespace ProjectDM
         internal PrototypeSkillTable skillTable;
 
         internal PrototypeGrowthTable growthTable;
+        internal CharacterCatalog characters;
 
         internal readonly Dictionary<string, PrototypeGrowth> growthLookup = new();
 
@@ -54,7 +55,11 @@ namespace ProjectDM
             PrototypeGrowthTable growth = JsonUtility.FromJson<PrototypeGrowthTable>(settings.prototypeGrowthTable.text);
             string error = PrototypeRules.Validate(balance, skills, growth);
             if (error != null) throw new InvalidOperationException(error);
-            return new GameTables(balance, skills, growth);
+            GameTables tables = new GameTables(balance, skills, growth);
+            TextAsset characters = Resources.Load<TextAsset>("ProjectDM/Data/PrototypeCharacters");
+            if (characters == null) throw new InvalidOperationException("캐릭터 테이블을 찾을 수 없습니다.");
+            tables.characters = new CharacterCatalog(tables, JsonUtility.FromJson<CharacterTable>(characters.text));
+            return tables;
         }
     }
 }

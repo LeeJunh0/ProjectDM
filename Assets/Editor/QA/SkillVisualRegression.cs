@@ -78,6 +78,16 @@ namespace ProjectDM.Editor
                     Check(line.sprite == art.chain, "Lightning uses approved sprite");
                     Check(Near(line.transform.TransformPoint(PrototypeSkillVisuals.Anchor(art.chain, art.chainStart)), start), "Lightning starts at exact enemy position");
                     Check(Near(line.transform.TransformPoint(PrototypeSkillVisuals.Anchor(art.chain, art.chainEnd)), end), "Lightning ends at exact chained target");
+                    Vector3 authoredStart = PrototypeSkillVisuals.Anchor(art.chain, art.chainStart);
+                    Vector3 authoredEnd = PrototypeSkillVisuals.Anchor(art.chain, art.chainEnd);
+                    Vector3 authoredAxis = authoredEnd - authoredStart;
+                    Vector3 authoredNormal = new Vector3(-authoredAxis.y, authoredAxis.x).normalized;
+                    Vector3 linkAxis = (end - start).normalized;
+                    Vector3 linkNormal = new Vector3(-linkAxis.y, linkAxis.x);
+                    Vector3 offsetPoint = line.transform.TransformPoint((authoredStart + authoredEnd) * .5f + authoredNormal * .1f);
+                    float width = Mathf.Abs(Vector3.Dot(offsetPoint - start, linkNormal));
+                    float oldWidth = .1f * (end - start).magnitude / authoredAxis.magnitude;
+                    Check(Mathf.Abs(width / oldWidth - 2.5f) < .001f, "Lightning is exactly 2.5 times wider perpendicular to every connection direction");
                     effects.Tick(art.chainDuration + .01f);
                     Check(active.Count == 0 && !line.gameObject.activeSelf, "Lightning expires and returns to pool");
                 }
@@ -90,6 +100,34 @@ namespace ProjectDM.Editor
                 effects.Tick(art.splashDuration / 2);
                 Check(burst.transform.localScale.x > initialScale.x && burst.color.a < art.splashOpacity, "Splash expands and fades");
                 effects.Clear();
+
+                foreach (float radius in new[] { .5f, 1.65f, 2, 3.5f })
+                {
+                    foreach (bool meteorImpact in new[] { false, true })
+                    {
+                        Vector3 origin = new Vector3(.3f, -.4f);
+                        if (meteorImpact) effects.MeteorImpact(origin, radius);
+                        else effects.Burst(origin, radius, Color.white, .3f);
+                        SpriteRenderer area = (SpriteRenderer)RuntimeTestAccess.Get(active[0], "renderer");
+                        effects.Tick(art.burstExpansionDuration);
+                        float xDiameter = area.transform.TransformVector(Vector3.right * art.splash.rect.width / art.splash.pixelsPerUnit).magnitude * art.burstArtworkDiameter;
+                        float yDiameter = area.transform.TransformVector(Vector3.up * art.splash.rect.height / art.splash.pixelsPerUnit).magnitude * art.burstArtworkDiameter;
+                        Check(Mathf.Abs(xDiameter - radius * 2) < .001f && Mathf.Abs(yDiameter - radius * 2) < .001f,
+                            "Visible area reaches actual damage diameter while still visible: " + radius);
+                        Check(Near(area.transform.position, origin) && area.transform.parent.localScale == Vector3.one,
+                            "Reused area sprite is centered and does not inherit widened lightning frame");
+                        Check(area.color.a > .7f, "Range-sized impact remains opaque enough to see, rather than reaching full size only at expiry");
+                        Vector3 fullSize = area.transform.localScale;
+                        effects.Tick(.02f);
+                        Check(area.transform.localScale == fullSize && area.color.a > 0, "Impact holds full damage radius while fading");
+                        effects.Clear();
+                    }
+                    effects.Meteor(Vector3.zero, radius, .65f);
+                    SpriteRenderer warningArea = (SpriteRenderer)RuntimeTestAccess.Get(active[0], "renderer");
+                    float warningDiameter = warningArea.transform.TransformVector(Vector3.right * art.splash.rect.width / art.splash.pixelsPerUnit).magnitude * art.burstArtworkDiameter;
+                    Check(Mathf.Abs(warningDiameter - radius * 2) < .001f, "Meteor warning matches the same damage diameter: " + radius);
+                    effects.Clear();
+                }
 
                 Vector3 center = new Vector3(1.2f, -.7f);
                 float delay = .65f;

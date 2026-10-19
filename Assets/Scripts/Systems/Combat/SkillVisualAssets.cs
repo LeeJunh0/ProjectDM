@@ -17,11 +17,15 @@ namespace ProjectDM
         [InspectorName("번개 끝 위치 (이미지 비율)")] public Vector2 chainEnd = new(.9f, .88f);
         [InspectorName("번개 표시 시간"), Min(.01f)] public float chainDuration = .18f;
         [InspectorName("번개 투명도"), Range(0, 1)] public float chainOpacity = .9f;
+        [InspectorName("번개 굵기·퍼짐 배율"), Min(.1f), Tooltip("적 사이 연결 길이는 유지하고, 연결 축에 수직인 방향만 확대합니다.")]
+        public float chainWidthMultiplier = 2.5f;
 
         [Header("스플래쉬·충돌 확산")]
         [InspectorName("스플래쉬 표시 시간"), Min(.01f)] public float splashDuration = .3f;
         [InspectorName("스플래쉬 투명도"), Range(0, 1)] public float splashOpacity = .75f;
         [InspectorName("확산 시작 크기"), Range(.01f, 1)] public float burstStartScale = .18f;
+        [InspectorName("타격 범위까지 펼쳐지는 시간"), Min(.001f), Tooltip("이 시간 안에 실제 타격 지름까지 펼친 후, 최대 크기를 유지하며 사라집니다.")]
+        public float burstExpansionDuration = .06f;
         [InspectorName("이미지 속 원형 영역의 지름 비율"), Range(.1f, 1)] public float burstArtworkDiameter = .9f;
 
         [Header("운석")]

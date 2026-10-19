@@ -1,0 +1,41 @@
+{
+  "characters": [
+    { "id":"projectile", "name":"발사 마법사", "description":"마력탄 자동 발사 · 관통과 유도 강화", "enabled":true, "damage":1, "interval":0.65, "manaCost":1, "range":12,
+      "upgrades":[
+        {"id":"damage","name":"마력탄 위력","description":"마력탄 피해 +15%","icon":"bolt","rarity":"bronze","step":0.15,"permanentStep":0.15,"maxRank":99,"cost":8},
+        {"id":"speed","name":"빠른 시전","description":"마력탄 시전 속도 +10%","icon":"bolt","rarity":"silver","step":0.1,"permanentStep":0.1,"maxRank":99,"cost":10},
+        {"id":"count","name":"추가 마력탄","description":"시전당 투사체 +1개 · 추가 탄 피해 70%","icon":"bolt","rarity":"gold","step":1,"permanentStep":1,"maxRank":3,"cost":35},
+        {"id":"pierce","name":"관통 마력탄","description":"투사체 관통 대상 +1 · 동일 대상 중복 타격 없음","icon":"bolt","rarity":"silver","step":1,"permanentStep":1,"maxRank":3,"cost":25},
+        {"id":"homing","name":"유도 마력탄","description":"비행 중 적을 향해 초당 60도 추가 회전","icon":"bolt","rarity":"gold","step":60,"permanentStep":60,"maxRank":3,"cost":35}
+      ]},
+    { "id":"lightning", "name":"번개 마법사", "description":"확정 연쇄 번개 · 연쇄 수와 재타격 강화", "enabled":true, "damage":0.75, "interval":1, "manaCost":1, "range":3, "extraTargets":2,
+      "upgrades":[
+        {"id":"damage","name":"번개 위력","description":"번개 피해 +15%","icon":"gem","rarity":"bronze","step":0.15,"permanentStep":0.15,"maxRank":99,"cost":8},
+        {"id":"speed","name":"번개 시전 속도","description":"번개 시전 속도 +10%","icon":"gem","rarity":"silver","step":0.1,"permanentStep":0.1,"maxRank":99,"cost":10},
+        {"id":"jumps","name":"추가 연쇄","description":"연쇄 대상 +1 · 연쇄 피해는 첫 타격의 50%","icon":"gem","rarity":"gold","step":1,"permanentStep":1,"maxRank":3,"cost":35},
+        {"id":"range","name":"연쇄 도약 거리","description":"연쇄 도약 거리 +0.6 유닛","icon":"gem","rarity":"silver","step":0.6,"permanentStep":0.6,"maxRank":3,"cost":25},
+        {"id":"echo","name":"번개 재타격","description":"각 타격의 50% 피해 재타격 확률 +10%p · 재귀 발동 없음","icon":"gem","rarity":"gold","step":0.1,"permanentStep":0.1,"maxRank":3,"cost":35}
+      ]},
+    { "id":"flame", "name":"화염 마법사", "description":"전방 부채꼴 화염 · 범위와 화상 강화", "enabled":true, "damage":0.5, "interval":0.7, "manaCost":1, "range":3, "angle":60,
+      "upgrades":[
+        {"id":"damage","name":"화염 위력","description":"화염 피해 +15%","icon":"bolt","rarity":"bronze","step":0.15,"permanentStep":0.15,"maxRank":99,"cost":8},
+        {"id":"speed","name":"화염 시전 속도","description":"화염 시전 속도 +10%","icon":"bolt","rarity":"silver","step":0.1,"permanentStep":0.1,"maxRank":99,"cost":10},
+        {"id":"range","name":"화염 사거리","description":"화염 사거리 +0.4 유닛","icon":"bolt","rarity":"silver","step":0.4,"permanentStep":0.4,"maxRank":3,"cost":25},
+        {"id":"width","name":"넓은 화염","description":"부채꼴 전체 각도 +12도","icon":"bolt","rarity":"silver","step":12,"permanentStep":12,"maxRank":3,"cost":25},
+        {"id":"burn","name":"지속 화상","description":"2초간 초당 화염 피해의 +15% · 재명중 시 시간 갱신","icon":"bolt","rarity":"gold","step":0.15,"permanentStep":0.15,"maxRank":3,"cost":35}
+      ]},
+    { "id":"frost", "name":"빙결 마법사", "description":"얼음 궤도 공전 · 냉기 중첩과 빙결", "enabled":true,
+      "damage":0.65, "interval":1, "manaCost":3, "range":1.8, "duration":3, "orbitSpeed":120, "shardCount":2,
+      "shardRadius":0.35, "hitInterval":0.5, "chillThreshold":3, "chillDuration":2, "freezeSeconds":0.7, "slowFraction":0.2,
+      "upgrades":[
+        {"id":"damage","name":"얼음 위력","description":"얼음 조각 피해 +15%","icon":"gem","rarity":"bronze","step":0.15,"permanentStep":0.15,"maxRank":99,"cost":8},
+        {"id":"speed","name":"빠른 재시전","description":"공전 종료 후 재시전 대기 속도 +10% · 회전 속도와 별개","icon":"gem","rarity":"silver","step":0.1,"permanentStep":0.1,"maxRank":99,"cost":10},
+        {"id":"count","name":"추가 얼음 조각","description":"공전 조각 +1개 · 시전 비용은 그대로","icon":"gem","rarity":"gold","step":1,"permanentStep":1,"maxRank":3,"cost":35},
+        {"id":"orbitSpeed","name":"빠른 공전","description":"얼음 회전 속도 +30도/초","icon":"gem","rarity":"silver","step":30,"permanentStep":30,"maxRank":3,"cost":25},
+        {"id":"range","name":"넓은 궤도","description":"궤도 반경 +0.25 유닛 · 얼음 크기와 별개","icon":"gem","rarity":"silver","step":0.25,"permanentStep":0.25,"maxRank":3,"cost":25},
+        {"id":"size","name":"큰 얼음 조각","description":"얼음 조각의 시각·타격 반경 +0.08 유닛","icon":"gem","rarity":"silver","step":0.08,"permanentStep":0.08,"maxRank":3,"cost":25},
+        {"id":"chill","name":"짙은 냉기","description":"타격당 냉기 중첩 +1 · 3중첩에서 빙결","icon":"gem","rarity":"gold","step":1,"permanentStep":1,"maxRank":2,"cost":35},
+        {"id":"freezeDuration","name":"오래가는 빙결","description":"빙결 지속시간 +0.2초","icon":"gem","rarity":"gold","step":0.2,"permanentStep":0.2,"maxRank":3,"cost":35}
+      ]}
+  ]
+}

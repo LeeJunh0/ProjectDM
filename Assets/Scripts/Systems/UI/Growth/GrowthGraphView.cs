@@ -10,7 +10,10 @@ namespace ProjectDM
     {
         private readonly GameSettings settings;
         private readonly SaveService save;
-        private readonly GameTables tables;
+        private readonly GameTables sourceTables;
+        private bool personalGraph;
+        private GameTables tables => run.characters == null ? sourceTables : personalGraph
+            ? run.characters.Catalog.Graphs[run.characters.SelectedId] : run.characters.Catalog.CommonGraph;
         private readonly ProgressionService progression;
         private readonly WorldArtAssets art;
         private readonly RunController run;
@@ -21,7 +24,7 @@ namespace ProjectDM
         {
             this.settings = settings;
             this.save = save;
-            this.tables = tables;
+            sourceTables = tables;
             this.progression = progression;
             this.art = art;
             this.run = run;
@@ -56,6 +59,7 @@ namespace ProjectDM
             DrawGrowthWallet();
             DrawPrototypeGraphOverview();
             DrawStageSelection();
+            DrawCharacterSelection();
             // This is a navigation button, not a popup/header; the graph still owns the whole screen.
             Rect navigationArea = GrowthNavigationRect;
             Rect navigation = new Rect(navigationArea.x, navigationArea.yMax - 44, navigationArea.width, 44);
@@ -64,8 +68,8 @@ namespace ProjectDM
                 run.BeginRun();
                 return;
             }
-            bool newStage = run.stages != null && run.stages.SelectionChanged;
-            if (graphics.DrawResultButton(navigation, run.runEnded || newStage ? "선택 스테이지 시작" : "플레이로 복귀", true))
+            bool newStage = (run.stages != null && run.stages.SelectionChanged) || (run.characters != null && run.characters.SelectionChanged);
+            if (graphics.DrawResultButton(navigation, run.runEnded || newStage ? "선택 구성으로 시작" : "플레이로 복귀", true))
             {
                 if (run.runEnded || newStage) run.BeginRun();
                 else run.ToggleMetaTree();
@@ -317,8 +321,9 @@ namespace ProjectDM
             {
                 // Keep the existing full-screen framing when unobstructed. In small Game views,
                 // fit into whichever free rectangle (above/right of details) has more square space.
-                Rect above = Rect.MinMaxRect(22, overlays[1].yMax + 16, canvasSize.x - 22, overlays[2].yMin - 16);
-                Rect right = Rect.MinMaxRect(overlays[2].xMax + 16, overlays[1].yMax + 16, canvasSize.x - 22, overlays[3].yMin - 16);
+                float top = Mathf.Max(overlays[1].yMax, run.characters == null ? 0 : CharacterSelectionRect(canvasSize).yMax) + 16;
+                Rect above = Rect.MinMaxRect(22, top, canvasSize.x - 22, overlays[2].yMin - 16);
+                Rect right = Rect.MinMaxRect(overlays[2].xMax + 16, top, canvasSize.x - 22, overlays[3].yMin - 16);
                 Rect available = Mathf.Min(above.width, above.height) >= Mathf.Min(right.width, right.height) ? above : right;
                 float horizontal = 1, vertical = 1;
                 foreach (PrototypeGrowthNode node in tables.graphLayoutNodes)
@@ -341,6 +346,33 @@ namespace ProjectDM
         }
 
         private static Rect StageSelectionRect => new Rect(142, 22, 240, 30);
+        internal static Rect CharacterSelectionRect(Vector2 size) => new Rect(22, 96, Mathf.Min(540, size.x - 44), 64);
+
+        private void DrawCharacterSelection()
+        {
+            if (run.characters == null) return;
+            Rect area = CharacterSelectionRect(new Vector2(Screen.width, Screen.height));
+            CharacterSession characters = run.characters;
+            for (int i = 0; i < characters.Catalog.Definitions.Length; i++)
+            {
+                CharacterDefinition character = characters.Catalog.Definitions[i];
+                bool enabled = GUI.enabled; GUI.enabled = enabled && character.enabled;
+                if (GUI.Button(new Rect(area.x + i * area.width / 4, area.y, area.width / 4 - 4, 28),
+                    (characters.SelectedId == character.id ? "● " : "") + (character.enabled ? character.name : "빙결 · 준비 중")) && characters.Select(character.id))
+                {
+                    save.MarkPrototypeProgressDirty(); save.FlushPrototypeProgress();
+                    selectedMetaTreeNode = -1; hoveredMetaTreeNode = -1; prototypeGraphViewInitialized = false;
+                }
+                GUI.enabled = enabled;
+            }
+            bool common = GUI.Toggle(new Rect(area.x, area.y + 34, 112, 28), !personalGraph, "공통 성장", "Button");
+            bool personal = GUI.Toggle(new Rect(area.x + 118, area.y + 34, 150, 28), personalGraph, "선택 캐릭터 전용 성장", "Button");
+            if ((common && personalGraph) || (personal && !personalGraph))
+            {
+                personalGraph = !personalGraph; selectedMetaTreeNode = -1; hoveredMetaTreeNode = -1; prototypeGraphViewInitialized = false;
+            }
+            GUI.Label(new Rect(area.x + 278, area.y + 36, area.width - 278, 24), "선택·구매는 다음 런부터 적용");
+        }
 
         private void DrawStageSelection()
         {
@@ -363,7 +395,8 @@ namespace ProjectDM
         internal bool IsPrototypeGraphOverlay(Vector2 pointer)
         {
             // Pointer tests run for each node; do not allocate a rectangle array per test.
-            return GrowthOverviewRect.Contains(pointer) || StageSelectionRect.Contains(pointer) || GrowthWalletRect.Contains(pointer) ||
+            return GrowthOverviewRect.Contains(pointer) || StageSelectionRect.Contains(pointer) ||
+                (run.characters != null && CharacterSelectionRect(new Vector2(Screen.width, Screen.height)).Contains(pointer)) || GrowthWalletRect.Contains(pointer) ||
                 GrowthDetailsRect.Contains(pointer) || GrowthNavigationRect.Contains(pointer);
         }
 
@@ -378,7 +411,7 @@ namespace ProjectDM
 
         internal static Rect[] GetGrowthOverlayRects(Vector2 size, bool ended)
         {
-            return new[] { new Rect(22, 22, 110, 30), GetGrowthWalletRect(size), GetGrowthDetailsRect(size), GetGrowthNavigationRect(size, ended), StageSelectionRect };
+            return new[] { new Rect(22, 22, 110, 30), GetGrowthWalletRect(size), GetGrowthDetailsRect(size), GetGrowthNavigationRect(size, ended), StageSelectionRect, CharacterSelectionRect(size) };
         }
 
         internal Rect GrowthWalletRect => GetGrowthWalletRect(new Vector2(Screen.width, Screen.height));
@@ -401,7 +434,8 @@ namespace ProjectDM
         {
             if (metaTreeNodes.Length != tables.graphLayoutNodes.Length + 1)
                 metaTreeNodes = new MetaTreeNodePresentation[tables.graphLayoutNodes.Length + 1];
-            metaTreeNodes[0] = new MetaTreeNodePresentation("ROOT", "기본 공격 해금", "가까운 몬스터를 향해 기본 투사체를 자동으로 발사합니다.", Vector2.zero,
+            metaTreeNodes[0] = new MetaTreeNodePresentation("ROOT", personalGraph && run.characters != null ? run.characters.Catalog.Find(run.characters.SelectedId).name : "기본 공격 해금",
+                run.characters != null ? "선택한 캐릭터의 고유 마법을 자동 시전합니다. 캐릭터 변경과 영구 성장은 다음 런부터 적용됩니다." : "가까운 몬스터를 향해 기본 투사체를 자동으로 발사합니다.", Vector2.zero,
                 -1, MetaTreeNodeState.Completed, new Color(.91f, .69f, .3f));
             int stage = PrototypeRules.Stage(tables.balance, save.progress);
             for (int i = 0; i < tables.growthTable.nodes.Length; i++)
@@ -435,7 +469,7 @@ namespace ProjectDM
         internal string GoalDescription(PrototypeGoalNode goal)
         {
             string condition = goal.kind == "boss"
-                ? $"해당 보스 노드 해금 후, 스테이지 {goal.stage}의 런 경과 {goal.limitSeconds:0.##}초 리미트에서 등장 예정.\n남은 제한시간 종료나 몬스터 단계와는 별개입니다."
+                ? $"해당 보스 노드 해금 후, 스테이지 {goal.stage}의 런 경과 {goal.limitSeconds:0.##}초 리미트에서 등장 예정.\n마나 고갈이나 몬스터 단계와는 별개입니다."
                 : goal.stage == 1 ? "중앙에서 시작하는 첫 스테이지입니다." : "앞 스테이지 보스 다음에 이어지는 목표입니다. 이동 조건은 아직 확정하지 않았습니다.";
             return $"{goal.description}\n{condition}";
         }
@@ -447,6 +481,7 @@ namespace ProjectDM
         {
             if (row.unit == "해금") return rank > 0 ? "해금됨 (런 레벨업에서 획득)" : "미해금";
             float amount = (float)PrototypeRules.Amount(tables.balance, row, rank, partial);
+            if (row.id.StartsWith("magic.")) return row.unit == "%" || row.unit == "%p" ? $"누적 +{amount * 100:0.##}{row.unit}" : $"누적 +{amount:0.##}{row.unit}";
             switch (row.id)
             {
                 case "health": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##} HP";
@@ -456,7 +491,7 @@ namespace ProjectDM
                 case "invulnerability": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##}초";
                 case "magnet": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##}유닛";
             }
-            if (row.id == "extension") return $"{(tables.balance.timeRewardChance + amount) * 100:0.##}% / +{tables.balance.timeRewardSeconds:0.##}초";
+            if (row.id == "extension") return $"{Mathf.Clamp01(tables.balance.ResolvedManaAbsorbChance + amount) * 100:0.##}% / +{tables.balance.ResolvedManaAbsorbAmount:0.##} MP";
             if (LootGradeRules.CurrencyGrowthGrade(row.id) > 0) return $"+{Mathf.Clamp01(amount) * 100:0.##}%p / 낮은 재화 확률에서 전환";
             if (row.id == "currencyGradeChance" || row.id == "experienceGradeChance") return $"{Mathf.Clamp01(amount) * 100:0.##}% / 한 단계 상승";
             if (row.id.EndsWith("Chance"))
@@ -464,7 +499,7 @@ namespace ProjectDM
                 string skillId = row.id.Substring(0, row.id.Length - "Chance".Length);
                 return $"{Mathf.Clamp01(tables.SkillRow(skillId).chance + amount) * 100:0.##}%";
             }
-            if (row.id == "time") return $"{Mathf.Min(tables.balance.bossElapsedSeconds, (settings.useTableRunDuration ? tables.balance.initialSeconds : settings.runDuration) + amount):0.##}초";
+            if (row.id == "time") return $"{Mathf.Max(1, (settings.useTableStartingMana ? tables.balance.ResolvedInitialMana : settings.startingMana) + amount):0.##} MP";
             if (row.unit == "%" || row.unit == "%p") return $"+{amount * 100:0.##}{row.unit}";
             return $"+{amount:0.##}{row.unit}";
         }

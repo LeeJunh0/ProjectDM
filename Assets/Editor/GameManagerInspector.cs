@@ -18,13 +18,13 @@ namespace ProjectDM.Editor
             DrawProperty("prototypeBalanceTable", "기본·몬스터·스폰 테이블", "비워두면 Resources/ProjectDM/Data/PrototypeBalance.json을 사용합니다. 수정한 테이블은 플레이 재시작 시 적용됩니다.");
             DrawProperty("prototypeSkillTable", "런 스킬 테이블", "비워두면 PrototypeSkills.json을 사용합니다. 레벨업 선택 조건과 실제 공격 효과 수치입니다.");
             DrawProperty("prototypeGrowthTable", "영구 성장 그래프 테이블", "비워두면 PrototypeGrowth.json을 사용합니다. 가격, 최대 단계, 해금 조건, 그래프 위치를 지정합니다.");
-            DrawProperty("useTableRunDuration", "테이블 시작 시간 사용", "켜면 기본 40초 + 영구 시간 성장입니다. 끄면 아래 진행 제한 시간 + 영구 시간 성장을 사용합니다.");
+            DrawProperty("useTableStartingMana", "테이블 최대 마나 사용", "켜면 테이블 기본 최대 마나 + 영구 마나 성장입니다. 기본 공격 1회당 소모량과 처치 마나 흡수 확률·회복량도 기본 테이블에서 설정합니다.");
             DrawProperty("useTableSpawnDistances", "테이블 스폰 거리 사용", "켜면 초기 3~5, 리필 5~8 거리입니다. 끄면 기존 씬의 스폰 영역 설정을 사용합니다.");
             DrawProperty("enablePrototypeDebug", "런 디버그 버튼 표시", "레벨업, 재화 지급, 임시 스킬 획득, 발동 100%, 스폰 단계, 보스 도달 테스트 도구입니다.");
             DrawProperty("prototypeSandbox", "실험 모드 (저장하지 않음)", "플레이 시작 전에 켜세요. 기존 진행을 읽지만 실험 중 얻은 재화·처치·구매는 실제 저장하지 않습니다. 플레이 도중 변경은 다음 플레이 시작에 적용됩니다.");
 
-            DrawSection("런 진행 시간");
-            DrawProperty("runDuration", "시작 시간 수동 설정 (초)", "테이블 시작 시간 사용을 끈 경우의 기본 시간입니다. 영구 시간 성장이 더해집니다. 변경한 값은 다음 회차에 적용됩니다.");
+            DrawSection("런 마나");
+            DrawProperty("startingMana", "기본 최대 마나 수동 설정 (MP)", "테이블 최대 마나 사용을 끈 경우의 기본값입니다. 영구 마나 성장을 더하고 가득 찬 상태로 시작합니다. 다음 런부터 적용됩니다.");
 
             DrawSection("전투 데미지 숫자");
             DrawProperty("showCombatDamage", "데미지 숫자 표시", "실제 적중 지점에 받은 피해량을 표시합니다.");

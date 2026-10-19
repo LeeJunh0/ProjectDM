@@ -89,7 +89,7 @@ namespace ProjectDM.Editor
                 using (Fixture f = new Fixture())
                 {
                     Check(PrototypeRules.Validate(f.balance, f.skills, f.growth) == null, "Unity JsonUtility table validation");
-                    Check(f.balance.initialSeconds == 40, "Table duration overrides the old 5-second scene debug value");
+                    Check(f.balance.ResolvedInitialMana == 40, "Table mana overrides the old scene debug value");
                     Check(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/GameContent/Prefabs/Enemy.prefab") != null, "Existing default enemy resource");
                     Check(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/GameContent/Prefabs/Player.prefab") != null, "Existing player resource");
                     f.Call("SpawnPrototypeInitialEnemies");
@@ -242,7 +242,9 @@ namespace ProjectDM.Editor
                 }
                 using (Fixture f = new Fixture())
                 {
-                    f.balance.timeRewardChance = 1;
+                    f.balance.manaAbsorbChance = 1;
+                    RunMana mana = (RunMana)Get(f.manager, "mana");
+                    mana.Consume(3);
                     object original = f.Enemy(new Vector3(0, 0), 1);
                     object a = f.Enemy(new Vector3(1, 0), 1);
                     object b = f.Enemy(new Vector3(1.5f, 0), 1);
@@ -253,10 +255,10 @@ namespace ProjectDM.Editor
                     Check((bool)Get(a, "dead") && (bool)Get(b, "dead"), "Chain plus splash damage can both execute on a lethal hit");
                     Check(f.Meteors.Count == 1, "One hit independently rolls all effects, and effect damage never recursively rolls");
                     Check(((int[])Get(f.manager, "monsterKillCounts"))[0] == 3, "Death counted exactly once per target");
-                    Check(Near((float)Get(f.manager, "activeRunDuration"), 43), "Direct and effect kills each roll time replenishment");
+                    Check(Near(mana.Current, 40) && Near(mana.AbsorbedThisRun, 3), "Direct and effect kills each independently absorb mana");
                     Check(Near((float)Get(f.manager, "elapsed"), 0), "Replenishment cannot advance elapsed boss clock");
                     f.Call("DamagePrototypeEnemy", original, 100f);
-                    Check(f.save.kills[0] == 3 && Near((float)Get(f.manager, "activeRunDuration"), 43), "Already-dead enemy cannot duplicate drops/stacks/time");
+                    Check(f.save.kills[0] == 3 && Near(mana.Current, 40) && Near(mana.AbsorbedThisRun, 3), "Already-dead enemy cannot duplicate drops/stacks/mana");
                 }
                 using (Fixture f = new Fixture())
                 {
@@ -266,6 +268,9 @@ namespace ProjectDM.Editor
                     Set(f.manager, "forceAttackEffects", true);
                     f.Call("FirePrototypeVolley", 0f);
                     Check(f.Projectiles.Count == 3, "Two multishot ranks add two projectiles");
+                    Check(Near(((RunMana)Get(f.manager, "mana")).Current, 39), "One volley costs one MP, not three MP for multishot");
+                    f.Call("FirePrototypeVolley", 0f);
+                    Check(Near(((RunMana)Get(f.manager, "mana")).Current, 39), "Cooldown-rejected volleys do not cost MP");
                     f.Call("UpdatePrototypeProjectiles", .13f);
                     Check(f.Projectiles.Count == 0 && f.Meteors.Count == 3, "Every actual multishot hit independently rolls meteor");
                     Check(Near((float)Get(enemy, "hitPoints"), 97.6f), "Additional projectile direct damage is 70%, not 100%");
@@ -276,6 +281,20 @@ namespace ProjectDM.Editor
                     f.Call("UpdatePrototypeEffects", .01f);
                     Check(Near((float)Get(enemy, "hitPoints"), 87.1f), "All meteor effects use full main damage, including extra-projectile procs");
                     Check(f.Meteors.Count == 0, "Delayed meteors resolve once");
+                }
+                using (Fixture f = new Fixture())
+                {
+                    RunMana mana = (RunMana)Get(f.manager, "mana");
+                    f.Call("FirePrototypeVolley", 0f);
+                    Check(mana.Current == 40 && f.Projectiles.Count == 0, "No targets means no mana charge");
+                    object enemy = f.Enemy(Vector3.right, 100);
+                    mana.Reset(2, 1);
+                    f.Call("FirePrototypeVolley", 0f);
+                    Check(mana.Current == 1 && f.Projectiles.Count == 1, "Actual basic attack spends exactly the configured MP");
+                    f.Call("FirePrototypeVolley", 1f);
+                    Check(mana.IsDepleted && f.Projectiles.Count == 2, "The last affordable basic volley reaches zero MP");
+                    f.Call("FirePrototypeVolley", 2f);
+                    Check(f.Projectiles.Count == 2, "Zero MP cannot fire additional volleys");
                 }
                 using (Fixture f = new Fixture())
                 {
@@ -393,7 +412,7 @@ namespace ProjectDM.Editor
                     f.Call("UpdatePlayerContactDamage", .6f);
                     f.Call("ApplyPlayerDamage", 100f);
                     Check((bool)Get(f.manager, "runEnded") && (bool)Get(f.manager, "playerDefeated") && Near((float)Get(f.manager, "playerHealth"), 0), "Lethal damage ends run once and clamps HP");
-                    Check(f.save.completedRuns == 1 && Near((float)Get(f.manager, "remainingTimeFraction"), 1), "Player death records one run without falsely showing timer depleted");
+                    Check(f.save.completedRuns == 1 && Near(((RunMana)Get(f.manager, "mana")).Fraction, 1), "Player death records one run without falsely showing mana depleted");
                     f.Call("ApplyPlayerDamage", 100f);
                     Check(f.save.completedRuns == 1, "Damage after defeat cannot duplicate end-run statistics");
                     f.Call("ResetPrototypeRun");
@@ -459,7 +478,7 @@ namespace ProjectDM.Editor
                 skills = JsonUtility.FromJson<PrototypeSkillTable>(Resources.Load<TextAsset>("ProjectDM/Data/PrototypeSkills").text);
                 growth = JsonUtility.FromJson<PrototypeGrowthTable>(Resources.Load<TextAsset>("ProjectDM/Data/PrototypeGrowth").text);
                 // Default tests suppress randomized time/chest rewards; individual tests explicitly enable them.
-                balance.timeRewardChance = 0;
+                balance.manaAbsorbChance = 0;
                 balance.criticalChance = 0;
                 balance.chestChance = 0;
                 GameTables tables = new GameTables(balance, skills, growth);
@@ -473,7 +492,7 @@ namespace ProjectDM.Editor
                     typeof(ProjectDMRuntimeAssets).GetProperty(property).SetValue(assets, new[] { prefab, prefab, prefab, prefab, prefab });
                 Set(manager, "runtimeAssets", assets);
                 Call("ResetPrototypeRun");
-                Set(manager, "initialRunSeconds", 40f); Set(manager, "activeRunDuration", 40f);
+                ((RunMana)Get(manager, "mana")).Reset(40, 1);
             }
 
             internal Type EntityType(string name) => typeof(GameManager).Assembly.GetType("ProjectDM." + name);

@@ -66,11 +66,15 @@ namespace ProjectDM
                 save.metaCurrency = (int)System.Math.Min(int.MaxValue, (long)save.metaCurrency + 1000);
                 save.MarkPrototypeProgressDirty(); save.FlushPrototypeProgress();
             }
-            if (GUI.Button(new Rect(panel.x + 10, panel.y + 67, 205, 28), "공격 효과 3종 획득 (이번 런)"))
+            if (GUI.Button(new Rect(panel.x + 10, panel.y + 67, 205, 28), run.characters != null ? "전용 강화 각 +1 (이번 런)" : "공격 효과 3종 획득 (이번 런)"))
             {
-                foreach (string id in new[] { "chain", "splash", "meteor" }) skills.runSkillRanks[id] = Mathf.Max(1, skills.RunRank(id));
+                if (run.characters != null)
+                    foreach (CharacterUpgrade row in skills.Character.upgrades)
+                        skills.runSkillRanks[row.Key(skills.Character.id)] = Mathf.Min(row.maxRank, skills.RunRank(row.Key(skills.Character.id)) + 1);
+                else foreach (string id in new[] { "chain", "splash", "meteor" }) skills.runSkillRanks[id] = Mathf.Max(1, skills.RunRank(id));
             }
-            skills.forceAttackEffects = GUI.Toggle(new Rect(panel.x + 10, panel.y + 101, 205, 24), skills.forceAttackEffects, "공격 효과 100% (이번 런)");
+            if (run.characters == null) skills.forceAttackEffects = GUI.Toggle(new Rect(panel.x + 10, panel.y + 101, 205, 24), skills.forceAttackEffects, "공격 효과 100% (이번 런)");
+            else GUI.Label(new Rect(panel.x + 10, panel.y + 101, 205, 24), skills.Character.name + " · 고유 마법만 사용", graphics.statStyle);
             if (GUI.Button(new Rect(panel.x + 10, panel.y + 127, 205, 28), $"스폰 단계 변경 · 현재 {enemiesSystem.SpawnStage + 1}"))
                 enemiesSystem.debugStageOverride = (enemiesSystem.SpawnStage + 1) % 5;
             if (GUI.Button(new Rect(panel.x + 10, panel.y + 162, 205, 28), "스테이지 보스 도달 미리보기")) boss.ArriveAtPrototypeBoss(true);

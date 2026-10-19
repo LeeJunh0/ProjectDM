@@ -145,6 +145,9 @@ class Run:
     def extra_event(self, kind, payload):
         pass
 
+    def begin_basic_attack(self):
+        return True
+
     def monster_rewards(self, enemy):
         monster = self.config["monsters"][enemy.kind]
         coins = monster["coins"] + (monster["bonus_coins"] if self.rng.random() < monster["bonus_chance"] else 0)
@@ -286,7 +289,7 @@ class Run:
                 self.spawn(min(stage["batch"], max(0, stage["target"] - len(self.enemies))))
                 self.schedule(self.time + stage["refill_seconds"], "refill", None)
             elif kind == "attack":
-                if self.enemies:
+                if self.enemies and self.begin_basic_attack():
                     targets = sorted(self.enemies.values(), key=lambda enemy: enemy.radius)
                     rank = self.progress.ranks.get("multishot", 0)
                     for projectile in range(1 + rank):

@@ -12,7 +12,7 @@ import math
 from pathlib import Path
 import struct
 
-from simulate import Progress, stats
+from simulate import Progress, Run, stats
 from simulate_progression import FrontierRun, load_config
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -46,8 +46,8 @@ def load_current():
     config["late_price_scale"] = balance["latePriceScale"]
     config["player"] = {"damage": balance["baseDamage"], "attack_interval": balance["attackInterval"],
                         "projectile_speed": balance["projectileSpeed"], "projectile_lifetime": balance["projectileLifetime"],
-                        "run_seconds": balance["initialSeconds"]}
-    config["time_reward"] = {"base_chance": balance["timeRewardChance"], "seconds": balance["timeRewardSeconds"]}
+                        "run_seconds": balance["bossElapsedSeconds"]}
+    config["time_reward"] = {"base_chance": balance["manaAbsorbChance"], "seconds": balance["manaAbsorbAmount"]}
     config["simulation"].update({"xp_first": balance["xpFirst"], "xp_growth": balance["xpGrowth"],
         "initial_radius": [balance["initialSpawnMin"], balance["initialSpawnMax"]],
         "spawn_radius": [balance["refillSpawnMin"], balance["refillSpawnMax"]],
@@ -230,7 +230,7 @@ def benefit(config, progress, key):
             gain += weight * row["step"] * delta
         return gain / base if base else 0
     if key == "time":
-        return row["step"] / (config["player"]["run_seconds"] + rank * row["step"])
+        return row["step"] / (config["runtime_balance"]["initialMana"] + rank * row["step"])
     if key == "extension":
         return 4 * row["step"] / (config["time_reward"]["base_chance"] + rank * row["step"])
     if key == "population":
@@ -275,10 +275,36 @@ def player_attribute(config, ranks, key):
 class CurrentRun(FrontierRun):
     def __init__(self, config, progress, seed, policy="balanced", profile=None):
         super().__init__(config, progress, seed, policy, profile)
+        balance = config["runtime_balance"]
+        self.max_mana = balance["initialMana"] + progress.ranks.get("time", 0) * config["upgrades"]["time"]["step"]
+        self.current_mana = self.max_mana
+        self.mana_cost = balance["basicAttackManaCost"]
+        self.duration = config["boss_elapsed_seconds"]
+        self.initial_seconds = self.duration
+        self.absorbed_mana = 0
         self.critical_hits = 0
         self.player_health = player_attribute(config, progress.ranks, "health")
         self.player_defeated = False
         self.next_contact = 0
+
+    def begin_basic_attack(self):
+        if self.current_mana <= 0: return False
+        affordable = self.current_mana >= self.mana_cost
+        self.current_mana = max(0, self.current_mana - self.mana_cost)
+        if self.current_mana <= 0: self.duration = self.time
+        return affordable
+
+    def hurt(self, uid, damage, source="basic"):
+        # Bypass the legacy FrontierRun's unlimited time extension; MP is capacity-limited.
+        if self.player_defeated or self.current_mana <= 0:
+            return
+        before = sum(self.kills)
+        Run.hurt(self, uid, damage, source)
+        if sum(self.kills) != before and self.rng.random() < self.time_chance:
+            added = min(self.max_mana - self.current_mana, self.design["runtime_balance"]["manaAbsorbAmount"])
+            self.current_mana += added
+            self.extensions += int(added > 0)
+            self.absorbed_mana += added
 
     def monster_rewards(self, enemy):
         kind = enemy.kind
@@ -355,6 +381,8 @@ class CurrentRun(FrontierRun):
             self.schedule(.05, "contact", None)
         row = super().play()
         row.update({"critical_hits": self.critical_hits, "player_defeated": self.player_defeated, "player_health": self.player_health})
+        row.update({"max_mana": self.max_mana, "absorbed_mana": self.absorbed_mana,
+                    "remaining_mana": self.current_mana})
         return row
 
 
