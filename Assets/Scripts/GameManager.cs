@@ -60,6 +60,9 @@ namespace ProjectDM
         [SerializeField, Min(0.1f), Tooltip("보물상자 픽업 비주얼의 크기 배율입니다.")]
         private float chestPickupScaleMultiplier = 1f;
 
+        [SerializeField, Min(0.1f), Tooltip("마나 픽업 비주얼의 크기 배율입니다.")]
+        private float manaPickupScaleMultiplier = 3f;
+
         [SerializeField, Min(0f), Tooltip("비주얼 자식 오브젝트가 부유하는 로컬 Y축 최대 높이입니다.")]
         private float collectibleFloatYAmplitude = .06f;
 
@@ -148,11 +151,11 @@ namespace ProjectDM
 
         [SerializeField, Range(16, 512)] private int combatDamageMaximum = 128;
 
-        [SerializeField] private Color combatAttackColor = new Color(.95f, .96f, 1);
+        [SerializeField] private Color combatAttackColor = new Color(.96f, .94f, .86f);
 
         [SerializeField] private Color combatReceivedColor = new Color(1, .32f, .28f);
 
-        [SerializeField] private Color combatCriticalColor = new Color(1, .78f, .22f);
+        [SerializeField] private Color combatCriticalColor = new Color(1, .74f, .26f);
 
         [SerializeField] private bool enableCriticalHits = true;
 
@@ -236,6 +239,7 @@ namespace ProjectDM
             settings.experiencePickupScaleMultiplier = experiencePickupScaleMultiplier;
             settings.currencyPickupScaleMultiplier = currencyPickupScaleMultiplier;
             settings.chestPickupScaleMultiplier = chestPickupScaleMultiplier;
+            settings.manaPickupScaleMultiplier = manaPickupScaleMultiplier;
             settings.collectibleFloatYAmplitude = collectibleFloatYAmplitude;
             settings.collectibleFloatLoopDuration = collectibleFloatLoopDuration;
             settings.experiencePickupFloatYCurve = experiencePickupFloatYCurve;
@@ -329,8 +333,8 @@ namespace ProjectDM
             manaBar = new ManaBarRenderer(mana, Resources.Load<ManaBarSettings>("ProjectDM/UI/ManaBarSettings"));
             run = new RunController(settings, save, tables, progression, playerWorld, ResetWorld, () => enemiesSystem.SpawnPrototypeInitialEnemies(), () => cameraSystem.SnapCameraToPlayer(), () => growthView?.ResetNavigation(), () => { if (selection != null) selection.choosingUpgrade = false; }, () => selection != null && selection.choosingUpgrade, mana, stages);
             boss = new BossMilestone(save, art, playerWorld, run);
-            pickupsSystem = new PickupSystem(settings, save, tables, progression, art, playerWorld, run, pool, amount => selection.AddExperience(amount), playerStats);
-            enemiesSystem = new EnemySystem(settings, save, tables, progression, art, playerWorld, run, pickupsSystem, boss, notifications, pool, effects, presentation.ShowCombatDamage);
+            pickupsSystem = new PickupSystem(settings, save, tables, progression, art, playerWorld, run, pool, amount => selection.AddExperience(amount), playerStats, effects.ManaAbsorb);
+            enemiesSystem = new EnemySystem(settings, save, tables, progression, art, playerWorld, run, pickupsSystem, boss, notifications, pool, presentation.ShowCombatDamage, effects.BossDeath, presentation.ShowElementalDamage);
             skills = new SkillSystem(tables, progression, art, run, enemiesSystem, effects, () => combat.RollCriticalHit(), () => stats.MainDamage, playerStats);
             stats = new CombatStats(tables, progression, skills);
             combat = new CombatSystem(settings, tables, progression, art, playerWorld, enemiesSystem, skills, stats, pool, playerStats, mana);

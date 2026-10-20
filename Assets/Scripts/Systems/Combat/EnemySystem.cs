@@ -19,10 +19,11 @@ namespace ProjectDM
         private readonly BossMilestone boss;
         private readonly GameNotifications notifications;
         private readonly GameObjectPool objectPool;
-        private readonly PrototypeSkillVisuals visuals;
         private readonly Action<Vector3, float, CombatDamageKind> showDamage;
+        private readonly Action<Vector3, bool> showBossDeath;
+        private readonly Action<Vector3, float, CombatDamageKind, CombatDamageElement> showElementalDamage;
 
-        internal EnemySystem(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, RunController run, PickupSystem pickupsSystem, BossMilestone boss, GameNotifications notifications, GameObjectPool objectPool, PrototypeSkillVisuals visuals, Action<Vector3, float, CombatDamageKind> showDamage)
+        internal EnemySystem(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, RunController run, PickupSystem pickupsSystem, BossMilestone boss, GameNotifications notifications, GameObjectPool objectPool, Action<Vector3, float, CombatDamageKind> showDamage, Action<Vector3, bool> showBossDeath = null, Action<Vector3, float, CombatDamageKind, CombatDamageElement> showElementalDamage = null)
         {
             this.settings = settings;
             this.save = save;
@@ -35,17 +36,24 @@ namespace ProjectDM
             this.boss = boss;
             this.notifications = notifications;
             this.objectPool = objectPool;
-            this.visuals = visuals;
             this.showDamage = showDamage;
+            this.showBossDeath = showBossDeath;
+            this.showElementalDamage = showElementalDamage;
         }
 
         internal readonly List<Enemy> enemies = new();
 
         internal float nextSpawn;
+        internal float nextMiniBoss;
 
         internal void SpawnEnemies(float time)
         {
+            if (run.runEnded || boss.bossArrived || time >= tables.balance.bossElapsedSeconds) return;
             SpawnPrototypeRefill(time);
+            if (time < nextMiniBoss || enemies.Exists(e => IsLive(e) && e.rank != EnemyRank.Normal)) return;
+            SpawnPrototypeEnemy(false, true);
+            nextMiniBoss = time + tables.balance.miniBossInterval;
+            notifications.Notice("중간보스 등장! 처치하면 보물상자가 확정 드랍됩니다.");
         }
 
         internal void UpdateEnemies(float dt)
@@ -99,6 +107,7 @@ namespace ProjectDM
             int count = Mathf.Min(FieldCap, Mathf.CeilToInt(stage.initial * (float)FieldTarget / stage.target));
             for (int i = 0; i < count; i++) SpawnPrototypeEnemy(true);
             nextSpawn = tables.balance.stages[SpawnStage].refillSeconds / (1 + progression.PermanentAmount("respawn"));
+            nextMiniBoss = tables.balance.miniBossInterval;
         }
 
         internal void SpawnPrototypeRefill(float time)
@@ -138,19 +147,22 @@ namespace ProjectDM
             return fallback;
         }
 
-        internal void SpawnPrototypeEnemy(bool initial)
+        internal void SpawnPrototypeEnemy(bool initial, bool miniBoss = false)
         {
             int[] weights = tables.balance.stages[SpawnStage].weights;
             int sum = 0;
             foreach (int weight in weights) sum += weight;
             int roll = Random.Range(0, sum), kind = 0;
             while (kind < weights.Length - 1 && roll >= weights[kind]) { roll -= weights[kind]; kind++; }
+            if (miniBoss) kind = SpawnStage;
             PrototypeMonster row = tables.balance.monsters[kind];
             GameObject instance = objectPool.Rent(art.runtimeAssets.EnemyPrefab);
             instance.name = art.MonsterName(kind, tables.balance);
+            if (miniBoss) instance.name = "중간보스 · " + instance.name;
             instance.transform.position = PrototypeSpawnPosition(initial);
             instance.transform.rotation = Quaternion.identity;
             instance.transform.localScale = Vector3.one * (kind == 4 ? .82f : kind == 3 ? .78f : .65f);
+            if (miniBoss) instance.transform.localScale *= tables.balance.miniBossScale;
             SpriteRenderer renderer = instance.GetComponentInChildren<SpriteRenderer>();
             Animator animator = instance.GetComponentInChildren<Animator>();
             if (animator != null)
@@ -168,7 +180,11 @@ namespace ProjectDM
             renderer.sortingOrder = 2;
             Sprite alternate = art.MonsterAlternate((MonsterKind)kind);
             enemies.Add(new Enemy { kind = (MonsterKind)kind, transform = instance.transform, renderer = renderer, animator = animator,
-                baseSprite = renderer.sprite, alternateSprite = alternate, hitPoints = row.hp, speed = row.speed });
+                baseSprite = renderer.sprite, alternateSprite = alternate,
+                rank = miniBoss ? EnemyRank.MiniBoss : EnemyRank.Normal,
+                rewardMultiplier = miniBoss ? tables.balance.miniBossRewardMultiplier : 1,
+                hitRadiusMultiplier = miniBoss ? tables.balance.miniBossScale : 1,
+                hitPoints = row.hp * (miniBoss ? tables.balance.miniBossHealthMultiplier : 1), speed = row.speed });
         }
 
         internal static bool IsLive(Enemy enemy) => enemy != null && !enemy.dead && enemy.transform != null;
@@ -179,9 +195,13 @@ namespace ProjectDM
         }
 
         internal void DamagePrototypeEnemyWithPresentation(Enemy enemy, float damage, CombatDamageKind presentationKind)
+            => DamageElementalEnemy(enemy, damage, presentationKind, CombatDamageElement.None);
+
+        internal void DamageElementalEnemy(Enemy enemy, float damage, CombatDamageKind presentationKind, CombatDamageElement element)
         {
             if (!IsLive(enemy)) return;
-            showDamage(enemy.transform.position, damage, presentationKind);
+            if (showElementalDamage != null) showElementalDamage(enemy.transform.position, damage, presentationKind, element);
+            else showDamage(enemy.transform.position, damage, presentationKind);
             enemy.hitPoints -= damage;
             if (enemy.hitPoints > 0) return;
             enemy.dead = true; // Single owner of death, rewards and pool return, including AoE overlaps.
@@ -192,14 +212,9 @@ namespace ProjectDM
             if (save.progress.kills[kind] < int.MaxValue) save.progress.kills[kind]++;
             int newStage = PrototypeRules.Stage(tables.balance, save.progress);
             if (newStage > oldStage) notifications.Notice(art.MonsterName(newStage, tables.balance) + " 등장 해금! 기존 몬스터와 함께 출현합니다.");
-            pickupsSystem.SpawnPrototypeLoot(position, kind);
-            // On-death roll is separate from on-hit effects and also runs for effect kills.
-            double chance = PrototypeRules.Chance(tables.balance.ResolvedManaAbsorbChance, progression.PermanentAmount("extension"), 0);
-            if (chance >= 1 || Random.value < chance)
-            {
-                float added = run.runEnded ? 0 : run.mana.Absorb(tables.balance.ResolvedManaAbsorbAmount);
-                if (added > 0) visuals.ManaAbsorb(position, added);
-            }
+            bool bossType = enemy.rank != EnemyRank.Normal;
+            pickupsSystem.SpawnPrototypeLoot(position, kind, enemy.rewardMultiplier, bossType);
+            if (bossType) showBossDeath?.Invoke(position, enemy.rank == EnemyRank.Boss);
             enemies.Remove(enemy);
             objectPool.Return(enemy.transform.gameObject);
             save.MarkPrototypeProgressDirty();
@@ -208,7 +223,7 @@ namespace ProjectDM
         internal void Reset()
         {
             foreach (Enemy enemy in enemies) if (enemy.transform != null) objectPool.Return(enemy.transform.gameObject);
-            enemies.Clear(); nextSpawn = 0; debugStageOverride = -1;
+            enemies.Clear(); nextSpawn = 0; nextMiniBoss = tables.balance.miniBossInterval; debugStageOverride = -1;
         }
     }
 }

@@ -154,3 +154,9 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  manaPickupPrefab:
+    m_AssetGUID: 2e131a277412afc4e9d20ffd84e0f973
+    m_SubObjectName:
+    m_SubObjectType:
+    m_SubObjectGUID:
+    m_EditorAssetChanged: 0

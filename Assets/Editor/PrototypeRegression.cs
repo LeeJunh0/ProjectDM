@@ -255,7 +255,16 @@ namespace ProjectDM.Editor
                     Check((bool)Get(a, "dead") && (bool)Get(b, "dead"), "Chain plus splash damage can both execute on a lethal hit");
                     Check(f.Meteors.Count == 1, "One hit independently rolls all effects, and effect damage never recursively rolls");
                     Check(((int[])Get(f.manager, "monsterKillCounts"))[0] == 3, "Death counted exactly once per target");
-                    Check(Near(mana.Current, 40) && Near(mana.AbsorbedThisRun, 3), "Direct and effect kills each independently absorb mana");
+                    PickupSystem drops = (PickupSystem)Get(f.manager, "pickupsSystem");
+                    Pickup[] manaDrops = drops.pickups.FindAll(p => p.kind == PickupKind.Mana).ToArray();
+                    Check(manaDrops.Length == 3 && Near(mana.Current, 37) && Near(mana.AbsorbedThisRun, 0), "Direct and effect kills drop mana without immediate recovery");
+                    foreach (Pickup drop in manaDrops)
+                    {
+                        drop.isLaunching = false;
+                        drop.transform.position = Vector3.zero;
+                    }
+                    drops.UpdatePickups(.01f);
+                    Check(drops.pickups.TrueForAll(p => p.kind != PickupKind.Mana) && Near(mana.Current, 40) && Near(mana.AbsorbedThisRun, 3), "Actual pickup collection recovers each drop exactly once");
                     Check(Near((float)Get(f.manager, "elapsed"), 0), "Replenishment cannot advance elapsed boss clock");
                     f.Call("DamagePrototypeEnemy", original, 100f);
                     Check(f.save.kills[0] == 3 && Near(mana.Current, 40) && Near(mana.AbsorbedThisRun, 3), "Already-dead enemy cannot duplicate drops/stacks/mana");
@@ -486,7 +495,7 @@ namespace ProjectDM.Editor
                 manager.ComposeServices(tables, persistence, pool, root.AddComponent<PrototypeSkillVisuals>());
                 Set(manager, "player", player.transform);
                 ProjectDMRuntimeAssets assets = new ProjectDMRuntimeAssets();
-                foreach (string property in new[] { "EnemyPrefab", "ProjectilePrefab", "ChestPickupPrefab" })
+                foreach (string property in new[] { "EnemyPrefab", "ProjectilePrefab", "ChestPickupPrefab", "ManaPickupPrefab" })
                     typeof(ProjectDMRuntimeAssets).GetProperty(property).SetValue(assets, prefab);
                 foreach (string property in new[] { "ExperiencePickupPrefabs", "CurrencyPickupPrefabs" })
                     typeof(ProjectDMRuntimeAssets).GetProperty(property).SetValue(assets, new[] { prefab, prefab, prefab, prefab, prefab });

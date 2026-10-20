@@ -2,18 +2,19 @@
 
 2026-10-19: 실제 게임은 캐릭터 고유 마법으로 전환했습니다. 생성된 번개 이미지는 번개 캐릭터의 확정 기본 연쇄에 재사용합니다. 발사 캐릭터는 기존 투사체, 화염 캐릭터는 같은 스프라이트를 주황색 부채꼴 광선으로 재사용하는 임시 연출입니다. 광선의 끝과 양쪽 각도는 실제 사거리/각도를 따릅니다. 스플래쉬/운석 리소스 및 아래 구 효과 경로는 보관하되 새 레벨업 풀에서는 획득하지 않습니다.
 
-빙결은 기존 gem/bolt 스프라이트를 청백색으로 재사용하여 실제 타격 위치에서 공전합니다. 조각의 화면 크기는 실제 `shardRadius` 지름에 맞추며, 회전·플레이어 추종·일시정지가 전투 궤도와 같습니다. 전용 스프라이트 생성은 아직 하지 않았습니다. 냉기 적은 옅은 청색, 빙결 적은 진한 청색으로 구분하고 빙결 중 애니메이션을 멈춥니다.
+2026-10-20: 빙결에 전용 `ProjectDM_FrostShard_v1.png` 얼음 조각을 생성하여 적용했습니다. `SkillVisuals.frostShard`가 실제 타격 위치에서 공전하며, 원본 색을 그대로 사용합니다. `frostArtworkDiameter=0.94`로 투명 여백을 보정해 긴 축을 실제 `shardRadius` 지름에 맞춥니다. 회전·플레이어 추종·일시정지는 전투 궤도와 같습니다. 리소스가 없는 옛 테스트는 gem/bolt 임시 연출을 유지합니다. 냉기 적은 옅은 청색, 빙결 적은 진한 청색으로 구분하고 빙결 중 애니메이션을 멈춥니다.
 
-승인받은 이미지 3개를 원본 그대로 복사해 실제 공격 연출에 연결했습니다. 카드/성장 그래프 아이콘과 기본 공격 투사체는 기존 리소스를 유지합니다.
+초기 이미지 3개를 실제 공격 연출에 연결했고, 2026-10-20 전체 아트 톤 조정에서 번개·스플래쉬·운석·기본 투사체도 발광을 낮추고 외곽선을 연하게 수정했습니다. 기존 파일과 스프라이트 참조를 유지합니다. 전체 대상과 생성 프롬프트는 [SoftTone-assets.md](Art/SoftTone-assets.md)에 기록합니다.
 
 ## 리소스와 설정
 
 - `Assets/GameContent/Art/Skills/ProjectDM_ChainLightning_v1.png`: 파랑·청록 연쇄 번개.
 - `Assets/GameContent/Art/Skills/ProjectDM_Splash_v1.png`: 청록 원형 스플래쉬. 운석의 바닥 예고/충돌에도 형태를 재사용합니다.
 - `Assets/GameContent/Art/Skills/ProjectDM_Meteor_v1.png`: 주황 불꽃 운석.
+- `Assets/GameContent/Art/Skills/ProjectDM_FrostShard_v1.png`: 청백색 공전 얼음 조각.
 - `Assets/Resources/ProjectDM/Skills/SkillVisuals.asset`: 스프라이트 참조와 연출 설정. 인스펙터의 항목 이름은 한글입니다.
 
-원본은 투명 PNG이며 임포트는 Single Sprite / Full Rect / Point / 최대 512픽셀 / 밉맵·읽기 비활성 / 무압축입니다. 승인 원본 픽셀은 별도로 편집하지 않았습니다. 셋 모두 `Resources` 설정 에셋의 직접 참조이므로 빌드에 포함되며, 로딩 후 같은 설정을 매 런 `SkillSystem.Reset`에서 전달합니다.
+스킬 이미지는 투명 PNG이며 임포트는 Single Sprite / Full Rect / Point / 최대 512픽셀 / 밉맵·읽기 비활성 / 무압축입니다. 사용자 요청에 따라 내장 이미지 도구로 하이라이트·후광·외곽선 색을 수정했습니다. `Resources` 설정 에셋의 직접 참조이므로 빌드에 포함되며, 로딩 후 같은 설정을 매 런 `SkillSystem.Reset`에서 전달합니다.
 
 `SkillImpactTint.shader/.mat`는 스플래쉬 이미지의 밝기·알파를 유지하면서 주황색으로 변환합니다. 청록 RGB에 주황색을 곱해서 녹색으로 변하는 문제를 피하며 이미지 파일을 변경하지 않습니다.
 
@@ -36,3 +37,5 @@
 추가로 가로·세로·역방향 번개의 정확한 2.5배 폭/양끝 정렬, 반경 0.5/1.65/2/3.5의 스플래쉬·운석 충돌·예고 지름, 확산 완료 시 투명도 및 전체 크기 유지, 번개를 재사용한 범위 이펙트에 확대 변환이 남지 않는지도 검사합니다.
 
 기존 `PrototypeRegression`과 `PrototypePlaySmoke`도 실행합니다. 원본 프로젝트의 열려 있는 씬과 실제 플레이어 저장 데이터는 변경하지 않습니다.
+
+신규 빙결·마나의 생성 프롬프트와 연결 경로는 [FrostMana-assets.md](Art/FrostMana-assets.md)에 기록합니다. `SkillVisualRegression`은 빙결 전용 참조·크기 보정·위치·반환을 검사하고 실제 공전의 피해/정지/추종은 `CharacterRegression`에서 검사합니다.

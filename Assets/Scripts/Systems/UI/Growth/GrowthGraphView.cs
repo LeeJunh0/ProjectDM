@@ -425,7 +425,7 @@ namespace ProjectDM
             GUIStyle label = new GUIStyle(graphics.statStyle) { fontSize = 11, normal = { textColor = new Color(.68f, .59f, .44f) } };
             GUIStyle amount = new GUIStyle(graphics.statStyle) { fontSize = 24, fontStyle = FontStyle.Bold, normal = { textColor = new Color(1f, .82f, .42f) } };
             GUI.Label(new Rect(rect.x + 60f, rect.y + 7f, rect.width - 76f, 18f), "보유 재화", label);
-            string value = save.metaCurrency.ToString("N0");
+            string value = CompactNumber.Format(save.metaCurrency);
             while (amount.fontSize > 12 && amount.CalcSize(new GUIContent(value)).x > rect.width - 76f) amount.fontSize--;
             GUI.Label(new Rect(rect.x + 60f, rect.y + 24f, rect.width - 76f, 32f), value, amount);
         }
@@ -563,7 +563,7 @@ namespace ProjectDM
             GUI.Label(new Rect(38, panel.y + 142, width - 30, 20), status, body);
             bool previousEnabled = GUI.enabled;
             GUI.enabled = PrototypeRules.NodePurchaseBlock(tables.balance, row, node, save.progress, PrototypeRules.Stage(tables.balance, save.progress), save.metaCurrency, tables.growthTable) == null;
-            if (GUI.Button(new Rect(38, panel.y + 164, width - 30, 25), $"구매 · {cost:N0} 재화"))
+            if (GUI.Button(new Rect(38, panel.y + 164, width - 30, 25), $"구매 · {CompactNumber.Format(cost)} 재화"))
             {
                 if (PrototypeRules.TryPurchaseNode(tables.balance, row, node, save.progress, PrototypeRules.Stage(tables.balance, save.progress), ref save.metaCurrency, tables.growthTable))
                 {
@@ -616,7 +616,7 @@ namespace ProjectDM
             PrototypeGrowth row = tables.GrowthRow(definition.growthId);
             GUI.Label(new Rect(rect.x + 16, rect.y + 40, width - 32, 76), GrowthDescription(row, definition), body);
             int cost = PrototypeRules.Cost(row, Mathf.Max(save.progress.Rank(row.id), definition.startRank), tables.balance.latePriceScale);
-            GUI.Label(new Rect(rect.x + 16, rect.y + 118, width - 32, 36), $"{progression.GrowthNodeRankLabel(node.id)} · 비용 {cost:N0}\n{GrowthPurchaseStatus(row, definition)}", body);
+            GUI.Label(new Rect(rect.x + 16, rect.y + 118, width - 32, 36), $"{progression.GrowthNodeRankLabel(node.id)} · 비용 {CompactNumber.Format(cost)}\n{GrowthPurchaseStatus(row, definition)}", body);
         }
 
         internal void ResetNavigation() { isPanningMetaTree = false; hoveredMetaTreeNode = -1; }

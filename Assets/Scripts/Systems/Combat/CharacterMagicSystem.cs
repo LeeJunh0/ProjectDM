@@ -92,7 +92,7 @@ namespace ProjectDM
                 burn.accumulated += step;
                 // DOT is not a new cast, never pays MP, crits, or recursively adds burns.
                 if (burn.accumulated >= .5f || burn.remaining <= 0)
-                { enemies.DamagePrototypeEnemy(burn.enemy, burn.damage * burn.accumulated); burn.accumulated = 0; }
+                { enemies.DamageElementalEnemy(burn.enemy, burn.damage * burn.accumulated, CombatDamageKind.Attack, CombatDamageElement.Flame); burn.accumulated = 0; }
                 if (burn.remaining <= 0) burns.RemoveAt(i);
             }
         }

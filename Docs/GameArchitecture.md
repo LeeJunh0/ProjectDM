@@ -50,6 +50,8 @@ Assets/Scripts/
 
 기존 `GameObjectPool`, `ProjectDMAssetLoader`, `PrototypeSkillVisuals`는 Unity 컴포넌트로 유지하고 필요한 시스템에 주입한다. 효과 확률·구매 조건 등 순수 계산은 기존 `PrototypeRules`를 사용한다.
 
+`EnemySystem`은 60초 간격의 중간보스도 소유한다. 같은 몬스터 프리팹/외형에 개체별 등급·크기/HP/보상 배율을 적용하고 사망 경로에서 보스 계열의 상자 1개 확정 드랍과 좁은 연출 콜백을 호출한다. `BossDeathRippleVisuals`는 월드 처치 지점의 배경 굴절만 담당하며 `PrototypeSkillVisuals`의 Tick/Clear 경로를 공유한다. 최종 보스 전투는 기존 도달 미리보기 상태다. 설정/검증은 `Docs/Art/Boss-death-ripple.md`를 참고한다.
+
 `PlayerStats`는 `GameTables/ProgressionService`만 주입받아 최대 체력·이동속도·치명타 확률/피해량·무적 시간·끌어오기 범위를 계산한다. 이동/전투/픽업 시스템에 같은 인스턴스를 주입하며, UI의 현재/다음 수치는 같은 계산식을 사용한다. 구매한 값은 `ResetSnapshot` 이후 다음 런에 적용되고 체력 HUD의 최대값도 함께 갱신한다.
 
 `PrototypeGrowthTable.goalLine`은 스테이지/보스 목표 경로이며 구매 가능한 성장 `rows/nodes`와 구분한다. `GameTables.graphLayoutNodes`는 중앙 12시 통로를 확보한 표시 좌표만 소유하고 구매 조건이나 저장 랭크를 바꾸지 않는다. `GrowthGraphView`는 두 종류를 하나의 카드 선택/툴팁/전체 보기로 표시하되 목표 칸을 클릭해도 구매·보스 처치를 기록하지 않는다. 스테이지 선택 UI는 별도로 `StageSession.Select`를 호출하며 실제 바닥/외형 교체는 다음 `BeginRun`의 리셋 경계에서 수행한다.
@@ -58,7 +60,7 @@ Assets/Scripts/
 
 ## 주입 원칙
 
-`RunMana`는 최대/현재 MP·기본 공격 1회 비용·실제 누적 소모/흡수량을 소유한다. `CombatSystem`에 같은 인스턴스를 주입하여 유효 타깃이 있고 발사 간격을 통과한 한 묶음에 한 번만 비용을 지불한다. 다중 공격 추가탄·효과 피해·대기에는 별도 소모가 없다. `RunController.TickClock`은 마나를 건드리지 않고 보스 경과 시계만 진행한다. MP 고갈은 발사 직후 별도 종료 검사에서 처리하며 늦은 회복으로 부활하지 않는다. 적 사망 시 기존 독립 확률로 최대값까지 MP를 흡수한다. 저장의 `time/extension` 성장 ID는 유지한다.
+`RunMana`는 최대/현재 MP·기본 공격 1회 비용·실제 누적 소모/흡수량을 소유한다. `CombatSystem`에 같은 인스턴스를 주입하여 유효 타깃이 있고 발사 간격을 통과한 한 묶음에 한 번만 비용을 지불한다. 다중 공격 추가탄·효과 피해·대기에는 별도 소모가 없다. `RunController.TickClock`은 마나를 건드리지 않고 보스 경과 시계만 진행한다. MP 고갈은 발사 직후 별도 종료 검사에서 처리하며 늦은 회복으로 부활하지 않는다. 적 사망 시 `PickupSystem`이 기존 독립 확률로 마나 방울을 드랍하고, 실제 획득 시 최대값까지 MP를 흡수한다. 실제 회복량 표시도 좁은 콜백으로 픽업 시스템에 주입한다. 저장의 `time/extension` 성장 ID는 유지한다.
 
 `UI/Mana`의 `ManaBarSettings`는 한글 설정/상태별 색상이고 `ManaBarRenderer`는 색상 전환·출렁임 반응과 재사용하는 셰이더 렌더 타깃을 소유한다. GameManager는 Tick/Reset/Dispose와 공개 상태 전환 API만 연결하며 Hud는 텍스처를 그린다. 연출은 MP/전투 난수를 변경하지 않고 일시정지 중 멈춘다. 각성 게임 판정은 아직 없다.
 

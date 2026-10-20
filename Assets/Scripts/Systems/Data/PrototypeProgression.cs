@@ -10,6 +10,7 @@ namespace ProjectDM
         public string version;
         public float baseDamage, attackInterval, projectileSpeed, projectileLifetime, moveSpeed;
         public float bossElapsedSeconds;
+        public float miniBossInterval = 60, miniBossScale = 1.35f, miniBossHealthMultiplier = 5, miniBossRewardMultiplier = 3;
         public float initialMana = -1, manaAbsorbChance = -1, manaAbsorbAmount = -1;
         public float basicAttackManaCost = 1;
         // Read-only compatibility with previously authored JSON tables; new tables use mana keys.
@@ -410,6 +411,9 @@ namespace ProjectDM
             if (!Positive(b.baseDamage) || !Positive(b.attackInterval) || !Positive(b.projectileSpeed) ||
                 !Positive(b.projectileLifetime) || !Positive(b.moveSpeed) || !Positive(b.ResolvedInitialMana) || !Positive(b.basicAttackManaCost) ||
                 !Positive(b.bossElapsedSeconds) ||
+                !Positive(b.miniBossInterval) || !Positive(b.miniBossScale) || b.miniBossScale < 1 ||
+                !Positive(b.miniBossHealthMultiplier) || b.miniBossHealthMultiplier < 1 ||
+                !Positive(b.miniBossRewardMultiplier) || b.miniBossRewardMultiplier < 1 ||
                 !Positive(b.xpFirst) || !Positive(b.xpGrowth) || b.xpGrowth < 1 ||
                 !Positive(b.latePriceScale) || b.latePriceScale < 1 || !FiniteNonnegative(b.firstDamageBonus) ||
                 !Probability(b.ResolvedManaAbsorbChance) || !FiniteNonnegative(b.ResolvedManaAbsorbAmount) ||

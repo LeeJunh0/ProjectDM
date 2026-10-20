@@ -51,6 +51,7 @@ namespace ProjectDM.Editor
             Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/Enemy.prefab", "prefab/enemy");
             Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/Projectile.prefab", "prefab/projectile");
             Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/ChestPickup.prefab", "prefab/pickup-chest");
+            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/ManaPickup.prefab", "prefab/pickup-mana");
             for (int variant = 1; variant <= 5; variant++)
             {
                 string suffix = variant.ToString("00");
@@ -73,12 +74,14 @@ namespace ProjectDM.Editor
             ProjectDMAssetCatalog catalog = CreateOrLoadCatalog();
             catalog.experiencePickupPrefabs = PickupReferences("ExperiencePickup");
             catalog.currencyPickupPrefabs = PickupReferences("CurrencyPickup");
+            catalog.manaPickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/ManaPickup.prefab");
 
             AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
             AddressableAssetGroup bootstrap = settings.FindGroup(BootstrapGroupName)
                 ?? settings.CreateGroup(BootstrapGroupName, true, false, false, null,
                     typeof(BundledAssetGroupSchema), typeof(ContentUpdateGroupSchema));
             Register(settings, bootstrap, CatalogPath, "project-dm/catalog");
+            Register(settings, bootstrap, ProjectDMPrefabFactory.PrefabFolder + "/ManaPickup.prefab", "prefab/pickup-mana");
             for (int variant = 1; variant <= 5; variant++)
             {
                 string suffix = variant.ToString("00");
@@ -125,6 +128,7 @@ namespace ProjectDM.Editor
             catalog.experiencePickupPrefabs = PickupReferences("ExperiencePickup");
             catalog.currencyPickupPrefabs = PickupReferences("CurrencyPickup");
             catalog.chestPickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/ChestPickup.prefab");
+            catalog.manaPickupPrefab = GameObjectReference(ProjectDMPrefabFactory.PrefabFolder + "/ManaPickup.prefab");
         }
 
         private static AssetReferenceGameObject[] PickupReferences(string prefix)

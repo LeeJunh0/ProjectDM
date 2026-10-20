@@ -42,9 +42,9 @@ namespace ProjectDM.Editor
             DrawProperty("combatDamageScatter", "좌우 분산 거리", "겹치는 숫자를 좌우로 흩어 표시합니다. 전투 확률 판정에는 영향을 주지 않습니다.");
             DrawProperty("combatCriticalScale", "치명타 크기 배율", "치명타 표시의 크기 배율입니다. 실제 치명타 판정은 별도 전투 규칙입니다.");
             DrawProperty("combatDamageMaximum", "동시 표시 최대 수", "숫자 표시만 제한하며 실제 피해나 스킬 발동은 제한하지 않습니다.");
-            DrawProperty("combatAttackColor", "공격 피해 숫자 색상", "몬스터에게 가한 피해의 숫자 색상입니다.");
+            DrawProperty("combatAttackColor", "공격 피해 숫자 색상", "마법미사일·무속성 피해의 일반 색상입니다. 화염·번개·빙결은 Resources/ProjectDM/UI/CombatDamageAppearance에서 각각 설정합니다.");
             DrawProperty("combatReceivedColor", "플레이어 피격 숫자 색상", "플레이어가 받은 실제 피해의 숫자 색상입니다.");
-            DrawProperty("combatCriticalColor", "치명타 숫자 색상", "실제로 치명타가 발생한 적중의 숫자 색상입니다.");
+            DrawProperty("combatCriticalColor", "치명타 숫자 색상", "마법미사일·무속성 치명타의 색상입니다. 속성 치명타는 CombatDamageAppearance에서 별도로 설정하며 실제 치명타 판정과 기존 크기 배율·! 표식을 따릅니다.");
             DrawProperty("enableCriticalHits", "기본 공격 치명타 사용", "치명타 확률과 치명타 피해량은 기본 테이블 값에 영구 성장 노드 값을 더합니다. 다중 공격의 각 적중도 따로 판정합니다.");
             DrawProperty("enablePlayerContactDamage", "플레이어 접촉 피해 사용", "체력·접촉 판정 거리·피격 무적 시간과 몬스터 접촉 피해량은 기본 테이블에서 설정합니다.");
 
@@ -69,8 +69,9 @@ namespace ProjectDM.Editor
             DrawProperty("experiencePickupScaleMultiplier", "경험치 픽업 크기 배율", "경험치 픽업 비주얼의 크기 배율입니다. 기본값은 원본의 3배입니다.");
             DrawProperty("currencyPickupScaleMultiplier", "재화 픽업 크기 배율", "재화 픽업 비주얼의 크기 배율입니다. 기본값은 원본의 3배입니다.");
             DrawProperty("chestPickupScaleMultiplier", "보물상자 픽업 크기 배율", "보물상자 픽업 비주얼의 크기 배율입니다.");
+            DrawProperty("manaPickupScaleMultiplier", "마나 픽업 크기 배율", "마나 방울의 크기 배율입니다. 획득하면 MP를 회복합니다.");
 
-            DrawSection("경험치·재화 부유 모션");
+            DrawSection("경험치·재화·마나 부유 모션");
             DrawProperty("collectibleFloatYAmplitude", "부유 높이", "픽업 비주얼이 부유하는 로컬 Y축 최대 높이입니다.");
             DrawProperty("collectibleFloatLoopDuration", "부유 반복 시간", "부유 모션이 한 번 반복되는 시간(초)입니다.");
             DrawProperty("experiencePickupFloatYCurve", "경험치 부유 곡선", "경험치 픽업 비주얼의 로컬 Y축 부유 곡선입니다.");

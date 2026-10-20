@@ -130,7 +130,8 @@ namespace ProjectDM
                         if (!EnemySystem.IsLive(enemy) || bolt.hits.Contains(enemy)) continue;
                         Vector2 center = enemy.transform.position;
                         float along = segment.sqrMagnitude > .000001f ? Mathf.Clamp01(Vector2.Dot(center - from, segment) / segment.sqrMagnitude) : 0;
-                        if ((center - (from + segment * along)).sqrMagnitude < .55f * .55f && along < nearestAlong)
+                        float hitRadius = .55f * enemy.hitRadiusMultiplier;
+                        if ((center - (from + segment * along)).sqrMagnitude < hitRadius * hitRadius && along < nearestAlong)
                         { nearestAlong = along; hit = enemy; }
                     }
                     if (hit != null) { bolt.hits.Add(hit); skills.ApplyPrototypeBasicHit(hit, bolt.damage); finished = bolt.pierces-- <= 0; }

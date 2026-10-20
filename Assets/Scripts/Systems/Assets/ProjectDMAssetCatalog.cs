@@ -28,5 +28,6 @@ namespace ProjectDM
         public AssetReferenceGameObject[] experiencePickupPrefabs = new AssetReferenceGameObject[5];
         public AssetReferenceGameObject[] currencyPickupPrefabs = new AssetReferenceGameObject[5];
         public AssetReferenceGameObject chestPickupPrefab;
+        public AssetReferenceGameObject manaPickupPrefab;
     }
 }

@@ -78,6 +78,8 @@ namespace ProjectDM.Editor
             characterRun.characters.Select("projectile");
             ProjectDMRuntimeAssets assets = (ProjectDMRuntimeAssets)Get(manager, "runtimeAssets");
             Check(assets.CurrencyPickupPrefabs.Length == 5 && assets.ExperiencePickupPrefabs.Length == 5, "Addressables preserves all five grade slots");
+            Check(assets.ManaPickupPrefab != null && assets.ManaPickupPrefab.GetComponentInChildren<SpriteRenderer>().sprite != null,
+                "Real Addressables boot loads the dedicated mana drop prefab and sprite");
             for (int i = 0; i < 5; i++)
             {
                 GameObject currencyPrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/GameContent/Prefabs/CurrencyPickup_{i + 1:00}.prefab");
@@ -195,13 +197,58 @@ namespace ProjectDM.Editor
                     SkillSystem skills = (SkillSystem)Get(manager, "skills");
                     skills.UpdatePrototypeEffects(.05f);
                     IList shards = (IList)RuntimeTestAccess.Get(manager.GetComponent<PrototypeSkillVisuals>(), "frostShards");
-                    Check(skills.Frost.Active && shards.Count == 2 && ((SpriteRenderer)shards[0]).sprite != null, "Real frost orbit loads and positions existing sprite resources");
+                    Check(skills.Frost.Active && shards.Count == 2 && ((SpriteRenderer)shards[0]).sprite == skillArt.frostShard, "Real frost orbit loads and positions dedicated frost artwork");
+                    PickupSystem drops = (PickupSystem)Get(manager, "pickupsSystem");
+                    Transform player = (Transform)Get(manager, "player");
+                    drops.CreatePickup("Smoke mana drop", player.position + Vector3.right * .8f, null, PickupKind.Mana, 1, .28f);
+                    Pickup manaDrop = drops.pickups.Find(p => p.kind == PickupKind.Mana);
+                    Check(manaDrop != null && manaDrop.isLaunching, "Real mana drop starts its fountain motion");
+                    PickupAmbientVfx ambient = manaDrop.transform.GetComponentInChildren<PickupAmbientVfx>();
+                    Check(ambient != null && ambient.GetComponent<ParticleSystem>().isPlaying, "Real Addressables mana prefab starts its rising motes");
+                    RenderFrostManaPreview(manager);
+                    float beforePickup = mana.Current;
+                    manaDrop.isLaunching = false; manaDrop.transform.position = player.position;
+                    drops.UpdatePickups(.01f);
+                    Check(Mathf.Approximately(mana.Current, beforePickup + 1) && !drops.pickups.Contains(manaDrop), "Real mana pickup restores MP once and despawns");
+                    Check(ambient.GetComponent<ParticleSystem>().particleCount == 0, "Real mana collection clears its pooled motes");
+                    enemySystem.SpawnEnemies(balance.miniBossInterval);
+                    Enemy miniBoss = enemySystem.enemies.Find(e => e.rank == EnemyRank.MiniBoss);
+                    Check(miniBoss != null && miniBoss.renderer.sprite != null, "Real Main spawns an enlarged current-monster mini boss");
+                    miniBoss.transform.position = player.position + Vector3.right * 2;
+                    int chestsBefore = drops.pickups.FindAll(p => p.kind == PickupKind.Chest).Count;
+                    enemySystem.DamagePrototypeEnemy(miniBoss, miniBoss.hitPoints);
+                    var ripple = manager.GetComponent<BossDeathRippleVisuals>();
+                    Check(ripple != null && ripple.ActiveCount == 1 && drops.pickups.FindAll(p => p.kind == PickupKind.Chest).Count == chestsBefore + 1,
+                        "Actual Main mini boss death produces a world ripple and exactly one guaranteed chest");
+                    ripple.Tick(.4f);
+                    RenderFrostManaPreview(manager, "Logs/MiniBoss-ingame.png");
                 }
                 Call(manager, "TriggerDebugLevelUp");
                 foreach (RunUpgradePresentation card in (RunUpgradePresentation[])Get(manager, "runUpgradeChoices"))
                     Check(card.upgrade.StartsWith("magic." + character + "."), "Real level-up pool contains only active personal magic");
             }
             Call(manager, "BeginRun");
+        }
+
+        private static void RenderFrostManaPreview(GameManager manager, string path = "Logs/FrostMana-ingame.png")
+        {
+            if (SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null) return;
+            Camera camera = Camera.main;
+            RenderTexture previousTarget = camera.targetTexture, previousActive = RenderTexture.active;
+            RenderTexture target = new(1280, 720, 24, RenderTextureFormat.ARGB32);
+            Texture2D pixels = new(1280, 720, TextureFormat.RGBA32, false);
+            try
+            {
+                camera.targetTexture = target; camera.Render(); RenderTexture.active = target;
+                pixels.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0); pixels.Apply();
+                Directory.CreateDirectory("Logs");
+                File.WriteAllBytes(path, pixels.EncodeToPNG());
+            }
+            finally
+            {
+                camera.targetTexture = previousTarget; RenderTexture.active = previousActive;
+                target.Release(); UnityEngine.Object.Destroy(target); UnityEngine.Object.Destroy(pixels);
+            }
         }
 
         private static void VerifyMonsterPresentation(GameManager manager, WorldArtAssets art)

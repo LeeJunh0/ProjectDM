@@ -63,7 +63,7 @@ namespace ProjectDM
                 alignment = TextAnchor.MiddleRight,
                 fontSize = Screen.width < 650 ? 12 : 15
             };
-            GUI.Label(new Rect(x, y, width, 28f), $"레벨 {selection.level}    경험치 {selection.experience:0.##}/{selection.experienceToNext}    획득 재화 +{run.runCurrency}    영구 재화 {save.metaCurrency}", informationStyle);
+            GUI.Label(new Rect(x, y, width, 28f), $"레벨 {selection.level}    경험치 {CompactNumber.Format(selection.experience)}/{CompactNumber.Format(selection.experienceToNext)}    획득 재화 +{CompactNumber.Format(run.runCurrency)}    영구 재화 {CompactNumber.Format(save.metaCurrency)}", informationStyle);
             GUI.Label(new Rect(x, y + 28f, width, 26f), $"공격력 {stats.MainDamage:0.##}  |  공격 간격 {stats.AttackInterval:0.00}초  |  필드 {enemiesSystem.enemies.Count}/{enemiesSystem.FieldTarget}  |  마나 흡수 +{run.mana.AbsorbedThisRun:0.##} MP", informationStyle);
         }
 

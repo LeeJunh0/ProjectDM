@@ -22,6 +22,11 @@ namespace ProjectDM
             if (settings.showCombatDamage) combatDamageDisplay.Show(position, damage, kind, settings.combatDamageMaximum);
         }
 
+        internal void ShowElementalDamage(Vector3 position, float damage, CombatDamageKind kind, CombatDamageElement element)
+        {
+            if (settings.showCombatDamage) combatDamageDisplay.ShowElemental(position, damage, kind, settings.combatDamageMaximum, element);
+        }
+
         internal void DrawCombatDamage()
         {
             if (!settings.showCombatDamage) return;

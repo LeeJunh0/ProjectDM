@@ -18,8 +18,9 @@ namespace ProjectDM
         private readonly GameObjectPool objectPool;
         private readonly Action<float> addExperience;
         private readonly PlayerStats playerStats;
+        private readonly Action<Vector3, float> showManaGain;
 
-        internal PickupSystem(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, RunController run, GameObjectPool objectPool, Action<float> addExperience, PlayerStats playerStats)
+        internal PickupSystem(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, RunController run, GameObjectPool objectPool, Action<float> addExperience, PlayerStats playerStats, Action<Vector3, float> showManaGain = null)
         {
             this.settings = settings;
             this.save = save;
@@ -31,6 +32,7 @@ namespace ProjectDM
             this.objectPool = objectPool;
             this.addExperience = addExperience;
             this.playerStats = playerStats;
+            this.showManaGain = showManaGain;
         }
 
         internal readonly List<Pickup> pickups = new();
@@ -46,11 +48,13 @@ namespace ProjectDM
             GameObject pickupObject = objectPool.Rent(prefab);
             pickupObject.name = name;
             pickupObject.transform.position = position;
-            float pickupScaleMultiplier = kind == PickupKind.Experience
-                ? settings.experiencePickupScaleMultiplier
-                : kind == PickupKind.Currency
-                    ? settings.currencyPickupScaleMultiplier
-                    : settings.chestPickupScaleMultiplier;
+            float pickupScaleMultiplier = kind switch
+            {
+                PickupKind.Experience => settings.experiencePickupScaleMultiplier,
+                PickupKind.Currency => settings.currencyPickupScaleMultiplier,
+                PickupKind.Mana => settings.manaPickupScaleMultiplier,
+                _ => settings.chestPickupScaleMultiplier
+            };
             pickupObject.transform.localScale = Vector3.one * (scale * pickupScaleMultiplier);
             SpriteRenderer renderer = pickupObject.GetComponentInChildren<SpriteRenderer>();
             renderer.sortingOrder = 1;
@@ -116,6 +120,7 @@ namespace ProjectDM
 
         internal GameObject SelectPickupPrefab(PickupKind kind, int grade = 1)
         {
+            if (kind == PickupKind.Mana) return art.runtimeAssets.ManaPickupPrefab;
             if (kind == PickupKind.Chest)
             {
                 return art.runtimeAssets.ChestPickupPrefab;
@@ -130,6 +135,7 @@ namespace ProjectDM
 
         internal void UpdatePickups(float dt)
         {
+            if (dt <= 0 || run.runEnded || run.mana.IsDepleted) return;
             for (int i = pickups.Count - 1; i >= 0; i--)
             {
                 Pickup pickup = pickups[i];
@@ -200,7 +206,14 @@ namespace ProjectDM
 
         internal void Collect(Pickup pickup)
         {
+            if (run.runEnded || run.mana.IsDepleted) return;
             if (pickup.kind == PickupKind.Experience) { addExperience(pickup.amount); return; }
+            if (pickup.kind == PickupKind.Mana)
+            {
+                float added = run.mana.Absorb(pickup.amount);
+                if (added > 0) showManaGain?.Invoke(playerWorld.player.position, added);
+                return;
+            }
             int currency = (int)System.Math.Min(int.MaxValue, System.Math.Max(0, System.Math.Round((double)pickup.amount)));
             run.runCurrency = (int)System.Math.Min(int.MaxValue, (long)run.runCurrency + currency);
             save.metaCurrency = (int)System.Math.Min(int.MaxValue, (long)save.metaCurrency + currency);
@@ -226,7 +239,7 @@ namespace ProjectDM
             }
         }
 
-        internal void SpawnPrototypeLoot(Vector3 position, int kind)
+        internal void SpawnPrototypeLoot(Vector3 position, int kind, float rewardMultiplier = 1, bool guaranteedChest = false)
         {
             PrototypeMonster row = tables.balance.monsters[kind];
             // Unlocks follow actual permanent kill progress mid-run; purchased bonuses use the run snapshot.
@@ -241,13 +254,21 @@ namespace ProjectDM
             float xp = (float)LootGradeRules.Reward(tables.balance, row, xpGrade, false, progression.PermanentAmount("xp"), false, 0);
             int coins = (int)LootGradeRules.Reward(tables.balance, row, coinGrade, true, progression.PermanentAmount("yield"),
                 Random.value < row.bonusChance, Random.value);
+            xp *= rewardMultiplier;
+            if (rewardMultiplier != 1) coins = PrototypeRules.StochasticCoins(coins * (double)rewardMultiplier, Random.value);
             CreatePickup($"{LootGradeRules.Name(tables.balance, xpGrade, false)} {xpGrade}등급 · {xp:0.##}", position, art.gemSprite, PickupKind.Experience, xp, .28f, xpGrade);
             if (coins > 0) CreatePickup($"{LootGradeRules.Name(tables.balance, coinGrade, true)} {coinGrade}등급 · {coins}", position, art.coinSprite, PickupKind.Currency, coins, .23f, coinGrade);
-            if (Random.value < tables.balance.chestChance)
+            if (guaranteedChest || Random.value < tables.balance.chestChance)
             {
-                int chest = PrototypeRules.StochasticCoins(tables.balance.chestCoins * (1.0 + progression.PermanentAmount("yield")), Random.value);
+                int chest = PrototypeRules.StochasticCoins(tables.balance.chestCoins * (1.0 + progression.PermanentAmount("yield")) * rewardMultiplier, Random.value);
+                if (guaranteedChest) chest = Mathf.Max(1, chest);
                 if (chest > 0) CreatePickup("보물상자", position + Vector3.up * .2f, art.coinSprite, PickupKind.Chest, chest, .42f);
             }
+            // Preserve the independent on-death chance; recovery happens only on collection.
+            double chance = PrototypeRules.Chance(tables.balance.ResolvedManaAbsorbChance, progression.PermanentAmount("extension"), 0);
+            if (!run.runEnded && tables.balance.ResolvedManaAbsorbAmount > 0 && (chance >= 1 || Random.value < chance))
+                CreatePickup($"마나 · +{tables.balance.ResolvedManaAbsorbAmount:0.##} MP", position, null,
+                    PickupKind.Mana, tables.balance.ResolvedManaAbsorbAmount, .28f);
         }
 
         internal void Reset()

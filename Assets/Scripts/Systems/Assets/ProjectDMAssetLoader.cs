@@ -25,6 +25,7 @@ namespace ProjectDM
         public GameObject[] ExperiencePickupPrefabs { get; internal set; }
         public GameObject[] CurrencyPickupPrefabs { get; internal set; }
         public GameObject ChestPickupPrefab { get; internal set; }
+        public GameObject ManaPickupPrefab { get; internal set; }
         public ProjectDMSpriteCatalog SpriteCatalog { get; internal set; }
     }
 
@@ -67,6 +68,7 @@ namespace ProjectDM
             yield return LoadGradeCollection<GameObject>(catalog.experiencePickupPrefabs, assets => Assets.ExperiencePickupPrefabs = assets);
             yield return LoadGradeCollection<GameObject>(catalog.currencyPickupPrefabs, assets => Assets.CurrencyPickupPrefabs = assets);
             yield return Load<GameObject>(catalog.chestPickupPrefab, asset => Assets.ChestPickupPrefab = asset);
+            yield return Load<GameObject>(catalog.manaPickupPrefab, asset => Assets.ManaPickupPrefab = asset);
         }
 
         private IEnumerator Load<T>(AssetReference reference, Action<T> assign) where T : UnityEngine.Object

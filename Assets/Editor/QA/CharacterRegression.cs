@@ -70,6 +70,20 @@ namespace ProjectDM.Editor
                     if (id == "projectile") Check(f.combat.projectiles.Count == 1, "Projectile character creates a projectile");
                     else if (id == "frost") Check(f.skills.Frost.Active && f.skills.Frost.Count == 2, "Frost creates two orbiting shards");
                     else Check(f.combat.projectiles.Count == 0 && f.enemies.enemies[0].hitPoints < 100, "Lightning/flame directly damage without projectiles");
+                    if (id == "projectile") f.combat.UpdateProjectiles(.3f);
+                    if (id == "frost") f.skills.UpdatePrototypeEffects(.01f);
+                    CombatDamageElement expectedElement = id == "flame" ? CombatDamageElement.Flame : id == "lightning" ? CombatDamageElement.Lightning :
+                        id == "frost" ? CombatDamageElement.Frost : CombatDamageElement.None;
+                    var displayedHits = (IList)RuntimeTestAccess.Get(RuntimeTestAccess.Get(f.manager, "combatDamageDisplay"), "active");
+                    Check(displayedHits.Count > 0, "Actual personal cast generated a damage popup");
+                    foreach (object popup in displayedHits)
+                        Check((CombatDamageElement)RuntimeTestAccess.Get(popup, "element") == expectedElement, "Actual missile/cone/chain/orbit hit carries its own element");
+                    f.combat.forceCriticalHits = true;
+                    f.skills.ApplyPersonalHit(f.enemies.enemies[0], 1);
+                    object critPopup = displayedHits[displayedHits.Count - 1];
+                    Check((CombatDamageKind)RuntimeTestAccess.Get(critPopup, "kind") == CombatDamageKind.Critical &&
+                        (CombatDamageElement)RuntimeTestAccess.Get(critPopup, "element") == expectedElement, "Critical preserves the actual attack element");
+                    f.combat.forceCriticalHits = false;
                     if (id == "lightning") foreach (Enemy enemy in f.enemies.enemies) Check(enemy.hitPoints < 100, "Base lightning hits first target and two chained targets");
                     f.enemies.Reset(); f.combat.nextShot = 0; paid = f.mana.Current; f.combat.FireAtNearestEnemy(0);
                     Check(Near(f.mana.Current, paid), "No target costs no MP");
@@ -106,6 +120,10 @@ namespace ProjectDM.Editor
                 f.combat.FireAtNearestEnemy(0); Check(front.hitPoints < 100 && Near(back.hitPoints, 100) && Near(side.hitPoints, 100), "Flame affects only real forward cone");
                 float hp = front.hitPoints; f.skills.UpdatePrototypeEffects(0); Check(Near(front.hitPoints, hp), "Paused DOT does not tick");
                 f.skills.UpdatePrototypeEffects(1); Check(front.hitPoints < hp && Near(f.mana.SpentThisRun, 1), "Burn ticks without another MP charge");
+                var burnHits = (IList)RuntimeTestAccess.Get(RuntimeTestAccess.Get(f.manager, "combatDamageDisplay"), "active");
+                object burnPopup = burnHits[burnHits.Count - 1];
+                Check((CombatDamageElement)RuntimeTestAccess.Get(burnPopup, "element") == CombatDamageElement.Flame &&
+                    (CombatDamageKind)RuntimeTestAccess.Get(burnPopup, "kind") == CombatDamageKind.Attack, "Delayed burn retains flame color and never invents a critical");
                 Check(!CharacterMagicSystem.InCone(new Vector2(4, 0), Vector2.right, 3, 60), "Cone excludes out-of-range targets");
                 f.Begin(); front = f.Enemy(new Vector3(5, 0), 100); f.combat.FireAtNearestEnemy(0); Check(Near(f.mana.SpentThisRun, 0), "Flame never spends MP on out-of-range targets");
                 Check(f.save.progress.Rank("meteor") == 1 && f.save.progress.Rank("chainChance") == 2, "Archived investments survive every selection/restart");

@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-20",
+  "tool": "built-in image_gen",
+  "direction": "Restrained glow and lighter desaturated local-color outlines",
+  "assets": [
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_DungeonMonsters_2Frame_v1.png",
+      "width": 724,
+      "height": 2172,
+      "metaSha256": "A681C640AE4490436312D2149D2B076BB525DF728BEFA7B3A3261B9C869C8C25",
+      "beforeSha256": "4F9E3A031CBC3F41884E35C4FA82B59393DF568814AE72E5E64F2DF98E1CB82B",
+      "alreadyApproved": false,
+      "afterSha256": "B29744DC2FBEF5B1DEC102744256302263C8A3FDB418EA52AE221383CDD25E41",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png",
+      "width": 1402,
+      "height": 1122,
+      "metaSha256": "1718D1FC7C77DC069C4A90C55698FC0A355ADB8758DD7C886A9EA34875101F27",
+      "beforeSha256": "156CDF8B8911409F9D04FD1E48C11B9CC00450232E81907A95E594E83DEEB7EB",
+      "alreadyApproved": false,
+      "afterSha256": "F480908F0F22F265BEF7FB953AEF167DA47ED6588648600F9D32F8EDEE0C6AE2",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_ExtraMonsters_16Bit_v1.png",
+      "width": 1024,
+      "height": 1536,
+      "metaSha256": "AB1EDDE885285FE9FEAE0078EF002DC32C2CCA05435E720FCBF090B9668373B0",
+      "beforeSha256": "9E6910038E76E64E504E83CF0BF8FBC4A0A47525921C533A640E5379E3D061AB",
+      "alreadyApproved": false,
+      "afterSha256": "5B9ECC5E83411C3A7CAF13A1B8B5EA06DC0CA31B383FAC6027ECBE028377DF59",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_ManaPickup_v1.png",
+      "width": 1254,
+      "height": 1254,
+      "metaSha256": "A6482DEA6E5FF04CB428AF926F30460BE22695B20031A6768E77FEE4960C2B39",
+      "beforeSha256": "B989C6F123F61D5C176532A40D4038C7251AA9FEFF5A430F6DF3D53E8DFE4DF7",
+      "alreadyApproved": true,
+      "afterSha256": "B989C6F123F61D5C176532A40D4038C7251AA9FEFF5A430F6DF3D53E8DFE4DF7",
+      "status": "retained-approved"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_MeadowMonsters_2Frame_v1.png",
+      "width": 724,
+      "height": 2172,
+      "metaSha256": "37E8B39083C2890A74EA2BD323DD9594CC1E7766589C115A66B8A928D9B7D2F3",
+      "beforeSha256": "C974DFF24D2DFE2239358CB0BFADFB32AB23A2383BD34A07C1A34DDB1040BD38",
+      "alreadyApproved": false,
+      "afterSha256": "23F25AD84E1528764BDE755A23B6BFF5B50C61E80AE8BAF6FDA318EC3C3F4C3A",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_Monsters_16Bit_v5.png",
+      "width": 1402,
+      "height": 1122,
+      "metaSha256": "ADEFD50BB92D022C6D881857F258510D511D0EA89123571D76C9CBA61C8602CA",
+      "beforeSha256": "8AFA0ED9B0DB42D3634AE149A18E097F3E775D5984F303949D08BE75877B2FB2",
+      "alreadyApproved": false,
+      "afterSha256": "501A0A2B8A58A8F2328E6A1CFB78C0700869C8E0F847740321CDEFA1CA327872",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_Pickups_4Frame_v1.png",
+      "width": 1448,
+      "height": 1086,
+      "metaSha256": "C66D321AC6B4DE2C986837CFA07263238A69BD1E0D9C357757CDA12662633CB7",
+      "beforeSha256": "8DDC26E89D315F8ACDE5896C25ED044FC75B0A190A1544E7C1D45949C3D10BF4",
+      "alreadyApproved": false,
+      "afterSha256": "CA497F587F270E26AC89EEBED526B2B640DA9DF991992599F54ED256771B44FC",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_Player_16Bit_v5.png",
+      "width": 1536,
+      "height": 1024,
+      "metaSha256": "F5AB6243C91B79DBDDB4921736744D33F55B307401E9740D42F3668AA452F325",
+      "beforeSha256": "6AD75B61DB98B8BDC7185294B5E5EFCFBF5012C4B7D9903FE2875E6529894E4D",
+      "alreadyApproved": false,
+      "afterSha256": "04D0C9D41CE40538457297C915E60D277030FC12C7785C5E2A742DF7F5506553",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_Player_Idle_4Frame_v1.png",
+      "width": 1278,
+      "height": 1230,
+      "metaSha256": "3870B8A5C09AB3BD1DE82D74DD50013E9CAC66E378E667B84BC7A9CC233BB6FF",
+      "beforeSha256": "3B363DE84613615E47FE2B89BB238AFCBFCAB05AB42C3DF488F99D8BA9F68BFF",
+      "alreadyApproved": false,
+      "afterSha256": "624162123FCD7DD60E11CE5C22F1D18B4030000B2547E2A4C5C2F5657AECB131",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_Player_Walk_4Frame_v6.png",
+      "width": 1278,
+      "height": 1230,
+      "metaSha256": "8FE39238A2491FFD52C289094E4B82022507AD1D4AD630C8A3EF080840EFC214",
+      "beforeSha256": "F5C7BB5D7F222C3CB0C42579D93B61C51A15C02FF573C722D1479485998DF3AE",
+      "alreadyApproved": false,
+      "afterSha256": "7DCD7E4301EAEC1A0D6E394C443EDE6348B0B84B1D7954005AB2A708F43A0765",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_Player_Walk_SideRefined_v7.png",
+      "width": 1278,
+      "height": 1230,
+      "metaSha256": "1460D20B7C2F3864CB49636EDF896A34E09BD9D7B6009249611653A2BB338049",
+      "beforeSha256": "DC466DE04D13CD547AA6C63000DE2FEB3584D72278BA69C19ADC038CAC5388EC",
+      "alreadyApproved": false,
+      "afterSha256": "346AE96BD08562A0AEE89F0CFFA7CE47405DBDE0476C793D490F21522E00346A",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/ProjectDM_Sprites_TopDown_v2.png",
+      "width": 1774,
+      "height": 887,
+      "metaSha256": "48A8DE3189D1CF01968269F2A76B00979ADEC60916CE74591856E72AAB1105ED",
+      "beforeSha256": "2EF9CFF2F78D6346F91D6D924093AF4B2E68DF9ABEC77F34AFD76A1326B355B5",
+      "alreadyApproved": false,
+      "afterSha256": "1090C9346B191B0907DEE99E5AA09974EB82DBF54CCBD846201357204BD0E527",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/Skills/ProjectDM_ChainLightning_v1.png",
+      "width": 1536,
+      "height": 1024,
+      "metaSha256": "25C28550ABD23CEF3E11699F5D135E4A67F57ECBFEBD93DC3D5555336A23CBEE",
+      "beforeSha256": "A6AC03D0B50DC6C5EB3AC190926ACC47412AD70A04FDADB19A22D41F49D5A769",
+      "alreadyApproved": false,
+      "afterSha256": "3C0A98C63C6E5ABF238D59AE9E948C756EF25E74E65FDADF764E167329A1DFE2",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/Skills/ProjectDM_FrostShard_v1.png",
+      "width": 1254,
+      "height": 1254,
+      "metaSha256": "6D9D9BF57310E2A0CF3FECCAAFCDC22FED95B4045ED53FFBF0FF7F06C5D13456",
+      "beforeSha256": "24CC3C0D24582A94E3EF865BB215997E95E1C86F7F75CF4CDF6553575EA21445",
+      "alreadyApproved": true,
+      "afterSha256": "24CC3C0D24582A94E3EF865BB215997E95E1C86F7F75CF4CDF6553575EA21445",
+      "status": "retained-approved"
+    },
+    {
+      "path": "Assets/GameContent/Art/Skills/ProjectDM_Meteor_v1.png",
+      "width": 1536,
+      "height": 1024,
+      "metaSha256": "EA03A9FC4BC99B3E579EB32BBF5F39A9BB0C078A12749DB25841BE580389527B",
+      "beforeSha256": "484C39A9B50ABA329DBC551FB22EB42FEB0AAF054435C1B9EC79F9229F4BB5E2",
+      "alreadyApproved": false,
+      "afterSha256": "9E08763EC04D234FED483AC7C16A7FA68F20C3D3E3463413C1337AD4620954E4",
+      "status": "edited-and-applied"
+    },
+    {
+      "path": "Assets/GameContent/Art/Skills/ProjectDM_Splash_v1.png",
+      "width": 1284,
+      "height": 1225,
+      "metaSha256": "BC71F1AEF59C2F3F4B4034D0A6BE46A25C4617F782F9F48ACA3FF7B809B7A363",
+      "beforeSha256": "E1B85D96D821392FCB7E2548699832040F863A5581641473DA2E8A325B23F6FA",
+      "alreadyApproved": false,
+      "afterSha256": "33F96F9ADBA8340DC7D70D197B78138C5D9682BFAC808AE11F4B12A6B8A5E6B0",
+      "status": "edited-and-applied"
+    }
+  ]
+}

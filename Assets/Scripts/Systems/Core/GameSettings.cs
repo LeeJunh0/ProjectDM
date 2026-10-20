@@ -25,6 +25,7 @@ namespace ProjectDM
         internal float experiencePickupScaleMultiplier = 3f;
         internal float currencyPickupScaleMultiplier = 3f;
         internal float chestPickupScaleMultiplier = 1f;
+        internal float manaPickupScaleMultiplier = 3f;
         internal float collectibleFloatYAmplitude = .06f;
         internal float collectibleFloatLoopDuration = 1.2f;
         internal AnimationCurve experiencePickupFloatYCurve = new AnimationCurve(
@@ -64,9 +65,9 @@ namespace ProjectDM
         internal float combatDamageScaleSpeed = 1f;
         internal float combatCriticalScale = 1.4f;
         internal int combatDamageMaximum = 128;
-        internal Color combatAttackColor = new Color(.95f, .96f, 1);
+        internal Color combatAttackColor = new Color(.96f, .94f, .86f);
         internal Color combatReceivedColor = new Color(1, .32f, .28f);
-        internal Color combatCriticalColor = new Color(1, .78f, .22f);
+        internal Color combatCriticalColor = new Color(1, .74f, .26f);
         internal bool enableCriticalHits = true;
         internal bool enablePlayerContactDamage = true;
     }

@@ -1,0 +1,179 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-20",
+  "approvedManaAndFrostPrompts": "FrostMana-assets.md",
+  "assets": [
+    {
+      "key": "player_base",
+      "steps": [
+        {
+          "key": "player_base",
+          "target": "ProjectDM_Player_16Bit_v5.png",
+          "prompt": "Use case: precise-object-edit. Edit target: this production Unity pixel-art character sprite sheet, 8 poses in two rows and four columns; keep every direction and original pose. Apply only a gentle palette correction across EVERY frame: weaken excessive glow and bright white/cyan staff-gem glare, remove diffuse emissive halos, and soften nearly black outlines to lighter desaturated local colors (muted medium purple for robe edges, subdued brown for boots/staff, soft warm skin shadow for facial contours). Keep eyes readable; do not make every outline blue. Match a quiet softly lit fantasy pixel-art style, no heavy black strokes and no bloom. CRITICAL: preserve the EXACT input canvas width and height, pixel coordinates of every sprite, frame count, row/column spacing, bounding boxes, pivots, silhouette, character identity, clothing, pose, facial expression, and animation progression. This atlas is sliced by fixed existing pixel rectangles: moving, rescaling, cropping or rearranging any frame will break the game. Preserve original transparency and crisp stepped pixel edges. Do not redesign, add or remove characters, frames or accessories. No text or new background. Return the same complete transparent atlas with only softer outline colors and restrained highlights.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-64a30ec6-a9a1-4e16-87da-9196762567b7.png"
+        }
+      ]
+    },
+    {
+      "key": "player_idle",
+      "steps": [
+        {
+          "key": "player_idle",
+          "target": "ProjectDM_Player_Idle_4Frame_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: this production Unity pixel-art character sprite sheet, 16 frames in a 4 by 4 grid: four directions across columns and four idle phases down rows. Apply only a gentle palette correction across EVERY frame: weaken excessive glow and bright white/cyan staff-gem glare, remove diffuse emissive halos, and soften nearly black outlines to lighter desaturated local colors (muted medium purple for robe edges, subdued brown for boots/staff, soft warm skin shadow for facial contours). Keep eyes readable; do not make every outline blue. Match a quiet softly lit fantasy pixel-art style, no heavy black strokes and no bloom. CRITICAL: preserve the EXACT input canvas width and height, pixel coordinates of every sprite, frame count, row/column spacing, bounding boxes, pivots, silhouette, character identity, clothing, pose, facial expression, and animation progression. This atlas is sliced by fixed existing pixel rectangles: moving, rescaling, cropping or rearranging any frame will break the game. Preserve original transparency and crisp stepped pixel edges. Do not redesign, add or remove characters, frames or accessories. No text or new background. Return the same complete transparent atlas with only softer outline colors and restrained highlights.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-167fd898-5896-48d7-9115-b1ab1fec362d.png"
+        }
+      ]
+    },
+    {
+      "key": "player_walk",
+      "steps": [
+        {
+          "key": "player_walk",
+          "target": "ProjectDM_Player_Walk_4Frame_v6.png",
+          "prompt": "Use case: precise-object-edit. Edit target: this production Unity pixel-art character sprite sheet, 16 frames in a 4 by 4 grid: four directions across columns and four walking phases down rows. Apply only a gentle palette correction across EVERY frame: weaken excessive glow and bright white/cyan staff-gem glare, remove diffuse emissive halos, and soften nearly black outlines to lighter desaturated local colors (muted medium purple for robe edges, subdued brown for boots/staff, soft warm skin shadow for facial contours). Keep eyes readable; do not make every outline blue. Match a quiet softly lit fantasy pixel-art style, no heavy black strokes and no bloom. CRITICAL: preserve the EXACT input canvas width and height, pixel coordinates of every sprite, frame count, row/column spacing, bounding boxes, pivots, silhouette, character identity, clothing, pose, facial expression, and animation progression. This atlas is sliced by fixed existing pixel rectangles: moving, rescaling, cropping or rearranging any frame will break the game. Preserve original transparency and crisp stepped pixel edges. Do not redesign, add or remove characters, frames or accessories. No text or new background. Return the same complete transparent atlas with only softer outline colors and restrained highlights.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-0ea7ca3a-bff2-48ff-9e26-f9716c55ba4e.png"
+        }
+      ]
+    },
+    {
+      "key": "player_side",
+      "steps": [
+        {
+          "key": "player_side",
+          "target": "ProjectDM_Player_Walk_SideRefined_v7.png",
+          "prompt": "Use case: precise-object-edit. Edit target: this production Unity pixel-art character sprite sheet, 16 frames in a 4 by 4 grid: four directions across columns and four walking phases down rows; preserve refined side-facing body proportions. Apply only a gentle palette correction across EVERY frame: weaken excessive glow and bright white/cyan staff-gem glare, remove diffuse emissive halos, and soften nearly black outlines to lighter desaturated local colors (muted medium purple for robe edges, subdued brown for boots/staff, soft warm skin shadow for facial contours). Keep eyes readable; do not make every outline blue. Match a quiet softly lit fantasy pixel-art style, no heavy black strokes and no bloom. CRITICAL: preserve the EXACT input canvas width and height, pixel coordinates of every sprite, frame count, row/column spacing, bounding boxes, pivots, silhouette, character identity, clothing, pose, facial expression, and animation progression. This atlas is sliced by fixed existing pixel rectangles: moving, rescaling, cropping or rearranging any frame will break the game. Preserve original transparency and crisp stepped pixel edges. Do not redesign, add or remove characters, frames or accessories. No text or new background. Return the same complete transparent atlas with only softer outline colors and restrained highlights.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-fe2296b9-b11c-4f9d-ad1e-5ce35ad47c57.png"
+        }
+      ]
+    },
+    {
+      "key": "monster_base",
+      "steps": [
+        {
+          "key": "monster_base",
+          "target": "ProjectDM_Monsters_16Bit_v5.png",
+          "prompt": "Use case: precise-object-edit. Edit target: the supplied production Unity pixel-art monster atlas, 1402 by 1122 pixels; two slime frames in the upper row and two skeleton-knight frames in the lower row. Apply ONLY this subtle art-direction change consistently to EVERY creature and every frame: replace nearly black/heavy outlines with lighter desaturated local colors, such as muted medium olive for green bodies, subdued warm brown for wood/fur, soft warm gray for bone, muted slate blue for stone and quiet purple for purple creatures. Keep pupils, mouths and deep anatomical details readable. Reduce excessive white specular glare and emissive eye highlights; weaken colored bloom and any luminous fog around creatures. All space OUTSIDE the crisp creature silhouettes must be truly transparent, with no diffuse glowing backdrop. Maintain soft natural fantasy colors and restrained lighting. CRITICAL: keep EXACT original canvas dimensions, all original sprite pixel positions, sizes, silhouettes, row separators, grid, frame count, poses, accessories, anatomy, expressions, species, and animation differences. Fixed Unity slice rectangles and pivots must still fit exactly. Do not crop, resize, rearrange, redesign, duplicate or remove any frame. Preserve crisp stepped pixel art and alpha transparency. Do not make every outline the same color. No text, no background, no added effects. Return the same complete atlas with gentler outlines and weaker glow.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-82434ca1-0e8d-4117-a75b-26c431580dcb.png"
+        }
+      ]
+    },
+    {
+      "key": "monster_extra",
+      "steps": [
+        {
+          "key": "monster_extra",
+          "target": "ProjectDM_ExtraMonsters_16Bit_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: the supplied production Unity pixel-art monster atlas, 1024 by 1536 pixels; 3 rows by 2 columns, paired goblin, mushroom and boar animation frames. Apply ONLY this subtle art-direction change consistently to EVERY creature and every frame: replace nearly black/heavy outlines with lighter desaturated local colors, such as muted medium olive for green bodies, subdued warm brown for wood/fur, soft warm gray for bone, muted slate blue for stone and quiet purple for purple creatures. Keep pupils, mouths and deep anatomical details readable. Reduce excessive white specular glare and emissive eye highlights; weaken colored bloom and any luminous fog around creatures. All space OUTSIDE the crisp creature silhouettes must be truly transparent, with no diffuse glowing backdrop. Maintain soft natural fantasy colors and restrained lighting. CRITICAL: keep EXACT original canvas dimensions, all original sprite pixel positions, sizes, silhouettes, row separators, grid, frame count, poses, accessories, anatomy, expressions, species, and animation differences. Fixed Unity slice rectangles and pivots must still fit exactly. Do not crop, resize, rearrange, redesign, duplicate or remove any frame. Preserve crisp stepped pixel art and alpha transparency. Do not make every outline the same color. No text, no background, no added effects. Return the same complete atlas with gentler outlines and weaker glow.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-b823742a-c666-47c7-a410-c09669002f58.png"
+        }
+      ]
+    },
+    {
+      "key": "monster_meadow",
+      "steps": [
+        {
+          "key": "monster_meadow",
+          "target": "ProjectDM_MeadowMonsters_2Frame_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: the supplied production Unity pixel-art monster atlas, 724 by 2172 pixels; 6 rows by 2 columns, five meadow creature species followed by the tree boss. Apply ONLY this subtle art-direction change consistently to EVERY creature and every frame: replace nearly black/heavy outlines with lighter desaturated local colors, such as muted medium olive for green bodies, subdued warm brown for wood/fur, soft warm gray for bone, muted slate blue for stone and quiet purple for purple creatures. Keep pupils, mouths and deep anatomical details readable. Reduce excessive white specular glare and emissive eye highlights; weaken colored bloom and any luminous fog around creatures. All space OUTSIDE the crisp creature silhouettes must be truly transparent, with no diffuse glowing backdrop. Maintain soft natural fantasy colors and restrained lighting. CRITICAL: keep EXACT original canvas dimensions, all original sprite pixel positions, sizes, silhouettes, row separators, grid, frame count, poses, accessories, anatomy, expressions, species, and animation differences. Fixed Unity slice rectangles and pivots must still fit exactly. Do not crop, resize, rearrange, redesign, duplicate or remove any frame. Preserve crisp stepped pixel art and alpha transparency. Do not make every outline the same color. No text, no background, no added effects. Return the same complete atlas with gentler outlines and weaker glow.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-fa30a66d-e371-4b22-b81e-1273fc1b0bdd.png"
+        }
+      ]
+    },
+    {
+      "key": "monster_dungeon",
+      "steps": [
+        {
+          "key": "monster_dungeon",
+          "target": "ProjectDM_DungeonMonsters_2Frame_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: the supplied production Unity pixel-art monster atlas, 724 by 2172 pixels; 6 rows by 2 columns, five dungeon creature species followed by the skeletal stone boss. Apply ONLY this subtle art-direction change consistently to EVERY creature and every frame: replace nearly black/heavy outlines with lighter desaturated local colors, such as muted medium olive for green bodies, subdued warm brown for wood/fur, soft warm gray for bone, muted slate blue for stone and quiet purple for purple creatures. Keep pupils, mouths and deep anatomical details readable. Reduce excessive white specular glare and emissive eye highlights; weaken colored bloom and any luminous fog around creatures. All space OUTSIDE the crisp creature silhouettes must be truly transparent, with no diffuse glowing backdrop. Maintain soft natural fantasy colors and restrained lighting. CRITICAL: keep EXACT original canvas dimensions, all original sprite pixel positions, sizes, silhouettes, row separators, grid, frame count, poses, accessories, anatomy, expressions, species, and animation differences. Fixed Unity slice rectangles and pivots must still fit exactly. Do not crop, resize, rearrange, redesign, duplicate or remove any frame. Preserve crisp stepped pixel art and alpha transparency. Do not make every outline the same color. No text, no background, no added effects. Return the same complete atlas with gentler outlines and weaker glow.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-85063906-2020-4cd1-b37b-01f0931f87c2.png"
+        },
+        {
+          "key": "monster_dungeon_refine",
+          "target": "ProjectDM_DungeonMonsters_2Frame_v1.png",
+          "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET, the original production monster sprite sheet with an exact 724-pixel width and 2172-pixel height. Image 2 is ONLY a palette/style reference showing the desired lighter local-color outlines and weaker eye glare. Apply Image 2's restrained highlights and softer desaturated outlines to Image 1. Preserve Image 1's EXACT 724x2172 canvas and every original sprite coordinate and shape: six rows by two columns, including the skeleton-stone boss at the bottom. Do not copy Image 2's canvas, which is incorrectly one pixel shorter. Do not crop or rescale; preserve all 2172 rows, transparent margins, pivots, animation poses, species and frame order. Only color/glow correction. Genuine transparent background, no text, no new objects, no bloom.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-68b6d1db-c4c5-48c2-b917-212585626206.png"
+        }
+      ]
+    },
+    {
+      "key": "gameplay",
+      "steps": [
+        {
+          "key": "gameplay",
+          "target": "ProjectDM_Sprites_TopDown_v2.png",
+          "prompt": "Use case: precise-object-edit. Edit target: this production Unity pixel-art atlas. Exact layout: 1774x887 pixels, the exact mixed atlas with wizard frames, skeleton frames, slime frames and bottom-row purple projectile frames, experience gems, gold coins and chest states. Reduce strong emitted light substantially: soften white-hot centers to medium colors, dim sparkles and glints, eliminate diffuse luminous halos, and use restrained specular highlights rather than bloom. Replace nearly black/heavy outer outlines with softer lighter desaturated LOCAL colors matching each material: muted blue for blue gems, medium purple for purple items, medium green for green items, warm ochre/brown for gold and chests, soft gray for silver. Do not apply one global blue border. Apply consistently to every sprite including the bottom-left purple projectile, fallback XP gem/coin and all treasure-chest states. Keep the purple projectile visible but replace its white-hot center with medium lavender. Preserve the EXACT original width/height, every frame and pixel position, item dimensions and silhouettes, number of rows/columns, animation order, and transparent gaps. Existing Unity slices use fixed pixel coordinates; any resize, repositioning or changed framing breaks the game. Preserve crisp stepped pixel-art edges, object designs and genuine alpha transparency. All surrounding space remains transparent with no background haze. Do not add, remove, crop or rearrange sprites, particles or frames. No text. Return the complete original atlas with gentle light and softer outlines.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-9c69e26f-7270-44c6-8d0f-5b273309182d.png"
+        }
+      ]
+    },
+    {
+      "key": "drops_variants",
+      "steps": [
+        {
+          "key": "drops_variants_refine",
+          "target": "ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png",
+          "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET, original production pixel-art atlas at exactly 1402 by 1122 pixels. Image 2 is ONLY a reference for subdued light and lighter material-colored outlines, a mana droplet already approved by the user. Apply that same QUIET LOW-GLOW style to ALL sprites in Image 1: 40 sprites in ten rows of four, with a narrow central bank and generous left/right transparent margins. Keep all blue/cyan/purple/green/gold XP shapes and bronze/silver/gold/emerald/amethyst currencies. Strong correction: remove the white-hot appearance of gem/star/orb centers and sparkles, replacing broad white regions with medium local colors (medium sky blue, muted cyan, lavender, medium green, subdued amber). The white area should become about 70 percent smaller; retain only a few tiny soft specular highlights. Dim all satellite sparkles and chest glow, reduce alpha/intensity of emissive halos. Recolor near-black outlines to lighter desaturated colors appropriate to each material, preserving distinct identities. Do not brighten the whole atlas or add bloom. STRICTLY preserve Image 1's EXACT 1402 by 1122 canvas, every frame's pixel location and dimensions, all silhouettes, animation order, row and column spacing, original particles in place and transparent margins. Fixed Unity sprite slices depend on those original coordinates. No crop, resize, rearrangement or new objects. No text or background. Crisp pixel art, genuine transparent background. Image 2 must never appear in the output.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-cef65ce5-d8da-424d-bce1-22ec7dea2d58.png"
+        },
+        {
+          "key": "drops_variants_final",
+          "target": "ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: the supplied already dimmed production Unity pixel-art item atlas, 1402x1122 pixels, 40 item frames, ten rows by four columns centered on the canvas. One targeted edit ONLY: lighten the OUTERMOST dark contour of every gem, orb, flame, star, coin and chest. Remove the heavy black/navy stroke appearance. Blue gem perimeter must become soft medium slate blue (#426b9a); purple items soft muted plum (#765487); green items medium desaturated green (#537d5a); gold/bronze/chest edges muted medium ochre-brown (#947049); silver edges medium gray (#78828e). Apply the corresponding lighter outline to ALL frames consistently, with no bright glowing rim. Preserve the current reduced-glow interiors and subdued sparkles, do not restore white-hot centers or brighten the body. Keep deeper carved details, locks, eye-like centers and interior crevices readable, only change outside contours. CRITICAL: preserve EXACT 1402x1122 canvas and exact existing pixel coordinates, shape, size, spacing, all particles in place and animation progression of every sprite. No resizing, cropping, moving, rearranging, adding or removing items or glints. Preserve crisp stepped pixel-art edges and genuine transparency, no diffuse background, no text. Return the complete same atlas with clearly lighter material-colored outer outlines.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-117aa1aa-c1c1-41b9-a94d-08904d9baf61.png"
+        }
+      ]
+    },
+    {
+      "key": "drops_chest",
+      "steps": [
+        {
+          "key": "drops_chest_refine",
+          "target": "ProjectDM_Pickups_4Frame_v1.png",
+          "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET, original production pixel-art atlas at exactly 1448 by 1086 pixels. Image 2 is ONLY a reference for subdued light and lighter material-colored outlines, a mana droplet already approved by the user. Apply that same QUIET LOW-GLOW style to ALL sprites in Image 1: 12 sprites in 3 rows of 4: blue crystals, gold coins, and four chest-opening stages. Strong correction: remove the white-hot appearance of gem/star/orb centers and sparkles, replacing broad white regions with medium local colors (medium sky blue, muted cyan, lavender, medium green, subdued amber). The white area should become about 70 percent smaller; retain only a few tiny soft specular highlights. Dim all satellite sparkles and chest glow, reduce alpha/intensity of emissive halos. Recolor near-black outlines to lighter desaturated colors appropriate to each material, preserving distinct identities. Do not brighten the whole atlas or add bloom. STRICTLY preserve Image 1's EXACT 1448 by 1086 canvas, every frame's pixel location and dimensions, all silhouettes, animation order, row and column spacing, original particles in place and transparent margins. Fixed Unity sprite slices depend on those original coordinates. No crop, resize, rearrangement or new objects. No text or background. Crisp pixel art, genuine transparent background. Image 2 must never appear in the output.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-f4176774-3e53-4c65-8c19-2959d6ff581b.png"
+        },
+        {
+          "key": "drops_chest_final",
+          "target": "ProjectDM_Pickups_4Frame_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: the supplied already dimmed production Unity pixel-art item atlas, 1448x1086 pixels, 12 frames, three rows by four columns, gems then coins then chests. One targeted edit ONLY: lighten the OUTERMOST dark contour of every gem, orb, flame, star, coin and chest. Remove the heavy black/navy stroke appearance. Blue gem perimeter must become soft medium slate blue (#426b9a); purple items soft muted plum (#765487); green items medium desaturated green (#537d5a); gold/bronze/chest edges muted medium ochre-brown (#947049); silver edges medium gray (#78828e). Apply the corresponding lighter outline to ALL frames consistently, with no bright glowing rim. Preserve the current reduced-glow interiors and subdued sparkles, do not restore white-hot centers or brighten the body. Keep deeper carved details, locks, eye-like centers and interior crevices readable, only change outside contours. CRITICAL: preserve EXACT 1448x1086 canvas and exact existing pixel coordinates, shape, size, spacing, all particles in place and animation progression of every sprite. No resizing, cropping, moving, rearranging, adding or removing items or glints. Preserve crisp stepped pixel-art edges and genuine transparency, no diffuse background, no text. Return the complete same atlas with clearly lighter material-colored outer outlines.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-f696247e-8ebf-4843-88ad-8ed326bc926d.png"
+        }
+      ]
+    },
+    {
+      "key": "skill_chain",
+      "steps": [
+        {
+          "key": "skill_chain",
+          "target": "ProjectDM_ChainLightning_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: this production Unity pixel-art spell sprite. The same blue/cyan lightning bolt from bottom-left to top-right. Preserve both exact endpoints and every original branch. Replace the broad white-hot core with softer medium/pale cyan, substantially reduce its large blue/cyan glow halo and dim satellite sparkles. Lighter muted blue edge colors instead of hard saturated dark-blue borders. Overall direction: gentle restrained emitted light and soft material-colored outlines, consistent with a subdued mana droplet and pale-blue ice shard. CRITICAL: preserve EXACT 1536x1024 canvas, exact sprite silhouette and original pixel coordinates, center/pivot, orientation, anchors, visible effect radius, transparent padding, composition and crisp pixel-art clusters. This image is already linked to gameplay range/anchor settings; resizing or moving the artwork will break alignment. Keep all original details and particles in place, changing only glow intensity, highlights and outline colors. Preserve genuine alpha transparency. No new particles, no text, no ground, no background. Return the same single complete spell sprite.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-42e4011c-da01-4c77-98c1-6e889a6935dc.png"
+        }
+      ]
+    },
+    {
+      "key": "skill_splash",
+      "steps": [
+        {
+          "key": "skill_splash",
+          "target": "ProjectDM_Splash_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: this production Unity pixel-art spell sprite. The same radial turquoise impact burst. Preserve the exact center, full circular extent, all original arms and flecks. Lower the bright white-green center to muted mint/teal and soften bright facets. Replace dark teal outlines with lighter desaturated teal, with no extra bloom or halo. Overall direction: gentle restrained emitted light and soft material-colored outlines, consistent with a subdued mana droplet and pale-blue ice shard. CRITICAL: preserve EXACT 1284x1225 canvas, exact sprite silhouette and original pixel coordinates, center/pivot, orientation, anchors, visible effect radius, transparent padding, composition and crisp pixel-art clusters. This image is already linked to gameplay range/anchor settings; resizing or moving the artwork will break alignment. Keep all original details and particles in place, changing only glow intensity, highlights and outline colors. Preserve genuine alpha transparency. No new particles, no text, no ground, no background. Return the same single complete spell sprite.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-e5942d49-7bbc-489d-83ae-cfc57da9c936.png"
+        }
+      ]
+    },
+    {
+      "key": "skill_meteor",
+      "steps": [
+        {
+          "key": "skill_meteor",
+          "target": "ProjectDM_Meteor_v1.png",
+          "prompt": "Use case: precise-object-edit. Edit target: this production Unity pixel-art spell sprite. The same rocky flaming meteor, head at lower-left and tail at upper-right. Preserve the exact head impact point, every rock and fire shape, and overall footprint. Reduce white-yellow fire glare and the large orange halo substantially, keeping warm muted amber/orange flames. Recolor nearly black rock outlines to softer brown/gray and harsh red fire borders to muted ochre. Keep enough value contrast to distinguish the rock head from its flames. Overall direction: gentle restrained emitted light and soft material-colored outlines, consistent with a subdued mana droplet and pale-blue ice shard. CRITICAL: preserve EXACT 1536x1024 canvas, exact sprite silhouette and original pixel coordinates, center/pivot, orientation, anchors, visible effect radius, transparent padding, composition and crisp pixel-art clusters. This image is already linked to gameplay range/anchor settings; resizing or moving the artwork will break alignment. Keep all original details and particles in place, changing only glow intensity, highlights and outline colors. Preserve genuine alpha transparency. No new particles, no text, no ground, no background. Return the same single complete spell sprite.",
+          "generatedOutput": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a157a6-bab1-7893-8f04-d591408ca216\\exec-417c071c-efa0-4b94-bf31-728aa88df075.png"
+        }
+      ]
+    }
+  ]
+}

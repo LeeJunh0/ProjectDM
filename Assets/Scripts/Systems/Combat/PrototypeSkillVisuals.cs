@@ -14,6 +14,13 @@ namespace ProjectDM
         private Sprite bolt, gem;
         private SkillVisualAssets artwork;
         private Material defaultSpriteMaterial;
+        private BossDeathRippleVisuals deathRipples;
+
+        internal void BossDeath(Vector3 position, bool boss)
+        {
+            if (deathRipples == null) deathRipples = gameObject.GetComponent<BossDeathRippleVisuals>() ?? gameObject.AddComponent<BossDeathRippleVisuals>();
+            deathRipples.Emit(position, boss);
+        }
 
         private sealed class Visual
         {
@@ -78,12 +85,14 @@ namespace ProjectDM
         internal void BeginFrostOrbit(int count, float radius)
         {
             EndFrostOrbit();
+            bool generated = artwork != null && artwork.frostShard != null;
+            float diameter = generated ? Mathf.Clamp(artwork.frostArtworkDiameter, .1f, 1) : 1;
             for (int i = 0; i < count; i++)
             {
-                SpriteRenderer renderer = Rent(gem ?? bolt);
+                SpriteRenderer renderer = Rent(generated ? artwork.frostShard : gem ?? bolt);
                 if (renderer == null) break; // Visual budget never changes combat's shard count.
-                renderer.transform.localScale = SpriteScale(renderer.sprite, radius * 2, radius * 2);
-                renderer.color = new Color(.65f, .95f, 1, .95f);
+                renderer.transform.localScale = SpriteScale(renderer.sprite, radius * 2 / diameter, radius * 2 / diameter);
+                renderer.color = generated ? Color.white : new Color(.65f, .95f, 1, .95f);
                 frostShards.Add(renderer);
             }
         }
@@ -164,7 +173,7 @@ namespace ProjectDM
                 renderer.transform.rotation = Quaternion.Euler(0, 0, angle);
                 Vector3 size = SpriteScale(bolt, range, .16f);
                 renderer.transform.localScale = size;
-                Color color = new Color(1, .35f, .06f, .65f);
+                Color color = new Color(1, .35f, .06f, .5f);
                 renderer.color = color;
                 active.Add(new Visual { renderer = renderer, color = color, size = size, duration = .22f });
             }
@@ -268,6 +277,7 @@ namespace ProjectDM
         internal void Tick(float dt)
         {
             if (dt <= 0) return;
+            deathRipples?.Tick(dt);
             for (int i = active.Count - 1; i >= 0; i--)
             {
                 Visual visual = active[i];
@@ -306,6 +316,7 @@ namespace ProjectDM
 
         internal void Clear()
         {
+            deathRipples?.Clear();
             EndFrostOrbit();
             foreach (Visual visual in active) { visual.renderer.gameObject.SetActive(false); spritePool.Enqueue(visual.renderer); }
             active.Clear();

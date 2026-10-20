@@ -34,6 +34,7 @@ namespace ProjectDM.Editor
                 Check(PrototypeRules.Validate(tables.balance, tables.skillTable, tables.growthTable) == null, "Runtime tables invalid");
                 foreach (PrototypeMonster monster in tables.balance.monsters) monster.bonusChance = 0;
                 tables.balance.chestChance = 0;
+                tables.balance.manaAbsorbChance = 0; // This fixture isolates the two graded reward streams.
                 GameSettings settings = new GameSettings();
                 WorldArtAssets art = new WorldArtAssets { runtimeAssets = new ProjectDMRuntimeAssets() };
                 art.runtimeAssets.CurrencyPickupPrefabs = new GameObject[5]; art.runtimeAssets.ExperiencePickupPrefabs = new GameObject[5];

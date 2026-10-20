@@ -69,8 +69,15 @@ namespace ProjectDM
         {
             if (!EnemySystem.IsLive(target)) return;
             bool critical = criticalRoll();
-            enemiesSystem.DamagePrototypeEnemyWithPresentation(target, damage * (critical ? playerStats.CriticalDamage : 1),
-                critical ? CombatDamageKind.Critical : CombatDamageKind.Attack);
+            CombatDamageElement element = Character?.id switch
+            {
+                "flame" => CombatDamageElement.Flame,
+                "lightning" => CombatDamageElement.Lightning,
+                "frost" => CombatDamageElement.Frost,
+                _ => CombatDamageElement.None
+            };
+            enemiesSystem.DamageElementalEnemy(target, damage * (critical ? playerStats.CriticalDamage : 1),
+                critical ? CombatDamageKind.Critical : CombatDamageKind.Attack, element);
         }
 
         internal double AttackEffectChance(PrototypeSkill row)

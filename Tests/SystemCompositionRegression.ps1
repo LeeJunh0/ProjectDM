@@ -51,7 +51,7 @@ foreach ($name in $dependencies.Keys) { Test-NoCycle $name @() }
 $settings = $sources.GameSettings
 $inspector = Get-Content (Join-Path $projectRoot 'Assets/Editor/GameManagerInspector.cs') -Raw
 $properties = @([regex]::Matches($inspector, 'DrawProperty\("(\w+)"') | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique)
-Assert-True ($properties.Count -eq 56) 'Inspector property coverage changed unexpectedly.'
+Assert-True ($properties.Count -eq 57) 'Inspector property coverage changed unexpectedly.'
 foreach ($property in $properties) {
     Assert-True ($manager -match ('\bprivate\s+[\w<>]+\s+' + $property + '\b')) "Serialized Inspector binding lost: $property"
     Assert-True ($settings -match ('\binternal\s+[\w<>]+\s+' + $property + '\b')) "Injected setting missing: $property"

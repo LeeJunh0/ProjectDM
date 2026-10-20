@@ -16,6 +16,9 @@ namespace ProjectDM
         public bool dead;
         public float speed;
         public MonsterKind kind;
+        public EnemyRank rank;
+        public float rewardMultiplier = 1;
+        public float hitRadiusMultiplier = 1;
         public int chillStacks;
         public float chillRemaining, freezeRemaining, chillSlow;
     }
@@ -47,6 +50,7 @@ namespace ProjectDM
         public float baseScale;
     }
 
-    internal enum PickupKind { Experience, Currency, Chest }
+    internal enum PickupKind { Experience, Currency, Chest, Mana }
     internal enum MonsterKind { Slime, Skeleton, Goblin, Mushroom, Boar }
+    internal enum EnemyRank { Normal, MiniBoss, Boss }
 }

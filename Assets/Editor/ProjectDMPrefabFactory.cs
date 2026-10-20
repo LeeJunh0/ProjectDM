@@ -26,6 +26,8 @@ namespace ProjectDM.Editor
             CreatePrefab("ChestPickup", root => CreateVisual(root, false));
             EnsureAnimator("ChestPickup", "ProjectDM_PickupChest");
             EnsureChestInteractionVisual();
+            CreatePrefab("ManaPickup", root => CreateVisual(root, false));
+            EnsureStaticPickupVisual("ManaPickup", "Mana");
             for (int variant = 1; variant <= 5; variant++)
             {
                 string suffix = variant.ToString("00");
@@ -34,6 +36,7 @@ namespace ProjectDM.Editor
                 EnsureStaticPickupVisual($"ExperiencePickup_{suffix}", $"Experience_{suffix}_1");
                 EnsureStaticPickupVisual($"CurrencyPickup_{suffix}", $"Currency_{suffix}_1");
             }
+            ProjectDMPickupEffectsSetup.Install();
         }
 
         private static void CreatePrefab(string prefabName, Action<GameObject> configure)
@@ -105,7 +108,9 @@ namespace ProjectDM.Editor
 
             bool changed = false;
             SpriteRenderer renderer = visual.GetComponent<SpriteRenderer>();
-            Sprite sprite = LoadCollectibleSprite(spriteName);
+            Sprite sprite = spriteName == "Mana"
+                ? AssetDatabase.LoadAssetAtPath<Sprite>("Assets/GameContent/Art/ProjectDM_ManaPickup_v1.png")
+                : LoadCollectibleSprite(spriteName);
             if (renderer != null && sprite != null && renderer.sprite != sprite)
             {
                 renderer.sprite = sprite;

@@ -25913,9 +25913,9 @@ MonoBehaviour:
   combatDamageScaleSpeed: 1
   combatCriticalScale: 1.4
   combatDamageMaximum: 128
-  combatAttackColor: {r: 0.95, g: 0.96, b: 1, a: 1}
+  combatAttackColor: {r: 0.96, g: 0.94, b: 0.86, a: 1}
   combatReceivedColor: {r: 1, g: 0.32, b: 0.28, a: 1}
-  combatCriticalColor: {r: 1, g: 0.78, b: 0.22, a: 1}
+  combatCriticalColor: {r: 1, g: 0.74, b: 0.26, a: 1}
   enableCriticalHits: 1
   enablePlayerContactDamage: 1
 --- !u!4 &1763096504

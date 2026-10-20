@@ -68,13 +68,13 @@ namespace ProjectDM
                 GUI.Label(new Rect(44f, 116f, 632f, 34f), "획득 재화", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(.58f, .55f, .50f) } });
 
                 GUIStyle currencyStyle = new GUIStyle(heading) { fontSize = 68, alignment = TextAnchor.MiddleLeft, normal = { textColor = new Color(.92f, .68f, .34f) } };
-                // Reserve the final value's width, so the centered coin/value group never shifts as digits increase.
-                string finalAmount = $"+{run.runCurrency:N0}";
-                string amount = $"+{AnimatedResultCount(run.runCurrency, 0, presentationElapsed):N0}";
-                float amountWidth = Mathf.Min(500f, currencyStyle.CalcSize(new GUIContent(finalAmount)).x);
+                // Reserve every reachable compact format so the coin/value group stays fixed during count-up.
+                string amount = "+" + CompactNumber.Format(AnimatedResultCount(run.runCurrency, 0, presentationElapsed));
+                float amountWidth = CurrencyWidth(currencyStyle, run.runCurrency);
                 // Fit unusually large balances without letting the text escape the panel.
-                while (currencyStyle.fontSize > 24 && currencyStyle.CalcSize(new GUIContent(finalAmount)).x > 500f) currencyStyle.fontSize--;
-                amountWidth = Mathf.Min(amountWidth, currencyStyle.CalcSize(new GUIContent(finalAmount)).x);
+                while (currencyStyle.fontSize > 24 && amountWidth > 500f)
+                { currencyStyle.fontSize--; amountWidth = CurrencyWidth(currencyStyle, run.runCurrency); }
+                amountWidth = Mathf.Min(500f, amountWidth);
                 float currencyX = (panelWidth - amountWidth - 82f) * .5f;
                 UiGraphics.DrawResultSprite(new Rect(currencyX, 163f, 64f, 64f), art.coinSprite);
                 GUI.Label(new Rect(currencyX + 82f, 151f, amountWidth + 4f, 90f), amount, currencyStyle);
@@ -143,6 +143,29 @@ namespace ProjectDM
             GUIStyle style = new GUIStyle(source) { wordWrap = false, clipping = TextClipping.Clip };
             while (style.fontSize > minimumSize && style.CalcSize(new GUIContent(text)).x > rect.width) style.fontSize--;
             GUI.Label(rect, text, style);
+        }
+
+        private static float CurrencyWidth(GUIStyle style, int target)
+        {
+            // During count-up, 999,999 can be wider than the final 1M. Reserve every reachable format.
+            char widestDigit = '0'; float widest = 0;
+            for (char digit = '0'; digit <= '9'; digit++)
+            {
+                float width = style.CalcSize(new GUIContent(digit.ToString())).x;
+                if (width > widest) { widest = width; widestDigit = digit; }
+            }
+            string digits = new string(widestDigit, Math.Min(999999, Math.Max(0, target)).ToString().Length);
+            if (digits.Length > 3) digits = digits.Insert(digits.Length - 3, ",");
+            float result = style.CalcSize(new GUIContent("+" + digits)).x;
+            string mantissa = "+" + new string(widestDigit, 3) + "." + new string(widestDigit, 2);
+            string[] units = { "M", "B" }; double threshold = 1000000;
+            foreach (string unit in units)
+            {
+                if (target < threshold) break;
+                result = Mathf.Max(result, style.CalcSize(new GUIContent(mantissa + unit)).x);
+                threshold *= 1000;
+            }
+            return Mathf.Max(result, style.CalcSize(new GUIContent("+" + CompactNumber.Format(target))).x);
         }
 
         private void DrawPermanentKillBar(Rect rect, RunResultPresentation.PermanentKillProgress progress, int displayedTotal)

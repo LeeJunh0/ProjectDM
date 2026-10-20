@@ -45,7 +45,7 @@ namespace ProjectDM.Editor
             checks = 0;
             SkillVisualAssets art = Resources.Load<SkillVisualAssets>("ProjectDM/Skills/SkillVisuals");
             Check(art != null, "Resource settings load in player-compatible path");
-            foreach (Sprite sprite in new[] { art.chain, art.splash, art.meteor })
+            foreach (Sprite sprite in new[] { art.chain, art.splash, art.meteor, art.frostShard })
             {
                 Check(sprite != null, "Assigned approved sprite");
                 TextureImporter importer = (TextureImporter)AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite));
@@ -69,6 +69,16 @@ namespace ProjectDM.Editor
                 PrototypeSkillVisuals effects = root.AddComponent<PrototypeSkillVisuals>();
                 effects.Configure(art.chain, art.splash, art);
                 IList active = (IList)RuntimeTestAccess.Get(effects, "active");
+                effects.BeginFrostOrbit(2, .35f);
+                IList shards = (IList)RuntimeTestAccess.Get(effects, "frostShards");
+                Check(shards.Count == 2, "Frost creates the requested orbit visuals");
+                SpriteRenderer shard = (SpriteRenderer)shards[0];
+                Check(shard.sprite == art.frostShard && shard.color == Color.white, "Frost uses its own artwork without recoloring it");
+                Check(Mathf.Abs(shard.bounds.size.x * art.frostArtworkDiameter - .7f) < .001f, "Frost padding compensation follows the real shard diameter");
+                effects.MoveFrostShard(0, new Vector3(2, 3), 40);
+                Check(Near(shard.transform.position, new Vector3(2, 3)), "Frost artwork uses the exact combat position");
+                effects.EndFrostOrbit();
+                Check(shards.Count == 0 && !shard.gameObject.activeSelf, "Frost artwork returns to the shared pool");
                 foreach (Vector3 end in new[] { Vector3.right * 3, Vector3.left * 3, Vector3.up * 2, new Vector3(-2, 1) })
                 {
                     Vector3 start = new Vector3(.25f, -.5f);
@@ -116,7 +126,9 @@ namespace ProjectDM.Editor
                             "Visible area reaches actual damage diameter while still visible: " + radius);
                         Check(Near(area.transform.position, origin) && area.transform.parent.localScale == Vector3.one,
                             "Reused area sprite is centered and does not inherit widened lightning frame");
-                        Check(area.color.a > .7f, "Range-sized impact remains opaque enough to see, rather than reaching full size only at expiry");
+                        float configuredOpacity = meteorImpact ? art.impactOpacity : art.splashOpacity;
+                        Check(configuredOpacity >= .5f && Mathf.Abs(area.color.a - configuredOpacity) < .001f,
+                            "Full-size impact retains configured soft opacity rather than reaching hit radius only at expiry");
                         Vector3 fullSize = area.transform.localScale;
                         effects.Tick(.02f);
                         Check(area.transform.localScale == fullSize && area.color.a > 0, "Impact holds full damage radius while fading");

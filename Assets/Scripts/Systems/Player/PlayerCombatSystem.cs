@@ -50,7 +50,7 @@ namespace ProjectDM
             float damage = 0;
             float radiusSquared = tables.balance.playerContactRadius * tables.balance.playerContactRadius;
             foreach (Enemy enemy in enemiesSystem.enemies)
-                if (EnemySystem.IsLive(enemy) && (enemy.transform.position - playerWorld.player.position).sqrMagnitude <= radiusSquared)
+                if (EnemySystem.IsLive(enemy) && (enemy.transform.position - playerWorld.player.position).sqrMagnitude <= radiusSquared * enemy.hitRadiusMultiplier * enemy.hitRadiusMultiplier)
                     damage = Mathf.Max(damage, tables.balance.monsters[(int)enemy.kind].contactDamage);
             if (damage > 0) ApplyPlayerDamage(damage);
         }

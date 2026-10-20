@@ -51,6 +51,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - bootstrap
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e131a277412afc4e9d20ffd84e0f973
+    m_Address: prefab/pickup-mana
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 342104ef5671c2543bd4bb7861815b6e
     m_Address: art/player-walk-cycle
     m_ReadOnly: 0
@@ -135,12 +141,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - bootstrap
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e2afedd2b1466574299d364fd8771168
-    m_Address: art/floor
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - bootstrap
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b251ad2d203e87549b07846c4a5c0af3
     m_Address: animation/player
     m_ReadOnly: 0
@@ -179,6 +179,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e0d5d46ed18e0e3449a3281c81718e7c
     m_Address: animation/slime
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - bootstrap
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2afedd2b1466574299d364fd8771168
+    m_Address: art/floor
     m_ReadOnly: 0
     m_SerializedLabels:
     - bootstrap

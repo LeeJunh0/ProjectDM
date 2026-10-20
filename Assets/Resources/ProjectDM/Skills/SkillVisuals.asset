@@ -15,14 +15,15 @@ MonoBehaviour:
   chain: {fileID: 21300000, guid: 759c3d159d9a466db35d70439e2a16bb, type: 3}
   splash: {fileID: 21300000, guid: 29a19885a1914c08a9e8d17452c84cba, type: 3}
   meteor: {fileID: 21300000, guid: 56d7ec2a4c2848ff8a449b2a0a49c384, type: 3}
+  frostShard: {fileID: 21300000, guid: 6938ccf1636b3664c923a1a64746c58b, type: 3}
   impactMaterial: {fileID: 2100000, guid: 5218c33bcb8144868cf3b6992e5c6620, type: 2}
   chainStart: {x: 0.14, y: 0.11}
   chainEnd: {x: 0.9, y: 0.88}
   chainDuration: 0.18
-  chainOpacity: 0.9
+  chainOpacity: 0.65
   chainWidthMultiplier: 2.5
   splashDuration: 0.3
-  splashOpacity: 0.75
+  splashOpacity: 0.6
   burstStartScale: 0.18
   burstExpansionDuration: 0.06
   burstArtworkDiameter: 0.9
@@ -30,8 +31,9 @@ MonoBehaviour:
   meteorWidth: 1.45
   meteorRotation: 55
   meteorAnchor: {x: 0.35, y: 0.3}
-  warningOpacity: 0.12
+  warningOpacity: 0.09
   impactDuration: 0.4
-  impactOpacity: 0.8
+  impactOpacity: 0.65
   impactColor: {r: 1, g: 0.4, b: 0.08, a: 1}
+  frostArtworkDiameter: 0.94
   maxActiveEffects: 128
