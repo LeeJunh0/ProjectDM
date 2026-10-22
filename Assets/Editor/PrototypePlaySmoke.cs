@@ -185,7 +185,17 @@ namespace ProjectDM.Editor
             manager.SetManaVisualState(ManaVisualState.Normal);
             foreach (string character in new[] { "lightning", "flame", "frost", "projectile" })
             {
-                characterRun.characters.Select(character); Call(manager, "BeginRun");
+                Transform avatar = (Transform)Get(manager, "player");
+                Animator avatarAnimator = avatar.GetComponentInChildren<Animator>();
+                RuntimeAnimatorController beforeSelection = avatarAnimator.runtimeAnimatorController;
+                characterRun.characters.Select(character);
+                Check(avatarAnimator.runtimeAnimatorController == beforeSelection, "Growth selection does not hot-swap the current avatar");
+                Call(manager, "BeginRun");
+                CharacterVisuals.Entry characterArt = stageArt.characterVisuals.Find(character);
+                avatarAnimator.Update(0);
+                Check(characterArt != null && avatarAnimator.runtimeAnimatorController == characterArt.controller &&
+                    avatar.GetComponentInChildren<SpriteRenderer>().sprite == characterArt.idleSprite,
+                    "Actual Main restart applies the selected hooded character sprite and animation");
                 Check(characterRun.characters.Current.id == character, "Real restart applies selected personal magic");
                 EnemySystem enemySystem = (EnemySystem)Get(manager, "enemiesSystem");
                 Enemy target = enemySystem.enemies[0]; target.transform.position = ((Transform)Get(manager, "player")).position + Vector3.right;
@@ -214,6 +224,9 @@ namespace ProjectDM.Editor
                     enemySystem.SpawnEnemies(balance.miniBossInterval);
                     Enemy miniBoss = enemySystem.enemies.Find(e => e.rank == EnemyRank.MiniBoss);
                     Check(miniBoss != null && miniBoss.renderer.sprite != null, "Real Main spawns an enlarged current-monster mini boss");
+                    Check(miniBoss.renderer.sprite == stageArt.MonsterSprite(miniBoss.kind) &&
+                        AssetDatabase.GetAssetPath(miniBoss.renderer.sprite).StartsWith(ProjectDMMonsterArtSetup.ArtFolder + "/"),
+                        "Real mini boss inherits the newly installed retro monster artwork");
                     miniBoss.transform.position = player.position + Vector3.right * 2;
                     int chestsBefore = drops.pickups.FindAll(p => p.kind == PickupKind.Chest).Count;
                     enemySystem.DamagePrototypeEnemy(miniBoss, miniBoss.hitPoints);

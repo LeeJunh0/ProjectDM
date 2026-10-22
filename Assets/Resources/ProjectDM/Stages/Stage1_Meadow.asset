@@ -19,31 +19,31 @@ MonoBehaviour:
   monsters:
   - displayName: "\uD480 \uC2AC\uB77C\uC784"
     frames:
-    - {fileID: -243069175, guid: fee8cf20bc670e44ba65251274556719, type: 3}
-    - {fileID: -1586343806, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -530214790, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
+    - {fileID: -287895292, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
     animatorController: {fileID: 0}
   - displayName: "\uC0C8\uC2F9 \uC815\uB839"
     frames:
-    - {fileID: -1057819321, guid: fee8cf20bc670e44ba65251274556719, type: 3}
-    - {fileID: -833135354, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -617390812, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
+    - {fileID: 510067268, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
     animatorController: {fileID: 0}
   - displayName: "\uB4E4\uD310 \uACE0\uBE14\uB9B0"
     frames:
-    - {fileID: 391696013, guid: fee8cf20bc670e44ba65251274556719, type: 3}
-    - {fileID: -747367936, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -206846774, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
+    - {fileID: 811340443, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
     animatorController: {fileID: 0}
   - displayName: "\uBC84\uC12F \uC694\uC815"
     frames:
-    - {fileID: -1759911009, guid: fee8cf20bc670e44ba65251274556719, type: 3}
-    - {fileID: -262982664, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: -534285207, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
+    - {fileID: 1078039953, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
     animatorController: {fileID: 0}
   - displayName: "\uBA67\uB3FC\uC9C0"
     frames:
-    - {fileID: 1076004570, guid: fee8cf20bc670e44ba65251274556719, type: 3}
-    - {fileID: -164211046, guid: fee8cf20bc670e44ba65251274556719, type: 3}
+    - {fileID: 1097022561, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
+    - {fileID: -767186058, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
     animatorController: {fileID: 0}
   bossName: "\uACE0\uBAA9 \uC218\uD638\uC790"
   bossFrames:
-  - {fileID: -2033015403, guid: fee8cf20bc670e44ba65251274556719, type: 3}
-  - {fileID: 943566511, guid: fee8cf20bc670e44ba65251274556719, type: 3}
-  bossScale: 0.47734806
+  - {fileID: -1794222391, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
+  - {fileID: -1565121413, guid: 8cedf0a1da7639840b3dd95817424ae2, type: 3}
+  bossScale: 0.5776824

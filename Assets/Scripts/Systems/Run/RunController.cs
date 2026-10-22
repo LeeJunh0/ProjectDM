@@ -109,7 +109,7 @@ namespace ProjectDM
                 + progression.PermanentAmount("time")), characters?.Current.manaCost ?? tables.balance.basicAttackManaCost);
             runEnded = showMetaTree = false;
             resetNavigation();
-            playerWorld.ResetPosition();
+            playerWorld.ResetPosition(characters?.Current.id);
             snapCamera();
             RefreshPauseState();
             spawnInitial();

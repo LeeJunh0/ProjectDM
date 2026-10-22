@@ -27,7 +27,7 @@ namespace ProjectDM.Editor
             try
             {
                 Verify(); Directory.CreateDirectory("Logs");
-                File.WriteAllText("Logs/StageContentRegression-result.txt", $"PASS: {checks} assertions (two stages, actual sprites, transparent actors, opaque floor, rule-tile topology, selection boundary, legacy dungeon preserved).\n");
+                File.WriteAllText("Logs/StageContentRegression-result.txt", $"PASS: {checks} assertions (two stages, retro sprites, transparent actors, opaque floor, rule-tile topology, selection boundary, dungeon ground preserved).\n");
                 EditorApplication.Exit(0);
             }
             catch (Exception e) { Debug.LogException(e); EditorApplication.Exit(1); }
@@ -51,7 +51,7 @@ namespace ProjectDM.Editor
                     .Select(s => GlobalObjectId.GetGlobalObjectIdSlow(s).ToString()).OrderBy(s => s).ToArray();
                 Check(before.SequenceEqual(after), "Reimport preserves sprite IDs and all existing references");
                 Directory.CreateDirectory("Logs");
-                File.WriteAllText("Logs/MonsterReimport-result.txt", $"PASS: {checks} assertions, repeated import preserves 96 PPU, original stage2 frames/controllers and sprite IDs.\n");
+                File.WriteAllText("Logs/MonsterReimport-result.txt", $"PASS: {checks} assertions, repeated stage import preserves retro monster bindings, 96 PPU and legacy sprite IDs.\n");
                 EditorApplication.Exit(0);
             }
             catch (Exception e) { Debug.LogException(e); EditorApplication.Exit(1); }
@@ -121,13 +121,15 @@ namespace ProjectDM.Editor
             try
             {
                 StageSession session = new StageSession(settings, art); session.SetDefinitions(definitions);
-                ProjectDMSpriteCatalog catalog = AssetDatabase.LoadAssetAtPath<ProjectDMSpriteCatalog>("Assets/GameContent/Configuration/ProjectDMSpriteCatalog.asset");
-                Check(session.Definition(2).monsters[0].frames.SequenceEqual(catalog.slimeFrames), "Stage 2 restores original slime frames");
-                Check(session.Definition(2).monsters[1].frames.SequenceEqual(catalog.skeletonFrames), "Stage 2 restores original skeleton frames");
-                for (int i = 2; i < 5; i++)
-                    Check(AssetDatabase.GetAssetPath(session.Definition(2).monsters[i].frames[0]) == "Assets/GameContent/Art/ProjectDM_ExtraMonsters_16Bit_v1.png", "Stage 2 restores original goblin/mushroom/boar sheet");
-                Check(session.Definition(2).monsters[0].animatorController == AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/GameContent/Animation/ProjectDM_Slime.controller"), "Original slime Animator is restored");
-                Check(session.Definition(2).monsters[1].animatorController == AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/GameContent/Animation/ProjectDM_Skeleton.controller"), "Original skeleton Animator is restored");
+                foreach (string biome in ProjectDMMonsterArtSetup.Biomes)
+                {
+                    StageDefinition stage = session.Definition(biome == "Meadow" ? 1 : 2);
+                    string expected = ProjectDMMonsterArtSetup.SheetPath(biome);
+                    Check(stage.monsters.All(monster => monster.frames.All(sprite => AssetDatabase.GetAssetPath(sprite) == expected)),
+                        "All five active monster slots use this biome's retro atlas");
+                    Check(stage.monsters.All(monster => monster.animatorController == null), "Manual playback is the sole retro animation owner");
+                    Check(stage.bossFrames.All(sprite => AssetDatabase.GetAssetPath(sprite) == expected), "Boss preview uses the matching retro atlas");
+                }
                 Check(!session.Select(3), "Unconfigured stage cannot be selected");
                 foreach (int id in new[] { 1, 2, 1, 2 })
                 {
@@ -169,12 +171,15 @@ namespace ProjectDM.Editor
                 Check(session.Definition(2).ground == AssetDatabase.LoadAssetAtPath<DungeonGroundRuleTile>("Assets/GameContent/Tiles/DungeonGroundRuleTile.asset"), "Stage 2 reuses the original dungeon asset");
                 foreach (string biome in new[] { "Meadow", "Dungeon" })
                 {
-                    string path = $"Assets/GameContent/Art/ProjectDM_{biome}Monsters_2Frame_v1.png";
+                    string path = ProjectDMMonsterArtSetup.SheetPath(biome);
                     Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().ToArray();
-                    Check(sprites.Length == (biome == "Dungeon" ? 2 : 12), "Only active stage sprites are imported (dungeon boss only)");
+                    Check(sprites.Length == 12, "Five active monsters and boss have two frames each");
                     Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-                    Color32[] pixels = texture.GetPixels32();
-                    Check(pixels[0].a == 0 && pixels.Count(p => p.a == 0) > pixels.Length / 4, "Real transparent actor atlas, not a black rectangle");
+                    Texture2D raw = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                    raw.LoadImage(File.ReadAllBytes(path));
+                    Color32[] pixels = raw.GetPixels32();
+                    Object.DestroyImmediate(raw);
+                    Check(pixels[0].a <= 16 && pixels.Count(p => p.a == 0) > pixels.Length / 4, "Transparent corner and empty gutters, not an opaque rectangle");
                     foreach (Sprite sprite in sprites)
                         Check(sprite.rect.xMin >= 0 && sprite.rect.yMin >= 0 && sprite.rect.xMax <= texture.width && sprite.rect.yMax <= texture.height,
                             "Slices stay within source texture");

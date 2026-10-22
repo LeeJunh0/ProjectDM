@@ -1,0 +1,485 @@
+fileFormatVersion: 2
+guid: 40c390b3bed229e449aa5d2e5aea44fd
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 99.28571
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Frost_Down_0
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 937
+        width: 224
+        height: 282
+      alignment: 9
+      pivot: {x: 0.515625, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da7048b8f0a93d34db75b7056ef2b855
+      internalID: 244717297
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Down_1
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 935
+        width: 225
+        height: 284
+      alignment: 9
+      pivot: {x: 0.5088889, y: 0.4964789}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20b2be21583afa24d9c5ad5e359f36bd
+      internalID: -222977563
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Down_2
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 934
+        width: 226
+        height: 285
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49473685}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b904bc715584b5840a3496c7e6fa2d26
+      internalID: -1202133036
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Down_3
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 934
+        width: 219
+        height: 284
+      alignment: 9
+      pivot: {x: 0.5205479, y: 0.4964789}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d852fae549c114a408286b598b0c3982
+      internalID: 423658877
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Left_0
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 659
+        width: 228
+        height: 269
+      alignment: 9
+      pivot: {x: 0.48245615, y: 0.52416354}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19a9b2678ff64cd4ab9e1e0d608e41be
+      internalID: 1295309465
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Left_1
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 661
+        width: 221
+        height: 267
+      alignment: 9
+      pivot: {x: 0.49773756, y: 0.5280899}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca7a65f30fd283143940d6e5be8ccb66
+      internalID: 409589608
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Left_2
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 659
+        width: 220
+        height: 269
+      alignment: 9
+      pivot: {x: 0.49545455, y: 0.52416354}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 325af217ef63e0747b54e681f092d9cf
+      internalID: 1741691941
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Left_3
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 659
+        width: 220
+        height: 269
+      alignment: 9
+      pivot: {x: 0.48863637, y: 0.52416354}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeff9cb0061a8724f934911caf056f46
+      internalID: -791792325
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Right_0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 373
+        width: 225
+        height: 270
+      alignment: 9
+      pivot: {x: 0.49555555, y: 0.5222222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1015d68036e6ba74bb741f18b31b147e
+      internalID: -248968334
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Right_1
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 375
+        width: 224
+        height: 269
+      alignment: 9
+      pivot: {x: 0.5, y: 0.52416354}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f00f54028b7b184785d563b8cf8e799
+      internalID: 149331037
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Right_2
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 372
+        width: 228
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5183824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b39f14e7be44e6845b95fa6c05dffee7
+      internalID: -1325451603
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Right_3
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 373
+        width: 225
+        height: 271
+      alignment: 9
+      pivot: {x: 0.49555555, y: 0.5202952}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d97fa87a1b47294faa516602b9aca91
+      internalID: -1115841029
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Up_0
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 56
+        width: 241
+        height: 307
+      alignment: 9
+      pivot: {x: 0.51244813, y: 0.45928338}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4008ab0b7fd3874b9670b487b4c28f8
+      internalID: 995484881
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Up_1
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 53
+        width: 240
+        height: 309
+      alignment: 9
+      pivot: {x: 0.5104167, y: 0.4563107}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fd0abdfca13c1749bb4af956c779e0d
+      internalID: 187721810
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Up_2
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 57
+        width: 246
+        height: 306
+      alignment: 9
+      pivot: {x: 0.5142276, y: 0.46078432}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a957bc7418fcccd4f85d0063edea6084
+      internalID: -1844791034
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frost_Up_3
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 62
+        width: 238
+        height: 301
+      alignment: 9
+      pivot: {x: 0.5, y: 0.46843854}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c289e2e758d5c644293135d9caa02628
+      internalID: 335395367
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID: 8377d48310360614eb47233382b1353a
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Frost_Down_0: 244717297
+      Frost_Down_1: -222977563
+      Frost_Down_2: -1202133036
+      Frost_Down_3: 423658877
+      Frost_Left_0: 1295309465
+      Frost_Left_1: 409589608
+      Frost_Left_2: 1741691941
+      Frost_Left_3: -791792325
+      Frost_Right_0: -248968334
+      Frost_Right_1: 149331037
+      Frost_Right_2: -1325451603
+      Frost_Right_3: -1115841029
+      Frost_Up_0: 995484881
+      Frost_Up_1: 187721810
+      Frost_Up_2: -1844791034
+      Frost_Up_3: 335395367
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

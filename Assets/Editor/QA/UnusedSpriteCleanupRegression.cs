@@ -60,7 +60,8 @@ namespace ProjectDM.Editor
             Sprite[] dungeon = AssetDatabase.LoadAllAssetsAtPath("Assets/GameContent/Art/ProjectDM_DungeonMonsters_2Frame_v1.png").OfType<Sprite>().ToArray();
             Check(dungeon.Length == 2 && dungeon.All(s => s.name.StartsWith("Dungeon_5_")), "Unused dungeon creature slices removed; both boss frames survive");
             StageDefinition stage2 = Resources.Load<StageDefinition>("ProjectDM/Stages/Stage2_Dungeon");
-            Check(stage2.bossFrames.All(s => s != null && dungeon.Contains(s)), "Boss references survive pruning");
+            Check(stage2.bossFrames.All(s => s != null && AssetDatabase.GetAssetPath(s) == ProjectDMMonsterArtSetup.SheetPath("Dungeon")),
+                "Active boss preview uses the replacement atlas; legacy slices remain available");
             AnimationClip bolt = AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/GameContent/Animation/ProjectDM_BoltLoop.anim");
             var binding = EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite");
             var keys = AnimationUtility.GetObjectReferenceCurve(bolt, binding);

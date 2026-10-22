@@ -17,33 +17,33 @@ MonoBehaviour:
   ground: {fileID: 11400000, guid: 265d9586dbffd2643a827fcb21e822ad, type: 2}
   background: {r: 0.025, g: 0.018, b: 0.07, a: 1}
   monsters:
-  - displayName: "\uC2AC\uB77C\uC784"
+  - displayName: "\uB3D9\uAD74 \uBC15\uC950"
     frames:
-    - {fileID: -1098603268, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
-    - {fileID: -866923610, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
-    animatorController: {fileID: 9100000, guid: e0d5d46ed18e0e3449a3281c81718e7c, type: 2}
-  - displayName: "\uC2A4\uCF08\uB808\uD1A4"
-    frames:
-    - {fileID: -1288109876, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
-    - {fileID: -84191757, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
-    animatorController: {fileID: 9100000, guid: c0bdb26eb57352e449a3742c74e147ed, type: 2}
-  - displayName: "\uACE0\uBE14\uB9B0"
-    frames:
-    - {fileID: -2125193601, guid: 4bf9385876300ff478af704d5ed92b6c, type: 3}
-    - {fileID: 1906641030, guid: 4bf9385876300ff478af704d5ed92b6c, type: 3}
+    - {fileID: 1635958375, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+    - {fileID: 834583079, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
     animatorController: {fileID: 0}
-  - displayName: "\uBC84\uC12F"
+  - displayName: "\uC9C0\uD558 \uC950"
     frames:
-    - {fileID: 1500855290, guid: 4bf9385876300ff478af704d5ed92b6c, type: 3}
-    - {fileID: -373957953, guid: 4bf9385876300ff478af704d5ed92b6c, type: 3}
+    - {fileID: 1105114726, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+    - {fileID: -1595007615, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
     animatorController: {fileID: 0}
-  - displayName: "\uBA67\uB3FC\uC9C0"
+  - displayName: "\uC0AC\uC2AC \uC720\uB839"
     frames:
-    - {fileID: -1920672688, guid: 4bf9385876300ff478af704d5ed92b6c, type: 3}
-    - {fileID: 128501256, guid: 4bf9385876300ff478af704d5ed92b6c, type: 3}
+    - {fileID: -1901554355, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+    - {fileID: -602117863, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
     animatorController: {fileID: 0}
-  bossName: "\uACE8\uC11D \uC218\uD638\uC790"
+  - displayName: "\uB3CC\uAC70\uBBF8"
+    frames:
+    - {fileID: -1415618136, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+    - {fileID: -1811113839, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+    animatorController: {fileID: 0}
+  - displayName: "\uB9DD\uB839 \uAC11\uC637"
+    frames:
+    - {fileID: 1917551865, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+    - {fileID: 235359003, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+    animatorController: {fileID: 0}
+  bossName: "\uBD09\uC778 \uC218\uBB38\uC7A5"
   bossFrames:
-  - {fileID: 627518992, guid: 1e769d616a1fffb4aa057f9b0cb75502, type: 3}
-  - {fileID: -164129177, guid: 1e769d616a1fffb4aa057f9b0cb75502, type: 3}
-  bossScale: 1.8
+  - {fileID: -1266097336, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+  - {fileID: -1273634660, guid: 4ef4dedf87405e141af535993e48306c, type: 3}
+  bossScale: 0.67985934

@@ -133,9 +133,9 @@ namespace ProjectDM
             if (!progress.available) return "미해금";
             if (!progress.HasTarget) return "최종 몬스터 · 다음 해금 없음";
             if (displayedTotal >= progress.target) return progress.NewlyUnlocked
-                ? "이번 런: " + tables.balance.monsters[kind + 1].name + " 해금!"
-                : tables.balance.monsters[kind + 1].name + " 해금 완료";
-            return "다음: " + tables.balance.monsters[kind + 1].name;
+                ? "이번 런: " + art.MonsterName(kind + 1, tables.balance) + " 해금!"
+                : art.MonsterName(kind + 1, tables.balance) + " 해금 완료";
+            return "다음: " + art.MonsterName(kind + 1, tables.balance);
         }
 
         private static void DrawFittedLabel(Rect rect, string text, GUIStyle source, int minimumSize)

@@ -29,6 +29,8 @@ namespace ProjectDM
             spriteRenderer.sprite = sprite;
             animator.runtimeAnimatorController = controller;
             animator.applyRootMotion = false;
+            facing = "Down";
+            if (visualTransform != null) visualTransform.localScale = restingScale;
             currentState = null;
             PlayState(false);
         }

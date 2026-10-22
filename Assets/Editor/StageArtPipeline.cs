@@ -42,6 +42,7 @@ namespace ProjectDM.Editor
                 AssetDatabase.LoadAssetAtPath<DungeonGroundRuleTile>(MeadowRule), new Color(.22f, .17f, .1f));
             ConfigureStage(2, "석재 던전", new[] { "슬라임", "스켈레톤", "고블린", "버섯", "멧돼지" }, "골석 수호자", "Dungeon",
                 AssetDatabase.LoadAssetAtPath<DungeonGroundRuleTile>("Assets/GameContent/Tiles/DungeonGroundRuleTile.asset"), new Color(.025f, .018f, .07f));
+            ProjectDMMonsterArtSetup.ApplyInstalledArtwork();
             AssetDatabase.SaveAssets();
         }
 
@@ -82,6 +83,7 @@ namespace ProjectDM.Editor
         private static void ImportMonsters(string biome)
         {
             string path = Art + $"ProjectDM_{biome}Monsters_2Frame_v1.png";
+            if (HasConfiguredSprites(path, biome == "Dungeon" ? 2 : 12)) return;
             TextureImporter importer = Prepare(path, true);
             Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             Color32[] pixels = texture.GetPixels32();
@@ -123,6 +125,7 @@ namespace ProjectDM.Editor
         private static void ImportExistingMonsters()
         {
             string path = Art + "ProjectDM_ExtraMonsters_16Bit_v1.png";
+            if (HasConfiguredSprites(path, 6)) return;
             TextureImporter importer = Prepare(path, true);
             Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             float width = texture.width / 2f, height = texture.height / 3f;
@@ -132,6 +135,10 @@ namespace ProjectDM.Editor
             importer.spritePixelsPerUnit = 96f;
             SetRects(importer, rects);
         }
+
+        private static bool HasConfiguredSprites(string path, int count) =>
+            (AssetImporter.GetAtPath(path) as TextureImporter)?.userData == Stamp &&
+            AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().Count() == count;
 
         private static TextureImporter Prepare(string path, bool alpha)
         {

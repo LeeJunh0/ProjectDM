@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29df25d3c3d15f4c9b76d64c430c873, type: 3}
+  m_Name: CharacterVisuals
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.CharacterVisuals
+  characters:
+  - characterId: projectile
+    idleSprite: {fileID: 799511227, guid: 0476aab8417df69428b36c0a2accd612, type: 3}
+    controller: {fileID: 9100000, guid: 8c606e286e3bf3a4f87f49d793ffb1c4, type: 2}
+  - characterId: flame
+    idleSprite: {fileID: 80187644, guid: 21473ae33134e7f4c8bacfb91645c052, type: 3}
+    controller: {fileID: 9100000, guid: f7a20dd86cea4344ebb5e1513a1d27e2, type: 2}
+  - characterId: lightning
+    idleSprite: {fileID: -1432117973, guid: 82f7ff00b688ffd40bbd8d3c866cce3c, type: 3}
+    controller: {fileID: 9100000, guid: 36360aa11443a08409e7b5b9eb0169a8, type: 2}
+  - characterId: frost
+    idleSprite: {fileID: 244717297, guid: 40c390b3bed229e449aa5d2e5aea44fd, type: 3}
+    controller: {fileID: 9100000, guid: 3c584e8cf7f06dd43b60ff0dbdf14ce7, type: 2}

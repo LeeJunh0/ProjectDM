@@ -1,0 +1,485 @@
+fileFormatVersion: 2
+guid: 21473ae33134e7f4c8bacfb91645c052
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100.35715
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Flame_Down_0
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 931
+        width: 233
+        height: 285
+      alignment: 9
+      pivot: {x: 0.4892704, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eba88629c0e1bc540b74aba161524c41
+      internalID: 80187644
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Down_1
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 931
+        width: 231
+        height: 285
+      alignment: 9
+      pivot: {x: 0.51731604, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0a9b2129d4f72743aa60a18b0ee1b53
+      internalID: 1900000822
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Down_2
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 931
+        width: 236
+        height: 285
+      alignment: 9
+      pivot: {x: 0.5169492, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84c24a722e2ee744b89ec79330f6a22d
+      internalID: -416675786
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Down_3
+      rect:
+        serializedVersion: 2
+        x: 977
+        y: 931
+        width: 228
+        height: 285
+      alignment: 9
+      pivot: {x: 0.5263158, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50cce81d12b46624ca18d73061a81c8f
+      internalID: -1119601590
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Left_0
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 657
+        width: 227
+        height: 270
+      alignment: 9
+      pivot: {x: 0.5330396, y: 0.5277778}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4debad43b2860ad488b8b34fa14a9971
+      internalID: -593644107
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Left_1
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 658
+        width: 223
+        height: 269
+      alignment: 9
+      pivot: {x: 0.5403587, y: 0.5297398}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9e59151b90903a42baea37a7d1c8649
+      internalID: -1307827432
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Left_2
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 658
+        width: 228
+        height: 269
+      alignment: 9
+      pivot: {x: 0.5416667, y: 0.5297398}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6a0913fd238ba544b6cc67392548c50
+      internalID: -1128104759
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Left_3
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 658
+        width: 224
+        height: 269
+      alignment: 9
+      pivot: {x: 0.52901787, y: 0.5297398}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8aa76dc7d0930db479578e0e710f8af3
+      internalID: 933277641
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Right_0
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 373
+        width: 232
+        height: 276
+      alignment: 9
+      pivot: {x: 0.47629312, y: 0.5163044}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2beb4b92f8a1e954b9708f4c4eab0e7d
+      internalID: -1459151370
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Right_1
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 373
+        width: 229
+        height: 276
+      alignment: 9
+      pivot: {x: 0.47379914, y: 0.5163044}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c834a61e33a9a74e8d775c87cadfc59
+      internalID: -1326634274
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Right_2
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 374
+        width: 232
+        height: 275
+      alignment: 9
+      pivot: {x: 0.47413793, y: 0.5181818}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87b435aaa10a1bc4cb560c69b2d0f51f
+      internalID: -995436731
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Right_3
+      rect:
+        serializedVersion: 2
+        x: 986
+        y: 373
+        width: 228
+        height: 276
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0.5163044}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90aa20a21e3f6b943aa470f57cf32dd6
+      internalID: 1019031612
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Up_0
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 63
+        width: 239
+        height: 301
+      alignment: 9
+      pivot: {x: 0.4874477, y: 0.47342193}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f0d3baa6bd798047a65b6362fa964cd
+      internalID: 653154097
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Up_1
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 59
+        width: 242
+        height: 305
+      alignment: 9
+      pivot: {x: 0.5, y: 0.46721312}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8cd0b62b77129b44858993c99da980e
+      internalID: 1346596815
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Up_2
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 63
+        width: 237
+        height: 301
+      alignment: 9
+      pivot: {x: 0.48523206, y: 0.47342193}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e10e3f2a14cd5af4cb14377bce5c99f5
+      internalID: 179407511
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flame_Up_3
+      rect:
+        serializedVersion: 2
+        x: 995
+        y: 70
+        width: 237
+        height: 294
+      alignment: 9
+      pivot: {x: 0.49156117, y: 0.48469388}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f99749543656ac44be6681a48a7e10d
+      internalID: -1522772500
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID: 4a6ca5b611dadaa4eb7b7aa3bc4a08e6
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Flame_Down_0: 80187644
+      Flame_Down_1: 1900000822
+      Flame_Down_2: -416675786
+      Flame_Down_3: -1119601590
+      Flame_Left_0: -593644107
+      Flame_Left_1: -1307827432
+      Flame_Left_2: -1128104759
+      Flame_Left_3: 933277641
+      Flame_Right_0: -1459151370
+      Flame_Right_1: -1326634274
+      Flame_Right_2: -995436731
+      Flame_Right_3: 1019031612
+      Flame_Up_0: 653154097
+      Flame_Up_1: 1346596815
+      Flame_Up_2: 179407511
+      Flame_Up_3: -1522772500
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

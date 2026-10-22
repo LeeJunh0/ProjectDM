@@ -37,9 +37,7 @@ namespace ProjectDM
             Animator animator = avatar.GetComponentInChildren<Animator>();
             animator.applyRootMotion = false;
             playerController = avatar.GetComponent<Player>();
-            playerController.Initialize(
-                art.playerSprite,
-                art.playerAnimatorController);
+            InitializeVisual("projectile");
             Vector2 movementCenter = settings.playerMovementArea != null ? settings.playerMovementArea.transform.position : Vector2.zero;
             Vector2 movementBounds = settings.playerMovementArea != null ? settings.playerMovementArea.HalfExtents : settings.playerMovementBounds;
             playerController.SetMovementBounds(movementBounds, movementCenter);
@@ -52,10 +50,17 @@ namespace ProjectDM
             playerController.Tick(dt, speed);
         }
 
-        internal void ResetPosition()
+        internal void ResetPosition(string characterId = null)
         {
             player.position = settings.playerSpawnPoint != null ? settings.playerSpawnPoint.position : Vector3.zero;
-            playerController.Initialize(art.playerSprite, art.playerAnimatorController);
+            InitializeVisual(characterId);
+        }
+
+        private void InitializeVisual(string characterId)
+        {
+            CharacterVisuals.Entry visual = art.characterVisuals?.Find(characterId ?? "projectile");
+            playerController.Initialize(visual?.idleSprite != null ? visual.idleSprite : art.playerSprite,
+                visual?.controller != null ? visual.controller : art.playerAnimatorController);
         }
     }
 }

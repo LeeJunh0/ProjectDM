@@ -12,6 +12,10 @@ namespace ProjectDM
         private readonly SaveService save;
         private readonly GameTables sourceTables;
         private bool personalGraph;
+        private GrowthGraphTheme graphTheme;
+        private GrowthGraphTheme Theme => graphTheme != null ? graphTheme : graphTheme = Resources.Load<GrowthGraphTheme>("ProjectDM/UI/GrowthGraphTheme");
+        internal string ThemeCharacterId => personalGraph ? run.characters?.SelectedId : null;
+        private Color ThemeTint(Color original) => Theme != null ? Theme.Tint(original, ThemeCharacterId) : original;
         private GameTables tables => run.characters == null ? sourceTables : personalGraph
             ? run.characters.Catalog.Graphs[run.characters.SelectedId] : run.characters.Catalog.CommonGraph;
         private readonly ProgressionService progression;
@@ -49,7 +53,7 @@ namespace ProjectDM
         internal void DrawMetaTree()
         {
             // The tree owns the entire screen instead of appearing as an in-game popup.
-            UiGraphics.DrawSolidRect(new Rect(0f, 0f, Screen.width, Screen.height), new Color(.075f, .038f, .014f, 1f));
+            UiGraphics.DrawSolidRect(new Rect(0f, 0f, Screen.width, Screen.height), ThemeTint(new Color(.075f, .038f, .014f, 1f)));
             BuildPrototypeGraph();
             Rect treeCanvas = new Rect(0f, 0f, Screen.width, Screen.height);
             if (!prototypeGraphViewInitialized || prototypeGraphCanvasSize != treeCanvas.size) FitPrototypeGraph(treeCanvas.size);
@@ -148,11 +152,11 @@ namespace ProjectDM
                 MetaTreeNodePresentation parent = metaTreeNodes[node.parentIndex];
                 DrawMetaTreeConnector(GetMetaTreeNodeCenter(parent, canvasSize), GetMetaTreeNodeCenter(node, canvasSize), tables.goalNodeLookup.ContainsKey(node.id)
                     ? new Color(.67f, .82f, .9f, .85f)
-                    : node.state == MetaTreeNodeState.Hidden
+                    : ThemeTint(node.state == MetaTreeNodeState.Hidden
                     ? new Color(.14f, .10f, .07f, .55f)
                     : node.state == MetaTreeNodeState.Locked
                     ? new Color(.28f, .18f, .11f, .85f)
-                    : new Color(.97f, .66f, .16f, .92f));
+                    : new Color(.97f, .66f, .16f, .92f)));
             }
 
             for (int i = 0; i < metaTreeNodes.Length; i++)
@@ -207,8 +211,8 @@ namespace ProjectDM
             if (node.state == MetaTreeNodeState.Hidden)
             {
                 // Preserve the map silhouette without exposing artwork, names, ranks or pointer events.
-                UiGraphics.DrawSolidRect(nodeRect, new Color(.035f, .023f, .017f, 1f));
-                UiGraphics.DrawOutline(nodeRect, new Color(.19f, .14f, .10f, .8f), 1f);
+                UiGraphics.DrawSolidRect(nodeRect, ThemeTint(new Color(.035f, .023f, .017f, 1f)));
+                UiGraphics.DrawOutline(nodeRect, ThemeTint(new Color(.19f, .14f, .10f, .8f)), 1f);
                 return;
             }
             Rect labelRect = GetMetaTreeNodeLabelRect(nodeRect);
@@ -217,16 +221,16 @@ namespace ProjectDM
             bool isHovered = hoveredMetaTreeNode == index;
             bool isGoal = tables.goalNodeLookup.TryGetValue(node.id, out PrototypeGoalNode goal);
             if (isGoal) labelRect = new Rect(nodeRect.x - 32, nodeRect.yMax + 2, nodeRect.width + 64, 14);
-            Color fill = node.state == MetaTreeNodeState.Locked
+            Color fill = ThemeTint(node.state == MetaTreeNodeState.Locked
                 ? new Color(.105f, .064f, .035f, .99f)
-                : new Color(.16f, .083f, .027f, .99f);
-            Color border = node.state == MetaTreeNodeState.Locked
+                : new Color(.16f, .083f, .027f, .99f));
+            Color border = ThemeTint(node.state == MetaTreeNodeState.Locked
                 ? new Color(.36f, .27f, .18f, .9f)
-                : new Color(.96f, .66f, .19f);
+                : new Color(.96f, .66f, .19f));
             if (node.state == MetaTreeNodeState.Completed)
             {
-                fill = new Color(.29f, .17f, .045f, .99f);
-                border = new Color(1f, .82f, .36f);
+                fill = ThemeTint(new Color(.29f, .17f, .045f, .99f));
+                border = ThemeTint(new Color(1f, .82f, .36f));
             }
             if (isGoal)
             {
@@ -240,7 +244,7 @@ namespace ProjectDM
             }
             if (isHovered)
             {
-                fill = Color.Lerp(fill, new Color(1f, .73f, .23f), .2f);
+                fill = Color.Lerp(fill, ThemeTint(new Color(1f, .73f, .23f)), .2f);
             }
 
             UiGraphics.DrawSolidRect(nodeRect, fill);
@@ -252,7 +256,7 @@ namespace ProjectDM
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter,
                 wordWrap = true,
-                normal = { textColor = node.state == MetaTreeNodeState.Locked ? new Color(.46f, .37f, .29f) : new Color(.9f, .74f, .49f) }
+                normal = { textColor = ThemeTint(node.state == MetaTreeNodeState.Locked ? new Color(.46f, .37f, .29f) : new Color(.9f, .74f, .49f)) }
             };
             if (isGoal)
             {
@@ -283,7 +287,7 @@ namespace ProjectDM
                 float segmentWidth = (nodeRect.width - padding * 2 - gap * (definition.ranks - 1)) / definition.ranks;
                 for (int slot = 0; slot < definition.ranks; slot++)
                     UiGraphics.DrawSolidRect(new Rect(nodeRect.x + padding + slot * (segmentWidth + gap), nodeRect.yMax - 4, segmentWidth, 2),
-                        slot < filled ? new Color(1f, .8f, .28f) : new Color(.29f, .23f, .16f));
+                        ThemeTint(slot < filled ? new Color(1f, .8f, .28f) : new Color(.29f, .23f, .16f)));
             }
             if (metaTreeZoom >= .4f || node.id == "ROOT" || (isGoal && metaTreeZoom >= .2f)) GUI.Label(labelRect, node.title, title);
 
@@ -321,7 +325,7 @@ namespace ProjectDM
             {
                 // Keep the existing full-screen framing when unobstructed. In small Game views,
                 // fit into whichever free rectangle (above/right of details) has more square space.
-                float top = Mathf.Max(overlays[1].yMax, run.characters == null ? 0 : CharacterSelectionRect(canvasSize).yMax) + 16;
+                float top = Mathf.Max(overlays[1].yMax, overlays[5].yMax) + 16;
                 Rect above = Rect.MinMaxRect(22, top, canvasSize.x - 22, overlays[2].yMin - 16);
                 Rect right = Rect.MinMaxRect(overlays[2].xMax + 16, top, canvasSize.x - 22, overlays[3].yMin - 16);
                 Rect available = Mathf.Min(above.width, above.height) >= Mathf.Min(right.width, right.height) ? above : right;
@@ -357,6 +361,8 @@ namespace ProjectDM
             {
                 CharacterDefinition character = characters.Catalog.Definitions[i];
                 bool enabled = GUI.enabled; GUI.enabled = enabled && character.enabled;
+                Color background = GUI.backgroundColor;
+                if (Theme != null) GUI.backgroundColor = Color.Lerp(Color.white, Theme.Accent(character.id), characters.SelectedId == character.id ? .7f : .25f);
                 if (GUI.Button(new Rect(area.x + i * area.width / 4, area.y, area.width / 4 - 4, 28),
                     (characters.SelectedId == character.id ? "● " : "") + (character.enabled ? character.name : "빙결 · 준비 중")) && characters.Select(character.id))
                 {
@@ -364,9 +370,13 @@ namespace ProjectDM
                     selectedMetaTreeNode = -1; hoveredMetaTreeNode = -1; prototypeGraphViewInitialized = false;
                 }
                 GUI.enabled = enabled;
+                GUI.backgroundColor = background;
             }
+            Color previousBackground = GUI.backgroundColor;
+            if (Theme != null && personalGraph) GUI.backgroundColor = Color.Lerp(Color.white, Theme.Accent(characters.SelectedId), .6f);
             bool common = GUI.Toggle(new Rect(area.x, area.y + 34, 112, 28), !personalGraph, "공통 성장", "Button");
             bool personal = GUI.Toggle(new Rect(area.x + 118, area.y + 34, 150, 28), personalGraph, "선택 캐릭터 전용 성장", "Button");
+            GUI.backgroundColor = previousBackground;
             if ((common && personalGraph) || (personal && !personalGraph))
             {
                 personalGraph = !personalGraph; selectedMetaTreeNode = -1; hoveredMetaTreeNode = -1; prototypeGraphViewInitialized = false;
@@ -419,10 +429,10 @@ namespace ProjectDM
         internal void DrawGrowthWallet()
         {
             Rect rect = GrowthWalletRect;
-            UiGraphics.DrawSolidRect(rect, new Color(.065f, .034f, .015f, .98f));
-            UiGraphics.DrawOutline(rect, new Color(.57f, .38f, .16f), 1f);
+            UiGraphics.DrawSolidRect(rect, ThemeTint(new Color(.065f, .034f, .015f, .98f)));
+            UiGraphics.DrawOutline(rect, ThemeTint(new Color(.57f, .38f, .16f)), 1f);
             UiGraphics.DrawResultSprite(new Rect(rect.x + 14f, rect.y + 16f, 32f, 32f), art.coinSprite);
-            GUIStyle label = new GUIStyle(graphics.statStyle) { fontSize = 11, normal = { textColor = new Color(.68f, .59f, .44f) } };
+            GUIStyle label = new GUIStyle(graphics.statStyle) { fontSize = 11, normal = { textColor = ThemeTint(new Color(.68f, .59f, .44f)) } };
             GUIStyle amount = new GUIStyle(graphics.statStyle) { fontSize = 24, fontStyle = FontStyle.Bold, normal = { textColor = new Color(1f, .82f, .42f) } };
             GUI.Label(new Rect(rect.x + 60f, rect.y + 7f, rect.width - 76f, 18f), "보유 재화", label);
             string value = CompactNumber.Format(save.metaCurrency);
@@ -436,7 +446,7 @@ namespace ProjectDM
                 metaTreeNodes = new MetaTreeNodePresentation[tables.graphLayoutNodes.Length + 1];
             metaTreeNodes[0] = new MetaTreeNodePresentation("ROOT", personalGraph && run.characters != null ? run.characters.Catalog.Find(run.characters.SelectedId).name : "기본 공격 해금",
                 run.characters != null ? "선택한 캐릭터의 고유 마법을 자동 시전합니다. 캐릭터 변경과 영구 성장은 다음 런부터 적용됩니다." : "가까운 몬스터를 향해 기본 투사체를 자동으로 발사합니다.", Vector2.zero,
-                -1, MetaTreeNodeState.Completed, new Color(.91f, .69f, .3f));
+                -1, MetaTreeNodeState.Completed, ThemeTint(new Color(.91f, .69f, .3f)));
             int stage = PrototypeRules.Stage(tables.balance, save.progress);
             for (int i = 0; i < tables.growthTable.nodes.Length; i++)
             {
@@ -451,7 +461,7 @@ namespace ProjectDM
                 for (int j = 0; j < tables.growthTable.nodes.Length; j++)
                     if (tables.growthTable.nodes[j].id == node.parent) parent = j + 1;
                 metaTreeNodes[i + 1] = new MetaTreeNodePresentation(node.id, revealed ? node.name : "", revealed ? row.description : "",
-                    new Vector2(tables.graphLayoutNodes[i].x, tables.graphLayoutNodes[i].y), parent, state, new Color(.96f, .66f, .19f));
+                    new Vector2(tables.graphLayoutNodes[i].x, tables.graphLayoutNodes[i].y), parent, state, ThemeTint(new Color(.96f, .66f, .19f)));
             }
             if (tables.growthTable.goalLine != null) for (int i = 0; i < tables.growthTable.goalLine.Length; i++)
             {
@@ -524,9 +534,9 @@ namespace ProjectDM
         {
             Rect panel = GrowthDetailsRect;
             float width = panel.width;
-            UiGraphics.DrawSolidRect(panel, new Color(.065f, .034f, .015f, .97f));
-            UiGraphics.DrawOutline(panel, new Color(.57f, .38f, .16f), 1);
-            GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = new Color(.92f, .8f, .6f) } };
+            UiGraphics.DrawSolidRect(panel, ThemeTint(new Color(.065f, .034f, .015f, .97f)));
+            UiGraphics.DrawOutline(panel, ThemeTint(new Color(.57f, .38f, .16f)), 1);
+            GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = ThemeTint(new Color(.92f, .8f, .6f)) } };
             GUIStyle heading = new GUIStyle(body) { fontSize = 16, fontStyle = FontStyle.Bold };
             string mode = save.sandboxThisSession ? "  [실험: 저장 안 됨]" : "";
             bool goalSelected = selectedMetaTreeNode > 0 && selectedMetaTreeNode < metaTreeNodes.Length && tables.goalNodeLookup.ContainsKey(metaTreeNodes[selectedMetaTreeNode].id);
@@ -579,7 +589,7 @@ namespace ProjectDM
         {
             int stage = PrototypeRules.Stage(tables.balance, save.progress);
             string progressText = stage < 4
-                ? $"{tables.balance.monsters[stage].name} 누적 {save.progress.kills[stage]}/{tables.balance.monsters[stage].nextUnlockKills} 처치 → {tables.balance.monsters[stage + 1].name}"
+                ? $"{art.MonsterName(stage, tables.balance)} 누적 {save.progress.kills[stage]}/{tables.balance.monsters[stage].nextUnlockKills} 처치 → {art.MonsterName(stage + 1, tables.balance)}"
                 : "모든 일반 몬스터 해금 완료";
             GUI.Label(rect, $"몬스터 {stage + 1}단계 · {progressText}", style);
         }
@@ -595,9 +605,9 @@ namespace ProjectDM
             if (x + width > Screen.width - 18) x = pointer.x - width - 20;
             if (y + height > Screen.height - 18) y = pointer.y - height - 18;
             Rect rect = new Rect(Mathf.Clamp(x, 18, Screen.width - width - 18), Mathf.Clamp(y, 18, Mathf.Max(18, Screen.height - height - 18)), width, height);
-            UiGraphics.DrawSolidRect(rect, new Color(.055f, .029f, .012f, .98f));
-            UiGraphics.DrawOutline(rect, new Color(.8f, .54f, .19f), 1);
-            GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = new Color(.92f, .78f, .56f) } };
+            UiGraphics.DrawSolidRect(rect, ThemeTint(new Color(.055f, .029f, .012f, .98f)));
+            UiGraphics.DrawOutline(rect, ThemeTint(new Color(.8f, .54f, .19f)), 1);
+            GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = ThemeTint(new Color(.92f, .78f, .56f)) } };
             GUI.Label(new Rect(rect.x + 16, rect.y + 10, width - 32, 24), node.title,
                 new GUIStyle(body) { fontSize = 17, fontStyle = FontStyle.Bold });
             if (node.id == "ROOT")

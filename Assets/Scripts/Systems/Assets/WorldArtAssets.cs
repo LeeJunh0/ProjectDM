@@ -19,6 +19,7 @@ namespace ProjectDM
             : kind switch { MonsterKind.Goblin => goblinFrame2, MonsterKind.Mushroom => mushroomFrame2, MonsterKind.Boar => boarFrame2, _ => null };
 
         internal Sprite playerSprite;
+        internal CharacterVisuals characterVisuals;
 
         internal Sprite slimeSprite;
 
@@ -55,6 +56,7 @@ namespace ProjectDM
 
         internal void LoadSprites(ProjectDMRuntimeAssets assets)
         {
+            characterVisuals = Resources.Load<CharacterVisuals>("ProjectDM/Characters/CharacterVisuals");
             skillVisualAssets = Resources.Load<SkillVisualAssets>("ProjectDM/Skills/SkillVisuals");
             ProjectDMSpriteCatalog spriteCatalog = assets.SpriteCatalog;
             if (spriteCatalog != null)
