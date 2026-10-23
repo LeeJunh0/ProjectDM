@@ -79,14 +79,8 @@ namespace ProjectDM
                     enemy.chillRemaining > 0 ? new Color(.75f, .9f, 1) : Color.white;
                 Vector2 direction = ((Vector2)playerWorld.player.position - (Vector2)enemy.transform.position).normalized;
                 enemy.transform.position += (Vector3)(direction * enemy.speed * movementTime);
-                enemy.animationTime += Mathf.Max(0, dt - frozen);
-                if (enemy.alternateSprite != null && enemy.animationTime > 0.16f)
-                {
-                    enemy.animationTime = 0f;
-                    enemy.showAlternate = !enemy.showAlternate;
-                    enemy.renderer.sprite = enemy.showAlternate ? enemy.alternateSprite : enemy.baseSprite;
-                }
-                if (enemy.renderer != null && Mathf.Abs(direction.x) > 0.01f)
+                enemy.AdvanceAnimation(movementTime);
+                if (enemy.renderer != null && enemy.mirrorToMovement && Mathf.Abs(direction.x) > 0.01f)
                 {
                     enemy.renderer.flipX = direction.x > 0f;
                 }
@@ -178,9 +172,12 @@ namespace ProjectDM
             renderer.color = Color.white;
             renderer.flipX = false;
             renderer.sortingOrder = 2;
+            renderer.transform.localScale = Vector3.one * art.MonsterVisualScale((MonsterKind)kind);
             Sprite alternate = art.MonsterAlternate((MonsterKind)kind);
             enemies.Add(new Enemy { kind = (MonsterKind)kind, transform = instance.transform, renderer = renderer, animator = animator,
                 baseSprite = renderer.sprite, alternateSprite = alternate,
+                animationFrames = art.MonsterFrames((MonsterKind)kind), frameSeconds = art.MonsterFrameSeconds((MonsterKind)kind),
+                mirrorToMovement = art.MonsterMirrorToMovement((MonsterKind)kind),
                 rank = miniBoss ? EnemyRank.MiniBoss : EnemyRank.Normal,
                 rewardMultiplier = miniBoss ? tables.balance.miniBossRewardMultiplier : 1,
                 hitRadiusMultiplier = miniBoss ? tables.balance.miniBossScale : 1,

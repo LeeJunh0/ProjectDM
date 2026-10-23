@@ -29,7 +29,7 @@ namespace ProjectDM.Editor
             {
                 CharacterVisuals.Entry entry = catalog.Find(id);
                 Check(entry?.idleSprite != null && entry.controller != null, "Complete visual binding: " + id);
-                string path = AssetDatabase.GetAssetPath(entry.idleSprite);
+                string path = AssetDatabase.GetAssetPath(Pixel32ArtSetup.Original(entry.idleSprite));
                 var importer = (TextureImporter)AssetImporter.GetAtPath(path);
                 Check(importer.filterMode == FilterMode.Point && !importer.mipmapEnabled && importer.alphaIsTransparency &&
                     importer.textureCompression == TextureImporterCompression.Uncompressed, "Crisp transparent sprite import: " + id);
@@ -51,7 +51,7 @@ namespace ProjectDM.Editor
                         EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite"));
                     Check(keys.Length == 4 && keys.Select(key => key.value).Distinct().Count() == 4,
                         "Four distinct walking frames: " + id + direction);
-                    Check(keys.Take(4).All(key => AssetDatabase.GetAssetPath(key.value) == path && key.value.name.Contains("_" + direction + "_")),
+                    Check(keys.Take(4).All(key => key.value is Sprite frame && AssetDatabase.GetAssetPath(Pixel32ArtSetup.Original(frame)) == path && key.value.name.Contains("_" + direction + "_")),
                         "Correct identity and direction in animation: " + id + direction);
                     Check(AnimationUtility.GetAnimationClipSettings(clip).loopTime && Mathf.Approximately(clip.length, .5f),
                         "8fps looping walk cadence: " + id + direction);
@@ -113,7 +113,7 @@ namespace ProjectDM.Editor
             for (int column = 0; column < 4; column++)
             {
                 CharacterVisuals.Entry entry = catalog.Find(ProjectDMCharacterArtSetup.Ids[column]);
-                Sprite[] frames = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(entry.idleSprite)).OfType<Sprite>().ToArray();
+                Sprite[] frames = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(Pixel32ArtSetup.Original(entry.idleSprite))).OfType<Sprite>().Select(Pixel32ArtSetup.Resolve).ToArray();
                 string prefix = entry.idleSprite.name.Replace("_Down_0", "");
                 for (int row = 0; row < 3; row++)
                 {

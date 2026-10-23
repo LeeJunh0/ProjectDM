@@ -13,28 +13,28 @@ MonoBehaviour:
   m_Name: ProjectDMSpriteCatalog
   m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.ProjectDMSpriteCatalog
   playerLeftFrames:
-  - {fileID: -712242547, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
-  - {fileID: -1052017261, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
-  - {fileID: -1146067449, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
-  - {fileID: -847304145, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  - {fileID: 21300000, guid: 70d1464894185884c9fae9abbe514fdf, type: 3}
+  - {fileID: 21300000, guid: f6d3b2b47895acf40a6628da40abbc73, type: 3}
+  - {fileID: 21300000, guid: 66dc8e9c519ec9541b7aaac15300934e, type: 3}
+  - {fileID: 21300000, guid: f19bd1ef9ef43c945a8891dcb4ea4672, type: 3}
   playerDownFrames:
-  - {fileID: 1048083004, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
-  - {fileID: -1002017637, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
-  - {fileID: 247355777, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
-  - {fileID: -598132210, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  - {fileID: 21300000, guid: 3d430f7a6159d86499102d62d9121221, type: 3}
+  - {fileID: 21300000, guid: 270ae00aeba05ad4d9b2931a5667ef3f, type: 3}
+  - {fileID: 21300000, guid: 6fe22d4f54a5a1d4e909fd980f6c85ad, type: 3}
+  - {fileID: 21300000, guid: 160989fc926d4e94a85f82ad9c8fec2e, type: 3}
   playerRightFrames:
-  - {fileID: -2045021983, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
-  - {fileID: -1576998539, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
-  - {fileID: 154951928, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
-  - {fileID: 288971503, guid: 9eee96d5dcae97c4c9c3978d58c88f75, type: 3}
+  - {fileID: 21300000, guid: 44c7c89d7b5da534dbc1610c8df98028, type: 3}
+  - {fileID: 21300000, guid: 760e79bed4195094e933d0fa08b16010, type: 3}
+  - {fileID: 21300000, guid: 46dfce597e8d8814a9dca3d42d890fc7, type: 3}
+  - {fileID: 21300000, guid: 42c38d237cbf969479f1aa6c5d0ce3e5, type: 3}
   playerUpFrames:
-  - {fileID: -475027555, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
-  - {fileID: 2079520878, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
-  - {fileID: 774164547, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
-  - {fileID: 1308579334, guid: 342104ef5671c2543bd4bb7861815b6e, type: 3}
+  - {fileID: 21300000, guid: 58adf4e1a4b3db94db85e79abfe138e5, type: 3}
+  - {fileID: 21300000, guid: 43baac29bc43008439314f878e616870, type: 3}
+  - {fileID: 21300000, guid: 6d654ddbdcf97704bb036a038a19c467, type: 3}
+  - {fileID: 21300000, guid: f6a00eef9d2b073469a2d6b6098122c2, type: 3}
   slimeFrames:
-  - {fileID: -1098603268, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
-  - {fileID: -866923610, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
+  - {fileID: 21300000, guid: 2df562791a234e342ba624fe68031acf, type: 3}
+  - {fileID: 21300000, guid: b402051e23b34d04188afc61b9790dc1, type: 3}
   skeletonFrames:
-  - {fileID: -1288109876, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
-  - {fileID: -84191757, guid: 1df6fb62170413149b93763b42934bf3, type: 3}
+  - {fileID: 21300000, guid: af9ceccc207df7b45bc950f8001eebbc, type: 3}
+  - {fileID: 21300000, guid: 9052206fc9ab90646b01dbe8d4bc9428, type: 3}

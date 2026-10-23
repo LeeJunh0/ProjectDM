@@ -1,0 +1,1110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01918355b4126648bd2da9c0e13a272, type: 3}
+  m_Name: Pixel32Catalog
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.Pixel32Catalog
+  entries:
+  - key: Characters/Missile/Missile_Down_0
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: 799511227
+    sprite: {fileID: 21300000, guid: ec563d7609f2f974f9fb8a2f37226e1c, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Down_1
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: 229857817
+    sprite: {fileID: 21300000, guid: c630b8a2f4210e040bdc2eaa00f28313, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Down_2
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -849316133
+    sprite: {fileID: 21300000, guid: 35d056e7ff97bac4ea442a4446aa0b43, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Down_3
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -1069222945
+    sprite: {fileID: 21300000, guid: 1d9ec201cd288ae4eb54c2b2526c2d38, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Left_0
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -449071139
+    sprite: {fileID: 21300000, guid: 231548d884801a042ac4886ab54a39ed, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Left_1
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -266271595
+    sprite: {fileID: 21300000, guid: cec5609f9bd9bc04f96a2a20b21000ad, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Left_2
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -1828641586
+    sprite: {fileID: 21300000, guid: 4357a8a04e0c3ef40ac2a5f185ef027c, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Left_3
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: 1092302328
+    sprite: {fileID: 21300000, guid: 1bebeb379f190c44591e06d1e5313f27, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Right_0
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: 1777807122
+    sprite: {fileID: 21300000, guid: efff17a5efb78774f8c543e984c04630, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Right_1
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: 2019361011
+    sprite: {fileID: 21300000, guid: 6a7b8071e9446d54f95112f92680b9f7, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Right_2
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: 146990051
+    sprite: {fileID: 21300000, guid: 40e4848d8729a6a49b7e42b0a32e4a73, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Right_3
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: 44906473
+    sprite: {fileID: 21300000, guid: 0266ab4b65e18fb4ca51a354958542d7, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Up_0
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -1415085110
+    sprite: {fileID: 21300000, guid: ad2701c05e4eba143b474eb9ae768b6b, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Up_1
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -65426291
+    sprite: {fileID: 21300000, guid: 08a666e2c7a8f784c8bafd97d50c24d7, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Up_2
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -371584534
+    sprite: {fileID: 21300000, guid: 99564c1d945def048969f142390e020e, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Missile/Missile_Up_3
+    sourceGuid: 0476aab8417df69428b36c0a2accd612
+    sourceFileId: -1786467048
+    sprite: {fileID: 21300000, guid: 7b45f8f5c1fd994438514b5c37eb26bd, type: 3}
+    worldSize: 3.5862203
+  - key: Characters/Flame/Flame_Down_0
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: 80187644
+    sprite: {fileID: 21300000, guid: abc6c9d3a9be917499589cd2d28fe5cc, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Down_1
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: 1900000822
+    sprite: {fileID: 21300000, guid: d8db5b99f2750314ba2f39322640d094, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Down_2
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -416675786
+    sprite: {fileID: 21300000, guid: 5455c0bdb9f196f4884d2e946851d1e0, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Down_3
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -1119601590
+    sprite: {fileID: 21300000, guid: 70874610289cfb04094470a166494b57, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Left_0
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -593644107
+    sprite: {fileID: 21300000, guid: b996a45f2d6291542bc91b94fd23ae6a, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Left_1
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -1307827432
+    sprite: {fileID: 21300000, guid: 7612f409837be8d4c9c2e4d9eab450e7, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Left_2
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -1128104759
+    sprite: {fileID: 21300000, guid: 2639cf5c0ed7518489a9780b33b70dbd, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Left_3
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: 933277641
+    sprite: {fileID: 21300000, guid: 2f015a5c421731e45a791afed7d4508e, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Right_0
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -1459151370
+    sprite: {fileID: 21300000, guid: 02d9317e3e707a048bde79a2727aba2d, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Right_1
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -1326634274
+    sprite: {fileID: 21300000, guid: 7076f240e3aed0840b9902060812f996, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Right_2
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -995436731
+    sprite: {fileID: 21300000, guid: c9dc08bf8b9fd3742baebfa1a1fa912f, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Right_3
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: 1019031612
+    sprite: {fileID: 21300000, guid: 3b0d00b80ca0d414e87d33bdb5c21595, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Up_0
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: 653154097
+    sprite: {fileID: 21300000, guid: 3fb339a11bd666646a5f24b47f30507c, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Up_1
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: 1346596815
+    sprite: {fileID: 21300000, guid: f3f648814bbbef94fa1aff6277a1345b, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Up_2
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: 179407511
+    sprite: {fileID: 21300000, guid: e9fd108a00f3b5f4f8674d5f075322d9, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Flame/Flame_Up_3
+    sourceGuid: 21473ae33134e7f4c8bacfb91645c052
+    sourceFileId: -1522772500
+    sprite: {fileID: 21300000, guid: 06434a1ef4845a645b3eccfc13ec86db, type: 3}
+    worldSize: 3.4543297
+  - key: Characters/Lightning/Lightning_Down_0
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: -1432117973
+    sprite: {fileID: 21300000, guid: 0d00feebbfefedc469ec5927c6f06ef2, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Down_1
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 1040390315
+    sprite: {fileID: 21300000, guid: 4c4b0759f48c390469452a392693d424, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Down_2
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: -1679450756
+    sprite: {fileID: 21300000, guid: b83dde0293b22794c8273ce8f3bee125, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Down_3
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: -1212849952
+    sprite: {fileID: 21300000, guid: 4ee3846562bc38149b7a4d7194abe2d9, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Left_0
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 1906908254
+    sprite: {fileID: 21300000, guid: e4a7e2bb1dedf524d982bddfcd455519, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Left_1
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 1452811118
+    sprite: {fileID: 21300000, guid: 4afb6bbc3285ce2448c1a711d24d5c51, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Left_2
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: -1774951056
+    sprite: {fileID: 21300000, guid: 97506835d06146243bfb2d281b3805c4, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Left_3
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 75279248
+    sprite: {fileID: 21300000, guid: c53a1d3228aff27479b8a4b63d7e3831, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Right_0
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: -84574825
+    sprite: {fileID: 21300000, guid: 778c17c00ee963e49b886337c8467eac, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Right_1
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 257616935
+    sprite: {fileID: 21300000, guid: 4e1bc8f60c2ca40409c38b40521453ae, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Right_2
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 393392929
+    sprite: {fileID: 21300000, guid: 1d0cf8c5ad7104b47957f9211c9dec27, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Right_3
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: -625703628
+    sprite: {fileID: 21300000, guid: f0bed2473a98aaa4e80cd51ce9296cfe, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Up_0
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 2034450076
+    sprite: {fileID: 21300000, guid: bd05ce8433c0b5b44b3c30764e03d9ef, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Up_1
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 764233063
+    sprite: {fileID: 21300000, guid: 920e47b494b0ed24f970aa84db047363, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Up_2
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 1697670537
+    sprite: {fileID: 21300000, guid: b78a560a3963f034b82dc3772890701b, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Lightning/Lightning_Up_3
+    sourceGuid: 82f7ff00b688ffd40bbd8d3c866cce3c
+    sourceFileId: 200046755
+    sprite: {fileID: 21300000, guid: b13125eac270dd044a2365fdb48efd39, type: 3}
+    worldSize: 3.427503
+  - key: Characters/Frost/Frost_Down_0
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 244717297
+    sprite: {fileID: 21300000, guid: 70b1f8073e7d1d44e873548e0b2add20, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Down_1
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: -222977563
+    sprite: {fileID: 21300000, guid: 424d483ac2cd18e4ca374a15386c5405, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Down_2
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: -1202133036
+    sprite: {fileID: 21300000, guid: 2fc98083a0fa4534b845cd44f3420194, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Down_3
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 423658877
+    sprite: {fileID: 21300000, guid: 144a081e5dd890a418de737f7edb1a43, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Left_0
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 1295309465
+    sprite: {fileID: 21300000, guid: 6b11ee6a33909e149ba15d90c642e7b4, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Left_1
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 409589608
+    sprite: {fileID: 21300000, guid: 9213928d4f3c28840b355336a3e63346, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Left_2
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 1741691941
+    sprite: {fileID: 21300000, guid: 2117030fe8456c64fb8799e52b3f964f, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Left_3
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: -791792325
+    sprite: {fileID: 21300000, guid: be8d4b8ad939ffe44b6f650f0f62f0bb, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Right_0
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: -248968334
+    sprite: {fileID: 21300000, guid: 3cec5422988fe2a4eba52a07f2d63a48, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Right_1
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 149331037
+    sprite: {fileID: 21300000, guid: b50ef9f1a8d6ffa4097755302366e893, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Right_2
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: -1325451603
+    sprite: {fileID: 21300000, guid: d5a79d1e4e5a2cb4c9388d6317b4a5c6, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Right_3
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: -1115841029
+    sprite: {fileID: 21300000, guid: 39d69646919f8e443a30617556c76eb1, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Up_0
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 995484881
+    sprite: {fileID: 21300000, guid: b6df89e7653d5c646acce19ffddc5ad2, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Up_1
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 187721810
+    sprite: {fileID: 21300000, guid: b56618849b5117a48ba479a0343777ca, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Up_2
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: -1844791034
+    sprite: {fileID: 21300000, guid: 312ba2e72e2e07848bcd49b8dfb9df66, type: 3}
+    worldSize: 3.6097841
+  - key: Characters/Frost/Frost_Up_3
+    sourceGuid: 40c390b3bed229e449aa5d2e5aea44fd
+    sourceFileId: 335395367
+    sprite: {fileID: 21300000, guid: c158f9dc562afe449bc0ff0abb84935c, type: 3}
+    worldSize: 3.6097841
+  - key: Monsters/Meadow/0/Walk_Meadow_0_0
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -770988191
+    sprite: {fileID: 21300000, guid: 798f7af7c41180c4ba924bddbac4b040, type: 3}
+    worldSize: 2.3666666
+  - key: Monsters/Meadow/0/Walk_Meadow_0_1
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 348100169
+    sprite: {fileID: 21300000, guid: a8d17acf10b3e0246b48ee7f1a8a45e2, type: 3}
+    worldSize: 2.3666666
+  - key: Monsters/Meadow/0/Walk_Meadow_0_2
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 307361306
+    sprite: {fileID: 21300000, guid: 07b00808990143b40adb3aff77120705, type: 3}
+    worldSize: 2.3666666
+  - key: Monsters/Meadow/0/Walk_Meadow_0_3
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -2065954164
+    sprite: {fileID: 21300000, guid: df4ef5b0b30294a4b94db4cb21200d6b, type: 3}
+    worldSize: 2.3666666
+  - key: Monsters/Meadow/1/Walk_Meadow_1_0
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 109507767
+    sprite: {fileID: 21300000, guid: e11034efb30135845b0f68b038532ce8, type: 3}
+    worldSize: 1.988889
+  - key: Monsters/Meadow/1/Walk_Meadow_1_1
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 102903997
+    sprite: {fileID: 21300000, guid: ebdc04b6bab51be4a89472bb41004af0, type: 3}
+    worldSize: 1.988889
+  - key: Monsters/Meadow/1/Walk_Meadow_1_2
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -523871653
+    sprite: {fileID: 21300000, guid: 32f3a7664e6d4814d90cfc0dad048f9c, type: 3}
+    worldSize: 1.988889
+  - key: Monsters/Meadow/1/Walk_Meadow_1_3
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -1964893971
+    sprite: {fileID: 21300000, guid: 3453222672303e74e9e5648c6c42876a, type: 3}
+    worldSize: 1.988889
+  - key: Monsters/Meadow/2/Walk_Meadow_2_0
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 1254385882
+    sprite: {fileID: 21300000, guid: dc8e83d709334d84091cc9602928b15f, type: 3}
+    worldSize: 2.477778
+  - key: Monsters/Meadow/2/Walk_Meadow_2_1
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -449812532
+    sprite: {fileID: 21300000, guid: cd78267ea361eeb49bcd42ab7a2507a9, type: 3}
+    worldSize: 2.477778
+  - key: Monsters/Meadow/2/Walk_Meadow_2_2
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 1408546014
+    sprite: {fileID: 21300000, guid: 27d65c211d5d8704a93d7dc92995f223, type: 3}
+    worldSize: 2.477778
+  - key: Monsters/Meadow/2/Walk_Meadow_2_3
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -872803481
+    sprite: {fileID: 21300000, guid: b3a6f36888ffadd47bd4a36b2e3108a1, type: 3}
+    worldSize: 2.477778
+  - key: Monsters/Meadow/3/Walk_Meadow_3_0
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 1619477901
+    sprite: {fileID: 21300000, guid: 200e0b8d4aa53f44595d5fb9777493c2, type: 3}
+    worldSize: 2.1444445
+  - key: Monsters/Meadow/3/Walk_Meadow_3_1
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -949545741
+    sprite: {fileID: 21300000, guid: 1bdefb359974b4f418896aa9b9318ea6, type: 3}
+    worldSize: 2.1444445
+  - key: Monsters/Meadow/3/Walk_Meadow_3_2
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 468942152
+    sprite: {fileID: 21300000, guid: 791f890eeb2f8ba48b620fcfb84022f3, type: 3}
+    worldSize: 2.1444445
+  - key: Monsters/Meadow/3/Walk_Meadow_3_3
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -1650121153
+    sprite: {fileID: 21300000, guid: 478099383cd7b3c4480afa45b3311ab4, type: 3}
+    worldSize: 2.1444445
+  - key: Monsters/Meadow/4/Walk_Meadow_4_0
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 1115610093
+    sprite: {fileID: 21300000, guid: 1d5e43ea50a35d14f84157e653607d3e, type: 3}
+    worldSize: 2.8555555
+  - key: Monsters/Meadow/4/Walk_Meadow_4_1
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -2055556224
+    sprite: {fileID: 21300000, guid: 003c4de842537ec4c9db617cfeab4b29, type: 3}
+    worldSize: 2.8555555
+  - key: Monsters/Meadow/4/Walk_Meadow_4_2
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: -303419906
+    sprite: {fileID: 21300000, guid: 41783f9e233a2ec40a6d949ee1a9a111, type: 3}
+    worldSize: 2.8555555
+  - key: Monsters/Meadow/4/Walk_Meadow_4_3
+    sourceGuid: 409c41b1f4d357546acc372b8e0f331a
+    sourceFileId: 1609714083
+    sprite: {fileID: 21300000, guid: 16fd42532d5b6f04c91d40bd103fdb60, type: 3}
+    worldSize: 2.8555555
+  - key: Monsters/Meadow/Boss/Retro_Meadow_5_0
+    sourceGuid: 8cedf0a1da7639840b3dd95817424ae2
+    sourceFileId: -1794222391
+    sprite: {fileID: 21300000, guid: 4d6b6f3c8b53bdf41b5b458d52b7f003, type: 3}
+    worldSize: 4.1444445
+  - key: Monsters/Meadow/Boss/Retro_Meadow_5_1
+    sourceGuid: 8cedf0a1da7639840b3dd95817424ae2
+    sourceFileId: -1565121413
+    sprite: {fileID: 21300000, guid: 62c558436d1305742b13c8206e08705f, type: 3}
+    worldSize: 4.1444445
+  - key: Monsters/Dungeon/0/Walk_Dungeon_0_0
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -1883637941
+    sprite: {fileID: 21300000, guid: 140b203e96a750c42a59bcfe080dfebb, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/0/Walk_Dungeon_0_1
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 539870915
+    sprite: {fileID: 21300000, guid: 79ed2742ac9507d40bc0e6e072c86e62, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/0/Walk_Dungeon_0_2
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -1502444253
+    sprite: {fileID: 21300000, guid: a874cf3f48140e747895c9babee3599d, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/0/Walk_Dungeon_0_3
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 1781783018
+    sprite: {fileID: 21300000, guid: 62cc63c5cafcd4746a49e35fca105a05, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/1/Walk_Dungeon_1_0
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 253270280
+    sprite: {fileID: 21300000, guid: 62663ccc879c1f148a900b032f115170, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/1/Walk_Dungeon_1_1
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -1269355122
+    sprite: {fileID: 21300000, guid: 82f3749881b80c14887a1a1b1d3fdcf0, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/1/Walk_Dungeon_1_2
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 1514422682
+    sprite: {fileID: 21300000, guid: d653985813f792849b3fc9194191be34, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/1/Walk_Dungeon_1_3
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 1527373528
+    sprite: {fileID: 21300000, guid: 548100d7d022a5947bacee31c430ca40, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/2/Walk_Dungeon_2_0
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 592627832
+    sprite: {fileID: 21300000, guid: 30fd2cd4f085b414bb7050ac0b7a46d3, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/2/Walk_Dungeon_2_1
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -1207090394
+    sprite: {fileID: 21300000, guid: 9cccbc7b2c1089942b9db60f61bd80bf, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/2/Walk_Dungeon_2_2
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -1491519954
+    sprite: {fileID: 21300000, guid: eacb7d0f565d9684585eeea7934724fe, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/2/Walk_Dungeon_2_3
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 1263658482
+    sprite: {fileID: 21300000, guid: 23ce9834cc032de4ea2982189ee7e606, type: 3}
+    worldSize: 2.4333334
+  - key: Monsters/Dungeon/3/Walk_Dungeon_3_0
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 611760586
+    sprite: {fileID: 21300000, guid: 910f72ac0279e284ca888411277e98a5, type: 3}
+    worldSize: 2.5222223
+  - key: Monsters/Dungeon/3/Walk_Dungeon_3_1
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 1755872279
+    sprite: {fileID: 21300000, guid: bdc9bb7a915d6e945bf6f2ae96d341d3, type: 3}
+    worldSize: 2.5222223
+  - key: Monsters/Dungeon/3/Walk_Dungeon_3_2
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -894802290
+    sprite: {fileID: 21300000, guid: 93e6851e773c7d5408c4f6e092b24f38, type: 3}
+    worldSize: 2.5222223
+  - key: Monsters/Dungeon/3/Walk_Dungeon_3_3
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -338860197
+    sprite: {fileID: 21300000, guid: a32061c39878639439e30b1acacb758f, type: 3}
+    worldSize: 2.5222223
+  - key: Monsters/Dungeon/4/Walk_Dungeon_4_0
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 317712124
+    sprite: {fileID: 21300000, guid: ff9c35b1a8d4f7d4d944ebdfef65f37e, type: 3}
+    worldSize: 2.3888888
+  - key: Monsters/Dungeon/4/Walk_Dungeon_4_1
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -313418949
+    sprite: {fileID: 21300000, guid: d93ddae7595a11048a798660aef2f564, type: 3}
+    worldSize: 2.3888888
+  - key: Monsters/Dungeon/4/Walk_Dungeon_4_2
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: 1775187133
+    sprite: {fileID: 21300000, guid: d0ce49d487105f14d8fa13b314d84c87, type: 3}
+    worldSize: 2.3888888
+  - key: Monsters/Dungeon/4/Walk_Dungeon_4_3
+    sourceGuid: 6ee523e25363d4043879097ad266acf9
+    sourceFileId: -1532574218
+    sprite: {fileID: 21300000, guid: 7dd5701f8a75459458e01a075692140a, type: 3}
+    worldSize: 2.3888888
+  - key: Monsters/Dungeon/Boss/Retro_Dungeon_5_0
+    sourceGuid: 4ef4dedf87405e141af535993e48306c
+    sourceFileId: -1266097336
+    sprite: {fileID: 21300000, guid: 11da6e3b0f086034aacd5033104c3822, type: 3}
+    worldSize: 4.1444445
+  - key: Monsters/Dungeon/Boss/Retro_Dungeon_5_1
+    sourceGuid: 4ef4dedf87405e141af535993e48306c
+    sourceFileId: -1273634660
+    sprite: {fileID: 21300000, guid: 8239a6ca70fc41349a30dca7daf914bc, type: 3}
+    worldSize: 4.1444445
+  - key: CollectiblesAndProjectiles/Currency_01/Currency_01_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1595109600
+    sprite: {fileID: 21300000, guid: 29de06238df8bc847a9ea33519860cb4, type: 3}
+    worldSize: 1.9203802
+  - key: CollectiblesAndProjectiles/Currency_01/Currency_01_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1752479963
+    sprite: {fileID: 21300000, guid: 065d17c5311d67c449ed4f1b5fb21956, type: 3}
+    worldSize: 1.9203802
+  - key: CollectiblesAndProjectiles/Currency_01/Currency_01_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -472575529
+    sprite: {fileID: 21300000, guid: 216135412209b3e499bb75c875dbe76a, type: 3}
+    worldSize: 1.9203802
+  - key: CollectiblesAndProjectiles/Currency_01/Currency_01_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 395150758
+    sprite: {fileID: 21300000, guid: e9e673d4a9073e34a91d3f3bda8466fa, type: 3}
+    worldSize: 1.9203802
+  - key: CollectiblesAndProjectiles/Currency_02/Currency_02_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1251010709
+    sprite: {fileID: 21300000, guid: c4d1a41e7e5bd8449bc0b7e18c397671, type: 3}
+    worldSize: 1.939394
+  - key: CollectiblesAndProjectiles/Currency_02/Currency_02_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1705998945
+    sprite: {fileID: 21300000, guid: 819cdaf85b993de4c834ebe7ac839f51, type: 3}
+    worldSize: 1.939394
+  - key: CollectiblesAndProjectiles/Currency_02/Currency_02_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -2111107737
+    sprite: {fileID: 21300000, guid: 0dc7e566d21fbb944b48f2506c4911cd, type: 3}
+    worldSize: 1.939394
+  - key: CollectiblesAndProjectiles/Currency_02/Currency_02_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 921634628
+    sprite: {fileID: 21300000, guid: c160f15bb50cdc3408d41c21f7334b04, type: 3}
+    worldSize: 1.939394
+  - key: CollectiblesAndProjectiles/Currency_03/Currency_03_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 585993334
+    sprite: {fileID: 21300000, guid: 1bccfd7b862a7b344a1feb7acad77b17, type: 3}
+    worldSize: 1.9584078
+  - key: CollectiblesAndProjectiles/Currency_03/Currency_03_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1413224690
+    sprite: {fileID: 21300000, guid: c9b842c69d53a334abc46f653ca24d84, type: 3}
+    worldSize: 1.9584078
+  - key: CollectiblesAndProjectiles/Currency_03/Currency_03_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 746427072
+    sprite: {fileID: 21300000, guid: 8c5cd8de7a5bfe54682f39cf2587b8ca, type: 3}
+    worldSize: 1.9584078
+  - key: CollectiblesAndProjectiles/Currency_03/Currency_03_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 267281845
+    sprite: {fileID: 21300000, guid: c68cddd14e482c044b9d53e15c9703f7, type: 3}
+    worldSize: 1.9584078
+  - key: CollectiblesAndProjectiles/Currency_04/Currency_04_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1704735068
+    sprite: {fileID: 21300000, guid: 950a516793b7ffa47bca05cac5670bb0, type: 3}
+    worldSize: 2.0534759
+  - key: CollectiblesAndProjectiles/Currency_04/Currency_04_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1958640807
+    sprite: {fileID: 21300000, guid: a17e976ec2f9aaa47ac8781d31216bb0, type: 3}
+    worldSize: 2.0534759
+  - key: CollectiblesAndProjectiles/Currency_04/Currency_04_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 55545199
+    sprite: {fileID: 21300000, guid: e76e2fc5b7b50fb4681f5624df2350f8, type: 3}
+    worldSize: 2.0534759
+  - key: CollectiblesAndProjectiles/Currency_04/Currency_04_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1178583372
+    sprite: {fileID: 21300000, guid: 6c6058ed90b13fa4faf028fb4864fb5b, type: 3}
+    worldSize: 2.0534759
+  - key: CollectiblesAndProjectiles/Currency_05/Currency_05_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1648852395
+    sprite: {fileID: 21300000, guid: d5d9e837fd710dc4c8cc7c328ee66203, type: 3}
+    worldSize: 2.110517
+  - key: CollectiblesAndProjectiles/Currency_05/Currency_05_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 299165810
+    sprite: {fileID: 21300000, guid: 1d57bf347800c1a44bd428fe0c4bb068, type: 3}
+    worldSize: 2.110517
+  - key: CollectiblesAndProjectiles/Currency_05/Currency_05_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1308076299
+    sprite: {fileID: 21300000, guid: 0ed4f5d393ef93644b94d73b424945a9, type: 3}
+    worldSize: 2.110517
+  - key: CollectiblesAndProjectiles/Currency_05/Currency_05_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1554422042
+    sprite: {fileID: 21300000, guid: 79666e0cabe6edb43acc13c9d3ed4707, type: 3}
+    worldSize: 2.110517
+  - key: CollectiblesAndProjectiles/Experience_01/Experience_01_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -72529629
+    sprite: {fileID: 21300000, guid: ac5d3b58c002f564ca4e4e0224fd8e22, type: 3}
+    worldSize: 1.9584078
+  - key: CollectiblesAndProjectiles/Experience_01/Experience_01_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1648051905
+    sprite: {fileID: 21300000, guid: 33929acf0d5e438439f57c8492eb334d, type: 3}
+    worldSize: 1.9584078
+  - key: CollectiblesAndProjectiles/Experience_01/Experience_01_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -648475265
+    sprite: {fileID: 21300000, guid: dc8a4e1e0c78d1d4da0deb007189803b, type: 3}
+    worldSize: 1.9584078
+  - key: CollectiblesAndProjectiles/Experience_01/Experience_01_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1507188428
+    sprite: {fileID: 21300000, guid: aadb1dc2c00ac9846b4d489756e247f6, type: 3}
+    worldSize: 1.9584078
+  - key: CollectiblesAndProjectiles/Experience_02/Experience_02_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1547440168
+    sprite: {fileID: 21300000, guid: f99b0f185ac785a4a81b79b05c570a8f, type: 3}
+    worldSize: 2.0534759
+  - key: CollectiblesAndProjectiles/Experience_02/Experience_02_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -258031880
+    sprite: {fileID: 21300000, guid: 3099cbcd30a6ac645bd158c78f080737, type: 3}
+    worldSize: 2.0534759
+  - key: CollectiblesAndProjectiles/Experience_02/Experience_02_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1502958915
+    sprite: {fileID: 21300000, guid: e3e3e944af77ec240920f0f90b0f14ea, type: 3}
+    worldSize: 2.0534759
+  - key: CollectiblesAndProjectiles/Experience_02/Experience_02_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1498944204
+    sprite: {fileID: 21300000, guid: d7427a6210ed6e241a488a349b04cfef, type: 3}
+    worldSize: 2.0534759
+  - key: CollectiblesAndProjectiles/Experience_03/Experience_03_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -201950333
+    sprite: {fileID: 21300000, guid: c4429055909d31e478c2e20a9f8c9493, type: 3}
+    worldSize: 1.8062984
+  - key: CollectiblesAndProjectiles/Experience_03/Experience_03_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 725322267
+    sprite: {fileID: 21300000, guid: 53615ec2117ec6e49b3e7f0c97d3fafc, type: 3}
+    worldSize: 1.8062984
+  - key: CollectiblesAndProjectiles/Experience_03/Experience_03_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1327886859
+    sprite: {fileID: 21300000, guid: e97084bb66261a84585d711aa51048b9, type: 3}
+    worldSize: 1.8062984
+  - key: CollectiblesAndProjectiles/Experience_03/Experience_03_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -950544150
+    sprite: {fileID: 21300000, guid: 3a64d853a2530bf46a43c3062cd4e578, type: 3}
+    worldSize: 1.8062984
+  - key: CollectiblesAndProjectiles/Experience_04/Experience_04_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1313736101
+    sprite: {fileID: 21300000, guid: f1fe729081b1f7043a6cb99b96d0962c, type: 3}
+    worldSize: 2.224599
+  - key: CollectiblesAndProjectiles/Experience_04/Experience_04_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1544109347
+    sprite: {fileID: 21300000, guid: 2770c4140d6a35144bbbfa356113c115, type: 3}
+    worldSize: 2.224599
+  - key: CollectiblesAndProjectiles/Experience_04/Experience_04_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: -1953785255
+    sprite: {fileID: 21300000, guid: e9c14c68ddc06eb429c92e932aa088bb, type: 3}
+    worldSize: 2.224599
+  - key: CollectiblesAndProjectiles/Experience_04/Experience_04_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 184413261
+    sprite: {fileID: 21300000, guid: c1b7be75b9562124aa41ce404dce2937, type: 3}
+    worldSize: 2.224599
+  - key: CollectiblesAndProjectiles/Experience_05/Experience_05_0
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 843151883
+    sprite: {fileID: 21300000, guid: ce5f5eeb10672aa45b69318021702d4f, type: 3}
+    worldSize: 2.224599
+  - key: CollectiblesAndProjectiles/Experience_05/Experience_05_1
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1254570773
+    sprite: {fileID: 21300000, guid: ed98d598b509bd6499958484039ed3e6, type: 3}
+    worldSize: 2.224599
+  - key: CollectiblesAndProjectiles/Experience_05/Experience_05_2
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 2085813813
+    sprite: {fileID: 21300000, guid: ba19874fc781e2d4a89659e6e0f2a725, type: 3}
+    worldSize: 2.224599
+  - key: CollectiblesAndProjectiles/Experience_05/Experience_05_3
+    sourceGuid: 447a4b775ebd2f440a89a316f4c82b54
+    sourceFileId: 1836370245
+    sprite: {fileID: 21300000, guid: 332f57090d6812c4e99e16c7bb967c9f, type: 3}
+    worldSize: 2.224599
+  - key: CollectiblesAndProjectiles/Pickup_ExperienceGem/Pickup_ExperienceGem_0
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 267742201
+    sprite: {fileID: 21300000, guid: 9f79b683381a30143b4af0a7eac29760, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_ExperienceGem/Pickup_ExperienceGem_1
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 416212062
+    sprite: {fileID: 21300000, guid: 27b291f644d01e0499ff3372894499b1, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_ExperienceGem/Pickup_ExperienceGem_2
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: -2133433758
+    sprite: {fileID: 21300000, guid: 8127d11d503d5ff45946b3d275936deb, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_ExperienceGem/Pickup_ExperienceGem_3
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 850640508
+    sprite: {fileID: 21300000, guid: fcc759595136df941859a6974aaa2e08, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_GoldCoin/Pickup_GoldCoin_0
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 1448230174
+    sprite: {fileID: 21300000, guid: cfca259038dd87d448796795881717b3, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_GoldCoin/Pickup_GoldCoin_1
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 368293834
+    sprite: {fileID: 21300000, guid: 5755c701f31ae314da1846a9bd3c6102, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_GoldCoin/Pickup_GoldCoin_2
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 276399207
+    sprite: {fileID: 21300000, guid: 069139a70f2503840a44f02b0855aa56, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_GoldCoin/Pickup_GoldCoin_3
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 867346624
+    sprite: {fileID: 21300000, guid: 18a7581901b61974994c8154ea075dfe, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_TreasureChest/Pickup_TreasureChest_0
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 1832532741
+    sprite: {fileID: 21300000, guid: f5cda2757e7a7a947812a2513b841ea9, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_TreasureChest/Pickup_TreasureChest_1
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: 946709486
+    sprite: {fileID: 21300000, guid: bd3d3f9b8cd9bd6449d9130c7613e480, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_TreasureChest/Pickup_TreasureChest_2
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: -1763191425
+    sprite: {fileID: 21300000, guid: ce7cbc68c1ad74b468e6c2ad6dcddc26, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/Pickup_TreasureChest/Pickup_TreasureChest_3
+    sourceGuid: 31a0def6fd40e88428af47f4e89e79ba
+    sourceFileId: -1221745156
+    sprite: {fileID: 21300000, guid: 763bbaac5f52071458f9bb59f1f1e5c6, type: 3}
+    worldSize: 4.243094
+  - key: CollectiblesAndProjectiles/ProjectDM_ManaPickup_v1/ProjectDM_ManaPickup_v1
+    sourceGuid: fbd08d311501e4e4fbcc624f61534cdf
+    sourceFileId: 21300000
+    sprite: {fileID: 21300000, guid: 257b31a6fa677f542a2daab481d02e49, type: 3}
+    worldSize: 2.6125
+  - key: CollectiblesAndProjectiles/Experience_Gem/Experience_Gem
+    sourceGuid: 502dc223c83ea6b4ebad6eefe15e9d07
+    sourceFileId: -5252421055456862097
+    sprite: {fileID: 21300000, guid: 9dbf6783afac21341b050a6bdb31a8ae, type: 3}
+    worldSize: 2.661
+  - key: CollectiblesAndProjectiles/Gold_Coin/Gold_Coin
+    sourceGuid: 502dc223c83ea6b4ebad6eefe15e9d07
+    sourceFileId: -287246070730913912
+    sprite: {fileID: 21300000, guid: 2d2b1e866574b604a9b632da0fee5aaf, type: 3}
+    worldSize: 1.4666667
+  - key: CollectiblesAndProjectiles/Projectile_Bolt/Projectile_Bolt_0
+    sourceGuid: 502dc223c83ea6b4ebad6eefe15e9d07
+    sourceFileId: -1132183327
+    sprite: {fileID: 21300000, guid: 4c85b889f6c4ada4da7f0aec5424499a, type: 3}
+    worldSize: 3.1666667
+  - key: CollectiblesAndProjectiles/Projectile_Bolt/Projectile_Bolt_1
+    sourceGuid: 502dc223c83ea6b4ebad6eefe15e9d07
+    sourceFileId: 1982213110
+    sprite: {fileID: 21300000, guid: bc5f8cfb12845844fbaf6b4aa4854a82, type: 3}
+    worldSize: 3.1666667
+  - key: CollectiblesAndProjectiles/Projectile_Bolt/Projectile_Bolt_2
+    sourceGuid: 502dc223c83ea6b4ebad6eefe15e9d07
+    sourceFileId: -1418005776
+    sprite: {fileID: 21300000, guid: fa38aa1ffdc802f4e955cc14fc926519, type: 3}
+    worldSize: 3.1666667
+  - key: CollectiblesAndProjectiles/Projectile_Bolt/Projectile_Bolt_3
+    sourceGuid: 502dc223c83ea6b4ebad6eefe15e9d07
+    sourceFileId: 1341735273
+    sprite: {fileID: 21300000, guid: 301c4988b110370449f0db14096a5be0, type: 3}
+    worldSize: 3.1666667
+  - key: CollectiblesAndProjectiles/Existing_0/Existing_0_0
+    sourceGuid: 4bf9385876300ff478af704d5ed92b6c
+    sourceFileId: -2125193601
+    sprite: {fileID: 21300000, guid: bb988e6cdcc17f64682e2fde5cee5dbb, type: 3}
+    worldSize: 5.688889
+  - key: CollectiblesAndProjectiles/Existing_0/Existing_0_1
+    sourceGuid: 4bf9385876300ff478af704d5ed92b6c
+    sourceFileId: 1906641030
+    sprite: {fileID: 21300000, guid: a7bc0cc9b55d990479a8d88c2ea4a113, type: 3}
+    worldSize: 5.688889
+  - key: CollectiblesAndProjectiles/Existing_1/Existing_1_0
+    sourceGuid: 4bf9385876300ff478af704d5ed92b6c
+    sourceFileId: 1500855290
+    sprite: {fileID: 21300000, guid: d3654d368a01bf84786584fb8f88999a, type: 3}
+    worldSize: 5.688889
+  - key: CollectiblesAndProjectiles/Existing_1/Existing_1_1
+    sourceGuid: 4bf9385876300ff478af704d5ed92b6c
+    sourceFileId: -373957953
+    sprite: {fileID: 21300000, guid: 4d0f9b267cc8c0547bc1b913fb113d70, type: 3}
+    worldSize: 5.688889
+  - key: CollectiblesAndProjectiles/Existing_2/Existing_2_0
+    sourceGuid: 4bf9385876300ff478af704d5ed92b6c
+    sourceFileId: -1920672688
+    sprite: {fileID: 21300000, guid: 3909e188abcdf4a44849cb20e46279ae, type: 3}
+    worldSize: 5.688889
+  - key: CollectiblesAndProjectiles/Existing_2/Existing_2_1
+    sourceGuid: 4bf9385876300ff478af704d5ed92b6c
+    sourceFileId: 128501256
+    sprite: {fileID: 21300000, guid: a5d6b511a4c2534429fa0c6ff769f792, type: 3}
+    worldSize: 5.688889
+  - key: Skills/ProjectDM_ChainLightning_v1/ProjectDM_ChainLightning_v1
+    sourceGuid: 759c3d159d9a466db35d70439e2a16bb
+    sourceFileId: 21300000
+    sprite: {fileID: 21300000, guid: 5044ed738409a444d8b052056d74da3f, type: 3}
+    worldSize: 6.406256
+  - key: Skills/ProjectDM_Splash_v1/ProjectDM_Splash_v1
+    sourceGuid: 29a19885a1914c08a9e8d17452c84cba
+    sourceFileId: 21300000
+    sprite: {fileID: 21300000, guid: 0339aa94227a1ed4eaeab5965b5d86bc, type: 3}
+    worldSize: 5.355191
+  - key: Skills/ProjectDM_Meteor_v1/ProjectDM_Meteor_v1
+    sourceGuid: 56d7ec2a4c2848ff8a449b2a0a49c384
+    sourceFileId: 21300000
+    sprite: {fileID: 21300000, guid: f946f8816c57a0a4fad854b50b702534, type: 3}
+    worldSize: 6.406256
+  - key: Skills/ProjectDM_FrostShard_v1/ProjectDM_FrostShard_v1
+    sourceGuid: 6938ccf1636b3664c923a1a64746c58b
+    sourceFileId: 21300000
+    sprite: {fileID: 21300000, guid: ef9d91fb473748e4ba130f30797f40d7, type: 3}
+    worldSize: 5.225
+  - key: Fallback/ProjectDM_Player_Walk_4Frame_v6/Walk_Down_0
+    sourceGuid: 342104ef5671c2543bd4bb7861815b6e
+    sourceFileId: 1048083004
+    sprite: {fileID: 21300000, guid: 3d430f7a6159d86499102d62d9121221, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_4Frame_v6/Walk_Down_1
+    sourceGuid: 342104ef5671c2543bd4bb7861815b6e
+    sourceFileId: -1002017637
+    sprite: {fileID: 21300000, guid: 270ae00aeba05ad4d9b2931a5667ef3f, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_4Frame_v6/Walk_Down_2
+    sourceGuid: 342104ef5671c2543bd4bb7861815b6e
+    sourceFileId: 247355777
+    sprite: {fileID: 21300000, guid: 6fe22d4f54a5a1d4e909fd980f6c85ad, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_4Frame_v6/Walk_Down_3
+    sourceGuid: 342104ef5671c2543bd4bb7861815b6e
+    sourceFileId: -598132210
+    sprite: {fileID: 21300000, guid: 160989fc926d4e94a85f82ad9c8fec2e, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_4Frame_v6/Walk_Up_0
+    sourceGuid: 342104ef5671c2543bd4bb7861815b6e
+    sourceFileId: -475027555
+    sprite: {fileID: 21300000, guid: 58adf4e1a4b3db94db85e79abfe138e5, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_4Frame_v6/Walk_Up_1
+    sourceGuid: 342104ef5671c2543bd4bb7861815b6e
+    sourceFileId: 2079520878
+    sprite: {fileID: 21300000, guid: 43baac29bc43008439314f878e616870, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_4Frame_v6/Walk_Up_2
+    sourceGuid: 342104ef5671c2543bd4bb7861815b6e
+    sourceFileId: 774164547
+    sprite: {fileID: 21300000, guid: 6d654ddbdcf97704bb036a038a19c467, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_4Frame_v6/Walk_Up_3
+    sourceGuid: 342104ef5671c2543bd4bb7861815b6e
+    sourceFileId: 1308579334
+    sprite: {fileID: 21300000, guid: f6a00eef9d2b073469a2d6b6098122c2, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_SideRefined_v7/Walk_Left_0
+    sourceGuid: 9eee96d5dcae97c4c9c3978d58c88f75
+    sourceFileId: -712242547
+    sprite: {fileID: 21300000, guid: 70d1464894185884c9fae9abbe514fdf, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_SideRefined_v7/Walk_Left_1
+    sourceGuid: 9eee96d5dcae97c4c9c3978d58c88f75
+    sourceFileId: -1052017261
+    sprite: {fileID: 21300000, guid: f6d3b2b47895acf40a6628da40abbc73, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_SideRefined_v7/Walk_Left_2
+    sourceGuid: 9eee96d5dcae97c4c9c3978d58c88f75
+    sourceFileId: -1146067449
+    sprite: {fileID: 21300000, guid: 66dc8e9c519ec9541b7aaac15300934e, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_SideRefined_v7/Walk_Left_3
+    sourceGuid: 9eee96d5dcae97c4c9c3978d58c88f75
+    sourceFileId: -847304145
+    sprite: {fileID: 21300000, guid: f19bd1ef9ef43c945a8891dcb4ea4672, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_SideRefined_v7/Walk_Right_0
+    sourceGuid: 9eee96d5dcae97c4c9c3978d58c88f75
+    sourceFileId: -2045021983
+    sprite: {fileID: 21300000, guid: 44c7c89d7b5da534dbc1610c8df98028, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_SideRefined_v7/Walk_Right_1
+    sourceGuid: 9eee96d5dcae97c4c9c3978d58c88f75
+    sourceFileId: -1576998539
+    sprite: {fileID: 21300000, guid: 760e79bed4195094e933d0fa08b16010, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_SideRefined_v7/Walk_Right_2
+    sourceGuid: 9eee96d5dcae97c4c9c3978d58c88f75
+    sourceFileId: 154951928
+    sprite: {fileID: 21300000, guid: 46dfce597e8d8814a9dca3d42d890fc7, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Walk_SideRefined_v7/Walk_Right_3
+    sourceGuid: 9eee96d5dcae97c4c9c3978d58c88f75
+    sourceFileId: 288971503
+    sprite: {fileID: 21300000, guid: 42c38d237cbf969479f1aa6c5d0ce3e5, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Down_0
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: 1048083004
+    sprite: {fileID: 21300000, guid: e1cd53ac84f01974eab2cf786500f9ea, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Left_0
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: -712242547
+    sprite: {fileID: 21300000, guid: c0bff4aef389ca545b385e592d85cff5, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Left_1
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: -1052017261
+    sprite: {fileID: 21300000, guid: ca9b7e2235502384ab0e4e65d9dd65ac, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Left_2
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: -1146067449
+    sprite: {fileID: 21300000, guid: 84e75c5b4156da3478f3f752b4144877, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Left_3
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: -847304145
+    sprite: {fileID: 21300000, guid: e68f8ae220a466c46b1a5cefbb0d748d, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Right_0
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: -2045021983
+    sprite: {fileID: 21300000, guid: ddb7b88f232e73c4cadcad5f50278553, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Right_1
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: -1576998539
+    sprite: {fileID: 21300000, guid: 948a2383c472f4f46973379d05bfdad5, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Right_2
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: 154951928
+    sprite: {fileID: 21300000, guid: eeecbe43b96d96f45b12e6f6a80e9cd3, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Right_3
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: 288971503
+    sprite: {fileID: 21300000, guid: 53ffd5ff8997c354088a627e23b5ad5c, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Up_0
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: -475027555
+    sprite: {fileID: 21300000, guid: 62fb7dac68c662e40bd49d6a2b594e84, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Up_1
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: 2079520878
+    sprite: {fileID: 21300000, guid: 627c3fd4100e2f74db77d7055a7dfa57, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Up_2
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: 774164547
+    sprite: {fileID: 21300000, guid: bb7da4edc5eb38e4dbb6baeaed9712b1, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Player_Idle_4Frame_v1/Idle_Up_3
+    sourceGuid: 4d5bc347bafc460b8ec76b43329eb2c9
+    sourceFileId: 1308579334
+    sprite: {fileID: 21300000, guid: c2e661a279c6f3a478f363e93a7dfe8d, type: 3}
+    worldSize: 3.2111113
+  - key: Fallback/ProjectDM_Monsters_16Bit_v5/Actor_Skeleton_0
+    sourceGuid: 1df6fb62170413149b93763b42934bf3
+    sourceFileId: -1288109876
+    sprite: {fileID: 21300000, guid: af9ceccc207df7b45bc950f8001eebbc, type: 3}
+    worldSize: 4.5666666
+  - key: Fallback/ProjectDM_Monsters_16Bit_v5/Actor_Skeleton_1
+    sourceGuid: 1df6fb62170413149b93763b42934bf3
+    sourceFileId: -84191757
+    sprite: {fileID: 21300000, guid: 9052206fc9ab90646b01dbe8d4bc9428, type: 3}
+    worldSize: 4.5666666
+  - key: Fallback/ProjectDM_Monsters_16Bit_v5/Actor_Slime_0
+    sourceGuid: 1df6fb62170413149b93763b42934bf3
+    sourceFileId: -1098603268
+    sprite: {fileID: 21300000, guid: 2df562791a234e342ba624fe68031acf, type: 3}
+    worldSize: 4.5666666
+  - key: Fallback/ProjectDM_Monsters_16Bit_v5/Actor_Slime_1
+    sourceGuid: 1df6fb62170413149b93763b42934bf3
+    sourceFileId: -866923610
+    sprite: {fileID: 21300000, guid: b402051e23b34d04188afc61b9790dc1, type: 3}
+    worldSize: 4.5666666
+  - key: Runtime_Bolt
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: 4c85b889f6c4ada4da7f0aec5424499a, type: 3}
+    worldSize: 3.1666667
+  - key: Runtime_Gem
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: 9dbf6783afac21341b050a6bdb31a8ae, type: 3}
+    worldSize: 2.661
+  - key: Runtime_Coin
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: 2d2b1e866574b604a9b632da0fee5aaf, type: 3}
+    worldSize: 1.4666667
+  - key: Fallback_2_0
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: bb988e6cdcc17f64682e2fde5cee5dbb, type: 3}
+    worldSize: 5.688889
+  - key: Fallback_2_1
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: a7bc0cc9b55d990479a8d88c2ea4a113, type: 3}
+    worldSize: 5.688889
+  - key: Fallback_3_0
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: d3654d368a01bf84786584fb8f88999a, type: 3}
+    worldSize: 5.688889
+  - key: Fallback_3_1
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: 4d0f9b267cc8c0547bc1b913fb113d70, type: 3}
+    worldSize: 5.688889
+  - key: Fallback_4_0
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: 3909e188abcdf4a44849cb20e46279ae, type: 3}
+    worldSize: 5.688889
+  - key: Fallback_4_1
+    sourceGuid: 
+    sourceFileId: 0
+    sprite: {fileID: 21300000, guid: a5d6b511a4c2534429fa0c6ff769f792, type: 3}
+    worldSize: 5.688889

@@ -1,0 +1,577 @@
+fileFormatVersion: 2
+guid: 409c41b1f4d357546acc372b8e0f331a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 96
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Walk_Meadow_0_0
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 1090
+        width: 154
+        height: 213
+      alignment: 9
+      pivot: {x: 0.5422078, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b3cbd6cccc5e504f9d7a8591e17fea7
+      internalID: -770988191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_0_1
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 1090
+        width: 138
+        height: 213
+      alignment: 9
+      pivot: {x: 0.5253623, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00456e81740e03b4891ad224e64ce672
+      internalID: 348100169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_0_2
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 1090
+        width: 142
+        height: 213
+      alignment: 9
+      pivot: {x: 0.5246479, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94c9b0bd1e527074c9f1d81026d88205
+      internalID: 307361306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_0_3
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 1090
+        width: 160
+        height: 213
+      alignment: 9
+      pivot: {x: 0.521875, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 798b246b126a4ac499b9b8ea35b097e4
+      internalID: -2065954164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_1_0
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 861
+        width: 170
+        height: 179
+      alignment: 9
+      pivot: {x: 0.4970588, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dd58732525bd0e47b55d3e4c9377c7e
+      internalID: 109507767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_1_1
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 861
+        width: 166
+        height: 179
+      alignment: 9
+      pivot: {x: 0.47289157, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad62784f388c78408c119b82f483f8e
+      internalID: 102903997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_1_2
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 861
+        width: 160
+        height: 179
+      alignment: 9
+      pivot: {x: 0.509375, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1005b3543059996489d7d6b1d8cc4d62
+      internalID: -523871653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_1_3
+      rect:
+        serializedVersion: 2
+        x: 881
+        y: 861
+        width: 171
+        height: 179
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fa7aee2314c1854fa10960cf4964fe2
+      internalID: -1964893971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_2_0
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 602
+        width: 207
+        height: 173
+      alignment: 9
+      pivot: {x: 0.5241546, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5232768443a06054d9a4a9a660014cdd
+      internalID: 1254385882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_2_1
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 602
+        width: 206
+        height: 173
+      alignment: 9
+      pivot: {x: 0.5315534, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1aa04d4db3905f8408eccf4ea4d1a49f
+      internalID: -449812532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_2_2
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 602
+        width: 216
+        height: 173
+      alignment: 9
+      pivot: {x: 0.5162037, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fa34c2350fab7545956f26fa8c4b905
+      internalID: 1408546014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_2_3
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 602
+        width: 206
+        height: 173
+      alignment: 9
+      pivot: {x: 0.54126215, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fb43804f4cef4d4cb527aa891c105c5
+      internalID: -872803481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_3_0
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 357
+        width: 187
+        height: 173
+      alignment: 9
+      pivot: {x: 0.5053476, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d00a7a9f65666f0479c697cb99078a53
+      internalID: 1619477901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_3_1
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 357
+        width: 185
+        height: 173
+      alignment: 9
+      pivot: {x: 0.4945946, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89807405aaa0da0409c295a71cd4a1fd
+      internalID: -949545741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_3_2
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 357
+        width: 193
+        height: 173
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e25185e1a292d04184b5e0529a06439
+      internalID: 468942152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_3_3
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 357
+        width: 189
+        height: 173
+      alignment: 9
+      pivot: {x: 0.49470899, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 160090243ca493a4fbe439dcaeb034f9
+      internalID: -1650121153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_4_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 90
+        width: 244
+        height: 185
+      alignment: 9
+      pivot: {x: 0.47336066, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c85a5b658c99fa34d9838ac28ee83d54
+      internalID: 1115610093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_4_1
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 90
+        width: 229
+        height: 185
+      alignment: 9
+      pivot: {x: 0.51310045, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25d081e28eeb235429598bc7821fd2bd
+      internalID: -2055556224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_4_2
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 90
+        width: 227
+        height: 185
+      alignment: 9
+      pivot: {x: 0.49118942, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4e504a46a92b5943bf69d6345f9e0b0
+      internalID: -303419906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk_Meadow_4_3
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 90
+        width: 232
+        height: 185
+      alignment: 9
+      pivot: {x: 0.47198275, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2f4ac6ae24901643bf381910480f314
+      internalID: 1609714083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: d6ce28190b274c644a7f2dedecfeb3cc
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Walk_Meadow_0_0: -770988191
+      Walk_Meadow_0_1: 348100169
+      Walk_Meadow_0_2: 307361306
+      Walk_Meadow_0_3: -2065954164
+      Walk_Meadow_1_0: 109507767
+      Walk_Meadow_1_1: 102903997
+      Walk_Meadow_1_2: -523871653
+      Walk_Meadow_1_3: -1964893971
+      Walk_Meadow_2_0: 1254385882
+      Walk_Meadow_2_1: -449812532
+      Walk_Meadow_2_2: 1408546014
+      Walk_Meadow_2_3: -872803481
+      Walk_Meadow_3_0: 1619477901
+      Walk_Meadow_3_1: -949545741
+      Walk_Meadow_3_2: 468942152
+      Walk_Meadow_3_3: -1650121153
+      Walk_Meadow_4_0: 1115610093
+      Walk_Meadow_4_1: -2055556224
+      Walk_Meadow_4_2: -303419906
+      Walk_Meadow_4_3: 1609714083
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

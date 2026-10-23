@@ -22,7 +22,7 @@ namespace ProjectDM.Editor
         {
             checks = 0;
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/GameContent/Prefabs/ManaPickup.prefab");
-            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(ProjectDMFrostManaSetup.ManaPath);
+            Sprite sprite = Pixel32ArtSetup.Resolve(AssetDatabase.LoadAssetAtPath<Sprite>(ProjectDMFrostManaSetup.ManaPath));
             Check(prefab != null && sprite != null, "Dedicated mana art and prefab exist");
             Check(prefab.GetComponentInChildren<SpriteRenderer>().sprite == sprite && prefab.GetComponentInChildren<PickupFloatVisual>() != null,
                 "Mana prefab has its own art and pooled floating visual");

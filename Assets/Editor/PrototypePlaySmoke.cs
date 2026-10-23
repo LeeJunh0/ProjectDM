@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -225,7 +226,7 @@ namespace ProjectDM.Editor
                     Enemy miniBoss = enemySystem.enemies.Find(e => e.rank == EnemyRank.MiniBoss);
                     Check(miniBoss != null && miniBoss.renderer.sprite != null, "Real Main spawns an enlarged current-monster mini boss");
                     Check(miniBoss.renderer.sprite == stageArt.MonsterSprite(miniBoss.kind) &&
-                        AssetDatabase.GetAssetPath(miniBoss.renderer.sprite).StartsWith(ProjectDMMonsterArtSetup.ArtFolder + "/"),
+                        AssetDatabase.GetAssetPath(Pixel32ArtSetup.Original(miniBoss.renderer.sprite)).StartsWith(ProjectDMMonsterArtSetup.ArtFolder + "/"),
                         "Real mini boss inherits the newly installed retro monster artwork");
                     miniBoss.transform.position = player.position + Vector3.right * 2;
                     int chestsBefore = drops.pickups.FindAll(p => p.kind == PickupKind.Chest).Count;
@@ -294,12 +295,43 @@ namespace ProjectDM.Editor
                         Check(enemy.renderer.sprite == enemy.baseSprite, "Original looping Animator returns to the first frame");
                     }
                 }
-                system.UpdateEnemies(.17f);
                 foreach (Enemy enemy in system.enemies)
-                    if (enemy.alternateSprite != null) Check(enemy.renderer.sprite == enemy.alternateSprite, "Live two-frame sprite animation advances");
-                system.UpdateEnemies(.17f);
+                {
+                    if (enemy.animationFrames == null) continue;
+                    int frameCount = MonsterAnimationArtSetup.FrameCount;
+                    Check(enemy.animationFrames.Length == frameCount && enemy.animationFrame == 0, "Pooled walk cycle starts clean with four frames");
+                    for (int frame = 1; frame <= frameCount; frame++)
+                    {
+                        enemy.AdvanceAnimation(enemy.frameSeconds);
+                        Check(enemy.renderer.sprite == enemy.animationFrames[frame % frameCount], "Live walk cycle visits every frame and loops");
+                    }
+                    enemy.freezeRemaining = 1; enemy.chillRemaining = 0;
+                }
+                system.UpdateEnemies(.2f);
                 foreach (Enemy enemy in system.enemies)
-                    if (enemy.alternateSprite != null) Check(enemy.renderer.sprite == enemy.baseSprite, "Live two-frame sprite animation loops");
+                {
+                    if (enemy.animationFrames == null) continue;
+                    Check(enemy.animationFrame == 0 && enemy.animationTime == 0, "Frozen walk cycle remains still");
+                    enemy.freezeRemaining = .05f;
+                }
+                system.UpdateEnemies(.1f);
+                foreach (Enemy enemy in system.enemies)
+                {
+                    if (enemy.animationFrames == null) continue;
+                    Check(Mathf.Abs(enemy.animationTime - .05f) < .0001f, "Freeze expiry advances only the unfrozen portion");
+                    enemy.freezeRemaining = 0; enemy.chillRemaining = 1; enemy.chillSlow = .5f;
+                }
+                system.UpdateEnemies(.04f);
+                foreach (Enemy enemy in system.enemies)
+                    if (enemy.animationFrames != null) Check(Mathf.Abs(enemy.animationTime - .07f) < .0001f, "Chilled walk rate follows movement without foot sliding");
+                var player = ((PlayerWorld)RuntimeTestAccess.Get(system, "playerWorld")).player;
+                foreach (Enemy enemy in system.enemies.Where(enemy => !enemy.mirrorToMovement))
+                    foreach (float side in new[] { -1f, 1f })
+                    {
+                        enemy.transform.position = player.position + Vector3.right * side * 2;
+                        system.UpdateEnemies(0);
+                        Check(!enemy.renderer.flipX, "Sprout face and mushroom cap never mirror when walking around the player");
+                    }
             }
             finally { stage.weights = weights; system.Reset(); system.debugStageOverride = overrideBefore; }
         }

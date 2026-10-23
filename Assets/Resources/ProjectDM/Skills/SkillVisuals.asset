@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fde6b75486649c18c423e456ff64ee6, type: 3}
   m_Name: SkillVisuals
   m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.SkillVisualAssets
-  chain: {fileID: 21300000, guid: 759c3d159d9a466db35d70439e2a16bb, type: 3}
-  splash: {fileID: 21300000, guid: 29a19885a1914c08a9e8d17452c84cba, type: 3}
-  meteor: {fileID: 21300000, guid: 56d7ec2a4c2848ff8a449b2a0a49c384, type: 3}
-  frostShard: {fileID: 21300000, guid: 6938ccf1636b3664c923a1a64746c58b, type: 3}
+  chain: {fileID: 21300000, guid: 5044ed738409a444d8b052056d74da3f, type: 3}
+  splash: {fileID: 21300000, guid: 0339aa94227a1ed4eaeab5965b5d86bc, type: 3}
+  meteor: {fileID: 21300000, guid: f946f8816c57a0a4fad854b50b702534, type: 3}
+  frostShard: {fileID: 21300000, guid: ef9d91fb473748e4ba130f30797f40d7, type: 3}
   impactMaterial: {fileID: 2100000, guid: 5218c33bcb8144868cf3b6992e5c6620, type: 2}
-  chainStart: {x: 0.14, y: 0.11}
-  chainEnd: {x: 0.9, y: 0.88}
+  chainStart: {x: 0.1625, y: 0.25648803}
+  chainEnd: {x: 0.875, y: 0.73726803}
   chainDuration: 0.18
   chainOpacity: 0.65
   chainWidthMultiplier: 2.5
@@ -26,14 +26,14 @@ MonoBehaviour:
   splashOpacity: 0.6
   burstStartScale: 0.18
   burstExpansionDuration: 0.06
-  burstArtworkDiameter: 0.9
+  burstArtworkDiameter: 0.84374994
   meteorFallHeight: 3
-  meteorWidth: 1.45
+  meteorWidth: 1.5466667
   meteorRotation: 55
-  meteorAnchor: {x: 0.35, y: 0.3}
+  meteorAnchor: {x: 0.359375, y: 0.37512207}
   warningOpacity: 0.09
   impactDuration: 0.4
   impactOpacity: 0.65
   impactColor: {r: 1, g: 0.4, b: 0.08, a: 1}
-  frostArtworkDiameter: 0.94
+  frostArtworkDiameter: 0.88125
   maxActiveEffects: 128

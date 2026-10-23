@@ -60,12 +60,12 @@ namespace ProjectDM.Editor
             Sprite[] dungeon = AssetDatabase.LoadAllAssetsAtPath("Assets/GameContent/Art/ProjectDM_DungeonMonsters_2Frame_v1.png").OfType<Sprite>().ToArray();
             Check(dungeon.Length == 2 && dungeon.All(s => s.name.StartsWith("Dungeon_5_")), "Unused dungeon creature slices removed; both boss frames survive");
             StageDefinition stage2 = Resources.Load<StageDefinition>("ProjectDM/Stages/Stage2_Dungeon");
-            Check(stage2.bossFrames.All(s => s != null && AssetDatabase.GetAssetPath(s) == ProjectDMMonsterArtSetup.SheetPath("Dungeon")),
+            Check(stage2.bossFrames.All(s => s != null && AssetDatabase.GetAssetPath(Pixel32ArtSetup.Original(s)) == ProjectDMMonsterArtSetup.SheetPath("Dungeon")),
                 "Active boss preview uses the replacement atlas; legacy slices remain available");
             AnimationClip bolt = AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/GameContent/Animation/ProjectDM_BoltLoop.anim");
             var binding = EditorCurveBinding.PPtrCurve("", typeof(SpriteRenderer), "m_Sprite");
             var keys = AnimationUtility.GetObjectReferenceCurve(bolt, binding);
-            Check(keys != null && keys.Length == 4 && keys.All(k => k.value is Sprite s && gameplay.Contains(s)), "Actual projectile clip keeps four valid sprite frames");
+            Check(keys != null && keys.Length == 4 && keys.All(k => k.value is Sprite s && gameplay.Contains(Pixel32ArtSetup.Original(s))), "Actual projectile clip keeps four valid sprite frames");
             ProjectDMAssetCatalog catalog = AssetDatabase.LoadAssetAtPath<ProjectDMAssetCatalog>("Assets/GameContent/Configuration/ProjectDMAssetCatalog.asset");
             Check(AssetDatabase.GUIDToAssetPath(catalog.floorSheet.AssetGUID) == "Assets/GameContent/Art/ProjectDM_FloorTiles_Calm_v3.png", "Bootstrap uses the current floor sheet, not a deleted version");
 

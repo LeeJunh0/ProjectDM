@@ -23,6 +23,7 @@ namespace ProjectDM.Editor
             EditorUtility.SetDirty(art);
             ProjectDMPrefabFactory.CreateOrUpdatePrefabs();
             ProjectDMAddressablesMigration.ConfigurePickupContent();
+            Pixel32ArtSetup.ApplyInstalledArtwork();
             AssetDatabase.SaveAssets();
             Debug.Log("Frost shard artwork and pooled mana pickup content installed.");
         }

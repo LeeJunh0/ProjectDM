@@ -11,7 +11,22 @@ namespace ProjectDM
         public Sprite baseSprite;
         public Sprite alternateSprite;
         public float animationTime;
-        public bool showAlternate;
+        public Sprite[] animationFrames;
+        public float frameSeconds = .16f;
+        public int animationFrame;
+        public bool mirrorToMovement = true;
+
+        internal void AdvanceAnimation(float elapsed)
+        {
+            if (elapsed <= 0 || animationFrames == null || animationFrames.Length < 2 || renderer == null) return;
+            // Keep the remainder and catch up every elapsed frame, including long update steps.
+            animationTime += elapsed;
+            int steps = Mathf.FloorToInt((animationTime + .000001f) / frameSeconds);
+            if (steps == 0) return;
+            animationTime = Mathf.Max(0, animationTime - steps * frameSeconds);
+            animationFrame = (animationFrame + steps % animationFrames.Length) % animationFrames.Length;
+            renderer.sprite = animationFrames[animationFrame];
+        }
         public float hitPoints;
         public bool dead;
         public float speed;

@@ -55,6 +55,7 @@ namespace ProjectDM.Editor
             }
             catalog.characters = entries.ToArray();
             EditorUtility.SetDirty(catalog);
+            Pixel32ArtSetup.ApplyInstalledArtwork();
             AssetDatabase.SaveAssets();
             Debug.Log("Hooded mages: four identities, 64 sliced walking frames, four controllers installed.");
         }

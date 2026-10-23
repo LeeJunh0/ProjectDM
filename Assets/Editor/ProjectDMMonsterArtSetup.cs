@@ -23,11 +23,11 @@ namespace ProjectDM.Editor
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("플레이를 종료한 다음 임포트하세요.");
             var bossHeights = Resources.LoadAll<StageDefinition>("ProjectDM/Stages").ToDictionary(stage => stage.stageId,
-                stage => stage.bossFrames[0].bounds.size.y * stage.bossScale);
+                stage => Pixel32ArtSetup.Original(stage.bossFrames[0]).bounds.size.y * stage.bossScale);
             foreach (string biome in Biomes) Import(biome);
             ApplyInstalledArtwork(bossHeights);
             AssetDatabase.SaveAssets();
-            Debug.Log("Retro monster artwork: 10 regular types and two boss previews, 24 frames installed.");
+            Debug.Log("Retro monster artwork and installed walk cycles applied.");
         }
 
         // The existing stage rebuild also calls this, so rebuilding tiles/content cannot revert the art.
@@ -43,13 +43,15 @@ namespace ProjectDM.Editor
                 StageDefinition stage = Resources.Load<StageDefinition>($"ProjectDM/Stages/Stage{(biome == "Meadow" ? 1 : 2)}_{biome}");
                 if (stage == null) throw new InvalidOperationException("스테이지 설정이 없습니다: " + biome);
                 float bossHeight = bossHeights != null && bossHeights.TryGetValue(stage.stageId, out float beforeImport)
-                    ? beforeImport : stage.bossFrames[0].bounds.size.y * stage.bossScale;
+                    ? beforeImport : Pixel32ArtSetup.Original(stage.bossFrames[0]).bounds.size.y * stage.bossScale;
                 var map = sprites.ToDictionary(sprite => sprite.name);
                 for (int row = 0; row < 5; row++)
                 {
                     stage.monsters[row].frames = Frames(map, biome, row);
                     // One animation owner: the existing two-frame manual playback, including pooled enemies.
                     stage.monsters[row].animatorController = null;
+                    stage.monsters[row].visualScale = 1;
+                    stage.monsters[row].frameSeconds = .16f;
                 }
                 if (biome == "Dungeon")
                 {
@@ -62,6 +64,7 @@ namespace ProjectDM.Editor
                 stage.ValidateContent();
                 EditorUtility.SetDirty(stage);
             }
+            MonsterAnimationArtSetup.ApplyInstalledArtwork();
         }
 
         private static Sprite[] Frames(Dictionary<string, Sprite> sprites, string biome, int row) =>

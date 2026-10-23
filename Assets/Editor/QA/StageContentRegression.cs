@@ -125,10 +125,10 @@ namespace ProjectDM.Editor
                 {
                     StageDefinition stage = session.Definition(biome == "Meadow" ? 1 : 2);
                     string expected = ProjectDMMonsterArtSetup.SheetPath(biome);
-                    Check(stage.monsters.All(monster => monster.frames.All(sprite => AssetDatabase.GetAssetPath(sprite) == expected)),
-                        "All five active monster slots use this biome's retro atlas");
+                    Check(stage.monsters.All(monster => monster.frames.Length == MonsterAnimationArtSetup.FrameCount && monster.frames.All(sprite => AssetDatabase.GetAssetPath(Pixel32ArtSetup.Original(sprite)) == MonsterAnimationArtSetup.SheetPath(biome))),
+                        "All five active monster slots use this biome's four-frame walk atlas");
                     Check(stage.monsters.All(monster => monster.animatorController == null), "Manual playback is the sole retro animation owner");
-                    Check(stage.bossFrames.All(sprite => AssetDatabase.GetAssetPath(sprite) == expected), "Boss preview uses the matching retro atlas");
+                    Check(stage.bossFrames.All(sprite => AssetDatabase.GetAssetPath(Pixel32ArtSetup.Original(sprite)) == expected), "Boss preview uses the matching retro source artwork");
                 }
                 Check(!session.Select(3), "Unconfigured stage cannot be selected");
                 foreach (int id in new[] { 1, 2, 1, 2 })
@@ -155,10 +155,10 @@ namespace ProjectDM.Editor
                         Check(art.MonsterSprite((MonsterKind)i) == stage.monsters[i].frames[0] && art.MonsterAlternate((MonsterKind)i) == (animated ? null : stage.monsters[i].frames[1]), "Each renderer has exactly one animation owner");
                         Check(art.MonsterController((MonsterKind)i) == stage.monsters[i].animatorController, "Stage animation controller resolves correctly");
                         Check(stage.monsters[i].frames[0] != stage.monsters[i].frames[1], "Animation frames are separate sprite slices");
-                        if (!animated) Check(stage.monsters[i].frames[0].bounds.size == stage.monsters[i].frames[1].bounds.size, "Manual animation frames share stable rectangle/pivot");
-                        float worldHeight = stage.monsters[i].frames[0].bounds.size.y * (i == 4 ? .82f : i == 3 ? .78f : .65f);
+                        if (!animated) Check(stage.monsters[i].frames.All(frame => frame.bounds.size.y == stage.monsters[i].frames[0].bounds.size.y), "Manual animation frames share a stable vertical anchor");
+                        float worldHeight = stage.monsters[i].frames[0].bounds.size.y * stage.monsters[i].visualScale * (i == 4 ? .82f : i == 3 ? .78f : .65f);
                         Check(worldHeight >= 1f && worldHeight <= 5f, "Normal monsters are readable world-size actors, not sub-unit miniatures");
-                        Check(Mathf.Approximately(stage.monsters[i].frames[0].pixelsPerUnit, 96f), "Normal monsters use the original 96 PPU convention");
+                        Check(Mathf.Approximately(Pixel32ArtSetup.Original(stage.monsters[i].frames[0]).pixelsPerUnit, 96f), "Original monster source retains its 96 PPU convention");
                     }
                     Check(settings.gameplayCamera.backgroundColor == stage.background, "Camera background follows biome");
                     float bossHeight = stage.bossFrames[0].bounds.size.y * stage.bossScale;

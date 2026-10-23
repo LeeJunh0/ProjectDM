@@ -37,6 +37,7 @@ namespace ProjectDM.Editor
                 EnsureStaticPickupVisual($"CurrencyPickup_{suffix}", $"Currency_{suffix}_1");
             }
             ProjectDMPickupEffectsSetup.Install();
+            Pixel32ArtSetup.ApplyInstalledArtwork();
         }
 
         private static void CreatePrefab(string prefabName, Action<GameObject> configure)

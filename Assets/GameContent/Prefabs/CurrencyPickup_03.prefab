@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1413224690, guid: 447a4b775ebd2f440a89a316f4c82b54, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c9b842c69d53a334abc46f653ca24d84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -133,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 1156341994837368222}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.04590018, z: 0}
+  m_LocalPosition: {x: 0, y: -1.0771244, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,8 +393,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.08262033
-      minScalar: 0.0504902
+      scalar: 0.17625672
+      minScalar: 0.10771243
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -778,7 +778,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 0.78609633, y: 0.015, z: 0.01}
+    m_Scale: {x: 1.3708855, y: 0.015, z: 0.01}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -1610,8 +1610,8 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.032130126
-      minScalar: -0.032130126
+      scalar: 0.068544276
+      minScalar: -0.068544276
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1663,8 +1663,8 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.6058824
-      minScalar: 0.46818188
+      scalar: 1.2925493
+      minScalar: 0.99878806
       maxCurve:
         serializedVersion: 2
         m_Curve:

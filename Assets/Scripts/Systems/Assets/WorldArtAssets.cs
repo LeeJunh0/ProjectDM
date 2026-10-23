@@ -18,6 +18,17 @@ namespace ProjectDM
         internal Sprite MonsterAlternate(MonsterKind kind) => MonsterController(kind) != null ? null : stage != null ? stage.monsters[(int)kind].frames[1]
             : kind switch { MonsterKind.Goblin => goblinFrame2, MonsterKind.Mushroom => mushroomFrame2, MonsterKind.Boar => boarFrame2, _ => null };
 
+        internal Sprite[] MonsterFrames(MonsterKind kind)
+        {
+            if (MonsterController(kind) != null) return null;
+            if (stage != null) return stage.monsters[(int)kind].frames;
+            Sprite alternate = MonsterAlternate(kind);
+            return alternate != null ? new[] { MonsterSprite(kind), alternate } : null;
+        }
+        internal float MonsterFrameSeconds(MonsterKind kind) => stage != null ? stage.monsters[(int)kind].frameSeconds : .16f;
+        internal float MonsterVisualScale(MonsterKind kind) => stage != null ? stage.monsters[(int)kind].visualScale : 1f;
+        internal bool MonsterMirrorToMovement(MonsterKind kind) => stage == null || stage.monsters[(int)kind].mirrorToMovement;
+
         internal Sprite playerSprite;
         internal CharacterVisuals characterVisuals;
 
@@ -56,6 +67,7 @@ namespace ProjectDM
 
         internal void LoadSprites(ProjectDMRuntimeAssets assets)
         {
+            Pixel32Catalog native = Resources.Load<Pixel32Catalog>("ProjectDM/Pixel32Catalog");
             characterVisuals = Resources.Load<CharacterVisuals>("ProjectDM/Characters/CharacterVisuals");
             skillVisualAssets = Resources.Load<SkillVisualAssets>("ProjectDM/Skills/SkillVisuals");
             ProjectDMSpriteCatalog spriteCatalog = assets.SpriteCatalog;
@@ -67,10 +79,10 @@ namespace ProjectDM
             }
             if (assets.GameplaySheet != null)
             {
-                gemSprite = Slice(assets.GameplaySheet, .385f, .025f, .080f, .180f, 64f);
+                gemSprite = native?.Find("Runtime_Gem") ?? Slice(assets.GameplaySheet, .385f, .025f, .080f, .180f, 64f);
                 // First coin only: measured in the 1774 x 887 source atlas, excluding the next frame.
-                coinSprite = Slice(assets.GameplaySheet, 960f / 1774f, 58f / 887f, 82f / 1774f, 88f / 887f, 64f);
-                boltSprite = Slice(assets.GameplaySheet, .020f, .025f, .100f, .180f, 64f);
+                coinSprite = native?.Find("Runtime_Coin") ?? Slice(assets.GameplaySheet, 960f / 1774f, 58f / 887f, 82f / 1774f, 88f / 887f, 64f);
+                boltSprite = native?.Find("Runtime_Bolt") ?? Slice(assets.GameplaySheet, .020f, .025f, .100f, .180f, 64f);
             }
 
             playerAnimatorController = assets.PlayerAnimatorController;
@@ -80,9 +92,12 @@ namespace ProjectDM
             Texture2D extras = assets.ExtraMonsterSheet;
             if (extras != null)
             {
-                goblinSprite = Slice(extras, 0f, 2f / 3f, .5f, 1f / 3f, 96f); goblinFrame2 = Slice(extras, .5f, 2f / 3f, .5f, 1f / 3f, 96f);
-                mushroomSprite = Slice(extras, 0f, 1f / 3f, .5f, 1f / 3f, 96f); mushroomFrame2 = Slice(extras, .5f, 1f / 3f, .5f, 1f / 3f, 96f);
-                boarSprite = Slice(extras, 0f, 0f, .5f, 1f / 3f, 96f); boarFrame2 = Slice(extras, .5f, 0f, .5f, 1f / 3f, 96f);
+                goblinSprite = native?.Find("Fallback_2_0") ?? Slice(extras, 0f, 2f / 3f, .5f, 1f / 3f, 96f);
+                goblinFrame2 = native?.Find("Fallback_2_1") ?? Slice(extras, .5f, 2f / 3f, .5f, 1f / 3f, 96f);
+                mushroomSprite = native?.Find("Fallback_3_0") ?? Slice(extras, 0f, 1f / 3f, .5f, 1f / 3f, 96f);
+                mushroomFrame2 = native?.Find("Fallback_3_1") ?? Slice(extras, .5f, 1f / 3f, .5f, 1f / 3f, 96f);
+                boarSprite = native?.Find("Fallback_4_0") ?? Slice(extras, 0f, 0f, .5f, 1f / 3f, 96f);
+                boarFrame2 = native?.Find("Fallback_4_1") ?? Slice(extras, .5f, 0f, .5f, 1f / 3f, 96f);
             }
 
             playerSprite ??= PixelSprite(new Color(0.45f, 0.18f, 0.8f), new Color(0.05f, 0.9f, 1f));
