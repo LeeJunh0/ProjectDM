@@ -14,11 +14,21 @@ namespace ProjectDM
         public float duration, orbitSpeed, shardRadius, hitInterval, freezeSeconds, chillDuration, slowFraction;
         public int shardCount, chillThreshold;
         public CharacterUpgrade[] upgrades;
+        public CharacterSkillDefinition[] skills;
+    }
+    [Serializable] internal sealed class CharacterSkillDefinition
+    {
+        public string id, name, description, icon;
+        public float damage, interval, range, radius, duration, tickInterval, speed;
+        public int count, charge;
     }
     [Serializable] internal sealed class CharacterUpgrade
     {
         public string id, name, description, icon, rarity;
+        public string skill, unit;
+        public bool unlock;
         public float step, permanentStep;
+        public float effectiveCap;
         public int maxRank, cost;
         public string Key(string character) => "magic." + character + "." + id;
     }
@@ -28,7 +38,9 @@ namespace ProjectDM
     {
         internal readonly CharacterDefinition[] Definitions;
         internal readonly Dictionary<string, GameTables> Graphs = new();
-        internal readonly GameTables CommonGraph;
+        internal GameTables CommonGraph { get; private set; }
+        internal void SetGraph(string id, GameTables graph)
+        { if (id == "common") CommonGraph = graph; else Graphs[id] = graph; }
 
         internal CharacterCatalog(GameTables tables, CharacterTable source)
         {
@@ -53,21 +65,47 @@ namespace ProjectDM
                     character.id == "lightning" ? new[] { "damage", "speed", "jumps", "range", "echo" } :
                     character.id == "flame" ? new[] { "damage", "speed", "range", "width", "burn" } :
                     new[] { "damage", "speed", "count", "orbitSpeed", "range", "size", "chill", "freezeDuration" };
-                if (character.upgrades.Length != expected.Length) throw new InvalidOperationException("캐릭터 강화 개수 오류: " + character.id);
+                if (character.skills == null || character.skills.Length != 3) throw new InvalidOperationException("캐릭터 스킬은 3개여야 합니다: " + character.id);
+                var skillIds = new HashSet<string>();
+                foreach (var skill in character.skills)
+                    if (skill == null || string.IsNullOrEmpty(skill.id) || !skillIds.Add(skill.id) || string.IsNullOrEmpty(skill.name) ||
+                        !FinitePositive(skill.damage) || !FinitePositive(skill.interval) || !FinitePositive(skill.range) ||
+                        !FinitePositive(skill.radius) || !FinitePositive(skill.duration) || !FinitePositive(skill.tickInterval) ||
+                        !FinitePositive(skill.speed) || skill.count < 1 || skill.count > 16 || skill.charge < 1)
+                        throw new InvalidOperationException("전용 스킬 정의 오류: " + character.id);
+                foreach (string required in expected)
+                    if (Array.Find(character.upgrades, u => u.id == required) == null) throw new InvalidOperationException("기존 강화 누락: " + required);
                 for (int i = 0; i < character.upgrades.Length; i++)
                 {
                     CharacterUpgrade upgrade = character.upgrades[i];
-                    if (upgrade == null || upgrade.id != expected[i] || !upgrades.Add(upgrade.id) || upgrade.maxRank < 1 || upgrade.cost < 1 ||
-                        !FinitePositive(upgrade.step) || !FinitePositive(upgrade.permanentStep)) throw new InvalidOperationException("전용 강화 오류: " + character.id);
+                    if (upgrade == null || string.IsNullOrEmpty(upgrade.id) || !skillIds.Contains(upgrade.skill ?? "") || !upgrades.Add(upgrade.id) || upgrade.maxRank < 1 || upgrade.cost < 1 ||
+                        !FinitePositive(upgrade.step) || !FinitePositive(upgrade.permanentStep) || float.IsNaN(upgrade.effectiveCap) || float.IsInfinity(upgrade.effectiveCap) || upgrade.effectiveCap < 0) throw new InvalidOperationException("전용 강화 오류: " + character.id);
+                    if (upgrade.unlock && (upgrade.maxRank != 1 || upgrade.step != 1 || upgrade.permanentStep != 1)) throw new InvalidOperationException("해금 노드는 1단계여야 합니다.");
                     string key = upgrade.Key(character.id);
+                    string prerequisite = upgrade.skill == character.skills[0].id || upgrade.unlock ? null : "magic." + character.id + "." + upgrade.skill + "Unlock";
                     rows.Add(new PrototypeGrowth { id = key, name = upgrade.name, description = upgrade.description + " (영구 성장 · 다음 런 적용)",
-                        icon = upgrade.icon, unit = upgrade.id == "damage" || upgrade.id == "speed" || upgrade.id == "burn" ? "%" :
+                        requires = prerequisite, icon = upgrade.icon, unit = upgrade.unit ?? (upgrade.id == "damage" || upgrade.id == "speed" || upgrade.id == "burn" ? "%" :
                             upgrade.id == "echo" ? "%p" : upgrade.id == "homing" || upgrade.id == "orbitSpeed" ? "°/초" : upgrade.id == "width" ? "°" :
-                            upgrade.id == "range" || upgrade.id == "size" ? "유닛" : upgrade.id == "freezeDuration" ? "초" : "개", baseCost = upgrade.cost, costGrowth = 1.8f, maxRank = Mathf.Min(3, upgrade.maxRank), step = upgrade.permanentStep });
+                            upgrade.id == "range" || upgrade.id == "size" ? "유닛" : upgrade.id == "freezeDuration" ? "초" : "개"), baseCost = upgrade.cost, costGrowth = 1.8f, maxRank = Mathf.Min(3, upgrade.maxRank), step = upgrade.permanentStep });
                     // Two short outward branches, rather than a long chain or remote cross-links.
                     nodes.Add(new PrototypeGrowthNode { id = key, growthId = key, name = upgrade.name, ranks = Mathf.Min(3, upgrade.maxRank), parentRanks = i < 2 ? 0 : 1,
                         parent = i < 2 ? "ROOT" : character.upgrades[i - 2].Key(character.id),
                         x = (i % 2 == 0 ? -1 : 1) * (180 + i / 2 * 150), y = (i / 2 - 1) * 170 });
+                }
+                for (int i = 0; i < character.skills.Length; i++)
+                {
+                    var skill = character.skills[i];
+                    if (i > 0 && Array.Find(character.upgrades, u => u.id == skill.id + "Unlock" && u.unlock) == null)
+                        throw new InvalidOperationException("스킬 해금 강화 누락: " + skill.id);
+                    foreach (var node in nodes)
+                    {
+                        var upgrade = Array.Find(character.upgrades, u => u.Key(character.id) == node.id);
+                        if (upgrade.skill != skill.id) continue;
+                        node.parent = i == 0 ? (upgrade.id == "damage" || upgrade.id == "speed" ? "ROOT" : character.upgrades[0].Key(character.id)) :
+                            upgrade.unlock ? (i == 1 ? character.upgrades[0].Key(character.id) : "magic." + character.id + "." + character.skills[i - 1].id + "Unlock") :
+                            "magic." + character.id + "." + skill.id + "Unlock";
+                        node.parentRanks = node.parent == "ROOT" ? 0 : 1;
+                    }
                 }
                 GameTables graph = new GameTables(tables.balance, tables.skillTable, new PrototypeGrowthTable { rows = rows.ToArray(), nodes = nodes.ToArray() });
                 Graphs.Add(character.id, graph);

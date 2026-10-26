@@ -1,0 +1,1980 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a56d71c3c0a404ca4073eec9803d1d, type: 3}
+  m_Name: GrowthTrees
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.GrowthTreeSettings
+  trees:
+  - id: common
+    name: "\uACF5\uD1B5 \uC131\uC7A5"
+    nodes:
+    - enabled: 1
+      id: damage_1
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 I"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 210
+      y: -160
+    - enabled: 1
+      id: speed_1
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 I"
+      parent: ROOT
+      displayParent: damage_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 1470
+      y: -160
+    - enabled: 1
+      id: time_1
+      growthId: time
+      name: "\uCD5C\uB300 \uB9C8\uB098 I"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 210
+      y: 160
+    - enabled: 1
+      id: yield_1
+      growthId: yield
+      name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 I"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: -210
+      y: 160
+    - enabled: 1
+      id: xp_1
+      growthId: xp
+      name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 I"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: -210
+      y: -160
+    - enabled: 1
+      id: population_1
+      growthId: population
+      name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 I"
+      parent: ROOT
+      displayParent: experienceGradeChance_3
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: -2100
+      y: -1600
+    - enabled: 1
+      id: extension_1
+      growthId: extension
+      name: "\uCC98\uCE58 \uB9C8\uB098 \uD761\uC218 I"
+      parent: ROOT
+      displayParent: time_2
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 1050
+      y: 160
+    - enabled: 1
+      id: damage_2
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 II"
+      parent: speed_1
+      displayParent: damage_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: -160
+    - enabled: 1
+      id: speed_2
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 II"
+      parent: damage_1
+      displayParent: speed_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 1680
+      y: -160
+    - enabled: 1
+      id: respawn_1
+      growthId: respawn
+      name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 I"
+      parent: population_1
+      displayParent: magnet_1
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -1890
+      y: -2400
+    - enabled: 1
+      id: population_2
+      growthId: population
+      name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 II"
+      parent: yield_1
+      displayParent: population_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2310
+      y: -1600
+    - enabled: 1
+      id: extension_2
+      growthId: extension
+      name: "\uCC98\uCE58 \uB9C8\uB098 \uD761\uC218 II"
+      parent: xp_1
+      displayParent: extension_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 1260
+      y: 160
+    - enabled: 1
+      id: xp_2
+      growthId: xp
+      name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 II"
+      parent: population_1
+      displayParent: xp_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: -160
+    - enabled: 1
+      id: damage_3
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 III"
+      parent: time_1
+      displayParent: damage_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -160
+    - enabled: 1
+      id: speed_3
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 III"
+      parent: extension_1
+      displayParent: speed_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 1890
+      y: -160
+    - enabled: 1
+      id: time_2
+      growthId: time
+      name: "\uCD5C\uB300 \uB9C8\uB098 II"
+      parent: extension_1
+      displayParent: time_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 160
+    - enabled: 1
+      id: yield_2
+      growthId: yield
+      name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 II"
+      parent: time_1
+      displayParent: yield_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 160
+    - enabled: 1
+      id: damage_4
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 IV"
+      parent: damage_1
+      displayParent: damage_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 840
+      y: -160
+    - enabled: 1
+      id: speed_4
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 IV"
+      parent: damage_2
+      displayParent: speed_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 2100
+      y: -160
+    - enabled: 1
+      id: respawn_2
+      growthId: respawn
+      name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 II"
+      parent: speed_2
+      displayParent: respawn_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -2100
+      y: -2400
+    - enabled: 1
+      id: xp_3
+      growthId: xp
+      name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 III"
+      parent: damage_3
+      displayParent: xp_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: -160
+    - enabled: 1
+      id: damage_5
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 V"
+      parent: yield_2
+      displayParent: damage_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: -320
+    - enabled: 1
+      id: speed_5
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 V"
+      parent: yield_2
+      displayParent: speed_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 2100
+      y: -320
+    - enabled: 1
+      id: time_3
+      growthId: time
+      name: "\uCD5C\uB300 \uB9C8\uB098 III"
+      parent: population_2
+      displayParent: time_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 320
+    - enabled: 1
+      id: yield_3
+      growthId: yield
+      name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 III"
+      parent: extension_2
+      displayParent: yield_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 160
+    - enabled: 1
+      id: population_3
+      growthId: population
+      name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 III"
+      parent: xp_2
+      displayParent: population_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -2520
+      y: -1600
+    - enabled: 1
+      id: extension_3
+      growthId: extension
+      name: "\uCC98\uCE58 \uB9C8\uB098 \uD761\uC218 III"
+      parent: damage_1
+      displayParent: extension_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 1260
+      y: 320
+    - enabled: 1
+      id: damage_6
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 VI"
+      parent: time_2
+      displayParent: damage_5
+      displayOrthogonal: 0
+      displayLinks:
+      - damage_3
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -320
+    - enabled: 1
+      id: speed_6
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 VI"
+      parent: time_2
+      displayParent: speed_5
+      displayOrthogonal: 0
+      displayLinks:
+      - speed_3
+      ranks: 3
+      parentRanks: 3
+      x: 1890
+      y: -320
+    - enabled: 1
+      id: respawn_3
+      growthId: respawn
+      name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 III"
+      parent: ROOT
+      displayParent: respawn_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: -2310
+      y: -2400
+    - enabled: 1
+      id: damage_7
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 VII"
+      parent: speed_4
+      displayParent: damage_6
+      displayOrthogonal: 0
+      displayLinks:
+      - damage_2
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: -320
+    - enabled: 1
+      id: speed_7
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 VII"
+      parent: respawn_2
+      displayParent: speed_6
+      displayOrthogonal: 0
+      displayLinks:
+      - speed_2
+      ranks: 3
+      parentRanks: 3
+      x: 1680
+      y: -320
+    - enabled: 1
+      id: xp_4
+      growthId: xp
+      name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 IV"
+      parent: respawn_2
+      displayParent: xp_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: -320
+    - enabled: 1
+      id: damage_8
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 VIII"
+      parent: xp_3
+      displayParent: damage_7
+      displayOrthogonal: 0
+      displayLinks:
+      - damage_1
+      ranks: 3
+      parentRanks: 3
+      x: 210
+      y: -320
+    - enabled: 1
+      id: speed_8
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 VIII"
+      parent: damage_5
+      displayParent: speed_7
+      displayOrthogonal: 0
+      displayLinks:
+      - speed_1
+      ranks: 3
+      parentRanks: 3
+      x: 1470
+      y: -320
+    - enabled: 1
+      id: yield_4
+      growthId: yield
+      name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 IV"
+      parent: time_3
+      displayParent: yield_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 320
+    - enabled: 1
+      id: respawn_4
+      growthId: respawn
+      name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 IV"
+      parent: yield_3
+      displayParent: respawn_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -2310
+      y: -2560
+    - enabled: 1
+      id: extension_4
+      growthId: extension
+      name: "\uCC98\uCE58 \uB9C8\uB098 \uD761\uC218 IV"
+      parent: population_3
+      displayParent: extension_3
+      displayOrthogonal: 0
+      displayLinks:
+      - extension_1
+      ranks: 1
+      parentRanks: 3
+      x: 1050
+      y: 320
+    - enabled: 1
+      id: population_4
+      growthId: population
+      name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 IV"
+      parent: respawn_1
+      displayParent: population_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 3
+      x: -2730
+      y: -1600
+    - enabled: 1
+      id: time_4
+      growthId: time
+      name: "\uCD5C\uB300 \uB9C8\uB098 IV"
+      parent: respawn_1
+      displayParent: time_3
+      displayOrthogonal: 0
+      displayLinks:
+      - time_1
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: 320
+    - enabled: 1
+      id: damage_9
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 IX"
+      parent: speed_6
+      displayParent: damage_8
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 210
+      y: -480
+    - enabled: 1
+      id: speed_9
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 IX"
+      parent: respawn_3
+      displayParent: speed_8
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 1470
+      y: -480
+    - enabled: 1
+      id: damage_10
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 X"
+      parent: damage_4
+      displayParent: damage_9
+      displayOrthogonal: 0
+      displayLinks:
+      - damage_7
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: -480
+    - enabled: 1
+      id: speed_10
+      growthId: speed
+      name: "\uACF5\uACA9\uC18D\uB3C4 X"
+      parent: damage_7
+      displayParent: speed_9
+      displayOrthogonal: 0
+      displayLinks:
+      - speed_7
+      ranks: 3
+      parentRanks: 3
+      x: 1680
+      y: -480
+    - enabled: 1
+      id: xp_5
+      growthId: xp
+      name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 V"
+      parent: speed_7
+      displayParent: xp_4
+      displayOrthogonal: 0
+      displayLinks:
+      - xp_2
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -320
+    - enabled: 1
+      id: damage_11
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 XI"
+      parent: speed_8
+      displayParent: damage_10
+      displayOrthogonal: 0
+      displayLinks:
+      - damage_6
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -480
+    - enabled: 1
+      id: yield_5
+      growthId: yield
+      name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 V"
+      parent: speed_8
+      displayParent: yield_4
+      displayOrthogonal: 0
+      displayLinks:
+      - yield_2
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 320
+    - enabled: 1
+      id: respawn_5
+      growthId: respawn
+      name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 V"
+      parent: yield_4
+      displayParent: respawn_4
+      displayOrthogonal: 0
+      displayLinks:
+      - respawn_2
+      ranks: 3
+      parentRanks: 3
+      x: -2100
+      y: -2560
+    - enabled: 1
+      id: damage_12
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 XII"
+      parent: population_4
+      displayParent: damage_11
+      displayOrthogonal: 0
+      displayLinks:
+      - damage_5
+      ranks: 3
+      parentRanks: 1
+      x: 840
+      y: -480
+    - enabled: 1
+      id: damage_13
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 XIII"
+      parent: damage_6
+      displayParent: damage_12
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: -640
+    - enabled: 1
+      id: damage_14
+      growthId: damage
+      name: "\uACF5\uACA9\uB825 XIV"
+      parent: speed_9
+      displayParent: damage_13
+      displayOrthogonal: 0
+      displayLinks:
+      - damage_11
+      ranks: 1
+      parentRanks: 3
+      x: 630
+      y: -640
+    - enabled: 1
+      id: silverDropChance_1
+      growthId: silverDropChance
+      name: "\uC740\uD654 \uD655\uB960 I"
+      parent: yield_1
+      displayParent: yield_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -1260
+      y: 480
+    - enabled: 1
+      id: experienceGradeChance_1
+      growthId: experienceGradeChance
+      name: "\uC0C1\uC704 \uACBD\uD5D8\uCE58 \uD655\uB960 I"
+      parent: xp_1
+      displayParent: xp_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -1260
+      y: -960
+    - enabled: 1
+      id: silverDropChance_2
+      growthId: silverDropChance
+      name: "\uC740\uD654 \uD655\uB960 II"
+      parent: yield_3
+      displayParent: silverDropChance_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 2
+      x: -1470
+      y: 480
+    - enabled: 1
+      id: experienceGradeChance_2
+      growthId: experienceGradeChance
+      name: "\uC0C1\uC704 \uACBD\uD5D8\uCE58 \uD655\uB960 II"
+      parent: xp_3
+      displayParent: experienceGradeChance_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 2
+      x: -1470
+      y: -960
+    - enabled: 1
+      id: silverDropChance_3
+      growthId: silverDropChance
+      name: "\uC740\uD654 \uD655\uB960 III"
+      parent: yield_5
+      displayParent: silverDropChance_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -1470
+      y: 640
+    - enabled: 1
+      id: experienceGradeChance_3
+      growthId: experienceGradeChance
+      name: "\uC0C1\uC704 \uACBD\uD5D8\uCE58 \uD655\uB960 III"
+      parent: xp_5
+      displayParent: experienceGradeChance_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -1470
+      y: -1120
+    - enabled: 1
+      id: goldDropChance_1
+      growthId: goldDropChance
+      name: "\uAE08\uD654 \uD655\uB960 I"
+      parent: yield_2
+      displayParent: yield_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -1260
+      y: 1440
+    - enabled: 1
+      id: goldDropChance_2
+      growthId: goldDropChance
+      name: "\uAE08\uD654 \uD655\uB960 II"
+      parent: damage_3
+      displayParent: goldDropChance_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 2
+      x: -1470
+      y: 1440
+    - enabled: 1
+      id: goldDropChance_3
+      growthId: goldDropChance
+      name: "\uAE08\uD654 \uD655\uB960 III"
+      parent: damage_4
+      displayParent: goldDropChance_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -1470
+      y: 1600
+    - enabled: 1
+      id: emeraldDropChance_1
+      growthId: emeraldDropChance
+      name: "\uC5D0\uBA54\uB784\uB4DC \uD654\uD3D0 \uD655\uB960 I"
+      parent: speed_3
+      displayParent: silverDropChance_2
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2100
+      y: 160
+    - enabled: 1
+      id: emeraldDropChance_2
+      growthId: emeraldDropChance
+      name: "\uC5D0\uBA54\uB784\uB4DC \uD654\uD3D0 \uD655\uB960 II"
+      parent: yield_3
+      displayParent: emeraldDropChance_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 2
+      x: -2310
+      y: 160
+    - enabled: 1
+      id: emeraldDropChance_3
+      growthId: emeraldDropChance
+      name: "\uC5D0\uBA54\uB784\uB4DC \uD654\uD3D0 \uD655\uB960 III"
+      parent: damage_5
+      displayParent: emeraldDropChance_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -2310
+      y: 320
+    - enabled: 1
+      id: amethystDropChance_1
+      growthId: amethystDropChance
+      name: "\uC790\uC218\uC815 \uD654\uD3D0 \uD655\uB960 I"
+      parent: time_2
+      displayParent: silverDropChance_3
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2100
+      y: 800
+    - enabled: 1
+      id: amethystDropChance_2
+      growthId: amethystDropChance
+      name: "\uC790\uC218\uC815 \uD654\uD3D0 \uD655\uB960 II"
+      parent: respawn_3
+      displayParent: amethystDropChance_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 2
+      x: -2310
+      y: 800
+    - enabled: 1
+      id: amethystDropChance_3
+      growthId: amethystDropChance
+      name: "\uC790\uC218\uC815 \uD654\uD3D0 \uD655\uB960 III"
+      parent: speed_5
+      displayParent: amethystDropChance_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -2310
+      y: 960
+    - enabled: 1
+      id: health_1
+      growthId: health
+      name: "\uCD5C\uB300 \uB9C8\uB098"
+      parent: population_1
+      displayParent: time_3
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 1050
+      y: 800
+    - enabled: 1
+      id: movement_1
+      growthId: movement
+      name: "\uC774\uB3D9\uC18D\uB3C4"
+      parent: time_1
+      displayParent: experienceGradeChance_2
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2100
+      y: -640
+    - enabled: 1
+      id: criticalChance_1
+      growthId: criticalChance
+      name: "\uCE58\uBA85\uD0C0 \uD655\uB960"
+      parent: speed_1
+      displayParent: damage_13
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 1470
+      y: -960
+    - enabled: 1
+      id: criticalDamage_1
+      growthId: criticalDamage
+      name: "\uCE58\uBA85\uD0C0 \uD53C\uD574\uB7C9"
+      parent: ROOT
+      displayParent: speed_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 2730
+      y: -160
+    - enabled: 1
+      id: invulnerability_1
+      growthId: invulnerability
+      name: "\uD53C\uACA9 \uD6C4 \uBB34\uC801 \uC2DC\uAC04"
+      parent: respawn_2
+      displayParent: extension_2
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 1890
+      y: 160
+    - enabled: 1
+      id: magnet_1
+      growthId: magnet
+      name: "\uC544\uC774\uD15C \uB04C\uC5B4\uC624\uAE30 \uBC94\uC704"
+      parent: time_3
+      displayParent: xp_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -1260
+      y: -2720
+    - enabled: 1
+      id: luck_1
+      growthId: luck
+      name: "\uD589\uC6B4"
+      parent: xp_1
+      displayParent: magnet_1
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -1890
+      y: -3040
+    - enabled: 1
+      id: population_5
+      growthId: population
+      name: "\uBAAC\uC2A4\uD130 \uC0DD\uC131\uB7C9"
+      parent: population_4
+      displayParent: population_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2730
+      y: -1760
+    - enabled: 1
+      id: population_6
+      growthId: population
+      name: "\uBAAC\uC2A4\uD130 \uC0DD\uC131\uB7C9"
+      parent: population_5
+      displayParent: population_5
+      displayOrthogonal: 0
+      displayLinks:
+      - population_3
+      ranks: 3
+      parentRanks: 1
+      x: -2520
+      y: -1760
+    - enabled: 1
+      id: population_7
+      growthId: population
+      name: "\uBAAC\uC2A4\uD130 \uC0DD\uC131\uB7C9"
+      parent: population_6
+      displayParent: population_6
+      displayOrthogonal: 0
+      displayLinks:
+      - population_2
+      ranks: 3
+      parentRanks: 1
+      x: -2310
+      y: -1760
+    - enabled: 1
+      id: population_8
+      growthId: population
+      name: "\uBAAC\uC2A4\uD130 \uC0DD\uC131\uB7C9"
+      parent: population_7
+      displayParent: population_7
+      displayOrthogonal: 0
+      displayLinks:
+      - population_1
+      ranks: 3
+      parentRanks: 1
+      x: -2100
+      y: -1760
+    - enabled: 1
+      id: population_9
+      growthId: population
+      name: "\uBAAC\uC2A4\uD130 \uC0DD\uC131\uB7C9"
+      parent: population_8
+      displayParent: population_8
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2100
+      y: -1920
+    - enabled: 1
+      id: population_10
+      growthId: population
+      name: "\uBAAC\uC2A4\uD130 \uC0DD\uC131\uB7C9"
+      parent: population_9
+      displayParent: population_9
+      displayOrthogonal: 0
+      displayLinks:
+      - population_7
+      ranks: 3
+      parentRanks: 1
+      x: -2310
+      y: -1920
+    - enabled: 1
+      id: population_11
+      growthId: population
+      name: "\uBAAC\uC2A4\uD130 \uC0DD\uC131\uB7C9"
+      parent: population_10
+      displayParent: population_10
+      displayOrthogonal: 0
+      displayLinks:
+      - population_6
+      ranks: 2
+      parentRanks: 1
+      x: -2520
+      y: -1920
+    - enabled: 1
+      id: populationCap_1
+      growthId: populationCap
+      name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
+      parent: population_1
+      displayParent: movement_1
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2730
+      y: -160
+    - enabled: 1
+      id: populationCap_2
+      growthId: populationCap
+      name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
+      parent: populationCap_1
+      displayParent: populationCap_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2940
+      y: -160
+    - enabled: 1
+      id: populationCap_3
+      growthId: populationCap
+      name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
+      parent: populationCap_2
+      displayParent: populationCap_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -3150
+      y: -160
+    - enabled: 1
+      id: populationCap_4
+      growthId: populationCap
+      name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
+      parent: populationCap_3
+      displayParent: populationCap_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -3150
+      y: -320
+    - enabled: 1
+      id: populationCap_5
+      growthId: populationCap
+      name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
+      parent: populationCap_4
+      displayParent: populationCap_4
+      displayOrthogonal: 0
+      displayLinks:
+      - populationCap_2
+      ranks: 3
+      parentRanks: 1
+      x: -2940
+      y: -320
+    - enabled: 1
+      id: populationCap_6
+      growthId: populationCap
+      name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
+      parent: populationCap_5
+      displayParent: populationCap_5
+      displayOrthogonal: 0
+      displayLinks:
+      - populationCap_1
+      ranks: 3
+      parentRanks: 1
+      x: -2730
+      y: -320
+    - enabled: 1
+      id: populationCap_7
+      growthId: populationCap
+      name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
+      parent: populationCap_6
+      displayParent: populationCap_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 2
+      parentRanks: 1
+      x: -2730
+      y: -480
+    - enabled: 1
+      id: spawnBatch_1
+      growthId: spawnBatch
+      name: "\uD55C \uBC88\uC5D0 \uC0DD\uC131\uB418\uB294 \uBAAC\uC2A4\uD130"
+      parent: population_1
+      displayParent: movement_1
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2730
+      y: -960
+    - enabled: 1
+      id: spawnBatch_2
+      growthId: spawnBatch
+      name: "\uD55C \uBC88\uC5D0 \uC0DD\uC131\uB418\uB294 \uBAAC\uC2A4\uD130"
+      parent: spawnBatch_1
+      displayParent: spawnBatch_1
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2940
+      y: -960
+    - enabled: 1
+      id: spawnBatch_3
+      growthId: spawnBatch
+      name: "\uD55C \uBC88\uC5D0 \uC0DD\uC131\uB418\uB294 \uBAAC\uC2A4\uD130"
+      parent: spawnBatch_2
+      displayParent: spawnBatch_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -2940
+      y: -1120
+    - enabled: 1
+      id: spawnBatch_4
+      growthId: spawnBatch
+      name: "\uD55C \uBC88\uC5D0 \uC0DD\uC131\uB418\uB294 \uBAAC\uC2A4\uD130"
+      parent: spawnBatch_3
+      displayParent: spawnBatch_3
+      displayOrthogonal: 0
+      displayLinks:
+      - spawnBatch_1
+      ranks: 3
+      parentRanks: 1
+      x: -2730
+      y: -1120
+    - enabled: 1
+      id: magnetDropChance_1
+      growthId: magnetDropChance
+      name: "\uC790\uC11D \uB4DC\uB78D \uD655\uB960"
+      parent: magnet_1
+      displayParent: population_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -3360
+      y: -1600
+  - id: projectile
+    name: "\uB9C8\uBC95\uBBF8\uC0AC\uC77C"
+    nodes:
+    - enabled: 1
+      id: magic.projectile.damage
+      growthId: magic.projectile.damage
+      name: "\uB9C8\uB825\uD0C4 \uC704\uB825"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 210
+      y: -160
+    - enabled: 1
+      id: magic.projectile.speed
+      growthId: magic.projectile.speed
+      name: "\uBE60\uB978 \uC2DC\uC804"
+      parent: ROOT
+      displayParent: magic.projectile.damage
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 420
+      y: -160
+    - enabled: 1
+      id: magic.projectile.count
+      growthId: magic.projectile.count
+      name: "\uCD94\uAC00 \uB9C8\uB825\uD0C4"
+      parent: magic.projectile.damage
+      displayParent: magic.projectile.speed
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -160
+    - enabled: 1
+      id: magic.projectile.pierce
+      growthId: magic.projectile.pierce
+      name: "\uAD00\uD1B5 \uB9C8\uB825\uD0C4"
+      parent: magic.projectile.damage
+      displayParent: magic.projectile.count
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -320
+    - enabled: 1
+      id: magic.projectile.homing
+      growthId: magic.projectile.homing
+      name: "\uC720\uB3C4 \uB9C8\uB825\uD0C4"
+      parent: magic.projectile.damage
+      displayParent: magic.projectile.pierce
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.projectile.speed
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: -320
+    - enabled: 1
+      id: magic.projectile.beamUnlock
+      growthId: magic.projectile.beamUnlock
+      name: "\uB9C8\uB825 \uAD11\uC120 \uD574\uAE08"
+      parent: magic.projectile.damage
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: 160
+    - enabled: 1
+      id: magic.projectile.beamPower
+      growthId: magic.projectile.beamPower
+      name: "\uB9C8\uB825 \uAD11\uC120 \uC704\uB825"
+      parent: magic.projectile.beamUnlock
+      displayParent: magic.projectile.beamUnlock
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 160
+    - enabled: 1
+      id: magic.projectile.beamWidth
+      growthId: magic.projectile.beamWidth
+      name: "\uB9C8\uB825 \uAD11\uC120 \uAD75\uAE30"
+      parent: magic.projectile.beamUnlock
+      displayParent: magic.projectile.beamPower
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: 160
+    - enabled: 1
+      id: magic.projectile.beamCount
+      growthId: magic.projectile.beamCount
+      name: "\uB9C8\uB825 \uAD11\uC120 \uAD11\uC120 \uC218"
+      parent: magic.projectile.beamUnlock
+      displayParent: magic.projectile.beamWidth
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: 320
+    - enabled: 1
+      id: magic.projectile.beamSweep
+      growthId: magic.projectile.beamSweep
+      name: "\uB9C8\uB825 \uAD11\uC120 \uD68C\uC804 \uC18D\uB3C4"
+      parent: magic.projectile.beamUnlock
+      displayParent: magic.projectile.beamCount
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.projectile.beamPower
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 320
+    - enabled: 1
+      id: magic.projectile.satelliteUnlock
+      growthId: magic.projectile.satelliteUnlock
+      name: "\uB9C8\uB825 \uC704\uC131 \uD574\uAE08"
+      parent: magic.projectile.beamUnlock
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: -210
+      y: 160
+    - enabled: 1
+      id: magic.projectile.satellitePower
+      growthId: magic.projectile.satellitePower
+      name: "\uB9C8\uB825 \uC704\uC131 \uC704\uB825"
+      parent: magic.projectile.satelliteUnlock
+      displayParent: magic.projectile.satelliteUnlock
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 160
+    - enabled: 1
+      id: magic.projectile.satelliteCount
+      growthId: magic.projectile.satelliteCount
+      name: "\uB9C8\uB825 \uC704\uC131 \uC704\uC131 \uC218"
+      parent: magic.projectile.satelliteUnlock
+      displayParent: magic.projectile.satellitePower
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -630
+      y: 160
+    - enabled: 1
+      id: magic.projectile.satelliteRate
+      growthId: magic.projectile.satelliteRate
+      name: "\uB9C8\uB825 \uC704\uC131 \uBC1C\uC0AC \uC18D\uB3C4"
+      parent: magic.projectile.satelliteUnlock
+      displayParent: magic.projectile.satelliteCount
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -630
+      y: 320
+    - enabled: 1
+      id: magic.projectile.satelliteVolley
+      growthId: magic.projectile.satelliteVolley
+      name: "\uB9C8\uB825 \uC704\uC131 \uC77C\uC81C \uC0AC\uACA9"
+      parent: magic.projectile.satelliteUnlock
+      displayParent: magic.projectile.satelliteRate
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.projectile.satellitePower
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 320
+    - enabled: 1
+      id: magic.projectile.split
+      growthId: magic.projectile.split
+      name: "\uBD84\uC5F4 \uB9C8\uB825\uD0C4"
+      parent: magic.projectile.damage
+      displayParent: magic.projectile.homing
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.projectile.damage
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: -320
+  - id: flame
+    name: "\uD654\uC5FC"
+    nodes:
+    - enabled: 1
+      id: magic.flame.damage
+      growthId: magic.flame.damage
+      name: "\uD654\uC5FC \uC704\uB825"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 210
+      y: -160
+    - enabled: 1
+      id: magic.flame.speed
+      growthId: magic.flame.speed
+      name: "\uD654\uC5FC \uC2DC\uC804 \uC18D\uB3C4"
+      parent: ROOT
+      displayParent: magic.flame.damage
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 420
+      y: -160
+    - enabled: 1
+      id: magic.flame.range
+      growthId: magic.flame.range
+      name: "\uD654\uC5FC \uC0AC\uAC70\uB9AC"
+      parent: magic.flame.damage
+      displayParent: magic.flame.speed
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -160
+    - enabled: 1
+      id: magic.flame.width
+      growthId: magic.flame.width
+      name: "\uB113\uC740 \uD654\uC5FC"
+      parent: magic.flame.damage
+      displayParent: magic.flame.range
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -320
+    - enabled: 1
+      id: magic.flame.burn
+      growthId: magic.flame.burn
+      name: "\uC9C0\uC18D \uD654\uC0C1"
+      parent: magic.flame.damage
+      displayParent: magic.flame.width
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.flame.speed
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: -320
+    - enabled: 1
+      id: magic.flame.firefieldUnlock
+      growthId: magic.flame.firefieldUnlock
+      name: "\uBD88\uAE38 \uC9C0\uB300 \uD574\uAE08"
+      parent: magic.flame.damage
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: 160
+    - enabled: 1
+      id: magic.flame.firefieldPower
+      growthId: magic.flame.firefieldPower
+      name: "\uBD88\uAE38 \uC9C0\uB300 \uC704\uB825"
+      parent: magic.flame.firefieldUnlock
+      displayParent: magic.flame.firefieldUnlock
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 160
+    - enabled: 1
+      id: magic.flame.firefieldRange
+      growthId: magic.flame.firefieldRange
+      name: "\uBD88\uAE38 \uC9C0\uB300 \uBC94\uC704"
+      parent: magic.flame.firefieldUnlock
+      displayParent: magic.flame.firefieldPower
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: 160
+    - enabled: 1
+      id: magic.flame.firefieldCount
+      growthId: magic.flame.firefieldCount
+      name: "\uBD88\uAE38 \uC9C0\uB300 \uAC1C\uC218"
+      parent: magic.flame.firefieldUnlock
+      displayParent: magic.flame.firefieldRange
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: 320
+    - enabled: 1
+      id: magic.flame.firefieldDuration
+      growthId: magic.flame.firefieldDuration
+      name: "\uBD88\uAE38 \uC9C0\uB300 \uC9C0\uC18D\uC2DC\uAC04"
+      parent: magic.flame.firefieldUnlock
+      displayParent: magic.flame.firefieldCount
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.flame.firefieldPower
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 320
+    - enabled: 1
+      id: magic.flame.meteorUnlock
+      growthId: magic.flame.meteorUnlock
+      name: "\uC720\uC131 \uB099\uD558 \uD574\uAE08"
+      parent: magic.flame.firefieldUnlock
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: -210
+      y: 160
+    - enabled: 1
+      id: magic.flame.meteorPower
+      growthId: magic.flame.meteorPower
+      name: "\uC720\uC131 \uB099\uD558 \uC704\uB825"
+      parent: magic.flame.meteorUnlock
+      displayParent: magic.flame.meteorUnlock
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 160
+    - enabled: 1
+      id: magic.flame.meteorRange
+      growthId: magic.flame.meteorRange
+      name: "\uC720\uC131 \uB099\uD558 \uD3ED\uBC1C \uBC18\uACBD"
+      parent: magic.flame.meteorUnlock
+      displayParent: magic.flame.meteorPower
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -630
+      y: 160
+    - enabled: 1
+      id: magic.flame.meteorCount
+      growthId: magic.flame.meteorCount
+      name: "\uC720\uC131 \uB099\uD558 \uC6B4\uC11D \uC218"
+      parent: magic.flame.meteorUnlock
+      displayParent: magic.flame.meteorRange
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -630
+      y: 320
+    - enabled: 1
+      id: magic.flame.meteorIgnite
+      growthId: magic.flame.meteorIgnite
+      name: "\uC720\uC131 \uB099\uD558 \uD654\uC0C1 \uC99D\uD3ED"
+      parent: magic.flame.meteorUnlock
+      displayParent: magic.flame.meteorCount
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.flame.meteorPower
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 320
+    - enabled: 1
+      id: magic.flame.spread
+      growthId: magic.flame.spread
+      name: "\uD654\uC0C1 \uC804\uD30C"
+      parent: magic.flame.damage
+      displayParent: magic.flame.burn
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.flame.damage
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: -320
+  - id: lightning
+    name: "\uBC88\uAC1C"
+    nodes:
+    - enabled: 1
+      id: magic.lightning.damage
+      growthId: magic.lightning.damage
+      name: "\uBC88\uAC1C \uC704\uB825"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 210
+      y: -160
+    - enabled: 1
+      id: magic.lightning.speed
+      growthId: magic.lightning.speed
+      name: "\uBC88\uAC1C \uC2DC\uC804 \uC18D\uB3C4"
+      parent: ROOT
+      displayParent: magic.lightning.damage
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 420
+      y: -160
+    - enabled: 1
+      id: magic.lightning.jumps
+      growthId: magic.lightning.jumps
+      name: "\uCD94\uAC00 \uC5F0\uC1C4"
+      parent: magic.lightning.damage
+      displayParent: magic.lightning.speed
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -160
+    - enabled: 1
+      id: magic.lightning.range
+      growthId: magic.lightning.range
+      name: "\uC5F0\uC1C4 \uB3C4\uC57D \uAC70\uB9AC"
+      parent: magic.lightning.damage
+      displayParent: magic.lightning.jumps
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -320
+    - enabled: 1
+      id: magic.lightning.echo
+      growthId: magic.lightning.echo
+      name: "\uBC88\uAC1C \uC7AC\uD0C0\uACA9"
+      parent: magic.lightning.damage
+      displayParent: magic.lightning.range
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.lightning.speed
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: -320
+    - enabled: 1
+      id: magic.lightning.orbUnlock
+      growthId: magic.lightning.orbUnlock
+      name: "\uC804\uAE30 \uAD6C\uCCB4 \uD574\uAE08"
+      parent: magic.lightning.damage
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: 160
+    - enabled: 1
+      id: magic.lightning.orbPower
+      growthId: magic.lightning.orbPower
+      name: "\uC804\uAE30 \uAD6C\uCCB4 \uC704\uB825"
+      parent: magic.lightning.orbUnlock
+      displayParent: magic.lightning.orbUnlock
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 160
+    - enabled: 1
+      id: magic.lightning.orbRange
+      growthId: magic.lightning.orbRange
+      name: "\uC804\uAE30 \uAD6C\uCCB4 \uBC29\uC804 \uBC18\uACBD"
+      parent: magic.lightning.orbUnlock
+      displayParent: magic.lightning.orbPower
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: 160
+    - enabled: 1
+      id: magic.lightning.orbCount
+      growthId: magic.lightning.orbCount
+      name: "\uC804\uAE30 \uAD6C\uCCB4 \uAD6C\uCCB4 \uC218"
+      parent: magic.lightning.orbUnlock
+      displayParent: magic.lightning.orbRange
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: 320
+    - enabled: 1
+      id: magic.lightning.orbLink
+      growthId: magic.lightning.orbLink
+      name: "\uC804\uB958 \uC5F0\uACB0 \uC704\uB825"
+      parent: magic.lightning.orbUnlock
+      displayParent: magic.lightning.orbCount
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.lightning.orbPower
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 320
+    - enabled: 1
+      id: magic.lightning.thunderUnlock
+      growthId: magic.lightning.thunderUnlock
+      name: "\uB099\uB8B0 \uD574\uAE08"
+      parent: magic.lightning.orbUnlock
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: -210
+      y: 160
+    - enabled: 1
+      id: magic.lightning.thunderPower
+      growthId: magic.lightning.thunderPower
+      name: "\uB099\uB8B0 \uC704\uB825"
+      parent: magic.lightning.thunderUnlock
+      displayParent: magic.lightning.thunderUnlock
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 160
+    - enabled: 1
+      id: magic.lightning.thunderRange
+      growthId: magic.lightning.thunderRange
+      name: "\uB099\uB8B0 \uD3ED\uBC1C \uBC18\uACBD"
+      parent: magic.lightning.thunderUnlock
+      displayParent: magic.lightning.thunderPower
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -630
+      y: 160
+    - enabled: 1
+      id: magic.lightning.thunderCount
+      growthId: magic.lightning.thunderCount
+      name: "\uB099\uB8B0 \uB099\uB8B0 \uC218"
+      parent: magic.lightning.thunderUnlock
+      displayParent: magic.lightning.thunderRange
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -630
+      y: 320
+    - enabled: 1
+      id: magic.lightning.thunderChain
+      growthId: magic.lightning.thunderChain
+      name: "\uB099\uB8B0 \uC794\uB958 \uC5F0\uC1C4"
+      parent: magic.lightning.thunderUnlock
+      displayParent: magic.lightning.thunderCount
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.lightning.thunderPower
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 320
+    - enabled: 1
+      id: magic.lightning.fork
+      growthId: magic.lightning.fork
+      name: "\uBD84\uAE30 \uBC88\uAC1C"
+      parent: magic.lightning.damage
+      displayParent: magic.lightning.echo
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.lightning.damage
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: -320
+  - id: frost
+    name: "\uBE59\uACB0"
+    nodes:
+    - enabled: 1
+      id: magic.frost.damage
+      growthId: magic.frost.damage
+      name: "\uC5BC\uC74C \uC704\uB825"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 210
+      y: -160
+    - enabled: 1
+      id: magic.frost.speed
+      growthId: magic.frost.speed
+      name: "\uBE60\uB978 \uC7AC\uC2DC\uC804"
+      parent: ROOT
+      displayParent: magic.frost.damage
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: 420
+      y: -160
+    - enabled: 1
+      id: magic.frost.count
+      growthId: magic.frost.count
+      name: "\uCD94\uAC00 \uC5BC\uC74C \uC870\uAC01"
+      parent: magic.frost.damage
+      displayParent: magic.frost.speed
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -160
+    - enabled: 1
+      id: magic.frost.orbitSpeed
+      growthId: magic.frost.orbitSpeed
+      name: "\uBE60\uB978 \uACF5\uC804"
+      parent: magic.frost.damage
+      displayParent: magic.frost.count
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -320
+    - enabled: 1
+      id: magic.frost.range
+      growthId: magic.frost.range
+      name: "\uB113\uC740 \uADA4\uB3C4"
+      parent: magic.frost.damage
+      displayParent: magic.frost.orbitSpeed
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.frost.speed
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: -320
+    - enabled: 1
+      id: magic.frost.size
+      growthId: magic.frost.size
+      name: "\uD070 \uC5BC\uC74C \uC870\uAC01"
+      parent: magic.frost.damage
+      displayParent: magic.frost.range
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.frost.damage
+      ranks: 3
+      parentRanks: 1
+      x: 210
+      y: -320
+    - enabled: 1
+      id: magic.frost.chill
+      growthId: magic.frost.chill
+      name: "\uC9D9\uC740 \uB0C9\uAE30"
+      parent: magic.frost.damage
+      displayParent: magic.frost.size
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 2
+      parentRanks: 1
+      x: 210
+      y: -480
+    - enabled: 1
+      id: magic.frost.freezeDuration
+      growthId: magic.frost.freezeDuration
+      name: "\uC624\uB798\uAC00\uB294 \uBE59\uACB0"
+      parent: magic.frost.damage
+      displayParent: magic.frost.chill
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.frost.range
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: -480
+    - enabled: 1
+      id: magic.frost.blizzardUnlock
+      growthId: magic.frost.blizzardUnlock
+      name: "\uB208\uBCF4\uB77C \uD574\uAE08"
+      parent: magic.frost.damage
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: 160
+    - enabled: 1
+      id: magic.frost.blizzardPower
+      growthId: magic.frost.blizzardPower
+      name: "\uB208\uBCF4\uB77C \uC704\uB825"
+      parent: magic.frost.blizzardUnlock
+      displayParent: magic.frost.blizzardUnlock
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 160
+    - enabled: 1
+      id: magic.frost.blizzardRange
+      growthId: magic.frost.blizzardRange
+      name: "\uB208\uBCF4\uB77C \uB208\uBCF4\uB77C \uBC18\uACBD"
+      parent: magic.frost.blizzardUnlock
+      displayParent: magic.frost.blizzardPower
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: 160
+    - enabled: 1
+      id: magic.frost.blizzardCount
+      growthId: magic.frost.blizzardCount
+      name: "\uB208\uBCF4\uB77C \uB208\uBCF4\uB77C \uC218"
+      parent: magic.frost.blizzardUnlock
+      displayParent: magic.frost.blizzardRange
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: 320
+    - enabled: 1
+      id: magic.frost.blizzardCold
+      growthId: magic.frost.blizzardCold
+      name: "\uB208\uBCF4\uB77C \uCD94\uAC00 \uB0C9\uAE30"
+      parent: magic.frost.blizzardUnlock
+      displayParent: magic.frost.blizzardCount
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.frost.blizzardPower
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 320
+    - enabled: 1
+      id: magic.frost.shatterUnlock
+      growthId: magic.frost.shatterUnlock
+      name: "\uC1C4\uBE59 \uD30C\uB3D9 \uD574\uAE08"
+      parent: magic.frost.blizzardUnlock
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: -210
+      y: 160
+    - enabled: 1
+      id: magic.frost.shatterPower
+      growthId: magic.frost.shatterPower
+      name: "\uC1C4\uBE59 \uD30C\uB3D9 \uC704\uB825"
+      parent: magic.frost.shatterUnlock
+      displayParent: magic.frost.shatterUnlock
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 160
+    - enabled: 1
+      id: magic.frost.shatterRange
+      growthId: magic.frost.shatterRange
+      name: "\uC1C4\uBE59 \uD30C\uB3D9 \uD30C\uB3D9 \uBC18\uACBD"
+      parent: magic.frost.shatterUnlock
+      displayParent: magic.frost.shatterPower
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -630
+      y: 160
+    - enabled: 1
+      id: magic.frost.shatterShards
+      growthId: magic.frost.shatterShards
+      name: "\uC1C4\uBE59 \uD30C\uB3D9 \uD30C\uD3B8 \uB300\uC0C1"
+      parent: magic.frost.shatterUnlock
+      displayParent: magic.frost.shatterRange
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -630
+      y: 320
+    - enabled: 1
+      id: magic.frost.shatterCascade
+      growthId: magic.frost.shatterCascade
+      name: "\uC1C4\uBE59 \uD30C\uB3D9 \uC5F0\uC1C4 \uD30C\uC1C4"
+      parent: magic.frost.shatterUnlock
+      displayParent: magic.frost.shatterShards
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.frost.shatterPower
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 320
+    - enabled: 1
+      id: magic.frost.rings
+      growthId: magic.frost.rings
+      name: "\uC774\uC911 \uC5BC\uC74C \uADA4\uB3C4"
+      parent: magic.frost.damage
+      displayParent: magic.frost.freezeDuration
+      displayOrthogonal: 0
+      displayLinks:
+      - magic.frost.orbitSpeed
+      ranks: 1
+      parentRanks: 1
+      x: 630
+      y: -480

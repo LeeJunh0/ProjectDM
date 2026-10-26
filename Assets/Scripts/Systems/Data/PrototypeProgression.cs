@@ -22,12 +22,12 @@ namespace ProjectDM
         public float initialSpawnMin, initialSpawnMax, refillSpawnMin, refillSpawnMax;
         public float chestChance;
         public int chestCoins;
-        public float playerHealth = 100;
         public float playerInvulnerability = .6f;
         public float playerContactRadius = .55f;
         public float criticalChance = .05f;
         public float criticalMultiplier = 2;
-        public float pickupMagnetRadius = 2;
+        public float pickupMagnetRadius;
+        public float luck;
         public PrototypeMonster[] monsters;
         public PrototypeStage[] stages;
         public PrototypeLootGrade[] lootGrades;
@@ -68,6 +68,7 @@ namespace ProjectDM
     [Serializable]
     public sealed class PrototypeGrowthTable
     {
+        public bool authoredLayout;
         public PrototypeGrowth[] rows;
         public PrototypeGrowthNode[] nodes;
         public PrototypeGoalNode[] goalLine;
@@ -85,7 +86,10 @@ namespace ProjectDM
     [Serializable]
     public sealed class PrototypeGrowthNode
     {
-        public string id, growthId, name, parent;
+        public string id, growthId, name, parent, displayParent;
+        public bool displayOrthogonal;
+        public string[] displayLinks;
+        public string VisualParent => string.IsNullOrEmpty(displayParent) ? parent : displayParent;
         public int startRank, ranks, parentRanks;
         public float x, y;
     }
@@ -94,7 +98,7 @@ namespace ProjectDM
     public sealed class PrototypeGrowth
     {
         public string id, name, description, requires, parent, icon, unit;
-        public int baseCost, maxRank, minStage, legacyMaxRank;
+        public int baseCost, maxRank, minStage, legacyMaxRank, legacyCompressedMaxRank;
         public float costGrowth, step, damageRatio, x, y, costRampRanks;
     }
 
@@ -171,7 +175,8 @@ namespace ProjectDM
             return (int)Math.Min(int.MaxValue, Math.Max(1, Math.Ceiling(price)));
         }
 
-        public static double LegacyRankScale(PrototypeGrowth row) => row.legacyMaxRank > 0 ? (double)row.legacyMaxRank / row.maxRank : 1;
+        public static double LegacyRankScale(PrototypeGrowth row) => row.legacyMaxRank > 0 ?
+            (double)row.legacyMaxRank / (row.legacyCompressedMaxRank > 0 ? row.legacyCompressedMaxRank : row.maxRank) : 1;
 
         public static void MigrateGrowthRanks(PrototypeSave save, PrototypeGrowthTable table)
         {
@@ -272,8 +277,8 @@ namespace ProjectDM
                     side = branchDirection < 0 ? -1 : 1;
                 }
                 layout[i] = new PrototypeGrowthNode { id = node.id, growthId = node.growthId, name = node.name,
-                    parent = node.parent, parentRanks = node.parentRanks, startRank = node.startRank, ranks = node.ranks,
-                    x = node.x + (goals > 0 ? side * 180 : 0), y = node.y };
+                    parent = node.parent, displayParent = node.displayParent, displayOrthogonal = node.displayOrthogonal, displayLinks = node.displayLinks, parentRanks = node.parentRanks, startRank = node.startRank, ranks = node.ranks,
+                    x = node.x + (goals > 0 && !table.authoredLayout ? side * 180 : 0), y = node.y };
             }
             for (int i = 0; i < goals; i++)
             {
@@ -417,8 +422,8 @@ namespace ProjectDM
                 !Positive(b.xpFirst) || !Positive(b.xpGrowth) || b.xpGrowth < 1 ||
                 !Positive(b.latePriceScale) || b.latePriceScale < 1 || !FiniteNonnegative(b.firstDamageBonus) ||
                 !Probability(b.ResolvedManaAbsorbChance) || !FiniteNonnegative(b.ResolvedManaAbsorbAmount) ||
-                !Probability(b.chestChance) || b.chestCoins < 0 || !Positive(b.playerHealth) ||
-                !Positive(b.playerInvulnerability) || !Positive(b.playerContactRadius) || !Positive(b.pickupMagnetRadius) ||
+                !Probability(b.chestChance) || b.chestCoins < 0 ||
+                !Positive(b.playerInvulnerability) || !Positive(b.playerContactRadius) || !FiniteNonnegative(b.pickupMagnetRadius) || !FiniteNonnegative(b.luck) ||
                 !Probability(b.criticalChance) || !Positive(b.criticalMultiplier) || b.criticalMultiplier < 1 ||
                 !FiniteNonnegative(b.initialSpawnMin) || b.initialSpawnMin < .6f ||
                 !Positive(b.initialSpawnMax) || b.initialSpawnMax < b.initialSpawnMin ||
@@ -448,14 +453,14 @@ namespace ProjectDM
             }
             string lootError = LootGradeRules.Validate(b);
             if (lootError != null) return lootError;
-            string[] playerGrowthIds = { "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet" };
-            string[] growthIds = { "damage", "speed", "time", "yield", "xp", "population", "respawn", "extension", "multishot", "chain", "splash", "meteor", "chainChance", "splashChance", "meteorChance", "currencyGradeChance", "experienceGradeChance", "silverDropChance", "goldDropChance", "emeraldDropChance", "amethystDropChance", "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet" };
+            string[] playerGrowthIds = { "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet", "luck", "populationCap", "spawnBatch", "magnetDropChance" };
+            string[] growthIds = { "damage", "speed", "time", "yield", "xp", "population", "respawn", "extension", "multishot", "chain", "splash", "meteor", "chainChance", "splashChance", "meteorChance", "currencyGradeChance", "experienceGradeChance", "silverDropChance", "goldDropChance", "emeraldDropChance", "amethystDropChance", "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet", "luck", "populationCap", "spawnBatch", "magnetDropChance" };
             HashSet<string> ids = new HashSet<string>();
             foreach (PrototypeGrowth r in growth.rows)
             {
                 if (r == null || Array.IndexOf(growthIds, r.id) < 0 || !ids.Add(r.id) || r.baseCost < 1 ||
                     !Positive(r.costGrowth) || r.costGrowth < 1 || r.maxRank < 1 || r.maxRank > 10000 ||
-                    r.minStage < 0 || r.minStage > 4 || r.legacyMaxRank < 0 || r.legacyMaxRank > 10000 ||
+                    r.minStage < 0 || r.minStage > 4 || r.legacyMaxRank < 0 || r.legacyMaxRank > 10000 || r.legacyCompressedMaxRank < 0 || r.legacyCompressedMaxRank > r.maxRank ||
                     (r.legacyMaxRank > 0 && r.legacyMaxRank < r.maxRank) || !FiniteNonnegative(r.costRampRanks) || !FiniteNonnegative(r.step) ||
                     !FiniteNonnegative(r.damageRatio) || float.IsNaN(r.x) || float.IsInfinity(r.x) ||
                     float.IsNaN(r.y) || float.IsInfinity(r.y)) return "성장 행 ID/수치 오류";

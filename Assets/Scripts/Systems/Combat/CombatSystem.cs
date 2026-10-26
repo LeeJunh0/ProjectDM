@@ -50,6 +50,7 @@ namespace ProjectDM
         }
 
         internal readonly List<Enemy> volleyTargets = new();
+        readonly List<Enemy> collisionCandidates = new();
 
         internal void FirePrototypeVolley(float time)
         {
@@ -63,6 +64,7 @@ namespace ProjectDM
             // One payment for the entire volley. No targets/cooldown/extra projectiles do not charge again.
             if (!mana.SpendForBasicAttack()) return;
             nextShot = time + stats.AttackInterval;
+            skills.PaidCast(playerWorld.player);
             if (skills.Character != null && skills.Character.id != "projectile")
             { skills.CastPersonalMagic(playerWorld.player.position, volleyTargets[0], playerWorld.player); return; }
             int count = 1 + Mathf.FloorToInt(skills.Character != null ? skills.PersonalAmount("count") + progression.PermanentAmount("multishot") : progression.PermanentAmount("multishot"));
@@ -121,11 +123,12 @@ namespace ProjectDM
                 // Swept collision prevents faster projectiles from tunneling past small targets.
                 Enemy hit = null;
                 Vector2 segment = to - from;
+                enemiesSystem.spatial.Bounds(Vector3.Min(from,to)-Vector3.one*1.5f,Vector3.Max(from,to)+Vector3.one*1.5f,collisionCandidates);
                 bool finished = false;
                 do
                 {
                     hit = null; float nearestAlong = float.MaxValue;
-                    foreach (Enemy enemy in enemiesSystem.enemies)
+                    foreach (Enemy enemy in collisionCandidates)
                     {
                         if (!EnemySystem.IsLive(enemy) || bolt.hits.Contains(enemy)) continue;
                         Vector2 center = enemy.transform.position;
@@ -134,7 +137,7 @@ namespace ProjectDM
                         if ((center - (from + segment * along)).sqrMagnitude < hitRadius * hitRadius && along < nearestAlong)
                         { nearestAlong = along; hit = enemy; }
                     }
-                    if (hit != null) { bolt.hits.Add(hit); skills.ApplyPrototypeBasicHit(hit, bolt.damage); finished = bolt.pierces-- <= 0; }
+                    if (hit != null) { if(bolt.hits.Count == 0) skills.SplitProjectileHit(hit, bolt.damage); bolt.hits.Add(hit); skills.ApplyPrototypeBasicHit(hit, bolt.damage); finished = bolt.pierces-- <= 0; }
                 } while (hit != null && !finished);
                 if (finished || bolt.lifetime <= 0)
                 {

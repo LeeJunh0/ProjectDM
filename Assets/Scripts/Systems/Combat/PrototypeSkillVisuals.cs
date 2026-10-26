@@ -15,6 +15,22 @@ namespace ProjectDM
         private SkillVisualAssets artwork;
         private Material defaultSpriteMaterial;
         private BossDeathRippleVisuals deathRipples;
+        private Sprite lineSprite;
+        private SpriteQuadBatch batch;
+        private struct BatchEffect {internal Sprite sprite;internal Vector3 center;internal Vector2 size;internal float angle,age,duration;internal Color color;}
+        private readonly List<BatchEffect> batched = new();
+        internal int BatchedEffectCount => batched.Count;
+        void AddBatch(Sprite sprite,Vector3 center,Vector2 size,float angle,Color color,float duration)
+        {if(sprite==null)return;batched.Add(new BatchEffect{sprite=sprite,center=center,size=size,angle=angle,color=color,duration=Mathf.Max(.01f,duration)});}
+        void TickBatch(float dt)
+        {
+            batch ??= new SpriteQuadBatch("전체 스킬 이펙트 일괄 그리기",6);batch.Begin();
+            for(int i=batched.Count-1;i>=0;i--){var e=batched[i];e.age+=dt;
+                if(e.age>=e.duration){batched[i]=batched[batched.Count-1];batched.RemoveAt(batched.Count-1);continue;}
+                Color color=e.color;color.a*=1-e.age/e.duration;
+                batch.Add(e.sprite,e.center,e.size,e.angle,color);batched[i]=e;}
+            batch.End();
+        }
 
         internal void BossDeath(Vector3 position, bool boss)
         {
@@ -45,7 +61,8 @@ namespace ProjectDM
 
         private SpriteRenderer Rent(Sprite sprite, bool warmTint = false)
         {
-            if (active.Count + frostShards.Count >= (artwork != null ? Mathf.Max(1, artwork.maxActiveEffects) : 128)) return null;
+            if(sprite == null) return null;
+
             SpriteRenderer renderer;
             if (spritePool.Count > 0) renderer = spritePool.Dequeue();
             else
@@ -81,7 +98,17 @@ namespace ProjectDM
             Vector2 size = sprite != null ? sprite.bounds.size : Vector2.one;
             return new Vector3(width / Mathf.Max(.01f, size.x), height / Mathf.Max(.01f, size.y), 1);
         }
-
+        internal void SkillLine(Vector3 from, Vector3 to, float width, Color color, float duration)
+        {
+            lineSprite ??= Sprite.Create(Texture2D.whiteTexture,new Rect(0,0,Texture2D.whiteTexture.width,Texture2D.whiteTexture.height),new Vector2(.5f,.5f),Texture2D.whiteTexture.width);
+            Vector3 delta=to-from;if(delta.sqrMagnitude<.00001f)return;
+            AddBatch(lineSprite,(from+to)*.5f,new Vector2(delta.magnitude,width),Mathf.Atan2(delta.y,delta.x)*Mathf.Rad2Deg,color,duration);
+        }
+        internal void SkillPulse(Vector3 center,float radius,string icon,Color color,float duration)
+        {
+            Sprite sprite=SkillIconAtlas.Find(icon) ?? gem ?? bolt;
+            AddBatch(sprite,center,Vector2.one*radius*2,0,new Color(1,1,1,color.a),duration);
+        }
         internal void BeginFrostOrbit(int count, float radius)
         {
             EndFrostOrbit();
@@ -110,39 +137,20 @@ namespace ProjectDM
 
         internal void Link(Vector3 from, Vector3 to)
         {
-            Vector3 delta = to - from;
-            if (delta.sqrMagnitude < .0001f) return;
-            if (artwork != null && artwork.chain != null)
+            Vector3 direction=to-from;if(direction.sqrMagnitude<.0001f)return;
+            if(artwork!=null && artwork.chain!=null)
             {
-                Sprite sprite = artwork.chain;
-                Vector3 localStart = Anchor(sprite, artwork.chainStart), localEnd = Anchor(sprite, artwork.chainEnd);
-                Vector3 authoredDirection = localEnd - localStart;
-                if (authoredDirection.sqrMagnitude > .0001f)
+                Sprite sprite=artwork.chain;Vector3 start=Anchor(sprite,artwork.chainStart),end=Anchor(sprite,artwork.chainEnd),axis=end-start;
+                if(axis.sqrMagnitude>.0001f)
                 {
-                    SpriteRenderer renderer = Rent(sprite);
-                    if (renderer == null) return;
-                    float scale = delta.magnitude / authoredDirection.magnitude;
-                    Quaternion artworkRotation = Quaternion.Euler(0, 0,
-                        -Mathf.Atan2(authoredDirection.y, authoredDirection.x) * Mathf.Rad2Deg);
-                    Transform frame = renderer.transform.parent;
-                    frame.position = from;
-                    frame.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg);
-                    frame.localScale = new Vector3(scale, scale * Mathf.Max(.1f, artwork.chainWidthMultiplier), 1);
-                    renderer.transform.localRotation = artworkRotation;
-                    renderer.transform.localPosition = -(artworkRotation * localStart);
-                    Color tint = new Color(1, 1, 1, Mathf.Clamp01(artwork.chainOpacity));
-                    renderer.color = tint;
-                    active.Add(new Visual { renderer = renderer, color = tint,
-                        size = renderer.transform.localScale, duration = Mathf.Max(.01f, artwork.chainDuration), lightning = true });
-                    return;
+                    float scale=direction.magnitude/axis.magnitude,angle=(Mathf.Atan2(direction.y,direction.x)-Mathf.Atan2(axis.y,axis.x))*Mathf.Rad2Deg;
+                    Vector3 center=from-Quaternion.Euler(0,0,angle)*start*scale;
+                    AddBatch(sprite,center,(Vector2)sprite.bounds.size*scale,angle,new Color(1,1,1,Mathf.Clamp01(artwork.chainOpacity)),artwork.chainDuration);return;
                 }
             }
-            // Three connected strokes create a readable zigzag with the default projectile sprite.
-            Vector3 direction = to - from;
-            Vector3 perpendicular = new Vector3(-direction.y, direction.x).normalized * .14f;
-            Vector3 a = from + direction / 3f + perpendicular;
-            Vector3 b = from + direction * (2f / 3f) - perpendicular;
-            Stroke(from, a); Stroke(a, b); Stroke(b, to);
+            Vector3 perpendicular=new Vector3(-direction.y,direction.x).normalized*.14f;
+            Vector3 a=from+direction/3+perpendicular,b=from+direction*2/3-perpendicular;
+            SkillLine(from,a,.1f,new Color(.5f,.75f,1),.18f);SkillLine(a,b,.1f,new Color(.5f,.75f,1),.18f);SkillLine(b,to,.1f,new Color(.5f,.75f,1),.18f);
         }
 
         private void Stroke(Vector3 from, Vector3 to)
@@ -278,6 +286,7 @@ namespace ProjectDM
         {
             if (dt <= 0) return;
             deathRipples?.Tick(dt);
+            TickBatch(dt);
             for (int i = active.Count - 1; i >= 0; i--)
             {
                 Visual visual = active[i];
@@ -314,9 +323,12 @@ namespace ProjectDM
             }
         }
 
+        private void OnDestroy(){batch?.Dispose();if(lineSprite!=null)Destroy(lineSprite);}
+
         internal void Clear()
         {
             deathRipples?.Clear();
+            batched.Clear();batch?.Clear();
             EndFrostOrbit();
             foreach (Visual visual in active) { visual.renderer.gameObject.SetActive(false); spritePool.Enqueue(visual.renderer); }
             active.Clear();

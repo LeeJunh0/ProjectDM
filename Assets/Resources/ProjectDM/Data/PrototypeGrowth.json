@@ -1,9 +1,52 @@
 {
   "goalLine": [
-    { "id": "GOAL_STAGE_01", "name": "1 · 초원", "description": "풀과 흙으로 이루어진 첫 스테이지입니다. 성장 지도에서 선택하여 새 런을 시작할 수 있습니다.", "kind": "stage", "stage": 1, "parent": "ROOT", "icon": "gem", "x": 0, "y": -180 },
-    { "id": "GOAL_BOSS_01", "name": "고목 수호자", "description": "초원의 보스 외형을 연결했습니다. 도달 미리보기만 가능하며 보스 전투는 준비 중입니다.", "kind": "boss", "stage": 1, "parent": "GOAL_STAGE_01", "icon": "slime", "limitSeconds": 180, "x": 0, "y": -360 },
-    { "id": "GOAL_STAGE_02", "name": "2 · 석재 던전", "description": "기존 어두운 석재 타일을 사용하는 두 번째 스테이지입니다. 테스트를 위해 직접 선택할 수 있습니다.", "kind": "stage", "stage": 2, "parent": "GOAL_BOSS_01", "icon": "gem", "x": 0, "y": -600 },
-    { "id": "GOAL_BOSS_02", "name": "골석 수호자", "description": "석재 던전의 보스 외형을 연결했습니다. 현재 두 스테이지만 구성하며 최종 스테이지 수는 미확정입니다.", "kind": "boss", "stage": 2, "parent": "GOAL_STAGE_02", "icon": "slime", "limitSeconds": 180, "final": true, "x": 0, "y": -780 }
+    {
+      "id": "GOAL_STAGE_01",
+      "name": "1 · 초원",
+      "description": "풀과 흙으로 이루어진 첫 스테이지입니다. 성장 지도에서 선택하여 새 런을 시작할 수 있습니다.",
+      "kind": "stage",
+      "stage": 1,
+      "parent": "ROOT",
+      "icon": "gem",
+      "x": 0,
+      "y": -180
+    },
+    {
+      "id": "GOAL_BOSS_01",
+      "name": "고목 수호자",
+      "description": "초원의 보스 외형을 연결했습니다. 도달 미리보기만 가능하며 보스 전투는 준비 중입니다.",
+      "kind": "boss",
+      "stage": 1,
+      "parent": "GOAL_STAGE_01",
+      "icon": "slime",
+      "limitSeconds": 180,
+      "x": 0,
+      "y": -360
+    },
+    {
+      "id": "GOAL_STAGE_02",
+      "name": "2 · 석재 던전",
+      "description": "기존 어두운 석재 타일을 사용하는 두 번째 스테이지입니다. 테스트를 위해 직접 선택할 수 있습니다.",
+      "kind": "stage",
+      "stage": 2,
+      "parent": "GOAL_BOSS_01",
+      "icon": "gem",
+      "x": 0,
+      "y": -600
+    },
+    {
+      "id": "GOAL_BOSS_02",
+      "name": "골석 수호자",
+      "description": "석재 던전의 보스 외형을 연결했습니다. 현재 두 스테이지만 구성하며 최종 스테이지 수는 미확정입니다.",
+      "kind": "boss",
+      "stage": 2,
+      "parent": "GOAL_STAGE_02",
+      "icon": "slime",
+      "limitSeconds": 180,
+      "final": true,
+      "x": 0,
+      "y": -780
+    }
   ],
   "rows": [
     {
@@ -110,8 +153,8 @@
     },
     {
       "id": "population",
-      "name": "필드 개체 수",
-      "description": "유지 목표와 최대 개체 수 증가. 초기 개체 수도 비례 증가합니다.",
+      "name": "몬스터 생성량",
+      "description": "필드에 유지하려는 몬스터 목표 수 +5마리. 최대 개체 수 성장으로 수용 공간도 함께 넓힙니다.",
       "icon": "slime",
       "unit": "마리",
       "parent": "ROOT",
@@ -119,11 +162,12 @@
       "y": 230,
       "baseCost": 20,
       "costGrowth": 1.065,
-      "maxRank": 10,
+      "maxRank": 30,
       "minStage": 0,
       "step": 5,
       "legacyMaxRank": 50,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "legacyCompressedMaxRank": 10
     },
     {
       "id": "respawn",
@@ -339,10 +383,10 @@
     },
     {
       "id": "health",
-      "name": "최대 체력",
-      "description": "최대 체력 +20. 구매 효과는 다음 런부터 적용하며 새 런을 최대 체력으로 시작합니다.",
+      "name": "최대 마나",
+      "description": "최대 마나 +20 MP. 구매 효과는 다음 런부터 적용하며 새 런을 최대 마나로 시작합니다.",
       "icon": "gem",
-      "unit": "HP",
+      "unit": "MP",
       "parent": "population",
       "x": -270,
       "y": 110,
@@ -420,7 +464,7 @@
     {
       "id": "magnet",
       "name": "아이템 끌어오기 범위",
-      "description": "경험치·재화·상자 끌어오기 범위 +0.5유닛. 실제 획득 거리는 변경하지 않습니다.",
+      "description": "아이템 자동 끌어오기 범위 +0.5유닛. 기본 상태에서는 직접 접촉해야 획득합니다.",
       "icon": "coin",
       "unit": "유닛",
       "parent": "time",
@@ -431,6 +475,70 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 0.5,
+      "costRampRanks": 2
+    },
+    {
+      "id": "luck",
+      "name": "행운",
+      "description": "단계마다 레벨업 선택지의 금·은 확률이 각각 +5%p 증가하고 동 확률은 -10%p 감소합니다. 행운 +25에 해당하며 다음 런부터 적용됩니다.",
+      "icon": "gem",
+      "unit": "",
+      "parent": "xp",
+      "x": 100,
+      "y": 260,
+      "baseCost": 25,
+      "costGrowth": 1.4,
+      "maxRank": 3,
+      "minStage": 0,
+      "step": 25,
+      "costRampRanks": 2
+    },
+    {
+      "id": "populationCap",
+      "name": "몬스터 최대 개체 수",
+      "description": "필드 최대 수용량 +10마리. 생성량과 함께 성장시켜 몬스터 밀도를 높입니다.",
+      "icon": "slime",
+      "unit": "마리",
+      "parent": "population",
+      "x": 100,
+      "y": 1920,
+      "baseCost": 15,
+      "costGrowth": 1.12,
+      "maxRank": 20,
+      "minStage": 0,
+      "step": 10,
+      "costRampRanks": 2
+    },
+    {
+      "id": "spawnBatch",
+      "name": "한 번에 생성되는 몬스터",
+      "description": "젠 한 번당 몬스터 생성 수 +1마리. 생성 간격은 젠 속도 성장과 별개입니다.",
+      "icon": "slime",
+      "unit": "마리",
+      "parent": "population",
+      "x": 100,
+      "y": 1980,
+      "baseCost": 15,
+      "costGrowth": 1.12,
+      "maxRank": 12,
+      "minStage": 0,
+      "step": 1,
+      "costRampRanks": 2
+    },
+    {
+      "id": "magnetDropChance",
+      "name": "자석 드랍 확률",
+      "description": "몬스터 처치 시 자석 드랍 확률 +1%p. 자석을 직접 획득하면 현재 맵의 아이템을 모두 당깁니다.",
+      "icon": "magnet",
+      "unit": "%p",
+      "parent": "magnet",
+      "x": 100,
+      "y": 2040,
+      "baseCost": 15,
+      "costGrowth": 1.12,
+      "maxRank": 3,
+      "minStage": 0,
+      "step": 0.01,
       "costRampRanks": 2
     }
   ],
@@ -1318,7 +1426,7 @@
     {
       "id": "health_1",
       "growthId": "health",
-      "name": "최대 체력",
+      "name": "최대 마나",
       "parent": "population_1",
       "startRank": 0,
       "ranks": 3,
@@ -1379,6 +1487,226 @@
       "ranks": 3,
       "x": 380,
       "y": 535,
+      "parentRanks": 1
+    },
+    {
+      "id": "luck_1",
+      "growthId": "luck",
+      "name": "행운",
+      "parent": "xp_1",
+      "startRank": 0,
+      "ranks": 3,
+      "x": 100,
+      "y": 260,
+      "parentRanks": 1
+    },
+    {
+      "id": "population_5",
+      "growthId": "population",
+      "name": "몬스터 생성량",
+      "parent": "population_4",
+      "startRank": 10,
+      "ranks": 3,
+      "x": 1200,
+      "y": 6190,
+      "parentRanks": 1
+    },
+    {
+      "id": "population_6",
+      "growthId": "population",
+      "name": "몬스터 생성량",
+      "parent": "population_5",
+      "startRank": 13,
+      "ranks": 3,
+      "x": 1300,
+      "y": 6260,
+      "parentRanks": 1
+    },
+    {
+      "id": "population_7",
+      "growthId": "population",
+      "name": "몬스터 생성량",
+      "parent": "population_6",
+      "startRank": 16,
+      "ranks": 3,
+      "x": 1400,
+      "y": 6330,
+      "parentRanks": 1
+    },
+    {
+      "id": "population_8",
+      "growthId": "population",
+      "name": "몬스터 생성량",
+      "parent": "population_7",
+      "startRank": 19,
+      "ranks": 3,
+      "x": 1500,
+      "y": 6400,
+      "parentRanks": 1
+    },
+    {
+      "id": "population_9",
+      "growthId": "population",
+      "name": "몬스터 생성량",
+      "parent": "population_8",
+      "startRank": 22,
+      "ranks": 3,
+      "x": 1600,
+      "y": 6470,
+      "parentRanks": 1
+    },
+    {
+      "id": "population_10",
+      "growthId": "population",
+      "name": "몬스터 생성량",
+      "parent": "population_9",
+      "startRank": 25,
+      "ranks": 3,
+      "x": 1700,
+      "y": 6540,
+      "parentRanks": 1
+    },
+    {
+      "id": "population_11",
+      "growthId": "population",
+      "name": "몬스터 생성량",
+      "parent": "population_10",
+      "startRank": 28,
+      "ranks": 2,
+      "x": 1800,
+      "y": 6610,
+      "parentRanks": 1
+    },
+    {
+      "id": "populationCap_1",
+      "growthId": "populationCap",
+      "name": "몬스터 최대 개체 수",
+      "parent": "population_1",
+      "startRank": 0,
+      "ranks": 3,
+      "x": 800,
+      "y": 6680,
+      "parentRanks": 1
+    },
+    {
+      "id": "populationCap_2",
+      "growthId": "populationCap",
+      "name": "몬스터 최대 개체 수",
+      "parent": "populationCap_1",
+      "startRank": 3,
+      "ranks": 3,
+      "x": 900,
+      "y": 6750,
+      "parentRanks": 1
+    },
+    {
+      "id": "populationCap_3",
+      "growthId": "populationCap",
+      "name": "몬스터 최대 개체 수",
+      "parent": "populationCap_2",
+      "startRank": 6,
+      "ranks": 3,
+      "x": 1000,
+      "y": 6820,
+      "parentRanks": 1
+    },
+    {
+      "id": "populationCap_4",
+      "growthId": "populationCap",
+      "name": "몬스터 최대 개체 수",
+      "parent": "populationCap_3",
+      "startRank": 9,
+      "ranks": 3,
+      "x": 1100,
+      "y": 6890,
+      "parentRanks": 1
+    },
+    {
+      "id": "populationCap_5",
+      "growthId": "populationCap",
+      "name": "몬스터 최대 개체 수",
+      "parent": "populationCap_4",
+      "startRank": 12,
+      "ranks": 3,
+      "x": 1200,
+      "y": 6960,
+      "parentRanks": 1
+    },
+    {
+      "id": "populationCap_6",
+      "growthId": "populationCap",
+      "name": "몬스터 최대 개체 수",
+      "parent": "populationCap_5",
+      "startRank": 15,
+      "ranks": 3,
+      "x": 1300,
+      "y": 7030,
+      "parentRanks": 1
+    },
+    {
+      "id": "populationCap_7",
+      "growthId": "populationCap",
+      "name": "몬스터 최대 개체 수",
+      "parent": "populationCap_6",
+      "startRank": 18,
+      "ranks": 2,
+      "x": 1400,
+      "y": 7100,
+      "parentRanks": 1
+    },
+    {
+      "id": "spawnBatch_1",
+      "growthId": "spawnBatch",
+      "name": "한 번에 생성되는 몬스터",
+      "parent": "population_1",
+      "startRank": 0,
+      "ranks": 3,
+      "x": 800,
+      "y": 7170,
+      "parentRanks": 1
+    },
+    {
+      "id": "spawnBatch_2",
+      "growthId": "spawnBatch",
+      "name": "한 번에 생성되는 몬스터",
+      "parent": "spawnBatch_1",
+      "startRank": 3,
+      "ranks": 3,
+      "x": 900,
+      "y": 7240,
+      "parentRanks": 1
+    },
+    {
+      "id": "spawnBatch_3",
+      "growthId": "spawnBatch",
+      "name": "한 번에 생성되는 몬스터",
+      "parent": "spawnBatch_2",
+      "startRank": 6,
+      "ranks": 3,
+      "x": 1000,
+      "y": 7310,
+      "parentRanks": 1
+    },
+    {
+      "id": "spawnBatch_4",
+      "growthId": "spawnBatch",
+      "name": "한 번에 생성되는 몬스터",
+      "parent": "spawnBatch_3",
+      "startRank": 9,
+      "ranks": 3,
+      "x": 1100,
+      "y": 7380,
+      "parentRanks": 1
+    },
+    {
+      "id": "magnetDropChance_1",
+      "growthId": "magnetDropChance",
+      "name": "자석 드랍 확률",
+      "parent": "magnet_1",
+      "startRank": 0,
+      "ranks": 3,
+      "x": 800,
+      "y": 7450,
       "parentRanks": 1
     }
   ]

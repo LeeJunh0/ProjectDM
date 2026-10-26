@@ -161,9 +161,9 @@ namespace ProjectDM
             MonsterKind.Mushroom => mushroomSprite, MonsterKind.Boar => boarSprite, _ => slimeSprite
         };
 
-        internal Sprite PrototypeIcon(string id) => id switch
+        internal Sprite PrototypeIcon(string id) => SkillIconAtlas.Find(id) ?? (id switch
         {
             "coin" => coinSprite, "gem" => gemSprite, "slime" => slimeSprite, _ => boltSprite
-        };
+        });
     }
 }

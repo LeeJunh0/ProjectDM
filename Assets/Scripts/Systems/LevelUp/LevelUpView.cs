@@ -46,6 +46,8 @@ namespace ProjectDM
             };
             GUI.Label(new Rect(0, 74f, Screen.width, 46f), "레벨업", headingStyle);
             GUI.Label(new Rect(0, 118f, Screen.width, 26f), $"이번 런에 적용할 효과 선택  ·  남은 선택 {selection.pendingRunUpgrades}", subtitleStyle);
+            var chances = selection.GradeChances;
+            GUI.Label(new Rect(0, 140f, Screen.width, 22f), $"행운 {selection.Luck:0.##}  ·  금 {chances.gold * 100:0.#}%  은 {chances.silver * 100:0.#}%  동 {chances.bronze * 100:0.#}%", subtitleStyle);
 
             bool compactLayout = Screen.width < 820;
             float gap = compactLayout ? 10f : 14f;

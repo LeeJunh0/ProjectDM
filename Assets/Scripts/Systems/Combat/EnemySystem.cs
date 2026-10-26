@@ -42,6 +42,7 @@ namespace ProjectDM
         }
 
         internal readonly List<Enemy> enemies = new();
+        internal readonly EnemySpatialGrid spatial = new();
 
         internal float nextSpawn;
         internal float nextMiniBoss;
@@ -93,7 +94,8 @@ namespace ProjectDM
 
         internal int FieldTarget => tables.balance.stages[SpawnStage].target + Mathf.FloorToInt(progression.PermanentAmount("population"));
 
-        internal int FieldCap => tables.balance.stages[SpawnStage].cap + Mathf.FloorToInt(progression.PermanentAmount("population"));
+        internal int FieldCap => tables.balance.stages[SpawnStage].cap + Mathf.FloorToInt(progression.PermanentAmount("populationCap"));
+        internal int RefillBatch => tables.balance.stages[SpawnStage].batch + Mathf.FloorToInt(progression.PermanentAmount("spawnBatch"));
 
         internal void SpawnPrototypeInitialEnemies()
         {
@@ -109,7 +111,7 @@ namespace ProjectDM
             if (time < nextSpawn || boss.bossArrived) return;
             PrototypeStage stage = tables.balance.stages[SpawnStage];
             nextSpawn = time + stage.refillSeconds / (1f + progression.PermanentAmount("respawn"));
-            int count = Mathf.Min(stage.batch, Mathf.Min(FieldTarget, FieldCap) - enemies.Count);
+            int count = Mathf.Min(RefillBatch, Mathf.Min(FieldTarget, FieldCap) - enemies.Count);
             for (int i = 0; i < count; i++) SpawnPrototypeEnemy(false);
         }
 

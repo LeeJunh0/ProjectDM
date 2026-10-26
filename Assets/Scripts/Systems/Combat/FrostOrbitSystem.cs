@@ -14,6 +14,7 @@ namespace ProjectDM
         private readonly Action<Enemy, float> hit;
         private readonly List<Dictionary<Enemy, float>> nextHits = new();
         private readonly List<Enemy> targets = new();
+        private readonly List<Enemy> candidates = new();
         private CharacterDefinition definition;
         private Transform caster;
         private Vector3 previousCenter;
@@ -31,7 +32,7 @@ namespace ProjectDM
             Reset(); this.definition = definition; this.caster = caster;
             duration = definition.duration; radius = definition.range + strength("range");
             shardRadius = definition.shardRadius + strength("size"); angularSpeed = definition.orbitSpeed + strength("orbitSpeed");
-            int count = Mathf.Clamp(definition.shardCount + Mathf.FloorToInt(strength("count")), 1, 16);
+            int count = Mathf.Clamp((definition.shardCount + Mathf.FloorToInt(strength("count"))) * (strength("rings") >= 1 ? 2 : 1), 1, 16);
             for (int i = 0; i < count; i++) nextHits.Add(new Dictionary<Enemy, float>());
             previousCenter = caster.position; Active = true;
             visuals.BeginFrostOrbit(count, shardRadius);
@@ -41,7 +42,8 @@ namespace ProjectDM
         internal Vector3 Position(int index, Vector3 center, float atAge)
         {
             float angle = (atAge * angularSpeed + index * 360f / Count) * Mathf.Deg2Rad;
-            return center + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+            float orbitRadius = radius + (strength("rings") >= 1 && index % 2 != 0 ? .65f : 0);
+            return center + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * orbitRadius;
         }
 
         internal void Tick(float dt)
@@ -62,7 +64,8 @@ namespace ProjectDM
                 for (int shard = 0; shard < Count; shard++)
                 {
                     Vector3 position = Position(shard, atCenter, atAge); targets.Clear();
-                    foreach (Enemy enemy in enemies.enemies)
+                    enemies.spatial.Bounds(position-Vector3.one*collisionRadius,position+Vector3.one*collisionRadius,candidates);
+                    foreach (Enemy enemy in candidates)
                         if (EnemySystem.IsLive(enemy) && (enemy.transform.position - position).sqrMagnitude <= collisionRadius * collisionRadius &&
                             (!nextHits[shard].TryGetValue(enemy, out float next) || atAge >= next)) targets.Add(enemy);
                     foreach (Enemy enemy in targets)

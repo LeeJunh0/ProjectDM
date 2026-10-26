@@ -23,13 +23,13 @@ namespace ProjectDM
         [InspectorName("과열 색상")] public Color overheatedColor = new(1, .42f, .06f);
         [InspectorName("색상 전환 시간"), Min(0)] public float colorTransitionDuration = .35f;
         [Header("액체·빛 연출")]
-        [InspectorName("물결 속도"), Min(0)] public float waveSpeed = 1.4f;
-        [InspectorName("물결 강도"), Range(0, .3f)] public float waveAmplitude = .07f;
-        [InspectorName("물결 빈도"), Range(1, 12)] public float waveFrequency = 3;
+        [InspectorName("흐름 움직임 속도"), Min(0)] public float waveSpeed = 1.4f;
+        [InspectorName("흐름 강조 강도"), Range(0, .3f)] public float waveAmplitude = .07f;
+        [InspectorName("흐름 빈도"), Range(1, 12)] public float waveFrequency = 3;
         [InspectorName("내부 흐름 속도"), Min(0)] public float flowSpeed = .65f;
         [InspectorName("발광 세기"), Range(0, 2)] public float glowStrength = .4f;
-        [InspectorName("마나 변동 시 출렁임 강도"), Range(0, 3)] public float reactionStrength = 1;
-        [InspectorName("출렁임 진정 시간"), Min(.01f)] public float reactionDuration = .55f;
+        [InspectorName("마나 변동 시 흐름 반응 강도"), Range(0, 3)] public float reactionStrength = 1;
+        [InspectorName("흐름 반응 진정 시간"), Min(.01f)] public float reactionDuration = .55f;
         [InspectorName("부족 경고 기준"), Range(0, 1)] public float lowManaThreshold = .25f;
         [InspectorName("부족 시 빛 점멸 강도"), Range(0, 1)] public float lowManaPulse = .2f;
 

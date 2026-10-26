@@ -338,9 +338,9 @@ namespace ProjectDM
             skills = new SkillSystem(tables, progression, art, run, enemiesSystem, effects, () => combat.RollCriticalHit(), () => stats.MainDamage, playerStats);
             stats = new CombatStats(tables, progression, skills);
             combat = new CombatSystem(settings, tables, progression, art, playerWorld, enemiesSystem, skills, stats, pool, playerStats, mana);
-            playerCombat = new PlayerCombatSystem(settings, tables, playerWorld, run, enemiesSystem, combat, presentation, playerStats);
+            playerCombat = new PlayerCombatSystem(settings, tables, playerWorld, run, enemiesSystem, combat, presentation, playerStats, manaBar.NotifyHit);
             selection = new LevelUpController(tables, progression, run, skills);
-            hud = new RunHudView(settings, save, tables, run, enemiesSystem, stats, selection, playerCombat, graphics, manaBar);
+            hud = new RunHudView(settings, save, tables, run, enemiesSystem, stats, selection, graphics, manaBar);
             results = new RunResultView(settings, tables, art, run, boss, playerCombat, graphics);
             levelUpView = new LevelUpView(settings, art, selection, graphics);
             growthView = new GrowthGraphView(settings, save, tables, progression, art, run, notifications, graphics);
@@ -388,6 +388,7 @@ namespace ProjectDM
         {
             if (!isInitialized) return;
             SynchronizeSettings();
+            manaBar.TickHitFeedback(Time.unscaledDeltaTime);
             manaBar.Tick(run.runEnded || run.showMetaTree || selection.choosingUpgrade ? 0 : Time.deltaTime);
             save.FlushPrototypeProgressIfDue();
             if (selection.choosingUpgrade) { selection.HandleRunUpgradeShortcuts(); return; }
@@ -407,9 +408,10 @@ namespace ProjectDM
             combat.FireAtNearestEnemy(run.elapsed);
             if (mana.IsDepleted) { run.CompleteIfDue(onBossDue); return; }
             enemiesSystem.UpdateEnemies(dt);
+            enemiesSystem.spatial.Rebuild(enemiesSystem.enemies);
             combat.UpdateProjectiles(dt);
             presentation.Tick(dt);
-            skills.UpdatePrototypeEffects(dt);
+            skills.UpdatePrototypeEffects(dt, playerWorld.player);
             playerCombat.UpdatePlayerContactDamage(dt);
             if (run.runEnded) return;
             pickupsSystem.UpdatePickups(dt);
@@ -434,6 +436,7 @@ namespace ProjectDM
                 return;
             }
 
+            hud.DrawManaShieldHit();
             if (run.runEnded)
             {
                 hud.DrawElapsedTime();
@@ -447,7 +450,6 @@ namespace ProjectDM
             hud.DrawElapsedTime();
             hud.DrawManaBar();
             presentation.DrawCombatDamage();
-            hud.DrawPlayerHealth();
 
             hud.DrawNavigationControls();
             if (enablePrototypeDebug && !selection.choosingUpgrade) debugView.DrawPrototypeDebugTools();
@@ -460,7 +462,7 @@ namespace ProjectDM
 
         private void OnApplicationPause(bool paused) { if (paused) save?.FlushPrototypeProgress(); }
         public void SetManaVisualState(ManaVisualState state) => manaBar?.SetState(state);
-        private void OnDestroy() { manaBar?.Dispose(); }
+        private void OnDestroy() { manaBar?.Dispose(); growthView?.Dispose(); pickupsSystem?.Dispose(); }
         private void OnApplicationQuit() { save?.FlushPrototypeProgress(); }
         private void OnDisable() { save?.FlushPrototypeProgress(); Time.timeScale = 1f; }
     }

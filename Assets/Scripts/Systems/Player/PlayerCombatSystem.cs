@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace ProjectDM
 {
-    /// <summary>Owns player health, contact damage, immunity and defeat.</summary>
+    /// <summary>Applies contact damage to mana, with immunity and defeat on depletion.</summary>
     internal sealed class PlayerCombatSystem
     {
         private readonly GameSettings settings;
@@ -16,8 +16,9 @@ namespace ProjectDM
         private readonly CombatSystem combat;
         private readonly DamagePresentation presentation;
         private readonly PlayerStats stats;
+        private readonly Action<float> onManaHit;
 
-        internal PlayerCombatSystem(GameSettings settings, GameTables tables, PlayerWorld playerWorld, RunController run, EnemySystem enemiesSystem, CombatSystem combat, DamagePresentation presentation, PlayerStats stats)
+        internal PlayerCombatSystem(GameSettings settings, GameTables tables, PlayerWorld playerWorld, RunController run, EnemySystem enemiesSystem, CombatSystem combat, DamagePresentation presentation, PlayerStats stats, Action<float> onManaHit = null)
         {
             this.settings = settings;
             this.tables = tables;
@@ -27,18 +28,15 @@ namespace ProjectDM
             this.combat = combat;
             this.presentation = presentation;
             this.stats = stats;
+            this.onManaHit = onManaHit;
         }
-
-        internal float playerHealth;
 
         internal float playerInvulnerabilityRemaining;
 
         internal bool playerDefeated;
-        internal float MaxHealth => stats.MaxHealth;
 
         internal void ResetPlayerCombat()
         {
-            playerHealth = MaxHealth;
             playerInvulnerabilityRemaining = 0;
             playerDefeated = combat.forceCriticalHits = false;
         }
@@ -58,10 +56,13 @@ namespace ProjectDM
         internal void ApplyPlayerDamage(float damage)
         {
             if (run.runEnded || playerDefeated || playerInvulnerabilityRemaining > 0 || damage <= 0) return;
-            playerHealth = Mathf.Max(0, playerHealth - damage);
+            float before = run.mana.Current;
+            run.mana.Consume(damage);
+            float lostMana = before - run.mana.Current;
+            if (lostMana > 0) onManaHit?.Invoke(lostMana);
             playerInvulnerabilityRemaining = stats.Invulnerability;
             presentation.ShowCombatDamage(playerWorld.player.position, damage, CombatDamageKind.Received);
-            if (playerHealth > 0) return;
+            if (!run.mana.IsDepleted) return;
             playerDefeated = true;
             run.EndRun();
         }

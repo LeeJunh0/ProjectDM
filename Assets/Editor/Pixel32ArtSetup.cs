@@ -48,13 +48,13 @@ namespace ProjectDM.Editor
                 if (existing != null) existing.frames = existing.frames.Concat(frames).ToArray();
                 else groups.Add(new Group { name = name, frames = frames });
             }
-            for (int i = 0; i < 4; i++) Add("Characters/" + ProjectDMCharacterArtSetup.Names[i],
-                Sprites($"{ProjectDMCharacterArtSetup.ArtFolder}/ProjectDM_{ProjectDMCharacterArtSetup.Names[i]}_Hooded_Walk_v1.png"));
-            foreach (string biome in ProjectDMMonsterArtSetup.Biomes)
+            foreach (string name in GameplayArtPaths.CharacterNames) Add("Characters/" + name,
+                Sprites($"{GameplayArtPaths.Characters}/ProjectDM_{name}_Hooded_Walk_v1.png"));
+            foreach (string biome in GameplayArtPaths.Biomes)
             {
-                Sprite[] sprites = Sprites(MonsterAnimationArtSetup.SheetPath(biome));
+                Sprite[] sprites = Sprites(GameplayArtPaths.MonsterWalkSheet(biome));
                 for (int row = 0; row < 5; row++) Add($"Monsters/{biome}/{row}", sprites.Where(sprite => sprite.name.StartsWith($"Walk_{biome}_{row}_")));
-                Add($"Monsters/{biome}/Boss", Sprites(ProjectDMMonsterArtSetup.SheetPath(biome)).Where(sprite => sprite.name.StartsWith($"Retro_{biome}_5_")));
+                Add($"Monsters/{biome}/Boss", Sprites(GameplayArtPaths.MonsterBossSheet(biome)).Where(sprite => sprite.name.StartsWith($"Retro_{biome}_5_")));
             }
             foreach (string path in new[] {
                 "Assets/GameContent/Art/ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png",
@@ -94,6 +94,17 @@ namespace ProjectDM.Editor
                         Mathf.Max(sprite.pivot.x, sprite.rect.width - sprite.pivot.x),
                         Mathf.Max(sprite.pivot.y, sprite.rect.height - sprite.pivot.y)) / sprite.pixelsPerUnit);
                     float worldSize = half * 2 * 32f / 30f; // one native transparent pixel around the entire animation envelope
+                    // The generated rear poses are larger than the front poses. Normalize only
+                    // that direction, using one factor and one foot anchor for its whole cycle.
+                    Sprite[] front = group.frames.Where(frame => frame.name.Contains("_Down_")).ToArray();
+                    Sprite[] rear = group.frames.Where(frame => frame.name.Contains("_Up_")).ToArray();
+                    float rearScale = 1f, rearFoot = 0f;
+                    if (group.name.StartsWith("Characters/") && front.Length == 4 && rear.Length == 4)
+                    {
+                        float MedianHeight(Sprite[] frames) => frames.Select(frame => frame.rect.height - 4f).OrderBy(height => height).Skip(1).Take(2).Average();
+                        rearScale = Mathf.Min(1f, MedianHeight(front) / MedianHeight(rear));
+                        rearFoot = rear.Min(frame => (2f - frame.pivot.y) / frame.pixelsPerUnit);
+                    }
                     foreach (Sprite source in group.frames)
                     {
                         string sourcePath = AssetDatabase.GetAssetPath(source);
@@ -111,8 +122,15 @@ namespace ProjectDM.Editor
                         float sourceX = (float)raw.width / source.texture.width, sourceY = (float)raw.height / source.texture.height;
                         for (int y = 0; y < Size; y++) for (int x = 0; x < Size; x++)
                         {
-                            float sx = source.pivot.x + ((x + .5f) / Size - .5f) * worldSize * source.pixelsPerUnit;
-                            float sy = source.pivot.y + ((y + .5f) / Size - .5f) * worldSize * source.pixelsPerUnit;
+                            float localX = ((x + .5f) / Size - .5f) * worldSize;
+                            float localY = ((y + .5f) / Size - .5f) * worldSize;
+                            if (source.name.Contains("_Up_") && rearScale < 1f)
+                            {
+                                localX /= rearScale;
+                                localY = rearFoot + (localY - rearFoot) / rearScale;
+                            }
+                            float sx = source.pivot.x + localX * source.pixelsPerUnit;
+                            float sy = source.pivot.y + localY * source.pixelsPerUnit;
                             if (sx < 0 || sy < 0 || sx >= source.rect.width || sy >= source.rect.height) continue;
                             int px = Mathf.Clamp(Mathf.FloorToInt((source.rect.x + sx) * sourceX), 0, raw.width - 1);
                             int py = Mathf.Clamp(Mathf.FloorToInt((source.rect.y + sy) * sourceY), 0, raw.height - 1);
@@ -189,7 +207,7 @@ namespace ProjectDM.Editor
                     EditorUtility.SetDirty(skillArt);
                 }
                 foreach (string path in new[] { "Assets/Resources/ProjectDM/Stages/Stage1_Meadow.asset", "Assets/Resources/ProjectDM/Stages/Stage2_Dungeon.asset",
-                    ProjectDMCharacterArtSetup.CatalogPath, "Assets/Resources/ProjectDM/Skills/SkillVisuals.asset",
+                    GameplayArtPaths.CharacterCatalog, "Assets/Resources/ProjectDM/Skills/SkillVisuals.asset",
                     "Assets/GameContent/Configuration/ProjectDMSpriteCatalog.asset" })
                     ReplaceReferences(AssetDatabase.LoadMainAssetAtPath(path));
                 foreach (AnimationClip clip in Clips())
@@ -200,7 +218,7 @@ namespace ProjectDM.Editor
                         { Sprite target = Resolve(source); if (target == source) continue; keys[i].value = target; changed = true; }
                         if (changed) { AnimationUtility.SetObjectReferenceCurve(clip, binding, keys); EditorUtility.SetDirty(clip); }
                     }
-                foreach (string guid in AssetDatabase.FindAssets("t:Prefab", new[] { ProjectDMPrefabFactory.PrefabFolder }))
+                foreach (string guid in AssetDatabase.FindAssets("t:Prefab", new[] { GameplayArtPaths.Prefabs }))
                 {
                     string path = AssetDatabase.GUIDToAssetPath(guid); GameObject root = PrefabUtility.LoadPrefabContents(path); bool changed = false;
                     try
@@ -304,22 +322,6 @@ namespace ProjectDM.Editor
             settings.spriteMeshType = SpriteMeshType.FullRect; settings.spriteAlignment = (int)SpriteAlignment.Center;
             settings.spritePivot = new Vector2(.5f, .5f); settings.spriteGenerateFallbackPhysicsShape = false;
             importer.SetTextureSettings(settings); importer.SaveAndReimport();
-        }
-        public static void RunBatch()
-        {
-            try
-            {
-                MonsterAnimationArtSetup.Install(); Install();
-                Pixel32Regression.RunMenu(); StageContentRegression.RunMenu(); CharacterArtRegression.RunMenu();
-                ArtToneRegression.RunMenu(); UnusedSpriteCleanupRegression.RunMenu();
-                ManaPickupRegression.RunMenu(); PickupEffectsRegression.RunMenu(); SkillVisualRegression.RunMenu();
-                MiniBossRegression.RunMenu(); CharacterRegression.RunMenu(); LootGradeQa.RunMenu();
-                MonsterAnimationRegression.RenderPreview(); CharacterArtRegression.Render(); Pixel32Regression.Render();
-                File.WriteAllText("Logs/Pixel32-result.txt", "PASS: native 32x32 character/monster/boss/skill/drop resources, bindings, anchor/scale, palettes and gameplay regressions.\n");
-                EditorApplication.Exit(0);
-            }
-            catch (Exception error)
-            { Directory.CreateDirectory("Logs"); File.WriteAllText("Logs/Pixel32-result.txt", "FAIL: " + error); Debug.LogException(error); EditorApplication.Exit(1); }
         }
     }
 }

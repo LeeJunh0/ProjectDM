@@ -35,6 +35,7 @@ namespace ProjectDM
         public float rewardMultiplier = 1;
         public float hitRadiusMultiplier = 1;
         public int chillStacks;
+        public int burnStacks;
         public float chillRemaining, freezeRemaining, chillSlow;
     }
 
@@ -57,6 +58,16 @@ namespace ProjectDM
         public bool isInteracting;
         public float interactionRemaining;
         public bool isLaunching;
+        public bool vacuum;
+        public bool removed;
+        public bool batched;
+        public int serial;
+        public Sprite batchSprite;
+        public float floatPhase, visualScale;
+        public float bornAt;
+        private Vector3 position;
+        internal Vector3 Position { get => transform!=null?transform.position:position; set {position=value;if(transform!=null)transform.position=value;} }
+        internal float VisualScale {get=>visualScale;set{visualScale=value;if(transform!=null)transform.localScale=Vector3.one*value;}}
         public Vector3 launchOrigin;
         public Vector3 launchDestination;
         public float launchElapsed;
@@ -65,7 +76,7 @@ namespace ProjectDM
         public float baseScale;
     }
 
-    internal enum PickupKind { Experience, Currency, Chest, Mana }
+    internal enum PickupKind { Experience, Currency, Chest, Mana, Magnet }
     internal enum MonsterKind { Slime, Skeleton, Goblin, Mushroom, Boar }
     internal enum EnemyRank { Normal, MiniBoss, Boss }
 }

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 namespace ProjectDM
 {
     /// <summary>Owns growth-map navigation, node visibility, hover details and purchase UI.</summary>
-    internal sealed class GrowthGraphView
+    internal sealed class GrowthGraphView : IDisposable
     {
         private readonly GameSettings settings;
         private readonly SaveService save;
@@ -15,6 +15,8 @@ namespace ProjectDM
         private GrowthGraphTheme graphTheme;
         private GrowthGraphTheme Theme => graphTheme != null ? graphTheme : graphTheme = Resources.Load<GrowthGraphTheme>("ProjectDM/UI/GrowthGraphTheme");
         internal string ThemeCharacterId => personalGraph ? run.characters?.SelectedId : null;
+        internal string SymbolCharacterId => GrowthTreeEffects.Character(run.characters?.SelectedId);
+        private Color SymbolAccent => Theme != null ? Theme.Accent(SymbolCharacterId) : GrowthTreeEffects.Accent(SymbolCharacterId);
         private Color ThemeTint(Color original) => Theme != null ? Theme.Tint(original, ThemeCharacterId) : original;
         private GameTables tables => run.characters == null ? sourceTables : personalGraph
             ? run.characters.Catalog.Graphs[run.characters.SelectedId] : run.characters.Catalog.CommonGraph;
@@ -23,6 +25,27 @@ namespace ProjectDM
         private readonly RunController run;
         private readonly GameNotifications notifications;
         private readonly UiGraphics graphics;
+        private readonly GrowthPotionRenderer potion = new();
+
+        public void Dispose() => potion.Dispose();
+
+        // Every authored purchase segment counts, including hidden descendants and legacy partial ranks.
+        internal float GrowthCompletion
+        {
+            get
+            {
+                double purchased = 0, total = 0;
+                bool complete = true;
+                foreach (var node in tables.growthTable.nodes)
+                {
+                    total += node.ranks;
+                    double ranks = save.progress.Rank(node.growthId) + save.progress.PartialRank(node.growthId) - node.startRank;
+                    purchased += Math.Max(0, Math.Min(node.ranks, ranks));
+                    if (ranks < node.ranks) complete = false;
+                }
+                return total > 0 ? complete ? 1 : Mathf.Min(.9999f, (float)(purchased / total)) : 0;
+            }
+        }
 
         internal GrowthGraphView(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, RunController run, GameNotifications notifications, UiGraphics graphics)
         {
@@ -40,7 +63,7 @@ namespace ProjectDM
 
         internal float metaTreeZoom = .75f;
 
-        internal int selectedMetaTreeNode;
+        internal int selectedMetaTreeNode = -1;
 
         internal int hoveredMetaTreeNode = -1;
 
@@ -135,7 +158,7 @@ namespace ProjectDM
 
             for (int i = 0; i < metaTreeNodes.Length; i++)
             {
-                if (metaTreeNodes[i].state != MetaTreeNodeState.Hidden && !IsPrototypeGraphOverlay(localPointer) && GetMetaTreeNodeHitRect(metaTreeNodes[i], canvasSize).Contains(localPointer))
+                if (i > 0 && metaTreeNodes[i].state != MetaTreeNodeState.Hidden && !IsPrototypeGraphOverlay(localPointer) && GetMetaTreeNodeHitRect(metaTreeNodes[i], canvasSize).Contains(localPointer))
                 {
                     hoveredMetaTreeNode = i;
                 }
@@ -144,19 +167,41 @@ namespace ProjectDM
             for (int i = 0; i < metaTreeNodes.Length; i++)
             {
                 MetaTreeNodePresentation node = metaTreeNodes[i];
-                if (node.parentIndex < 0)
+                if (node.parentIndex < 0 || node.state == MetaTreeNodeState.Hidden)
                 {
                     continue;
                 }
 
                 MetaTreeNodePresentation parent = metaTreeNodes[node.parentIndex];
-                DrawMetaTreeConnector(GetMetaTreeNodeCenter(parent, canvasSize), GetMetaTreeNodeCenter(node, canvasSize), tables.goalNodeLookup.ContainsKey(node.id)
+                bool orthogonal = tables.growthNodeLookup.TryGetValue(node.id, out var growth) && growth.displayOrthogonal;
+                var points = GrowthConnectionPath.Points(GetMetaTreeNodeCenter(parent, canvasSize), GetMetaTreeNodeCenter(node, canvasSize), orthogonal, metaTreeZoom);
+                Color connectorColor = tables.goalNodeLookup.ContainsKey(node.id)
                     ? new Color(.67f, .82f, .9f, .85f)
-                    : ThemeTint(node.state == MetaTreeNodeState.Hidden
-                    ? new Color(.14f, .10f, .07f, .55f)
-                    : node.state == MetaTreeNodeState.Locked
+                    : ThemeTint(node.state == MetaTreeNodeState.Locked
                     ? new Color(.28f, .18f, .11f, .85f)
-                    : new Color(.97f, .66f, .16f, .92f)));
+                    : new Color(.97f, .66f, .16f, .92f));
+                if (IsMetaTreeConnectionVisible(parent, node))
+                {
+                    for (int p = 1; p < points.Length; p++) DrawMetaTreeConnector(points[p - 1], points[p], connectorColor);
+                    if (HasGrowthInvestment(node.id)) GrowthTreeEffects.DrawInwardFlow(points, SymbolAccent, metaTreeZoom, Time.unscaledTime, i * .137f);
+                }
+                if (growth?.displayLinks == null) continue;
+                foreach (string link in growth.displayLinks)
+                {
+                    int neighbor = Array.FindIndex(metaTreeNodes, candidate => candidate.id == link);
+                    if (neighbor < 0 || !IsMetaTreeConnectionVisible(node, metaTreeNodes[neighbor])) continue;
+                    Color gridColor = node.state == MetaTreeNodeState.Locked || metaTreeNodes[neighbor].state == MetaTreeNodeState.Locked
+                        ? ThemeTint(new Color(.28f, .18f, .11f, .85f)) : connectorColor;
+                    DrawMetaTreeConnector(GetMetaTreeNodeCenter(metaTreeNodes[neighbor], canvasSize), GetMetaTreeNodeCenter(node, canvasSize), gridColor);
+                    if (HasGrowthInvestment(node.id) && HasGrowthInvestment(metaTreeNodes[neighbor].id))
+                    {
+                        int near = MetaTreeDepth(neighbor) < MetaTreeDepth(i) ? neighbor : i;
+                        int far = near == i ? neighbor : i;
+                        if (MetaTreeDepth(near) != MetaTreeDepth(far)) GrowthTreeEffects.DrawInwardFlow(
+                            new[] { GetMetaTreeNodeCenter(metaTreeNodes[near], canvasSize), GetMetaTreeNodeCenter(metaTreeNodes[far], canvasSize) },
+                            SymbolAccent, metaTreeZoom, Time.unscaledTime, i * .173f);
+                    }
+                }
             }
 
             for (int i = 0; i < metaTreeNodes.Length; i++)
@@ -190,6 +235,34 @@ namespace ProjectDM
             return GetMetaTreeNodeRect(node, canvasSize);
         }
 
+        internal static bool IsMetaTreeConnectionVisible(MetaTreeNodePresentation from, MetaTreeNodePresentation to)
+        {
+            return from.state != MetaTreeNodeState.Hidden && to.state != MetaTreeNodeState.Hidden;
+        }
+
+        internal bool HasGrowthInvestment(string id)
+        {
+            return tables.growthNodeLookup.TryGetValue(id, out var node) && save.progress != null &&
+                save.progress.Rank(node.growthId) + save.progress.PartialRank(node.growthId) > node.startRank;
+        }
+
+        internal int MetaTreeDepth(int index)
+        {
+            int depth = 0;
+            while (index > 0 && index < metaTreeNodes.Length && depth < metaTreeNodes.Length)
+            { index = metaTreeNodes[index].parentIndex; depth++; }
+            return depth;
+        }
+
+        private void DrawGrowthSymbol(Vector2 canvasSize)
+        {
+            if (Event.current?.type != EventType.Repaint) return;
+            Vector2 center = canvasSize * .5f + metaTreePan;
+            float completion = GrowthCompletion;
+            Texture bottle = potion.Render(SymbolCharacterId, SymbolAccent, Time.unscaledTime, completion);
+            GrowthTreeEffects.DrawSymbol(center, metaTreeZoom, SymbolCharacterId, SymbolAccent, Time.unscaledTime, bottle, completion);
+        }
+
         internal static void DrawMetaTreeConnector(Vector2 from, Vector2 to, Color color)
         {
             Vector2 direction = to - from;
@@ -207,14 +280,13 @@ namespace ProjectDM
 
         internal void DrawMetaTreeNode(int index, MetaTreeNodePresentation node, Vector2 canvasSize)
         {
-            Rect nodeRect = GetMetaTreeNodeRect(node, canvasSize);
             if (node.state == MetaTreeNodeState.Hidden)
             {
-                // Preserve the map silhouette without exposing artwork, names, ranks or pointer events.
-                UiGraphics.DrawSolidRect(nodeRect, ThemeTint(new Color(.035f, .023f, .017f, 1f)));
-                UiGraphics.DrawOutline(nodeRect, ThemeTint(new Color(.19f, .14f, .10f, .8f)), 1f);
+                // Undiscovered nodes leave no card, outline, text or pointer target behind.
                 return;
             }
+            if (node.id == "ROOT") { DrawGrowthSymbol(canvasSize); return; }
+            Rect nodeRect = GetMetaTreeNodeRect(node, canvasSize);
             Rect labelRect = GetMetaTreeNodeLabelRect(nodeRect);
             Rect hitRect = GetMetaTreeNodeHitRect(node, canvasSize);
             bool isSelected = selectedMetaTreeNode == index;
@@ -266,17 +338,14 @@ namespace ProjectDM
             }
             float inset = nodeRect.width * .19f;
             UiGraphics.DrawResultSprite(new Rect(nodeRect.x + inset, nodeRect.y + inset * .4f, nodeRect.width - inset * 2,
-                nodeRect.height * .42f), isGoal ? GoalIcon(goal) : art.PrototypeIcon(node.id == "ROOT" ? "bolt" : tables.NodeGrowthRow(node.id).icon));
-            if (node.id == "ROOT" && nodeRect.width >= 36)
-                GUI.Label(new Rect(nodeRect.x, nodeRect.yMax - 18f, nodeRect.width, 12f), "1/1",
-                    new GUIStyle(title) { fontSize = 9, wordWrap = false });
+                nodeRect.height * .42f), isGoal ? GoalIcon(goal) : art.PrototypeIcon(tables.NodeGrowthRow(node.id).icon));
             if (isGoal)
             {
                 if (nodeRect.width >= 36)
                     GUI.Label(new Rect(nodeRect.x, nodeRect.yMax - 18f, nodeRect.width, 12f), goal.kind == "stage" ? $"STAGE {goal.stage}" : "BOSS",
                         new GUIStyle(title) { fontSize = 9, wordWrap = false });
             }
-            else if (node.id != "ROOT")
+            else
             {
                 if (nodeRect.width >= 36)
                     GUI.Label(new Rect(nodeRect.x, nodeRect.yMax - 18f, nodeRect.width, 12f), progression.GrowthNodeRankLabel(node.id),
@@ -289,7 +358,7 @@ namespace ProjectDM
                     UiGraphics.DrawSolidRect(new Rect(nodeRect.x + padding + slot * (segmentWidth + gap), nodeRect.yMax - 4, segmentWidth, 2),
                         ThemeTint(slot < filled ? new Color(1f, .8f, .28f) : new Color(.29f, .23f, .16f)));
             }
-            if (metaTreeZoom >= .4f || node.id == "ROOT" || (isGoal && metaTreeZoom >= .2f)) GUI.Label(labelRect, node.title, title);
+            if (metaTreeZoom >= .4f || (isGoal && metaTreeZoom >= .2f)) GUI.Label(labelRect, node.title, title);
 
             if (!IsPrototypeGraphOverlay(Event.current.mousePosition) && GUI.Button(hitRect, GUIContent.none, GUIStyle.none))
             {
@@ -309,11 +378,30 @@ namespace ProjectDM
         internal Rect GrowthDetailsRect => GetGrowthDetailsRect(new Vector2(Screen.width, Screen.height));
         internal Rect GrowthNavigationRect => GetGrowthNavigationRect(new Vector2(Screen.width, Screen.height), run.runEnded);
 
-        internal void FitPrototypeGraph(Vector2 canvasSize)
+        internal void FitPrototypeGraph(Vector2 canvasSize, bool overview = false)
         {
             metaTreeZoom = PrototypeRules.GraphFitZoom(tables.graphLayoutNodes, canvasSize.x, canvasSize.y);
             metaTreePan = Vector2.zero;
             Rect[] overlays = GetGrowthOverlayRects(canvasSize, run.runEnded);
+            if (tables.growthTable.authoredLayout)
+            {
+                // Overview fits the whole map; opening the tree focuses on ROOT and nearby nodes.
+                float startY = Mathf.Max(overlays[1].yMax, overlays[5].yMax) + 24;
+                Rect free = Rect.MinMaxRect(Mathf.Min(overlays[2].xMax + 20, canvasSize.x * .5f), startY, canvasSize.x - 24, overlays[3].yMin - 16);
+                Vector2 min = Vector2.zero, max = Vector2.zero;
+                foreach (var node in tables.graphLayoutNodes)
+                { min = Vector2.Min(min, new Vector2(node.x, node.y)); max = Vector2.Max(max, new Vector2(node.x, node.y)); }
+                metaTreeZoom = Mathf.Clamp(Mathf.Min(Mathf.Max(1, free.width - 100) / Mathf.Max(1, max.x - min.x),
+                    Mathf.Max(1, free.height - 110) / Mathf.Max(1, max.y - min.y)), .04f, 1.05f);
+                metaTreePan = free.center - canvasSize * .5f - (min + max) * .5f * metaTreeZoom;
+                if (!overview)
+                {
+                    float closeZoom = Mathf.Clamp(Mathf.Min(free.width / 1100f, free.height / 700f), .4f, .75f);
+                    metaTreeZoom = Mathf.Max(metaTreeZoom, closeZoom);
+                    metaTreePan = free.center - canvasSize * .5f;
+                }
+                prototypeGraphCanvasSize = canvasSize; prototypeGraphViewInitialized = true; return;
+            }
             bool obscured = false;
             foreach (MetaTreeNodePresentation node in metaTreeNodes)
             {
@@ -346,7 +434,7 @@ namespace ProjectDM
 
         internal void DrawPrototypeGraphOverview()
         {
-            if (GUI.Button(GrowthOverviewRect, "전체 보기")) FitPrototypeGraph(new Vector2(Screen.width, Screen.height));
+            if (GUI.Button(GrowthOverviewRect, "전체 보기")) FitPrototypeGraph(new Vector2(Screen.width, Screen.height), true);
         }
 
         private static Rect StageSelectionRect => new Rect(142, 22, 240, 30);
@@ -459,7 +547,7 @@ namespace ProjectDM
                 MetaTreeNodeState state = !revealed ? MetaTreeNodeState.Hidden : completed ? MetaTreeNodeState.Completed : locked ? MetaTreeNodeState.Locked : MetaTreeNodeState.Reachable;
                 int parent = 0;
                 for (int j = 0; j < tables.growthTable.nodes.Length; j++)
-                    if (tables.growthTable.nodes[j].id == node.parent) parent = j + 1;
+                    if (tables.growthTable.nodes[j].id == node.VisualParent) parent = j + 1;
                 metaTreeNodes[i + 1] = new MetaTreeNodePresentation(node.id, revealed ? node.name : "", revealed ? row.description : "",
                     new Vector2(tables.graphLayoutNodes[i].x, tables.graphLayoutNodes[i].y), parent, state, ThemeTint(new Color(.96f, .66f, .19f)));
             }
@@ -472,6 +560,7 @@ namespace ProjectDM
                     new Vector2(goal.x, goal.y), i == 0 ? 0 : index - 1,
                     i == 0 ? MetaTreeNodeState.Completed : MetaTreeNodeState.Locked, new Color(.59f, .78f, .86f));
             }
+            if (selectedMetaTreeNode == 0) selectedMetaTreeNode = -1;
             if (selectedMetaTreeNode >= 0 && selectedMetaTreeNode < metaTreeNodes.Length &&
                 metaTreeNodes[selectedMetaTreeNode].state == MetaTreeNodeState.Hidden) selectedMetaTreeNode = -1;
         }
@@ -489,17 +578,24 @@ namespace ProjectDM
 
         internal string GrowthAmountText(PrototypeGrowth row, int rank, double partial = 0)
         {
-            if (row.unit == "해금") return rank > 0 ? "해금됨 (런 레벨업에서 획득)" : "미해금";
+            if (row.unit == "해금") return rank > 0 ? (row.id.StartsWith("magic.") ? "해금됨 · 다음 런 자동 사용" : "해금됨 (런 레벨업에서 획득)") : "미해금";
             float amount = (float)PrototypeRules.Amount(tables.balance, row, rank, partial);
-            if (row.id.StartsWith("magic.")) return row.unit == "%" || row.unit == "%p" ? $"누적 +{amount * 100:0.##}{row.unit}" : $"누적 +{amount:0.##}{row.unit}";
+            if (row.id.StartsWith("magic.")) return row.unit == "해금" ? (amount >= 1 ? "해금됨 · 다음 런 자동 사용" : "미해금") :
+                row.unit == "%" || row.unit == "%p" ? $"누적 +{amount * 100:0.##}{row.unit}" : $"누적 +{amount:0.##}{row.unit}";
             switch (row.id)
             {
-                case "health": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##} HP";
+                // Keep the former health ID so existing purchases now grant the same amount of mana.
+                case "health": return $"최대 마나 +{amount:0.##} MP";
                 case "movement": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##} / +{amount * 100:0.##}%";
                 case "criticalChance": return $"{PlayerStats.Calculate(tables.balance, row.id, amount) * 100:0.##}%";
                 case "criticalDamage": return $"기본 피해의 {PlayerStats.Calculate(tables.balance, row.id, amount) * 100:0.##}%";
                 case "invulnerability": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##}초";
                 case "magnet": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##}유닛";
+                case "magnetDropChance": return $"몬스터 처치 시 {Mathf.Clamp01(amount)*100:0.##}%";
+                case "luck":
+                    float luck = PlayerStats.Calculate(tables.balance, row.id, amount);
+                    var chances = UpgradeGradeRules.ForLuck(luck);
+                    return $"행운 {luck:0.##} · 금 {chances.gold * 100:0.#}% / 은 {chances.silver * 100:0.#}% / 동 {chances.bronze * 100:0.#}%";
             }
             if (row.id == "extension") return $"{Mathf.Clamp01(tables.balance.ResolvedManaAbsorbChance + amount) * 100:0.##}% / +{tables.balance.ResolvedManaAbsorbAmount:0.##} MP";
             if (LootGradeRules.CurrencyGrowthGrade(row.id) > 0) return $"+{Mathf.Clamp01(amount) * 100:0.##}%p / 낮은 재화 확률에서 전환";
@@ -509,7 +605,12 @@ namespace ProjectDM
                 string skillId = row.id.Substring(0, row.id.Length - "Chance".Length);
                 return $"{Mathf.Clamp01(tables.SkillRow(skillId).chance + amount) * 100:0.##}%";
             }
-            if (row.id == "time") return $"{Mathf.Max(1, (settings.useTableStartingMana ? tables.balance.ResolvedInitialMana : settings.startingMana) + amount):0.##} MP";
+            if (row.id == "time")
+            {
+                float capacityBonus = tables.growthLookup.TryGetValue("health", out var capacity)
+                    ? (float)PrototypeRules.Amount(tables.balance, capacity, save.progress.Rank("health"), save.progress.PartialRank("health")) : 0;
+                return $"{Mathf.Max(1, (settings.useTableStartingMana ? tables.balance.ResolvedInitialMana : settings.startingMana) + amount + capacityBonus):0.##} MP";
+            }
             if (row.unit == "%" || row.unit == "%p") return $"+{amount * 100:0.##}{row.unit}";
             return $"+{amount:0.##}{row.unit}";
         }
@@ -541,19 +642,11 @@ namespace ProjectDM
             string mode = save.sandboxThisSession ? "  [실험: 저장 안 됨]" : "";
             bool goalSelected = selectedMetaTreeNode > 0 && selectedMetaTreeNode < metaTreeNodes.Length && tables.goalNodeLookup.ContainsKey(metaTreeNodes[selectedMetaTreeNode].id);
             GUI.Label(new Rect(38, panel.y + 10, width - 30, 25), $"{(goalSelected ? "목표 정보" : "성장 정보")}{mode}", heading);
-            if (selectedMetaTreeNode < 0 || selectedMetaTreeNode >= metaTreeNodes.Length ||
+            if (selectedMetaTreeNode <= 0 || selectedMetaTreeNode >= metaTreeNodes.Length ||
                 metaTreeNodes[selectedMetaTreeNode].state == MetaTreeNodeState.Hidden)
             {
                 GUI.Label(new Rect(38, panel.y + 43, width - 30, 88), "노드에 마우스를 올려 설명을 확인하고,\n클릭한 뒤 구매를 눌러 성장하세요.\n휠: 확대/축소 · 가운데 버튼: 이동\n구매한 성장은 다음 런부터 적용됩니다.", body);
                 DrawPrototypeStageProgress(new Rect(38, panel.y + 139, width - 30, 42), body);
-                return;
-            }
-            if (selectedMetaTreeNode == 0)
-            {
-                MetaTreeNodePresentation root = metaTreeNodes[0];
-                GUI.Label(new Rect(38, panel.y + 37, width - 30, 23), root.title, heading);
-                GUI.Label(new Rect(38, panel.y + 62, width - 30, 78), root.subtitle, body);
-                GUI.Label(new Rect(38, panel.y + 142, width - 30, 20), "해금 완료 · 기본 자동 공격 사용 가능", body);
                 return;
             }
             if (tables.goalNodeLookup.TryGetValue(metaTreeNodes[selectedMetaTreeNode].id, out PrototypeGoalNode goal))
@@ -599,6 +692,7 @@ namespace ProjectDM
             if (hoveredMetaTreeNode < 0 || hoveredMetaTreeNode >= metaTreeNodes.Length || Event.current == null) return;
             MetaTreeNodePresentation node = metaTreeNodes[hoveredMetaTreeNode];
             if (node.state == MetaTreeNodeState.Hidden) return;
+            if (node.id == "ROOT") return;
             float width = Mathf.Min(330f, Screen.width - 36f), height = 158;
             Vector2 pointer = Event.current.mousePosition;
             float x = pointer.x + 20, y = pointer.y + 18;
@@ -610,12 +704,6 @@ namespace ProjectDM
             GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = ThemeTint(new Color(.92f, .78f, .56f)) } };
             GUI.Label(new Rect(rect.x + 16, rect.y + 10, width - 32, 24), node.title,
                 new GUIStyle(body) { fontSize = 17, fontStyle = FontStyle.Bold });
-            if (node.id == "ROOT")
-            {
-                GUI.Label(new Rect(rect.x + 16, rect.y + 42, width - 32, 70), node.subtitle, body);
-                GUI.Label(new Rect(rect.x + 16, rect.y + 113, width - 32, 35), "해금 완료 · 기본 자동 공격 사용 가능", body);
-                return;
-            }
             if (tables.goalNodeLookup.TryGetValue(node.id, out PrototypeGoalNode goal))
             {
                 GUI.Label(new Rect(rect.x + 16, rect.y + 40, width - 32, 76), GoalDescription(goal), body);

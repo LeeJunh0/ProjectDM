@@ -16,7 +16,7 @@ namespace ProjectDM
         private readonly List<Enemy> targets = new();
         private readonly List<Burn> burns = new();
         internal readonly FrostOrbitSystem frost;
-        private sealed class Burn { internal Enemy enemy; internal float remaining, damage, accumulated; }
+        private sealed class Burn { internal Enemy enemy; internal Vector3 position; internal float remaining, damage, accumulated; }
 
         internal CharacterMagicSystem(CharacterSession session, EnemySystem enemies, PrototypeSkillVisuals visuals,
             System.Func<float> damage, System.Func<string, float> strength, System.Action<Enemy, float> applyHit)
@@ -43,6 +43,13 @@ namespace ProjectDM
                 visited.Add(target); visuals.Link(origin, end);
                 float amount = damage() * (hit == 0 ? 1 : .5f);
                 applyHit(target, amount);
+                if (hit == 0 && strength("fork") >= 1)
+                {
+                    targets.Clear();
+                    foreach (var enemy in enemies.enemies)
+                        if (EnemySystem.IsLive(enemy) && !visited.Contains(enemy) && (enemy.transform.position-end).sqrMagnitude <= range*range) targets.Add(enemy);
+                    for (int j=0;j<Mathf.Min(Mathf.FloorToInt(strength("fork")),targets.Count);j++) { visited.Add(targets[j]); visuals.Link(end,targets[j].transform.position);applyHit(targets[j],amount*.5f); }
+                }
                 float echo = Mathf.Clamp01(strength("echo"));
                 if (EnemySystem.IsLive(target) && echo > 0 && Random.value < echo)
                 { visuals.Link(origin, end); applyHit(target, amount * .5f); }
@@ -73,7 +80,7 @@ namespace ProjectDM
                 if (!EnemySystem.IsLive(enemy) || burn <= 0) continue;
                 Burn existing = burns.Find(b => b.enemy == enemy);
                 if (existing == null) { existing = new Burn { enemy = enemy }; burns.Add(existing); }
-                existing.remaining = 2; existing.damage = damage() * burn;
+                existing.position=enemy.transform.position;existing.remaining = 2; enemy.burnStacks = Mathf.Min(5, enemy.burnStacks + 1); existing.damage = damage() * burn * enemy.burnStacks;
             }
         }
 
@@ -87,15 +94,30 @@ namespace ProjectDM
             for (int i = burns.Count - 1; i >= 0; i--)
             {
                 Burn burn = burns[i];
-                if (!EnemySystem.IsLive(burn.enemy)) { burns.RemoveAt(i); continue; }
+                if (!EnemySystem.IsLive(burn.enemy))
+                {
+                    if (strength("spread") > 0 && burn.enemy.transform != null)
+                    {
+                        Vector3 center=burn.position; int count=0;
+                        // Newly spread burns are staged after this pass; no recursive death propagation in one tick.
+                        foreach (var enemy in enemies.enemies)
+                            if (EnemySystem.IsLive(enemy) && enemy.burnStacks == 0 && (enemy.transform.position-center).sqrMagnitude < 6.25f)
+                            { enemy.burnStacks=1; spreadBurns.Add(new Burn{enemy=enemy,position=enemy.transform.position,remaining=2,damage=burn.damage*.5f});if(++count>=Mathf.FloorToInt(strength("spread")))break; }
+                    }
+                    burn.enemy.burnStacks=0; burns.RemoveAt(i); continue;
+                }
+                burn.position=burn.enemy.transform.position;
                 float step = Mathf.Min(dt, burn.remaining); burn.remaining -= step;
                 burn.accumulated += step;
                 // DOT is not a new cast, never pays MP, crits, or recursively adds burns.
                 if (burn.accumulated >= .5f || burn.remaining <= 0)
                 { enemies.DamageElementalEnemy(burn.enemy, burn.damage * burn.accumulated, CombatDamageKind.Attack, CombatDamageElement.Flame); burn.accumulated = 0; }
-                if (burn.remaining <= 0) burns.RemoveAt(i);
+                // A lethal final pulse stays until the next pass so purchased death-spread also runs on expiration.
+                if (burn.remaining <= 0 && EnemySystem.IsLive(burn.enemy)) {burn.enemy.burnStacks=0;burns.RemoveAt(i);}
             }
+            burns.AddRange(spreadBurns);spreadBurns.Clear();
         }
-        internal void Reset() { burns.Clear(); visited.Clear(); targets.Clear(); frost.Reset(); }
+        private readonly List<Burn> spreadBurns = new();
+        internal void Reset() { foreach(var burn in burns)burn.enemy.burnStacks=0;burns.Clear();spreadBurns.Clear(); visited.Clear(); targets.Clear(); frost.Reset(); }
     }
 }

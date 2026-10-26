@@ -18,6 +18,7 @@ namespace ProjectDM
         private readonly Func<float> mainDamage;
         private readonly PlayerStats playerStats;
         private readonly CharacterMagicSystem personalMagic;
+        internal readonly CharacterArsenalSystem arsenal;
 
         internal SkillSystem(GameTables tables, ProgressionService progression, WorldArtAssets art, RunController run, EnemySystem enemiesSystem, PrototypeSkillVisuals skillVisuals, Func<bool> criticalRoll, Func<float> mainDamage, PlayerStats playerStats)
         {
@@ -31,6 +32,7 @@ namespace ProjectDM
             this.mainDamage = mainDamage;
             this.playerStats = playerStats;
             personalMagic = new CharacterMagicSystem(run.characters, enemiesSystem, skillVisuals, mainDamage, PersonalAmount, ApplyPersonalHit);
+            arsenal = new CharacterArsenalSystem(run.characters, enemiesSystem, skillVisuals, mainDamage, PersonalAmount, IsSkillUnlocked, ApplyPersonalHit);
         }
 
         internal readonly Dictionary<string, int> runSkillRanks = new();
@@ -51,11 +53,17 @@ namespace ProjectDM
 
         internal int RunRank(string id) => runSkillRanks.TryGetValue(id, out int value) ? value : 0;
         internal CharacterDefinition Character => run.characters?.Current;
+        internal bool IsSkillUnlocked(string id) => Character?.skills != null &&
+            (id == Character.skills[0].id || progression.PermanentAmount("magic." + Character.id + "." + id + "Unlock") >= 1);
+        internal void PaidCast(Transform caster) => arsenal.PaidCast(caster);
+        internal void SplitProjectileHit(Enemy enemy, float power) => arsenal.Split(enemy.transform.position, power, enemy);
         internal float PersonalAmount(string id)
         {
             if (Character == null) return 0;
             CharacterUpgrade row = System.Array.Find(Character.upgrades, u => u.id == id);
-            return row == null ? 0 : progression.PermanentAmount(row.Key(Character.id)) + RunRank(row.Key(Character.id)) * row.step;
+            if(row == null)return 0;
+            float value=progression.PermanentAmount(row.Key(Character.id)) + RunRank(row.Key(Character.id)) * row.step;
+            return row.effectiveCap>0?Mathf.Min(value,row.effectiveCap):value;
         }
         internal FrostOrbitSystem Frost => personalMagic.frost;
         internal void CastPersonalMagic(Vector3 origin, Enemy target, Transform caster) => personalMagic.Cast(origin, target, caster);
@@ -154,10 +162,11 @@ namespace ProjectDM
             foreach (Enemy enemy in damageTargets) enemiesSystem.DamagePrototypeEnemy(enemy, damage);
         }
 
-        internal void UpdatePrototypeEffects(float dt)
+        internal void UpdatePrototypeEffects(float dt, Transform caster = null)
         {
             skillVisuals.Tick(dt);
             personalMagic.Tick(dt);
+            arsenal.Tick(dt, caster);
             for (int i = meteors.Count - 1; i >= 0; i--)
             {
                 PendingMeteor meteor = meteors[i];
@@ -171,6 +180,7 @@ namespace ProjectDM
         internal void Reset()
         {
             personalMagic.Reset();
+            arsenal.Reset();
             runSkillRanks.Clear(); meteors.Clear(); forceAttackEffects = false;
             skillVisuals.Clear();
             skillVisuals.Configure(art.boltSprite ?? art.slimeSprite, art.gemSprite ?? art.slimeSprite, art.skillVisualAssets);

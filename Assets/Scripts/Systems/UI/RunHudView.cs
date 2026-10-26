@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace ProjectDM
 {
-    /// <summary>Displays display-only mana, current statistics, health and navigation controls.</summary>
+    /// <summary>Displays mana, current statistics and navigation controls.</summary>
     internal sealed class RunHudView
     {
         private readonly GameSettings settings;
@@ -15,11 +15,10 @@ namespace ProjectDM
         private readonly EnemySystem enemiesSystem;
         private readonly CombatStats stats;
         private readonly LevelUpController selection;
-        private readonly PlayerCombatSystem playerCombat;
         private readonly UiGraphics graphics;
         private readonly ManaBarRenderer manaBar;
 
-        internal RunHudView(GameSettings settings, SaveService save, GameTables tables, RunController run, EnemySystem enemiesSystem, CombatStats stats, LevelUpController selection, PlayerCombatSystem playerCombat, UiGraphics graphics, ManaBarRenderer manaBar)
+        internal RunHudView(GameSettings settings, SaveService save, GameTables tables, RunController run, EnemySystem enemiesSystem, CombatStats stats, LevelUpController selection, UiGraphics graphics, ManaBarRenderer manaBar)
         {
             this.settings = settings;
             this.save = save;
@@ -28,7 +27,6 @@ namespace ProjectDM
             this.enemiesSystem = enemiesSystem;
             this.stats = stats;
             this.selection = selection;
-            this.playerCombat = playerCombat;
             this.graphics = graphics;
             this.manaBar = manaBar;
             timerTrackTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_TimerTrack_v1");
@@ -70,12 +68,14 @@ namespace ProjectDM
         internal void DrawManaBar()
         {
             Rect area = ManaHudRect(new Vector2(Screen.width, Screen.height));
+            area.position += manaBar.Hit.Offset;
             float width = area.width;
             float y = area.y;
             float x = area.x;
             float remaining = run.mana.Current;
             float fraction = run.mana.Fraction;
-            Color accent = Color.Lerp(manaBar.CurrentColor, Color.white, .35f);
+            float impact = manaBar.Hit.Intensity;
+            Color accent = Color.Lerp(Color.Lerp(manaBar.CurrentColor, Color.white, .35f), new Color(.6f, .92f, 1), impact);
             GUI.Label(new Rect(x, y - 3f, 34f, 30f), "MP", new GUIStyle(graphics.statStyle)
                 { fontSize = 18, fontStyle = FontStyle.Bold, normal = { textColor = accent } });
             Rect track = new Rect(x + 36f, y, Mathf.Max(24, width - 174f), area.height);
@@ -99,6 +99,14 @@ namespace ProjectDM
             GUI.enabled = false;
             GUI.HorizontalSlider(track, fraction, 0f, 1f, timerTrackStyle, GUIStyle.none);
             GUI.enabled = wasEnabled;
+            if (impact > .002f)
+            {
+                Color shield = new Color(.38f, .82f, 1, impact * .85f);
+                UiGraphics.DrawSolidRect(new Rect(track.x, track.y, track.width, 2), shield);
+                UiGraphics.DrawSolidRect(new Rect(track.x, track.yMax - 2, track.width, 2), shield);
+                UiGraphics.DrawSolidRect(new Rect(track.x, track.y, 2, track.height), shield);
+                UiGraphics.DrawSolidRect(new Rect(track.xMax - 2, track.y, 2, track.height), shield);
+            }
 
             GUIStyle timeStyle = new GUIStyle(graphics.statStyle)
             {
@@ -113,7 +121,9 @@ namespace ProjectDM
             GUI.Label(new Rect(track.xMax + 10f, y - 3f, 126f, 30f), text, timeStyle);
         }
 
-        // Bottom-left above health. Even at small sizes its bottom stays above right-side run information.
+        internal void DrawManaShieldHit() => manaBar.Hit.DrawShield(new Rect(0, 0, Screen.width, Screen.height));
+
+        // Bottom-left, above the run information even at small sizes.
         internal static Rect ManaHudRect(Vector2 screen) => new(22, Mathf.Max(110, screen.y - 118),
             Mathf.Min(480, Mathf.Max(200, screen.x - 44)), 32);
 
@@ -152,14 +162,5 @@ namespace ProjectDM
                 new Rect(TimerTrackUv.xMax - uvCapWidth, TimerTrackUv.y, uvCapWidth, TimerTrackUv.height), Color.white);
         }
 
-        internal void DrawPlayerHealth()
-        {
-            if (!settings.enablePlayerContactDamage) return;
-            Rect bar = new Rect(22, Screen.height - 42, Mathf.Min(200, Screen.width - 44), 10);
-            UiGraphics.DrawSolidRect(bar, new Color(.06f, .03f, .04f, .9f));
-            UiGraphics.DrawSolidRect(new Rect(bar.x + 1, bar.y + 1, (bar.width - 2) * Mathf.Clamp01(playerCombat.playerHealth / playerCombat.MaxHealth), 8), new Color(.85f, .25f, .22f));
-            GUI.Label(new Rect(bar.x, bar.y - 24, bar.width, 22), $"체력 {playerCombat.playerHealth:0.##}/{playerCombat.MaxHealth:0.##}",
-                new GUIStyle(graphics.statStyle) { fontSize = 14, normal = { textColor = new Color(1, .78f, .74f) } });
-        }
     }
 }

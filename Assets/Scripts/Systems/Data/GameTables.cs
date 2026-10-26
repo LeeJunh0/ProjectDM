@@ -43,7 +43,7 @@ namespace ProjectDM
 
         internal PrototypeSkill SkillRow(string id) => skillLookup[id];
 
-        internal static GameTables LoadResources(GameSettings settings)
+        internal static GameTables LoadResources(GameSettings settings, bool loadAuthoredGrowth = true)
         {
             if (settings.prototypeBalanceTable == null) settings.prototypeBalanceTable = Resources.Load<TextAsset>("ProjectDM/Data/PrototypeBalance");
             if (settings.prototypeSkillTable == null) settings.prototypeSkillTable = Resources.Load<TextAsset>("ProjectDM/Data/PrototypeSkills");
@@ -59,6 +59,8 @@ namespace ProjectDM
             TextAsset characters = Resources.Load<TextAsset>("ProjectDM/Data/PrototypeCharacters");
             if (characters == null) throw new InvalidOperationException("캐릭터 테이블을 찾을 수 없습니다.");
             tables.characters = new CharacterCatalog(tables, JsonUtility.FromJson<CharacterTable>(characters.text));
+            var authored = loadAuthoredGrowth ? Resources.Load<GrowthTreeSettings>(GrowthTreeSettings.ResourcePath) : null;
+            if (authored != null) authored.Apply(tables);
             return tables;
         }
     }

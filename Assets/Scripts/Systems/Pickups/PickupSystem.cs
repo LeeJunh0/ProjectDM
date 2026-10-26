@@ -36,14 +36,46 @@ namespace ProjectDM
         }
 
         internal readonly List<Pickup> pickups = new();
-
+        readonly double[] currencyBonuses = new double[5];
+        SpriteQuadBatch renderBatch;
+        readonly Dictionary<GameObject,FrameSource> frames = new();
+        int nextSerial, vacuumThrough;
+        int visibleCount;
+        Sprite moteSprite;
+        sealed class FrameSource
+        {
+            internal GameObject sample;
+            internal SpriteRenderer renderer;
+            internal AnimationClip clip;
+            internal Sprite sprite;
+            internal PickupAmbientVfx ambient;
+        }
+        internal int VisiblePickupCount => visibleCount;
+        FrameSource Frames(GameObject prefab)
+        {
+            if(frames.TryGetValue(prefab,out var result))return result;
+            var source=prefab.GetComponentInChildren<SpriteRenderer>(true);
+            var animator=prefab.GetComponentInChildren<Animator>(true);
+            result=new FrameSource{sprite=source!=null?source.sprite:null,ambient=prefab.GetComponentInChildren<PickupAmbientVfx>(true)};
+            if(animator!=null && animator.runtimeAnimatorController!=null && animator.runtimeAnimatorController.animationClips.Length>0)
+            {
+                result.sample=UnityEngine.Object.Instantiate(prefab);result.sample.name="드랍 애니메이션 공유 샘플";result.sample.hideFlags=HideFlags.HideAndDontSave;result.sample.SetActive(false);
+                result.renderer=result.sample.GetComponentInChildren<SpriteRenderer>(true);
+                result.clip=animator.runtimeAnimatorController.animationClips[0];
+            }
+            frames.Add(prefab,result);return result;
+        }
         internal void CreatePickup(string name, Vector3 position, Sprite sprite, PickupKind kind, float amount, float scale, int grade = 1)
         {
             GameObject prefab = SelectPickupPrefab(kind, grade);
-            if (prefab == null)
+            if(prefab==null){Debug.LogWarning($"드랍 프리팹 누락: {kind}");return;}
+            if(kind!=PickupKind.Chest)
             {
-                Debug.LogWarning($"Project DM could not spawn {kind}: no pooled prefab is configured.");
-                return;
+                var frame=Frames(prefab);
+                float multiplier=kind==PickupKind.Experience?settings.experiencePickupScaleMultiplier:kind==PickupKind.Currency?settings.currencyPickupScaleMultiplier:settings.manaPickupScaleMultiplier;
+                var item=new Pickup{batched=true,kind=kind,grade=grade,amount=amount,baseScale=scale*multiplier,serial=++nextSerial,bornAt=Time.time,
+                    batchSprite=kind==PickupKind.Magnet?Resources.Load<Sprite>("ProjectDM/Skills/Magnet"):frame.sprite ?? sprite,floatPhase=Random.value};
+                item.Position=position;item.VisualScale=item.baseScale;BeginPickupFountain(item,position);pickups.Add(item);return;
             }
             GameObject pickupObject = objectPool.Rent(prefab);
             pickupObject.name = name;
@@ -53,10 +85,12 @@ namespace ProjectDM
                 PickupKind.Experience => settings.experiencePickupScaleMultiplier,
                 PickupKind.Currency => settings.currencyPickupScaleMultiplier,
                 PickupKind.Mana => settings.manaPickupScaleMultiplier,
+                PickupKind.Magnet => settings.manaPickupScaleMultiplier,
                 _ => settings.chestPickupScaleMultiplier
             };
             pickupObject.transform.localScale = Vector3.one * (scale * pickupScaleMultiplier);
             SpriteRenderer renderer = pickupObject.GetComponentInChildren<SpriteRenderer>();
+            if(kind==PickupKind.Magnet || kind==PickupKind.Mana){var selected=kind==PickupKind.Magnet?Resources.Load<Sprite>("ProjectDM/Skills/Magnet"):sprite;if(selected!=null)renderer.sprite=selected;renderer.color=Color.white;}
             renderer.sortingOrder = 1;
             PickupFloatVisual floatVisual = pickupObject.GetComponentInChildren<PickupFloatVisual>();
             if (floatVisual != null)
@@ -68,8 +102,10 @@ namespace ProjectDM
                 floatVisual.Configure(floatCurve, settings.collectibleFloatYAmplitude, settings.collectibleFloatLoopDuration, Random.value);
             }
             Animator animator = pickupObject.GetComponentInChildren<Animator>();
-            if (animator != null && animator.runtimeAnimatorController != null)
+            if(kind==PickupKind.Magnet && animator!=null)animator.enabled=false;
+            else if (animator != null && animator.runtimeAnimatorController != null)
             {
+                animator.enabled=true;
                 animator.applyRootMotion = false;
                 animator.Rebind();
                 animator.Play("Loop", 0, 0f);
@@ -86,6 +122,7 @@ namespace ProjectDM
             Pickup pickup = new()
             {
                 transform = pickupObject.transform,
+                serial = ++nextSerial,
                 kind = kind,
                 grade = kind == PickupKind.Chest ? 0 : grade,
                 amount = amount,
@@ -94,7 +131,6 @@ namespace ProjectDM
             BeginPickupFountain(pickup, position);
             pickups.Add(pickup);
         }
-
         internal void BeginPickupFountain(Pickup pickup, Vector3 origin)
         {
             if (pickup.kind == PickupKind.Chest)
@@ -115,12 +151,12 @@ namespace ProjectDM
             pickup.launchElapsed = 0f;
             pickup.launchDuration = Mathf.Max(.05f, settings.pickupFountainDuration * Random.Range(.82f, 1.12f));
             pickup.launchArcHeight = settings.pickupFountainArcHeight * Random.Range(.78f, 1.18f);
-            pickup.transform.localScale = Vector3.one * (pickup.baseScale * .7f);
+            pickup.VisualScale=pickup.baseScale*.7f;
         }
 
         internal GameObject SelectPickupPrefab(PickupKind kind, int grade = 1)
         {
-            if (kind == PickupKind.Mana) return art.runtimeAssets.ManaPickupPrefab;
+            if (kind == PickupKind.Mana || kind == PickupKind.Magnet) return art.runtimeAssets.ManaPickupPrefab;
             if (kind == PickupKind.Chest)
             {
                 return art.runtimeAssets.ChestPickupPrefab;
@@ -139,7 +175,7 @@ namespace ProjectDM
             for (int i = pickups.Count - 1; i >= 0; i--)
             {
                 Pickup pickup = pickups[i];
-                if (pickup.transform == null)
+                if (!pickup.batched && pickup.transform == null)
                 {
                     pickups.RemoveAt(i);
                     continue;
@@ -151,23 +187,25 @@ namespace ProjectDM
                     if (pickup.interactionRemaining <= 0f)
                     {
                         Collect(pickup);
-                        objectPool.Return(pickup.transform.gameObject);
+                        if(pickup.transform!=null)objectPool.Return(pickup.transform.gameObject);
                         pickups.RemoveAt(i);
                     }
                     continue;
                 }
 
+                if(pickup.serial>0 && pickup.serial<=vacuumThrough){pickup.vacuum=true;pickup.isLaunching=false;pickup.VisualScale=pickup.baseScale;}
                 if (pickup.isLaunching)
                 {
                     UpdatePickupFountain(pickup, dt);
                     continue;
                 }
 
-                float distance = Vector2.Distance(playerWorld.player.position, pickup.transform.position);
+                float distance = Vector2.Distance(playerWorld.player.position, pickup.Position);
                 float magnetRadius = playerStats.MagnetRadius;
-                if (distance < magnetRadius)
+                if (pickup.vacuum || (magnetRadius > 0 && distance < magnetRadius && pickup.kind != PickupKind.Magnet))
                 {
-                    pickup.transform.position = Vector3.MoveTowards(pickup.transform.position, playerWorld.player.position, (2.5f + (1 - distance / magnetRadius) * 12f) * dt);
+                    pickup.Position = Vector3.MoveTowards(pickup.Position, playerWorld.player.position,
+                        (pickup.vacuum ? 16f + Mathf.Min(distance,30) : 2.5f + (1 - distance / magnetRadius) * 12f) * dt);
                 }
 
                 if (distance < 0.28f)
@@ -179,10 +217,51 @@ namespace ProjectDM
                     }
 
                     Collect(pickup);
-                    objectPool.Return(pickup.transform.gameObject);
+                    if(pickup.transform!=null)objectPool.Return(pickup.transform.gameObject);
                     pickups.RemoveAt(i);
                 }
             }
+            DrawBatchedPickups();
+        }
+        void DrawBatchedPickups()
+        {
+            renderBatch ??= new SpriteQuadBatch("전체 드랍 일괄 그리기",1);renderBatch.Begin();visibleCount=0;
+            moteSprite ??= Sprite.Create(Texture2D.whiteTexture,new Rect(0,0,Texture2D.whiteTexture.width,Texture2D.whiteTexture.height),new Vector2(.5f,.5f),Texture2D.whiteTexture.width);
+            foreach(var frame in frames.Values)
+                if(frame.clip!=null && frame.sample!=null){frame.clip.SampleAnimation(frame.sample,Mathf.Repeat(Time.time,Mathf.Max(.01f,frame.clip.length)));frame.sprite=frame.renderer.sprite;}
+            foreach(var p in pickups)
+            {
+                if(!p.batched || p.removed)continue;
+                var source=Frames(SelectPickupPrefab(p.kind,p.grade));
+                Sprite sprite=p.kind==PickupKind.Magnet?p.batchSprite:source.sprite ?? p.batchSprite;
+                if(sprite==null)continue;
+                var curve=p.kind==PickupKind.Currency?settings.currencyPickupFloatYCurve:settings.experiencePickupFloatYCurve;
+                float phase=Mathf.Repeat(Time.time/Mathf.Max(.05f,settings.collectibleFloatLoopDuration)+p.floatPhase,1);
+                Vector3 point=p.Position+Vector3.up*(curve?.Evaluate(phase)??0)*settings.collectibleFloatYAmplitude;
+                renderBatch.Add(sprite,point,(Vector2)sprite.bounds.size*p.VisualScale,0,Color.white);
+                visibleCount++;
+                // Keep the per-drop rising motes, using the same mesh rather than thousands of particle components.
+                var ambient=source.ambient;
+                if(ambient!=null && ambient.emissionRate>0)
+                {
+                    float age=Time.time-p.bornAt-.18f,life=Mathf.Max(.1f,ambient.lifetime),height=sprite.bounds.size.y*p.VisualScale;
+                    int count=Mathf.Min(ambient.maximumParticles,Mathf.CeilToInt(ambient.emissionRate*life));
+                    for(int m=0;m<count;m++)
+                    {
+                        float offset=m/ambient.emissionRate;if(age<offset)continue;
+                        float motePhase=Mathf.Repeat((age-offset)/life+p.floatPhase,1);
+                        float spread=Mathf.Sin(p.serial*2.39996f+m*4.13f)*sprite.bounds.size.x*p.VisualScale*.35f;
+                        Color tint=ambient.tint;tint.a=ambient.opacity*Mathf.Sin(motePhase*Mathf.PI);
+                        Vector3 at=point+new Vector3(spread,(-.55f+motePhase*ambient.riseSpeed*life)*height);
+                        renderBatch.Add(moteSprite,at,Vector2.one*height*.075f*(.55f+Mathf.Sin(motePhase*Mathf.PI)*.45f),0,tint);
+                    }
+                }
+            }
+            renderBatch.End();
+        }
+        internal void Dispose()
+        {
+            renderBatch?.Dispose();foreach(var frame in frames.Values)if(frame.sample!=null)UnityEngine.Object.Destroy(frame.sample);frames.Clear();if(moteSprite!=null)UnityEngine.Object.Destroy(moteSprite);
         }
 
         internal void PlayChestInteraction(Pickup pickup)
@@ -207,6 +286,13 @@ namespace ProjectDM
         internal void Collect(Pickup pickup)
         {
             if (run.runEnded || run.mana.IsDepleted) return;
+            if(pickup.removed)return;
+            pickup.removed=true;
+            if(pickup.kind==PickupKind.Magnet)
+            {
+                vacuumThrough=nextSerial;
+                return;
+            }
             if (pickup.kind == PickupKind.Experience) { addExperience(pickup.amount); return; }
             if (pickup.kind == PickupKind.Mana)
             {
@@ -227,14 +313,14 @@ namespace ProjectDM
             float easedProgress = 1f - Mathf.Pow(1f - progress, 3f);
             Vector3 position = Vector3.LerpUnclamped(pickup.launchOrigin, pickup.launchDestination, easedProgress);
             position.y += 4f * pickup.launchArcHeight * progress * (1f - progress);
-            pickup.transform.position = position;
+            pickup.Position = position;
 
             float popScale = Mathf.Lerp(.7f, 1f, easedProgress) + Mathf.Sin(progress * Mathf.PI) * .08f;
-            pickup.transform.localScale = Vector3.one * (pickup.baseScale * popScale);
+            pickup.VisualScale=pickup.baseScale*popScale;
             if (progress >= 1f)
             {
-                pickup.transform.position = pickup.launchDestination;
-                pickup.transform.localScale = Vector3.one * pickup.baseScale;
+                pickup.Position = pickup.launchDestination;
+                pickup.VisualScale=pickup.baseScale;
                 pickup.isLaunching = false;
             }
         }
@@ -246,7 +332,6 @@ namespace ProjectDM
             int stage = PrototypeRules.Stage(tables.balance, save.progress);
             int xpGrade = LootGradeRules.ResolveGrade(tables.balance, row.experienceGrade, stage,
                 progression.PermanentAmount("experienceGradeChance"), Random.value);
-            double[] currencyBonuses = new double[5];
             for (int grade = 2; grade <= 5; grade++) currencyBonuses[grade - 1] = progression.PermanentAmount(LootGradeRules.CurrencyGrowthId(grade));
             int coinGrade = row.currencyChances == null
                 ? LootGradeRules.ResolveGrade(tables.balance, row.currencyGrade, stage, progression.PermanentAmount("currencyGradeChance"), Random.value)
@@ -258,6 +343,9 @@ namespace ProjectDM
             if (rewardMultiplier != 1) coins = PrototypeRules.StochasticCoins(coins * (double)rewardMultiplier, Random.value);
             CreatePickup($"{LootGradeRules.Name(tables.balance, xpGrade, false)} {xpGrade}등급 · {xp:0.##}", position, art.gemSprite, PickupKind.Experience, xp, .28f, xpGrade);
             if (coins > 0) CreatePickup($"{LootGradeRules.Name(tables.balance, coinGrade, true)} {coinGrade}등급 · {coins}", position, art.coinSprite, PickupKind.Currency, coins, .23f, coinGrade);
+            float magnetChance = Mathf.Clamp01(progression.PermanentAmount("magnetDropChance"));
+            if(magnetChance>0 && Random.value<magnetChance)
+                CreatePickup("자석 · 맵 전체 아이템 끌어오기",position,art.gemSprite,PickupKind.Magnet,1,.3f);
             if (guaranteedChest || Random.value < tables.balance.chestChance)
             {
                 int chest = PrototypeRules.StochasticCoins(tables.balance.chestCoins * (1.0 + progression.PermanentAmount("yield")) * rewardMultiplier, Random.value);
@@ -273,8 +361,9 @@ namespace ProjectDM
 
         internal void Reset()
         {
-            foreach (Pickup pickup in pickups) if (pickup.transform != null) objectPool.Return(pickup.transform.gameObject);
-            pickups.Clear();
+            foreach (Pickup pickup in pickups) if (pickup.transform != null) if(pickup.transform!=null)objectPool.Return(pickup.transform.gameObject);
+            pickups.Clear();renderBatch?.Clear();visibleCount=0;nextSerial=vacuumThrough=0;
         }
+
     }
 }

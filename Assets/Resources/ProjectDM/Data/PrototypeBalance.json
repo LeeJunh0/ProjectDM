@@ -24,12 +24,12 @@
   "refillSpawnMax": 8,
   "chestChance": 0.018,
   "chestCoins": 6,
-  "playerHealth": 100,
   "playerInvulnerability": 0.6,
+  "luck": 0,
   "playerContactRadius": 0.55,
   "criticalChance": 0.05,
   "criticalMultiplier": 2,
-  "pickupMagnetRadius": 2,
+  "pickupMagnetRadius": 0,
   "lootGrades": [
     {
       "grade": 1,
@@ -186,11 +186,11 @@
   ],
   "stages": [
     {
-      "initial": 12,
-      "target": 14,
-      "cap": 18,
-      "refillSeconds": 0.7,
-      "batch": 3,
+      "initial": 3,
+      "target": 5,
+      "cap": 8,
+      "refillSeconds": 1.8,
+      "batch": 1,
       "weights": [
         100,
         0,
@@ -200,11 +200,11 @@
       ]
     },
     {
-      "initial": 18,
-      "target": 22,
-      "cap": 28,
-      "refillSeconds": 0.55,
-      "batch": 4,
+      "initial": 4,
+      "target": 7,
+      "cap": 10,
+      "refillSeconds": 1.6,
+      "batch": 1,
       "weights": [
         70,
         30,
@@ -214,11 +214,11 @@
       ]
     },
     {
-      "initial": 24,
-      "target": 30,
-      "cap": 38,
-      "refillSeconds": 0.4,
-      "batch": 5,
+      "initial": 5,
+      "target": 9,
+      "cap": 14,
+      "refillSeconds": 1.4,
+      "batch": 2,
       "weights": [
         50,
         30,
@@ -228,11 +228,11 @@
       ]
     },
     {
-      "initial": 30,
-      "target": 38,
-      "cap": 48,
-      "refillSeconds": 0.3,
-      "batch": 6,
+      "initial": 6,
+      "target": 12,
+      "cap": 18,
+      "refillSeconds": 1.2,
+      "batch": 2,
       "weights": [
         40,
         25,
@@ -242,11 +242,11 @@
       ]
     },
     {
-      "initial": 36,
-      "target": 46,
-      "cap": 58,
-      "refillSeconds": 0.25,
-      "batch": 7,
+      "initial": 8,
+      "target": 16,
+      "cap": 24,
+      "refillSeconds": 1,
+      "batch": 3,
       "weights": [
         30,
         25,

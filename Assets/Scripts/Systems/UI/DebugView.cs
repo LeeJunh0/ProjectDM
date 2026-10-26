@@ -78,7 +78,7 @@ namespace ProjectDM
             if (GUI.Button(new Rect(panel.x + 10, panel.y + 127, 205, 28), $"스폰 단계 변경 · 현재 {enemiesSystem.SpawnStage + 1}"))
                 enemiesSystem.debugStageOverride = (enemiesSystem.SpawnStage + 1) % 5;
             if (GUI.Button(new Rect(panel.x + 10, panel.y + 162, 205, 28), "스테이지 보스 도달 미리보기")) boss.ArriveAtPrototypeBoss(true);
-            if (GUI.Button(new Rect(panel.x + 10, panel.y + 195, 205, 28), "플레이어 피격 테스트 (-10)")) playerCombat.ApplyPlayerDamage(10);
+            if (GUI.Button(new Rect(panel.x + 10, panel.y + 195, 205, 28), "피격 테스트 (-10 MP)")) playerCombat.ApplyPlayerDamage(10);
             combat.forceCriticalHits = GUI.Toggle(new Rect(panel.x + 10, panel.y + 229, 205, 24), combat.forceCriticalHits, "치명타 100% (이번 런)");
         }
     }

@@ -15,6 +15,7 @@ namespace ProjectDM
         private Color currentColor, colorFrom, colorTo;
         private float colorAge, animationTime, reaction, lastMana, lastAbsorbed, lastSpent;
         private bool initialized;
+        internal readonly ManaHitFeedback Hit = new();
 
         internal ManaBarRenderer(RunMana mana, ManaBarSettings settings)
         { this.mana = mana; this.settings = settings; Reset(); }
@@ -25,6 +26,8 @@ namespace ProjectDM
         internal ManaVisualState State => hasOverride ? stateOverride : settings != null ? settings.previewState : ManaVisualState.Normal;
 
         internal void SetState(ManaVisualState state) { hasOverride = true; stateOverride = state; }
+        internal void NotifyHit(float lostMana) => Hit.Notify(lostMana, mana.Maximum);
+        internal void TickHitFeedback(float unscaledDeltaTime) => Hit.Tick(unscaledDeltaTime);
 
         internal void Reset()
         {
@@ -33,6 +36,7 @@ namespace ProjectDM
             lastAbsorbed = mana.AbsorbedThisRun; lastSpent = mana.SpentThisRun;
             currentColor = colorFrom = colorTo = settings != null ? settings.StateColor(State) : new Color(.1f, .48f, 1);
             colorAge = 0;
+            Hit.Reset();
         }
 
         internal void Tick(float deltaTime)
@@ -74,6 +78,8 @@ namespace ProjectDM
             material.SetFloat("_FlowSpeed", settings.flowSpeed);
             material.SetFloat("_Glow", settings.glowStrength);
             material.SetFloat("_Reaction", reaction * settings.reactionStrength);
+            material.SetFloat("_HitImpact", Hit.Intensity);
+            material.SetFloat("_HitClock", Hit.Age);
             material.SetFloat("_LowPulse", mana.Fraction <= settings.lowManaThreshold ? settings.lowManaPulse : 0);
             material.SetVector("_Resolution", new Vector4(width, height, 0, 0));
             RenderTexture previous = RenderTexture.active;
@@ -93,6 +99,7 @@ namespace ProjectDM
         {
             if (target != null) target.Release();
             Release(target); Release(material); target = null; material = null;
+            Hit.Dispose();
         }
     }
 }
