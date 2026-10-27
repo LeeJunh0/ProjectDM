@@ -10,8 +10,9 @@ namespace ProjectDM
         public readonly string title;
         public readonly string description;
         public readonly Color accent;
+        public readonly string grade;
 
-        public RunUpgradePresentation(string upgrade, string icon, string category, string title, string description, Color accent)
+        public RunUpgradePresentation(string upgrade, string icon, string category, string title, string description, Color accent, string grade = "bronze")
         {
             this.upgrade = upgrade;
             this.icon = icon;
@@ -19,6 +20,7 @@ namespace ProjectDM
             this.title = title;
             this.description = description;
             this.accent = accent;
+            this.grade = grade;
         }
     }
 

@@ -192,6 +192,7 @@ namespace ProjectDM
         private ProjectDMAssetLoader assetLoader;
         private GameObjectPool objectPool;
         private bool isInitialized;
+        private SpriteRenderer sceneryPlayerRenderer;
         private string prototypeError;
         private Action onBossDue;
         private StageSession stages;
@@ -228,6 +229,7 @@ namespace ProjectDM
             settings.gameplayCamera = gameplayCamera;
             settings.fieldBounds = fieldBounds;
             settings.playerSpawnPoint = playerSpawnPoint;
+            settings.pickupCollectionRadius = PlayerSpawnPointMarker.SyncRange(playerSpawnPoint, isInitialized ? playerWorld.player : null, isInitialized ? playerStats.MagnetRangeBonus : 0f);
             settings.monsterSpawnArea = monsterSpawnArea;
             settings.playerMovementArea = playerMovementArea;
             settings.dungeonFloor = dungeonFloor;
@@ -363,8 +365,10 @@ namespace ProjectDM
             try { stages.LoadContent(); }
             catch (Exception exception) { prototypeError = exception.Message; yield break; }
             playerWorld.CreatePlayer();
+            sceneryPlayerRenderer = playerWorld.player.GetComponentInChildren<SpriteRenderer>();
             cameraSystem.SnapCameraToPlayer();
             run.BeginRun();
+            run.transition = new ScreenTransition();
             isInitialized = true;
         }
 
@@ -388,6 +392,12 @@ namespace ProjectDM
         {
             if (!isInitialized) return;
             SynchronizeSettings();
+            if (run.transition.Active)
+            {
+                run.transition.Tick(Time.unscaledDeltaTime);
+                if (!run.transition.Active) run.RefreshPauseState();
+                return;
+            }
             manaBar.TickHitFeedback(Time.unscaledDeltaTime);
             manaBar.Tick(run.runEnded || run.showMetaTree || selection.choosingUpgrade ? 0 : Time.deltaTime);
             save.FlushPrototypeProgressIfDue();
@@ -395,10 +405,10 @@ namespace ProjectDM
             if (Input.GetKeyDown(KeyCode.Tab)) run.ToggleMetaTree();
             if (run.showMetaTree)
             {
-                if (Input.GetKeyDown(KeyCode.Escape)) { run.showMetaTree = false; run.RefreshPauseState(); }
+                if (Input.GetKeyDown(KeyCode.Escape)) run.ToggleMetaTree();
                 return;
             }
-            if (run.runEnded) return;
+            if (run.runEnded || run.transition.Active) return;
             float dt = run.TickClock(Time.deltaTime);
             if (mana.IsDepleted) { run.CompleteIfDue(onBossDue); return; }
             playerWorld.MovePlayer(dt);
@@ -413,7 +423,7 @@ namespace ProjectDM
             presentation.Tick(dt);
             skills.UpdatePrototypeEffects(dt, playerWorld.player);
             playerCombat.UpdatePlayerContactDamage(dt);
-            if (run.runEnded) return;
+            if (run.runEnded || run.transition.Active) return;
             pickupsSystem.UpdatePickups(dt);
             run.CompleteIfDue(onBossDue);
         }
@@ -430,34 +440,52 @@ namespace ProjectDM
                 return;
             }
 
-            if (run.showMetaTree)
+            if (run.transition.Active && Event.current.type != EventType.Layout && Event.current.type != EventType.Repaint)
+                Event.current.Use();
+            try
             {
-                growthView.DrawMetaTree();
-                return;
-            }
+                if (run.showMetaTree)
+                {
+                    growthView.DrawMetaTree();
+                    return;
+                }
 
-            hud.DrawManaShieldHit();
-            if (run.runEnded)
-            {
+                hud.DrawManaShieldHit();
+                if (run.runEnded)
+                {
+                    hud.DrawElapsedTime();
+                    hud.DrawManaBar();
+                    if (boss.bossArrived && !boss.showBossStatistics) bossView.DrawPrototypeBossArrival();
+                    else results.DrawRunResults();
+                    return;
+                }
+
+                hud.DrawRunHudInformation();
                 hud.DrawElapsedTime();
                 hud.DrawManaBar();
-                if (boss.bossArrived && !boss.showBossStatistics) bossView.DrawPrototypeBossArrival();
-                else results.DrawRunResults();
-                return;
+                presentation.DrawCombatDamage();
+
+                hud.DrawNavigationControls();
+                if (enablePrototypeDebug && !selection.choosingUpgrade) debugView.DrawPrototypeDebugTools();
+                debugView.DrawPrototypeNotices();
+                if (selection.choosingUpgrade)
+                {
+                    levelUpView.DrawRunUpgradeSelection();
+                }
             }
-
-            hud.DrawRunHudInformation();
-            hud.DrawElapsedTime();
-            hud.DrawManaBar();
-            presentation.DrawCombatDamage();
-
-            hud.DrawNavigationControls();
-            if (enablePrototypeDebug && !selection.choosingUpgrade) debugView.DrawPrototypeDebugTools();
-            debugView.DrawPrototypeNotices();
-            if (selection.choosingUpgrade)
+            finally
             {
-                levelUpView.DrawRunUpgradeSelection();
+                if (run.transition.Active)
+                    UiGraphics.DrawSolidRect(new Rect(0, 0, Screen.width, Screen.height), new Color(0, 0, 0, run.transition.Opacity));
             }
+        }
+
+        private void LateUpdate()
+        {
+            if (!isInitialized || run.showMetaTree || settings.dungeonFloor == null) return;
+            var scenery = settings.dungeonFloor.GetComponent<StageSceneryRenderer>();
+            if (scenery == null) return;
+            scenery.UpdateOcclusion(sceneryPlayerRenderer, Time.unscaledDeltaTime, settings.gameplayCamera);
         }
 
         private void OnApplicationPause(bool paused) { if (paused) save?.FlushPrototypeProgress(); }

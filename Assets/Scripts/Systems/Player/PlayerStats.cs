@@ -19,7 +19,8 @@ namespace ProjectDM
         // 2.75 means 275% of normal damage, not +275% bonus damage.
         internal float CriticalDamage => Value("criticalDamage");
         internal float Invulnerability => Value("invulnerability");
-        internal float MagnetRadius => Value("magnet");
+        // Extra attraction distance beyond the separately configured direct-pickup radius.
+        internal float MagnetRangeBonus => Value("magnet");
         internal float Luck => Value("luck");
 
         private float Value(string id) => Calculate(tables.balance, id, progression.PermanentAmount(id));

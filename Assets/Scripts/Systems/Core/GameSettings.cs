@@ -14,6 +14,7 @@ namespace ProjectDM
         internal Camera gameplayCamera;
         internal GameFieldBounds fieldBounds;
         internal Transform playerSpawnPoint;
+        internal float pickupCollectionRadius = .28f;
         internal MonsterSpawnAreaPreview monsterSpawnArea;
         internal PlayerMovementAreaPreview playerMovementArea;
         internal DungeonFloorTilemap dungeonFloor;

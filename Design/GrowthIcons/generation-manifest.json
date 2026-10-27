@@ -1,0 +1,145 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen.imagegen (built-in)",
+  "icons": 40,
+  "assets": [
+    {
+      "name": "GrowthStats",
+      "prompt": "Generate ONE production pixel-art ICON ATLAS sprite sheet for a Korean fantasy incremental RPG. Exactly the specified uniform grid, edge-to-edge equal-sized cells, no outer atlas margin. Every cell has exactly one centered distinct icon and 15% transparent padding around its glyph. Entire background including gaps truly transparent. NO cell frames, NO tiles, NO panel background, NO text, NO letters, NO numbers, NO captions, NO dividers. Readable compact 24x24/32x32-era pixel symbols with chunky hand-placed square pixels and consistent scale, 5-8 colors per icon, dark plum outline and small ivory highlight. No realistic shading, no blur, no large glow or particle haze. Warm brass, muted green, violet and icy blue palette fits a dark plum UI and olive meadow game. Each icon must remain recognizable at 24 pixels. Follow row order exactly LEFT TO RIGHT, TOP TO BOTTOM.  EXACT GRID: 4 columns by 4 rows. ROW 1: (1) crossed short sword and small golden attack burst; (2) golden lightning bolt with two short speed marks for attack speed; (3) round blue mana potion; (4) blue mana droplet curving inward along a small silver arrow for mana absorption. ROW 2: (1) three stacked gold coins; (2) open violet experience spellbook with one tiny blue gem; (3) winged brown leather boot; (4) ivory target crosshair with one orange spark for critical chance. ROW 3: (1) cracked red-orange crystal exploding in three chunks for critical damage; (2) icy-blue shield with ivory star for brief invulnerability; (3) steel U magnet with red and blue tips; (4) emerald four-leaf clover for luck. ROW 4: (1) three small moss-green monster slime heads for monster population; (2) five small green monster heads enclosed by two gold corner brackets for population capacity; (3) three green monster heads beside one small upward gold arrow for simultaneous spawns; (4) olive hourglass surrounded by one circular gold arrow for respawn speed.",
+      "columns": 4,
+      "rows": 4,
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-fbcf9698-3b95-4b86-a15f-45dc952cbf55.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "a28e38079c016d1f2e06b7bd6cbb306b8a73505a20dfed96a4829e603a3fa118",
+      "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/GrowthStats.png"
+    },
+    {
+      "name": "GrowthUtility",
+      "prompt": "Generate ONE production pixel-art ICON ATLAS sprite sheet for a Korean fantasy incremental RPG. Exactly the specified uniform grid, edge-to-edge equal-sized cells, no outer atlas margin. Every cell has exactly one centered distinct icon and 15% transparent padding around its glyph. Entire background including gaps truly transparent. NO cell frames, NO tiles, NO panel background, NO text, NO letters, NO numbers, NO captions, NO dividers. Readable compact 24x24/32x32-era pixel symbols with chunky hand-placed square pixels and consistent scale, 5-8 colors per icon, dark plum outline and small ivory highlight. No realistic shading, no blur, no large glow or particle haze. Warm brass, muted green, violet and icy blue palette fits a dark plum UI and olive meadow game. Each icon must remain recognizable at 24 pixels. Follow row order exactly LEFT TO RIGHT, TOP TO BOTTOM.  EXACT GRID: 4 columns by 3 rows. ROW 1: (1) faceted rainbow experience crystal; (2) a bright silver coin; (3) a bright gold coin; (4) a faceted emerald-green currency coin. ROW 2: (1) a faceted amethyst-purple currency coin; (2) a small U magnet beside two golden loot sparkles; (3) three ivory-gold magic projectiles fanning outward; (4) branching violet lightning connecting three tiny points. ROW 3: (1) a compact cyan circular splash shockwave; (2) one descending burning orange meteor stone; (3) three concentric gold range rings with a central dot; (4) a small brass hourglass filled with pale blue sand.",
+      "columns": 4,
+      "rows": 3,
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-424c8692-5dcd-4e70-bb6f-dad9f7a48d9b.png",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "fe7f188325b2e97d7f0489d8947dd94dbb53dc41c4384e6dcc8299a45cae13e5",
+      "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/GrowthUtility.png"
+    },
+    {
+      "name": "GrowthSkills",
+      "prompt": "Generate ONE production pixel-art ICON ATLAS sprite sheet for a Korean fantasy incremental RPG. Exactly the specified uniform grid, edge-to-edge equal-sized cells, no outer atlas margin. Every cell has exactly one centered distinct icon and 15% transparent padding around its glyph. Entire background including gaps truly transparent. NO cell frames, NO tiles, NO panel background, NO text, NO letters, NO numbers, NO captions, NO dividers. Readable compact 24x24/32x32-era pixel symbols with chunky hand-placed square pixels and consistent scale, 5-8 colors per icon, dark plum outline and small ivory highlight. No realistic shading, no blur, no large glow or particle haze. Warm brass, muted green, violet and icy blue palette fits a dark plum UI and olive meadow game. Each icon must remain recognizable at 24 pixels. Follow row order exactly LEFT TO RIGHT, TOP TO BOTTOM.  EXACT GRID: 3 columns by 4 rows. Each row belongs to one character element. ROW 1 ARCANE in ivory, brass and soft violet: (1) one flying arcane missile with two short trails; (2) a focused straight thick horizontal arcane beam bursting through one small diamond; (3) three little arcane orbs orbiting a central diamond. ROW 2 FIRE in ember orange and red: (1) a widening cone of flame; (2) a circular burning ground flame field; (3) one descending large fiery meteor. ROW 3 LIGHTNING in violet and yellow-white: (1) branching chain lightning connecting three little dots; (2) a round charged electric orb with a tiny jagged bolt inside; (3) a downward thunderbolt striking a small ground burst. ROW 4 FROST in icy blue and ivory: (1) three ice shards orbiting a small central snow crystal; (2) a spiraling blizzard with two visible snowflakes; (3) one ice crystal shattering into six sharp fragments.",
+      "columns": 3,
+      "rows": 4,
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-e7f6b6bb-c1ae-4406-a778-235e8fcd441a.png",
+      "width": 1086,
+      "height": 1448,
+      "sha256": "f5bdf6bd04b0e79c1f1ec5f0c72328479cda307a6bf68732cd6544b57d2c81b0",
+      "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/GrowthSkills.png"
+    }
+  ],
+  "iterations": [
+    {
+      "date": "2026-10-27",
+      "tool": "image_gen.imagegen (built-in)",
+      "role": "Growth-only redrawn base and modifier icons. References depict game resources; generated art is separate.",
+      "assets": [
+        {
+          "name": "MatchedSkills_v2",
+          "prompt": "Create ONE NEW pixel-art UI icon atlas, not a copy of the reference image. The references show the actual game's subjects, forms and color signatures: preserve their recognizable identity while REDRAWING them as purpose-made growth icons with distinct compositions and icon framing. This is a cute Korean 2D incremental RPG with chunky 32-pixel-era pixel art, dark outlines, limited crisp square-pixel colors and high legibility at 24px. Genuine transparent background, no text, no labels, no numbers, no borders, no tile squares, no cell separators, no fuzzy glow, no background. A perfectly regular equal-cell grid with icon centered inside each cell; keep a clear 15% gap on all four sides of every cell, so neighboring icons never touch or cross cell boundaries. Do not put a frame around icons. Cells read LEFT TO RIGHT, TOP TO BOTTOM. EXACTLY 3 columns x 4 rows. Reference 1 shows the existing 12 in-game skill identities and their exact characteristic color families. Redraw each skill as a new compact emblem while preserving its element and shape, never replace blue lightning with purple lightning. Row 1 ARCANE purple: compact glowing violet spherical magic bullet, purple horizontal ray, three purple satellite crystals. Row 2 FLAME orange-red: spreading fan of fire, circular fire field, descending dark stone with fiery trail. Row 3 LIGHTNING electric BLUE with small YELLOW highlights: branching chain bolt, blue electrical orb, downward blue lightning strike. Row 4 FROST cyan-blue: ice shard in orbit, snowy spiral blizzard, cyan ice crystal breaking apart. Twelve new distinct icons, 3x4 layout, all visual attributes stay faithful to the existing game.",
+          "references": [
+            "C:/Unity/ProjectDM/Assets/Resources/ProjectDM/Skills/SkillIcons.png",
+            "C:/Unity/ProjectDM/Assets/GameContent/Art/Pixel32/Skills/ProjectDM_FrostShard_v1/ProjectDM_FrostShard_v1.png",
+            "C:/Unity/ProjectDM/Assets/GameContent/Art/Pixel32/Skills/ProjectDM_ChainLightning_v1/ProjectDM_ChainLightning_v1.png"
+          ],
+          "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-7bdb859f-98c0-48e4-984c-d4f97fe5af7f.png",
+          "columns": 3,
+          "rows": 4,
+          "width": 1230,
+          "height": 1278,
+          "sha256": "69fe25e3178e70587ced70dc488a0499066628ec9aaa971bb2cccd43320c060f",
+          "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/MatchedSkills_v2.png"
+        },
+        {
+          "name": "MatchedStats_v2",
+          "prompt": "Create ONE NEW pixel-art UI icon atlas, not a copy of the reference image. The references show the actual game's subjects, forms and color signatures: preserve their recognizable identity while REDRAWING them as purpose-made growth icons with distinct compositions and icon framing. This is a cute Korean 2D incremental RPG with chunky 32-pixel-era pixel art, dark outlines, limited crisp square-pixel colors and high legibility at 24px. Genuine transparent background, no text, no labels, no numbers, no borders, no tile squares, no cell separators, no fuzzy glow, no background. A perfectly regular equal-cell grid with icon centered inside each cell; keep a clear 15% gap on all four sides of every cell, so neighboring icons never touch or cross cell boundaries. Do not put a frame around icons. Cells read LEFT TO RIGHT, TOP TO BOTTOM. EXACTLY 4 columns x 4 rows. Create new growth icons corresponding to the actual game references. Row 1: (1) purple magical projectile with small upward shine for power, (2) two fast purple magical projectiles for attack speed, (3) curled-tip deep-blue mana flame with a cyan spiral center and a tiny plus, (4) curled-tip deep-blue mana flame with cyan spiral and a small inward arrow. Row 2: (1) several copper coins matching the source round coin, (2) an angular pointed blue experience crystal matching reference item, (3) a small winged brown boot, (4) a gold target crosshair with a star. Row 3: (1) a sharp orange-red critical impact spark, (2) pale blue protective shield, (3) U-shaped blue steel magnet with GOLD bands and bright CYAN GEM TIPS like the magnet reference, with outward range arcs, NO RED MAGNET, (4) a green clover. Row 4: represent four growth properties using the reference meadow creature: a lime-green low round slime with TWO BLACK SQUARE EYES and TWO LEAF SPROUTS on its head, no mouth. (1) several sprout slimes for population, (2) one sprout slime with subtle upper bracket marks for capacity, (3) three sprout slimes emerging together, (4) sprout slime beside small speed arcs. It must clearly be the same species as the reference, not a generic pointy droplet creature.",
+          "references": [
+            "C:/Unity/ProjectDM/Assets/GameContent/Art/ProjectDM_ManaPickup_v1.png",
+            "C:/Unity/ProjectDM/Assets/GameContent/Art/ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png",
+            "C:/Unity/ProjectDM/Assets/GameContent/Art/Monsters/ProjectDM_Meadow_Walk_4Frame_BlackEyes_v5.png",
+            "C:/Unity/ProjectDM/Assets/Resources/ProjectDM/Skills/Magnet.png"
+          ],
+          "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-5895971e-82ba-45d8-ada4-7681a6777052.png",
+          "columns": 4,
+          "rows": 4,
+          "width": 1290,
+          "height": 1219,
+          "sha256": "a41c3a3230b6e5ed59c792123fb7ff95d23399c245f336932925d3844f731c52",
+          "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/MatchedStats_v2.png"
+        },
+        {
+          "name": "MatchedUtility_v2",
+          "prompt": "Create ONE NEW pixel-art UI icon atlas, not a copy of the reference image. The references show the actual game's subjects, forms and color signatures: preserve their recognizable identity while REDRAWING them as purpose-made growth icons with distinct compositions and icon framing. This is a cute Korean 2D incremental RPG with chunky 32-pixel-era pixel art, dark outlines, limited crisp square-pixel colors and high legibility at 24px. Genuine transparent background, no text, no labels, no numbers, no borders, no tile squares, no cell separators, no fuzzy glow, no background. A perfectly regular equal-cell grid with icon centered inside each cell; keep a clear 15% gap on all four sides of every cell, so neighboring icons never touch or cross cell boundaries. Do not put a frame around icons. Cells read LEFT TO RIGHT, TOP TO BOTTOM. EXACTLY 4 columns x 3 rows. Reimagine these game objects as NEW compact upgrade glyphs while retaining the source game silhouettes and colors. Row 1: (1) pointed CYAN blue-green experience crystal, (2) round SILVER coin with small diamond stamp, (3) round GOLD coin with small diamond stamp, (4) GOLD-RIMMED coin with a faceted GREEN emerald center. Row 2: (1) GOLD-RIMMED coin with a faceted PURPLE amethyst center, (2) blue-steel U magnet with two cyan gem caps and gold bands, NO red; add tiny gold sparkle for drop chance, (3) three small PURPLE round magic projectiles spreading outward, (4) blue lightning branching with yellow sparks. Row 3: (1) a pale cyan radial splash shockwave, (2) small meteor dark rock falling in orange-red flame, (3) pale gold concentric range arcs, (4) brass hourglass containing blue sand. The actual emerald and amethyst are inset gems inside GOLD RINGS, not green or purple outer coins.",
+          "references": [
+            "C:/Unity/ProjectDM/Assets/GameContent/Art/ProjectDM_ExperienceCurrency_5Types_4Frame_v1.png",
+            "C:/Unity/ProjectDM/Assets/Resources/ProjectDM/Skills/Magnet.png",
+            "C:/Unity/ProjectDM/Assets/Resources/ProjectDM/Skills/SkillIcons.png"
+          ],
+          "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-fe314756-7ac6-41ae-903b-095a27e44e79.png",
+          "columns": 4,
+          "rows": 3,
+          "width": 1448,
+          "height": 1086,
+          "sha256": "bebad96991d4995042c18e31e53f79b26b4b778e6b7f1b318357d96a77b78c3a",
+          "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/MatchedUtility_v2.png"
+        },
+        {
+          "name": "MatchedModifiers_v2",
+          "prompt": "Create ONE NEW pixel-art UI icon atlas, not a copy of the reference image. The references show the actual game's subjects, forms and color signatures: preserve their recognizable identity while REDRAWING them as purpose-made growth icons with distinct compositions and icon framing. This is a cute Korean 2D incremental RPG with chunky 32-pixel-era pixel art, dark outlines, limited crisp square-pixel colors and high legibility at 24px. Genuine transparent background, no text, no labels, no numbers, no borders, no tile squares, no cell separators, no fuzzy glow, no background. A perfectly regular equal-cell grid with icon centered inside each cell; keep a clear 15% gap on all four sides of every cell, so neighboring icons never touch or cross cell boundaries. Do not put a frame around icons. Cells read LEFT TO RIGHT, TOP TO BOTTOM. EXACTLY 4 columns x 4 rows. A new coherent sheet of SMALL SECONDARY modifier badges, each a compact simple glyph suited to overlay at the top right of a main skill icon. Every icon is easily distinct at only 12x12 displayed pixels, with bold dark-plum outline, clear ivory-and-gold or cool-cyan highlights, restrained 3-5 colors, no text. Row 1: (1) a small upward gold impact star for power, (2) two right-facing gold chevrons for speed, (3) three tiny gold magic dots for quantity, (4) two outward-facing cyan arrows for range. Row 2: (1) widening fan arrows for width, (2) tiny golden hourglass for duration, (3) gold circular rotation arrow, (4) cyan target reticle for homing. Row 3: (1) straight gold piercing arrow, (2) forked violet branching arrow, (3) gold connecting chain link, (4) orange flame ember for burning. Row 4: (1) tiny cyan snowflake for cold, (2) pale blue frozen crystal for freeze, (3) tiny open gold lock for unlock, (4) white percentage sign made of pixels for chance. Icons ONLY, no backgrounds or circles.",
+          "references": [
+            "C:/Unity/ProjectDM/Assets/Resources/ProjectDM/Skills/SkillIcons.png"
+          ],
+          "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-fcbf6cff-f9e0-4624-aaf1-a73e9ad293b0.png",
+          "columns": 4,
+          "rows": 4,
+          "width": 1254,
+          "height": 1254,
+          "sha256": "ff0360e5f098024eebef97f5839df04efa3fe158d9dcfbe73a9dee07381f8120",
+          "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/MatchedModifiers_v2.png"
+        },
+        {
+          "name": "MatchedDungeonPopulation_v2",
+          "prompt": "Create ONE NEW pixel-art UI icon atlas, not a copy of the reference image. The references show the actual game's subjects, forms and color signatures: preserve their recognizable identity while REDRAWING them as purpose-made growth icons with distinct compositions and icon framing. This is a cute Korean 2D incremental RPG with chunky 32-pixel-era pixel art, dark outlines, limited crisp square-pixel colors and high legibility at 24px. Genuine transparent background, no text, no labels, no numbers, no borders, no tile squares, no cell separators, no fuzzy glow, no background. A perfectly regular equal-cell grid with icon centered inside each cell; keep a clear 15% gap on all four sides of every cell, so neighboring icons never touch or cross cell boundaries. Do not put a frame around icons. Cells read LEFT TO RIGHT, TOP TO BOTTOM. EXACTLY 2 columns x 2 rows. Create four NEW growth icons all based on the game's FIRST MONSTER in reference: a cute dark PURPLE ROUND BAT with BLACK SQUARE EYES, two PINK bat wings and PINK pointy ears. Clearly retain those specific characteristics, not a bird or generic slime. (top-left) several bats to represent monster population; (top-right) one bat with small gold corner brackets to represent capacity; (bottom-left) three bats appearing together for spawn batch; (bottom-right) one bat and two short gold speed arcs for respawn. Each compact icon separate within grid, no background.",
+          "references": [
+            "C:/Unity/ProjectDM/Assets/GameContent/Art/Monsters/ProjectDM_Dungeon_Walk_4Frame_BlackEyes_v5.png"
+          ],
+          "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-65b6bfef-ce3b-46ad-94dc-f2d8866568f5.png",
+          "columns": 2,
+          "rows": 2,
+          "width": 1263,
+          "height": 1246,
+          "sha256": "7e18c534934d238939677e65fb4877064df15f4a48f1403f1ecb9d754da31990",
+          "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/MatchedDungeonPopulation_v2.png"
+        },
+        {
+          "name": "MatchedLightningOrb_v2",
+          "prompt": "Create ONE new compact pixel-art growth-tree base icon on a genuine transparent background. The reference is the current in-game skill sprite sheet; match ONLY its middle image in row three: an electrical orb that is DEEP VIOLET/PURPLE with a small bright golden-yellow lightning bolt inside, surrounded by purple-white electricity. Preserve this recognisable purple-and-gold color identity while DRAWING a new, distinct emblem composition suitable for a node icon. Crisp chunky 32-pixel-era square pixels, bold dark outline, limited colors, simple silhouette readable at 24px. One centered round purple electric orb and a yellow lightning bolt, small separated arcs, no frame, no text, no numbers, no tile or background, no sprite sheet, no huge fuzzy glow. Do not copy or crop the original sprite; create a new icon.",
+          "references": [
+            "C:/Unity/ProjectDM/Assets/Resources/ProjectDM/UI/GrowthIcons/GrowthSkills.png"
+          ],
+          "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-9aa03e28-6d29-4bc1-88d9-8888845bd8cd.png",
+          "width": 1254,
+          "height": 1254,
+          "sha256": "5989f566595800796e908c44310da307718ea015c0b40382608cf76d57225e96",
+          "runtime_file": "Assets/Resources/ProjectDM/UI/GrowthIcons/MatchedLightningOrb_v2.png"
+        }
+      ]
+    }
+  ],
+  "active_design": {
+    "version": 2,
+    "scope": "growth nodes",
+    "renderer": "Assets/Scripts/Systems/Assets/GrowthIconVariants.cs",
+    "composition": "redrawn skill-specific base plus separate growth-property badge, upper right",
+    "notes": "Source PNGs remain intact; measured cell gutters prevent neighboring icon bleed. Violet orb matches the current in-game effect."
+  }
+}

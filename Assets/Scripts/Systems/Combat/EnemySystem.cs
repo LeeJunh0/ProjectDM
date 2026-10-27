@@ -198,7 +198,8 @@ namespace ProjectDM
 
         internal void DamageElementalEnemy(Enemy enemy, float damage, CombatDamageKind presentationKind, CombatDamageElement element)
         {
-            if (!IsLive(enemy)) return;
+            if (!IsLive(enemy) || damage <= 0 || float.IsNaN(damage) || float.IsInfinity(damage)) return;
+            damage = Mathf.Max(1f, damage);
             if (showElementalDamage != null) showElementalDamage(enemy.transform.position, damage, presentationKind, element);
             else showDamage(enemy.transform.position, damage, presentationKind);
             enemy.hitPoints -= damage;
@@ -222,7 +223,7 @@ namespace ProjectDM
         internal void Reset()
         {
             foreach (Enemy enemy in enemies) if (enemy.transform != null) objectPool.Return(enemy.transform.gameObject);
-            enemies.Clear(); nextSpawn = 0; nextMiniBoss = tables.balance.miniBossInterval; debugStageOverride = -1;
+            enemies.Clear(); spatial.Rebuild(enemies); nextSpawn = 0; nextMiniBoss = tables.balance.miniBossInterval; debugStageOverride = -1;
         }
     }
 }

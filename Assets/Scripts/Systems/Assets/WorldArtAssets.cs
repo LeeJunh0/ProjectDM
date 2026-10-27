@@ -161,6 +161,12 @@ namespace ProjectDM
             MonsterKind.Mushroom => mushroomSprite, MonsterKind.Boar => boarSprite, _ => slimeSprite
         };
 
+        internal Sprite GrowthIcon(PrototypeGrowth row, PrototypeBalance balance = null, StageDefinition selectedStage = null, string characterId = null)
+        {
+            return GrowthIconVariants.Find(row.id, row.icon, selectedStage != null ? selectedStage.stageId : 1)
+                ?? GrowthIconAtlas.Find(row.id) ?? GrowthIconAtlas.Find(row.icon);
+        }
+
         internal Sprite PrototypeIcon(string id) => SkillIconAtlas.Find(id) ?? (id switch
         {
             "coin" => coinSprite, "gem" => gemSprite, "slime" => slimeSprite, _ => boltSprite

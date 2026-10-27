@@ -8,20 +8,6 @@ namespace ProjectDM
     /// <summary>Provides shared UI styles, artwork crops and drawing primitives.</summary>
     internal sealed class UiGraphics
     {
-        internal UiGraphics()
-        {
-            resultSecondaryButtonTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_ResultButtonSecondary_v1");
-            resultPrimaryButtonTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_ResultButtonPrimary_v1");
-        }
-
-        internal Texture2D resultSecondaryButtonTexture;
-
-        internal Texture2D resultPrimaryButtonTexture;
-
-        internal static readonly Rect ResultSecondaryButtonUv = new Rect(83f / 2036f, 177f / 772f, 1870f / 2036f, 416f / 772f);
-
-        internal static readonly Rect ResultPrimaryButtonUv = new Rect(91f / 2146f, 156f / 733f, 1964f / 2146f, 421f / 733f);
-
         internal GUIStyle titleStyle;
 
         internal GUIStyle statStyle;
@@ -38,30 +24,47 @@ namespace ProjectDM
 
         internal static void DrawResultDivider(float y)
         {
-            DrawSolidRect(new Rect(46f, y, 628f, 2f), new Color(.55f, .50f, .43f, .65f));
+            PixelUiArt.Draw(new Rect(46f, y - 3, 628f, 8f), PixelUiArt.Divider, 0, new Color(1, 1, 1, .7f));
         }
 
-        internal static void DrawResultArtwork(Rect rect, Texture2D texture, Rect uv, Color tint)
+        internal static void DrawStaticLabel(Rect rect, string text, GUIStyle style)
         {
-            if (texture != null) DrawTimerTexture(rect, texture, uv, tint);
-            else
-            {
-                DrawSolidRect(rect, new Color(.055f, .065f, .095f));
-                DrawOutline(rect, new Color(.72f, .52f, .25f), 2f);
-            }
+            // GUI.Label selects the inherited hover state from the pointer position, even for plain text.
+            // Draw the normal state directly without registering a control, focus or tooltip.
+            if (Event.current.type == EventType.Repaint)
+                style.Draw(rect, new GUIContent(text), false, false, false, false);
         }
 
         internal bool DrawResultButton(Rect rect, string label, bool primary)
         {
-            bool hovered = rect.Contains(Event.current.mousePosition);
-            DrawResultArtwork(rect, primary ? resultPrimaryButtonTexture : resultSecondaryButtonTexture,
-                primary ? ResultPrimaryButtonUv : ResultSecondaryButtonUv, hovered ? new Color(1.12f, 1.12f, 1.12f) : Color.white);
+            return DrawButton(rect, label, primary, Mathf.Clamp(Mathf.RoundToInt(rect.height * .36f), 12, 28));
+        }
+
+        internal bool DrawButton(Rect rect, string label, bool primary = false, int fontSize = 14)
+            => DrawControl(rect, label, primary ? PixelUiArt.Primary : PixelUiArt.Secondary, Color.white, fontSize);
+
+        internal bool DrawTab(Rect rect, string label, bool selected, Color accent, int fontSize = 12)
+            => DrawControl(rect, label, PixelUiArt.Tab, selected ? Color.Lerp(Color.white, accent, .35f) : new Color(.72f, .68f, .78f), fontSize);
+
+        private bool DrawControl(Rect rect, string label, PixelUiArt.Frame frame, Color tint, int fontSize)
+        {
+            bool hovered = GUI.enabled && rect.Contains(Event.current.mousePosition);
+            if (hovered) tint *= 1.15f;
+            tint.a = GUI.enabled ? 1 : .45f;
+            PixelUiArt.Draw(rect, frame, Mathf.Min(10, rect.height * .25f), tint);
             bool clicked = GUI.Button(rect, GUIContent.none, GUIStyle.none);
-            GUI.Label(rect, label, new GUIStyle(statStyle) { fontSize = 28, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(.96f, .94f, .87f) } });
+            var style = new GUIStyle(statStyle)
+            {
+                fontSize = fontSize, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleCenter,
+                clipping = TextClipping.Clip, wordWrap = false,
+                normal = { textColor = new Color(.96f, .92f, .81f) }
+            };
+            while (style.fontSize > 9 && style.CalcSize(new GUIContent(label)).x > rect.width - 18) style.fontSize--;
+            GUI.Label(new Rect(rect.x + 9, rect.y, rect.width - 18, rect.height), label, style);
             return clicked;
         }
 
-        internal static void DrawResultSprite(Rect rect, Sprite sprite)
+        internal static void DrawResultSprite(Rect rect, Sprite sprite, Vector2 contentOffset = default)
         {
             if (sprite == null) return;
             Rect pixels = sprite.textureRect;
@@ -71,6 +74,7 @@ namespace ProjectDM
             Rect image = aspect > 1f
                 ? new Rect(rect.x, rect.center.y - rect.width / aspect * .5f, rect.width, rect.width / aspect)
                 : new Rect(rect.center.x - rect.height * aspect * .5f, rect.y, rect.height * aspect, rect.height);
+            image.position -= Vector2.Scale(image.size, contentOffset);
             GUI.DrawTextureWithTexCoords(image, texture, uv);
         }
 
@@ -85,12 +89,12 @@ namespace ProjectDM
             {
                 fontSize = 22,
                 fontStyle = FontStyle.Bold,
-                normal = { textColor = new Color(0.8f, 0.48f, 1f) }
+                normal = { textColor = new Color(.94f, .82f, .58f) }
             };
             statStyle ??= new GUIStyle(GUI.skin.label)
             {
                 fontSize = 15,
-                normal = { textColor = new Color(0.72f, 0.82f, 1f) }
+                normal = { textColor = new Color(.83f, .8f, .88f) }
             };
             cardStyle ??= new GUIStyle(GUI.skin.button)
             {

@@ -203,29 +203,41 @@ do {
 } while ($advanced -and $purchases -le $totalPurchases)
 Assert-True ($purchases -eq $totalPurchases) 'Purchase graph contains unreachable nodes or a deadlock.'
 foreach ($row in $growth.rows) { Assert-True ($walk.Rank($row.id) -eq $row.maxRank) "Growth cannot reach its cap: $($row.id)" }
-# Discover only open nodes and their direct next nodes, not descendants of locked previews.
+# Discover only invested nodes and their immediate visual neighbors, not descendants of unpurchased previews.
 $fresh = [ProjectDM.PrototypeSave]::new()
 $preview = $growth.nodes | Where-Object id -eq 'chainChance_1'
 $distant = $growth.nodes | Where-Object id -eq 'damage_4'
 Assert-True (-not [ProjectDM.PrototypeRules]::IsNodeOpen($growth, $preview, $fresh, 0)) 'Locked preview must not count as open.'
-Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($growth, $preview, $fresh, 0)) 'Open skill unlock must reveal its immediate chance node.'
+Assert-True (-not [ProjectDM.PrototypeRules]::IsNodeRevealed($growth, $preview, $fresh, 0)) 'An unpurchased root neighbor must not reveal its own children.'
 Assert-True (-not [ProjectDM.PrototypeRules]::IsNodeRevealed($growth, $distant, $fresh, 0)) 'Preview-only nodes must not recursively reveal distant nodes.'
 $fresh.SetRank('chain', 1)
 Assert-True ([ProjectDM.PrototypeRules]::IsNodeOpen($growth, $preview, $fresh, 0)) 'Buying unlock must open its chance node immediately.'
+Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($growth, $preview, $fresh, 0)) 'Buying a node must reveal its immediate visual neighbor.'
 $fractional = [ProjectDM.PrototypeSave]::new(); $fractional.SetRank('damage', $distant.startRank, .2)
 Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($growth, $distant, $fractional, 0)) 'Migrated fractional investment must never be concealed.'
 foreach ($stage in 0..4) {
     foreach ($node in $growth.nodes) {
-        $row = Get-Row $node.growthId
-        $eligible = $null -eq [ProjectDM.PrototypeRules]::NodePurchaseBlock($balance, $row, $node, $fresh, $stage, [int]::MaxValue, $growth)
-        if ($eligible) { Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($growth, $node, $fresh, $stage)) 'An eligible purchase must always be discoverable.' }
-        $parent = $growth.nodes | Where-Object id -eq $node.parent
-        $expected = $node.parent -eq 'ROOT' -or [ProjectDM.PrototypeRules]::IsNodeOpen($growth, $node, $fresh, $stage) -or
-            ($null -ne $parent -and [ProjectDM.PrototypeRules]::IsNodeOpen($growth, $parent, $fresh, $stage))
-        Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($growth, $node, $fresh, $stage) -eq $expected) "Visibility exceeds one link: $($node.id)"
         Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($growth, $node, $walk, $stage)) 'Completed saves must retain all discovered nodes.'
     }
 }
+# A graph with different purchase and visual parents plus a non-parent grid edge.
+$a = [ProjectDM.PrototypeGrowthNode]::new(); $a.id='A'; $a.growthId='a'; $a.parent='ROOT'; $a.displayParent='ROOT'; $a.ranks=1
+$b = [ProjectDM.PrototypeGrowthNode]::new(); $b.id='B'; $b.growthId='b'; $b.parent='ROOT'; $b.displayParent='A'; $b.ranks=1
+$c = [ProjectDM.PrototypeGrowthNode]::new(); $c.id='C'; $c.growthId='c'; $c.parent='ROOT'; $c.displayParent='B'; $c.ranks=1
+$d = [ProjectDM.PrototypeGrowthNode]::new(); $d.id='D'; $d.growthId='d'; $d.parent='ROOT'; $d.displayParent='C'; $d.ranks=1
+$b.displayLinks = @('D')
+$visualFixture = [ProjectDM.PrototypeGrowthTable]::new(); $visualFixture.nodes = @($a,$b,$c,$d)
+$visualSave = [ProjectDM.PrototypeSave]::new()
+Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$a,$visualSave,0)) 'A root-connected node must be visible.'
+foreach ($node in @($b,$c,$d)) { Assert-True (-not [ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$node,$visualSave,0)) 'A purchase-parent ROOT must not reveal a distant visual node.' }
+$visualSave.SetRank('a',1)
+Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$b,$visualSave,0)) 'An invested node must reveal its next visual neighbor.'
+Assert-True (-not [ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$c,$visualSave,0)) 'A visible but unpurchased node must not reveal its child.'
+Assert-True (-not [ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$d,$visualSave,0)) 'A visible but unpurchased node must not reveal its grid neighbor.'
+$visualSave.SetRank('b',1)
+Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$c,$visualSave,0) -and [ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$d,$visualSave,0)) 'Invested grid links must reveal adjacent nodes.'
+$reverseSave = [ProjectDM.PrototypeSave]::new(); $reverseSave.SetRank('d',0,.25)
+Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$b,$reverseSave,0)) 'Grid links must reveal in both directions and retain fractional legacy investment.'
 # Keep old saves' EXACT effects, including a fraction smaller than one new purchase.
 foreach ($row in $growth.rows) {
     $old = Get-Source $row.id

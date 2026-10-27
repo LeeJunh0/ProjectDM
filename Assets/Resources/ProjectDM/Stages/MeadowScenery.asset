@@ -1,0 +1,4385 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738e78e8483604748bef9d55d0473a44, type: 3}
+  m_Name: MeadowScenery
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.StageSceneryLayout
+  referenceSize: {x: 100, y: 100}
+  palette:
+  - id: Meadow_Grass
+    displayName: "\uD480 \uBB34\uB354\uAE30"
+    sprite: {fileID: 21300000, guid: 16cb7f395ac344f69880f80e9b986a3b, type: 3}
+    height: 1.3
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Meadow_Flowers
+    displayName: "\uB4E4\uAF43"
+    sprite: {fileID: 21300000, guid: b9c8cb9e315f46d5a5633d11ee26bdd4, type: 3}
+    height: 1.2
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Meadow_Rock
+    displayName: "\uC774\uB07C \uB080 \uB3CC"
+    sprite: {fileID: 21300000, guid: 7fc37fbed10b4abd998bb81e34fa9e23, type: 3}
+    height: 1.7
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Meadow_Shrub
+    displayName: "\uC791\uC740 \uAD00\uBAA9"
+    sprite: {fileID: 21300000, guid: b116eb94e2544289ba8157775cffa3d1, type: 3}
+    height: 2.5
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Meadow_Tree_Oak
+    displayName: "\ud48d\uc131\ud55c \ub098\ubb34"
+    sprite: {fileID: 21300000, guid: 735ed55919c34640b98a64e5ae4775d1, type: 3}
+    height: 5.2
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Meadow_Tree_Young
+    displayName: "\uc5b4\ub9b0 \ub098\ubb34"
+    sprite: {fileID: 21300000, guid: 84830b94a7504f1d967b09d023249002, type: 3}
+    height: 4
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Meadow_Tree_Bent
+    displayName: "\uae30\uc6b8\uc5b4\uc9c4 \ub098\ubb34"
+    sprite: {fileID: 21300000, guid: 6d938ec06e1947aca3406f8de91a262f, type: 3}
+    height: 5.5
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Meadow_Tree_Double
+    displayName: "\uac08\ub77c\uc9c4 \ub098\ubb34"
+    sprite: {fileID: 21300000, guid: 6129fc0bf61943889cf8b6315575d026, type: 3}
+    height: 5.2
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  placements:
+  - propId: Meadow_Rock
+    position: {x: -47.82887, y: -48.670444}
+    scale: 0.9404444
+    rotation: -8.959881
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -44.776184, y: -48.43729}
+    scale: 0.89747906
+    rotation: -15.038002
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -42.502216, y: -47.266735}
+    scale: 1.1820651
+    rotation: -13.540556
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -38.649216, y: -48.240284}
+    scale: 0.9800381
+    rotation: 17.840078
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -36.54418, y: -47.87359}
+    scale: 0.8044039
+    rotation: 12.799251
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -30.755116, y: -47.78016}
+    scale: 0.9429927
+    rotation: 10.062262
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -24.770506, y: -48.669094}
+    scale: 0.89103657
+    rotation: -4.977636
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -24.170506, y: -48.269093}
+    scale: 1.1460677
+    rotation: 10.836691
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -21.509222, y: -47.438972}
+    scale: 0.8395494
+    rotation: -15.351448
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -18.317955, y: -48.277645}
+    scale: 0.94861114
+    rotation: -2.5446954
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -14.607673, y: -48.35009}
+    scale: 0.96437806
+    rotation: 16.511469
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -8.896633, y: -47.54653}
+    scale: 1.1019479
+    rotation: 11.533655
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -8.296633, y: -47.14653}
+    scale: 1.1385269
+    rotation: 10.323372
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -5.846748, y: -48.386227}
+    scale: 0.90161264
+    rotation: -10.864159
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -2.9991994, y: -48.7677}
+    scale: 0.9942506
+    rotation: -14.024126
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -0.5460241, y: -48.77836}
+    scale: 0.8972296
+    rotation: -2.773211
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 6.6715617, y: -47.885437}
+    scale: 0.8869147
+    rotation: 2.98788
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 8.75642, y: -48.560925}
+    scale: 0.8816193
+    rotation: -12.35111
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 9.3564205, y: -48.160923}
+    scale: 1.0563812
+    rotation: -0.82789814
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 12.079706, y: -48.323532}
+    scale: 1.1617081
+    rotation: 5.819196
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 15.747331, y: -47.802826}
+    scale: 0.83365476
+    rotation: 14.666587
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 26.809332, y: -47.475178}
+    scale: 0.8120983
+    rotation: -1.3446
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 30.451221, y: -48.74457}
+    scale: 1.1991779
+    rotation: -1.6769804
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 35.600327, y: -47.264378}
+    scale: 0.8261142
+    rotation: -13.853478
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 39.66614, y: -47.616543}
+    scale: 1.1352029
+    rotation: -2.6665535
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 40.26614, y: -47.21654}
+    scale: 1.106948
+    rotation: 4.344593
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 41.32201, y: -47.99455}
+    scale: 0.8642333
+    rotation: -1.2180716
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 44.27919, y: -48.354805}
+    scale: 1.1855344
+    rotation: -10.437721
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -48.54248, y: -44.906986}
+    scale: 1.1581913
+    rotation: -6.6403093
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -41.54819, y: -44.28959}
+    scale: 1.1364503
+    rotation: -9.699315
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -38.843258, y: -44.85428}
+    scale: 0.9253476
+    rotation: 10.770488
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -30.364994, y: -45.652706}
+    scale: 0.94222814
+    rotation: 5.2558722
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -27.552132, y: -45.21852}
+    scale: 1.0585003
+    rotation: -11.52448
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -24.094751, y: -44.899532}
+    scale: 0.85244066
+    rotation: 4.0356
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -20.93546, y: -45.408375}
+    scale: 1.0907308
+    rotation: -7.2087994
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -18.373495, y: -44.976383}
+    scale: 1.1492143
+    rotation: -5.625576
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -15.487793, y: -44.868626}
+    scale: 0.89106
+    rotation: -4.1830463
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -11.809113, y: -45.38149}
+    scale: 0.9096566
+    rotation: -11.915499
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -8.768442, y: -44.744354}
+    scale: 1.0898567
+    rotation: -14.011033
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -3.0199559, y: -45.224483}
+    scale: 0.98841876
+    rotation: 17.76461
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -2.4199557, y: -44.824482}
+    scale: 0.88116395
+    rotation: -10.743656
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -0.7622841, y: -45.52951}
+    scale: 0.9184406
+    rotation: 2.7953124
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 3.6591668, y: -45.299652}
+    scale: 1.0479947
+    rotation: 7.170624
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 5.2784796, y: -45.463573}
+    scale: 0.8996315
+    rotation: -10.0086975
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 11.238571, y: -45.584915}
+    scale: 0.90724367
+    rotation: 1.1736681
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 11.838572, y: -45.184914}
+    scale: 1.1869795
+    rotation: -14.749231
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 21.1007, y: -44.70294}
+    scale: 1.0958843
+    rotation: -3.2175136
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 29.791826, y: -44.336926}
+    scale: 1.130649
+    rotation: -12.179765
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 35.59485, y: -44.95116}
+    scale: 0.89955413
+    rotation: 2.0997255
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 38.28142, y: -45.495117}
+    scale: 1.0177015
+    rotation: -2.7543378
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 41.655033, y: -44.641914}
+    scale: 0.993966
+    rotation: 6.756933
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 44.38784, y: -44.219418}
+    scale: 1.1638206
+    rotation: -1.747206
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -48.373013, y: -42.01418}
+    scale: 1.1622177
+    rotation: 13.810992
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -45.660522, y: -41.517216}
+    scale: 1.0674506
+    rotation: 10.584737
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -33.51356, y: -42.545673}
+    scale: 0.9652496
+    rotation: 5.928255
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -26.322104, y: -42.440346}
+    scale: 1.0071785
+    rotation: 2.657715
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -24.484442, y: -41.3247}
+    scale: 1.1265154
+    rotation: 14.172195
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -18.454721, y: -41.542652}
+    scale: 1.1315991
+    rotation: 8.038422
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -14.58382, y: -41.49901}
+    scale: 0.96899956
+    rotation: 14.877447
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -9.218053, y: -42.779}
+    scale: 1.1891938
+    rotation: 1.7957926
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -5.9747105, y: -41.99001}
+    scale: 0.87950057
+    rotation: 1.2297435
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -0.79757315, y: -42.360092}
+    scale: 0.9811043
+    rotation: 13.142651
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 3.0911684, y: -41.56044}
+    scale: 1.0590768
+    rotation: 11.187466
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 9.310908, y: -42.4115}
+    scale: 0.908743
+    rotation: -6.725105
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 11.867912, y: -41.81701}
+    scale: 0.8273921
+    rotation: 15.1039715
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 14.206413, y: -41.796356}
+    scale: 1.1745572
+    rotation: -5.926379
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 18.374077, y: -41.887554}
+    scale: 1.0674976
+    rotation: 1.1485434
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 20.496428, y: -41.732372}
+    scale: 0.83341724
+    rotation: 4.5709925
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 21.096428, y: -41.33237}
+    scale: 1.1125984
+    rotation: -7.759822
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 26.437584, y: -41.67001}
+    scale: 0.91829056
+    rotation: 11.043157
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 32.774303, y: -41.24055}
+    scale: 1.0806319
+    rotation: 11.022731
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 36.560184, y: -41.383133}
+    scale: 1.0964893
+    rotation: 4.894682
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 38.29682, y: -41.64001}
+    scale: 0.9950134
+    rotation: -9.821514
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 45.136494, y: -41.417545}
+    scale: 0.9492071
+    rotation: 8.105387
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 45.736492, y: -41.017544}
+    scale: 0.9250123
+    rotation: -1.8933156
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -42.66594, y: -38.90066}
+    scale: 0.9629068
+    rotation: -15.469882
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -38.86141, y: -38.88683}
+    scale: 1.0369318
+    rotation: -13.407974
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -33.71728, y: -38.459927}
+    scale: 0.99083894
+    rotation: -12.225893
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -30.114092, y: -39.49831}
+    scale: 1.0884215
+    rotation: -4.3345904
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -18.029922, y: -38.516342}
+    scale: 1.0052302
+    rotation: -11.340924
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -12.057665, y: -38.860992}
+    scale: 0.9606779
+    rotation: -13.700424
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -5.784008, y: -38.440514}
+    scale: 0.832042
+    rotation: 6.581982
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -5.184008, y: -38.040512}
+    scale: 0.921054
+    rotation: 17.368841
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 0.2796998, y: -38.410084}
+    scale: 0.89748734
+    rotation: 8.055562
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 6.680551, y: -39.645855}
+    scale: 0.9499541
+    rotation: 9.256232
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 12.724169, y: -39.41947}
+    scale: 1.0008566
+    rotation: -3.568459
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 13.324169, y: -39.01947}
+    scale: 0.87084943
+    rotation: -15.539587
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 21.37577, y: -39.547264}
+    scale: 0.9152869
+    rotation: 4.185735
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 26.554491, y: -38.3156}
+    scale: 0.8527065
+    rotation: -7.903999
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 33.585587, y: -38.613476}
+    scale: 1.0521563
+    rotation: -4.163809
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 35.9017, y: -38.55485}
+    scale: 0.9563892
+    rotation: 7.785736
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 42.26302, y: -38.805504}
+    scale: 1.1662594
+    rotation: 5.3631735
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 42.863018, y: -38.405502}
+    scale: 1.1807094
+    rotation: -3.8104844
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 45.586693, y: -39.33738}
+    scale: 1.1534526
+    rotation: 15.833101
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -47.463886, y: -35.692482}
+    scale: 0.89880955
+    rotation: -13.679634
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -42.46163, y: -36.361546}
+    scale: 1.0800208
+    rotation: -8.803019
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -41.861633, y: -35.961544}
+    scale: 1.059088
+    rotation: 3.1601593
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -38.72174, y: -35.544743}
+    scale: 1.1900374
+    rotation: -12.594178
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -24.752182, y: -36.356457}
+    scale: 1.0710961
+    rotation: -11.355389
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -21.53339, y: -36.746136}
+    scale: 0.89436466
+    rotation: -5.327058
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -12.055985, y: -36.04133}
+    scale: 0.9515362
+    rotation: -8.549108
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -8.501026, y: -35.56898}
+    scale: 1.0561868
+    rotation: 6.7001667
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -6.165285, y: -35.979294}
+    scale: 1.1162084
+    rotation: -9.379397
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -3.1953168, y: -36.770214}
+    scale: 1.063793
+    rotation: -7.0566893
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 0.7688479, y: -35.72798}
+    scale: 0.81496185
+    rotation: -2.280342
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 1.3688478, y: -35.32798}
+    scale: 1.171943
+    rotation: -0.31570244
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 2.9141178, y: -36.076805}
+    scale: 1.1418175
+    rotation: -8.710141
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 5.794095, y: -35.576862}
+    scale: 1.086595
+    rotation: -0.66925514
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 12.451381, y: -35.835133}
+    scale: 1.1325315
+    rotation: -14.422528
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 15.051461, y: -35.835102}
+    scale: 0.92831033
+    rotation: 2.990987
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 17.750715, y: -35.54006}
+    scale: 0.8656287
+    rotation: -5.833028
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 21.692274, y: -35.210598}
+    scale: 1.0290836
+    rotation: 4.363087
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 23.935162, y: -35.37081}
+    scale: 1.1248691
+    rotation: -17.566
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 30.361422, y: -35.21219}
+    scale: 0.9774742
+    rotation: 11.219046
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 32.41954, y: -35.29132}
+    scale: 0.80744296
+    rotation: -3.3211992
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 36.17515, y: -35.997444}
+    scale: 1.0266664
+    rotation: -2.3254933
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 39.05265, y: -35.550644}
+    scale: 0.9913687
+    rotation: 0.9877546
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 39.65265, y: -35.150642}
+    scale: 1.1466748
+    rotation: 16.154688
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 42.179333, y: -36.78576}
+    scale: 1.0198767
+    rotation: 9.869997
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 44.513332, y: -36.025623}
+    scale: 0.99075276
+    rotation: 13.486842
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -48.475677, y: -32.983265}
+    scale: 1.0392959
+    rotation: -3.202976
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -44.38633, y: -33.239777}
+    scale: 0.9885373
+    rotation: 12.579828
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -42.05874, y: -33.745834}
+    scale: 1.1087722
+    rotation: -16.835384
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -33.56587, y: -33.313656}
+    scale: 1.020054
+    rotation: -6.3095255
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -29.211706, y: -32.857975}
+    scale: 1.1188647
+    rotation: -6.747734
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -27.077526, y: -32.946335}
+    scale: 0.93855685
+    rotation: 6.440902
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -17.382639, y: -32.509495}
+    scale: 0.95517594
+    rotation: 9.517889
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -16.782639, y: -32.109493}
+    scale: 0.98530084
+    rotation: 10.44553
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -8.2024, y: -33.065014}
+    scale: 1.0497022
+    rotation: -14.044058
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -5.6030912, y: -33.04088}
+    scale: 0.95169276
+    rotation: 5.105134
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -3.5529861, y: -33.782185}
+    scale: 1.094394
+    rotation: 8.465573
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 0.0770834, y: -32.269817}
+    scale: 1.0285258
+    rotation: -11.145901
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 5.8069, y: -32.228424}
+    scale: 1.0248736
+    rotation: -8.582568
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 9.387831, y: -33.354755}
+    scale: 1.0056666
+    rotation: -11.331464
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 9.987831, y: -32.954754}
+    scale: 1.010972
+    rotation: -4.668458
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 17.811857, y: -32.451214}
+    scale: 1.0726925
+    rotation: -15.426307
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 24.255318, y: -32.68514}
+    scale: 1.1380951
+    rotation: -14.921299
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 27.43096, y: -33.38681}
+    scale: 1.1945072
+    rotation: -2.773077
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 33.499695, y: -33.28782}
+    scale: 0.9796666
+    rotation: 7.8909516
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 35.45297, y: -33.702938}
+    scale: 0.9436285
+    rotation: -5.764183
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 44.210888, y: -32.27396}
+    scale: 1.0611788
+    rotation: 15.847682
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -47.89168, y: -30.615036}
+    scale: 0.9317079
+    rotation: -11.003386
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -45.33768, y: -29.712309}
+    scale: 1.149456
+    rotation: 8.271263
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -41.31614, y: -29.307316}
+    scale: 1.1596689
+    rotation: -14.31671
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -38.305283, y: -29.468287}
+    scale: 1.1098692
+    rotation: 16.186762
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -35.883152, y: -30.587437}
+    scale: 0.8559715
+    rotation: -16.469872
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -33.387104, y: -30.536448}
+    scale: 0.9617177
+    rotation: -10.0023985
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -27.672972, y: -30.766644}
+    scale: 1.1015099
+    rotation: 12.164392
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -23.735147, y: -30.509754}
+    scale: 0.85172015
+    rotation: -2.891611
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -14.384145, y: -29.374344}
+    scale: 1.0937806
+    rotation: 17.289885
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -5.407616, y: -29.459702}
+    scale: 0.9516309
+    rotation: 6.157914
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 3.5661225, y: -30.216618}
+    scale: 0.85660446
+    rotation: 11.1307335
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 5.511173, y: -30.592299}
+    scale: 0.80772936
+    rotation: 12.874509
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 8.468256, y: -30.049025}
+    scale: 1.0891508
+    rotation: -1.1075678
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 14.838498, y: -29.690186}
+    scale: 0.8095239
+    rotation: -16.718792
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 23.873266, y: -30.405926}
+    scale: 1.0831496
+    rotation: 6.3630795
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 26.775606, y: -29.498516}
+    scale: 0.9566959
+    rotation: 2.9400787
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 35.384884, y: -30.581842}
+    scale: 0.83768964
+    rotation: -3.7523985
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 35.984882, y: -30.181843}
+    scale: 1.092471
+    rotation: -11.914167
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 38.657417, y: -29.995813}
+    scale: 0.938136
+    rotation: 7.9997616
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 45.095524, y: -30.453524}
+    scale: 1.1635758
+    rotation: -3.984533
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -48.47259, y: -27.464352}
+    scale: 0.9220955
+    rotation: -14.04187
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -44.81816, y: -27.350424}
+    scale: 0.8329002
+    rotation: -7.3791466
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -44.218163, y: -26.950424}
+    scale: 0.83162105
+    rotation: 11.469507
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -38.31823, y: -27.427486}
+    scale: 1.0306582
+    rotation: -14.878221
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -36.021076, y: -26.952917}
+    scale: 1.1857686
+    rotation: 14.48225
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -33.38358, y: -27.213388}
+    scale: 0.90848166
+    rotation: 4.994035
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -29.523272, y: -27.376513}
+    scale: 0.94994706
+    rotation: -14.747687
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -26.30087, y: -27.291845}
+    scale: 0.9302276
+    rotation: -15.483903
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -20.563194, y: -27.778364}
+    scale: 0.9169549
+    rotation: -9.600082
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -17.899727, y: -27.150785}
+    scale: 0.91495365
+    rotation: 17.926764
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -15.100174, y: -27.300854}
+    scale: 0.90617454
+    rotation: -3.7265315
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -12.602195, y: -26.76508}
+    scale: 0.85933465
+    rotation: -11.146662
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -8.534726, y: -27.398958}
+    scale: 0.98474103
+    rotation: 7.054105
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -5.305476, y: -26.632816}
+    scale: 1.0128027
+    rotation: 14.304443
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -0.5078751, y: -27.268965}
+    scale: 1.0676297
+    rotation: 16.347397
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 6.294044, y: -26.72196}
+    scale: 0.94718593
+    rotation: 8.2562685
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 8.708753, y: -27.09149}
+    scale: 1.0644412
+    rotation: -4.396001
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 11.993145, y: -26.416834}
+    scale: 1.0812719
+    rotation: 16.022036
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 15.506304, y: -26.907408}
+    scale: 0.9186228
+    rotation: 3.2381494
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 17.54498, y: -26.3948}
+    scale: 1.1006132
+    rotation: -6.735244
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 18.14498, y: -25.9948}
+    scale: 1.104963
+    rotation: -12.434645
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 21.08555, y: -26.765656}
+    scale: 1.137379
+    rotation: -5.985942
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 23.53951, y: -26.946888}
+    scale: 0.87794363
+    rotation: 8.593956
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 24.139511, y: -26.546888}
+    scale: 1.0561482
+    rotation: 11.163395
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 26.989185, y: -26.249123}
+    scale: 1.1111412
+    rotation: -15.043924
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 32.49249, y: -26.679302}
+    scale: 1.0194346
+    rotation: 2.2053123
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 39.460796, y: -27.70086}
+    scale: 0.89069337
+    rotation: 14.0793295
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 42.018524, y: -27.793179}
+    scale: 0.94157904
+    rotation: -16.176334
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 44.49647, y: -26.75076}
+    scale: 1.1808233
+    rotation: -11.212414
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -48.71346, y: -24.373396}
+    scale: 1.0109866
+    rotation: 15.51998
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -45.51606, y: -23.227846}
+    scale: 0.8894484
+    rotation: -5.4431367
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -41.348263, y: -24.239573}
+    scale: 0.87640834
+    rotation: -14.419363
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -39.40258, y: -23.983574}
+    scale: 0.84969723
+    rotation: -4.9214993
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -33.163315, y: -24.7157}
+    scale: 0.9393468
+    rotation: -15.086174
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -29.264029, y: -24.74061}
+    scale: 1.0202247
+    rotation: 11.3197565
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -26.897724, y: -24.355265}
+    scale: 0.9269972
+    rotation: 9.397348
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -26.297724, y: -23.955265}
+    scale: 1.1114863
+    rotation: -17.343363
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -21.34723, y: -24.364832}
+    scale: 0.8111565
+    rotation: 11.724897
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -18.6208, y: -24.79696}
+    scale: 0.8924155
+    rotation: -15.75562
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -15.394072, y: -23.68348}
+    scale: 0.90061903
+    rotation: 2.1715443
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -12.742399, y: -23.717072}
+    scale: 1.1811359
+    rotation: 16.387001
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -8.848527, y: -24.599674}
+    scale: 0.8248547
+    rotation: 1.813817
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -5.5415254, y: -24.312584}
+    scale: 0.8663836
+    rotation: -7.070068
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -3.0549755, y: -23.952002}
+    scale: 1.0100043
+    rotation: -6.4650764
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -0.36782986, y: -24.283974}
+    scale: 1.0688026
+    rotation: -2.3298097
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 3.0269506, y: -24.250761}
+    scale: 0.8690618
+    rotation: -3.3617048
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 3.6269507, y: -23.850761}
+    scale: 0.9232826
+    rotation: -10.088736
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 11.674183, y: -23.900835}
+    scale: 0.91284376
+    rotation: -13.144121
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 18.650509, y: -23.909618}
+    scale: 1.1512003
+    rotation: 11.801823
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 19.25051, y: -23.509619}
+    scale: 1.03058
+    rotation: 11.917969
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 20.307844, y: -23.617615}
+    scale: 1.0392786
+    rotation: 11.580817
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 24.662416, y: -24.226274}
+    scale: 0.91130984
+    rotation: -4.4768753
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 26.87127, y: -24.424425}
+    scale: 1.1512892
+    rotation: -11.998742
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 33.527405, y: -23.858847}
+    scale: 0.8494946
+    rotation: 10.200237
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 34.127403, y: -23.458847}
+    scale: 0.86616373
+    rotation: -0.19527555
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 35.33936, y: -23.898275}
+    scale: 0.9832903
+    rotation: -14.69007
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 38.721565, y: -23.795597}
+    scale: 0.89671844
+    rotation: 3.2876887
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -39.49607, y: -21.463627}
+    scale: 0.93297744
+    rotation: 6.161648
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -35.236065, y: -21.128004}
+    scale: 1.0391935
+    rotation: 1.5697596
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -33.24572, y: -20.435787}
+    scale: 1.1717052
+    rotation: -3.5716777
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -30.47815, y: -20.985235}
+    scale: 1.0387056
+    rotation: 9.652303
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -26.354034, y: -21.384983}
+    scale: 1.0960877
+    rotation: -14.822679
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -23.419092, y: -20.557045}
+    scale: 0.8729507
+    rotation: -17.530756
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -20.37681, y: -20.409155}
+    scale: 0.9973244
+    rotation: 16.323483
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -17.677017, y: -21.54498}
+    scale: 0.9946987
+    rotation: -16.039145
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -14.408798, y: -21.548306}
+    scale: 1.1614324
+    rotation: 3.6876554
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -9.183609, y: -21.782585}
+    scale: 1.0389311
+    rotation: 6.796117
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -5.8357553, y: -21.30134}
+    scale: 0.8277078
+    rotation: -14.275691
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -3.4770162, y: -21.640003}
+    scale: 0.90138894
+    rotation: -16.783533
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 0.78970546, y: -20.808739}
+    scale: 0.91151834
+    rotation: -3.2184114
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 2.3185935, y: -21.025036}
+    scale: 0.8432268
+    rotation: 15.931637
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 8.227553, y: -21.64161}
+    scale: 0.8918208
+    rotation: 7.818691
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 12.753504, y: -21.657774}
+    scale: 1.0861499
+    rotation: -6.553949
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 14.762325, y: -21.45487}
+    scale: 0.81901896
+    rotation: 13.725889
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 18.13774, y: -21.419933}
+    scale: 0.8542168
+    rotation: 17.833902
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 18.73774, y: -21.019934}
+    scale: 1.030315
+    rotation: 1.3657937
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 21.56205, y: -21.552835}
+    scale: 1.1056056
+    rotation: 14.484686
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 23.503847, y: -21.326166}
+    scale: 0.8665625
+    rotation: -12.427337
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 27.362942, y: -20.337767}
+    scale: 0.83764267
+    rotation: 1.7686872
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 29.935797, y: -21.681673}
+    scale: 1.1902215
+    rotation: -10.19709
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 32.4839, y: -21.437845}
+    scale: 1.1077912
+    rotation: -13.754038
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 36.72729, y: -21.728466}
+    scale: 1.1535704
+    rotation: 13.636625
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 38.25385, y: -20.597237}
+    scale: 0.8681588
+    rotation: -3.3854842
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 41.68344, y: -21.747784}
+    scale: 1.0760237
+    rotation: -4.54971
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 45.57762, y: -20.242949}
+    scale: 0.8725241
+    rotation: 15.84215
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -47.218594, y: -17.220583}
+    scale: 1.0463732
+    rotation: 2.1583586
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -45.09466, y: -17.229118}
+    scale: 0.9980308
+    rotation: 2.5027885
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -44.494663, y: -16.829119}
+    scale: 1.1439054
+    rotation: -6.0243273
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -42.433834, y: -17.290491}
+    scale: 0.99202144
+    rotation: -16.714148
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -41.833836, y: -16.890491}
+    scale: 0.8734782
+    rotation: -7.0189486
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -38.32739, y: -17.684025}
+    scale: 1.1053393
+    rotation: -8.941072
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -33.75007, y: -17.853119}
+    scale: 1.0421182
+    rotation: 13.627523
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -33.15007, y: -17.45312}
+    scale: 1.1606858
+    rotation: -3.376018
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -26.799072, y: -17.30575}
+    scale: 0.97426254
+    rotation: -4.4230924
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -14.931789, y: -17.695139}
+    scale: 1.1083996
+    rotation: -6.52379
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -9.704858, y: -18.154696}
+    scale: 1.0680739
+    rotation: -5.8346896
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -9.104857, y: -17.754696}
+    scale: 0.92709243
+    rotation: -3.3275614
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -6.233009, y: -18.661863}
+    scale: 1.0263947
+    rotation: 6.2289176
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -2.9873295, y: -18.166328}
+    scale: 1.0114945
+    rotation: -14.822792
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -0.7143631, y: -17.43267}
+    scale: 1.0887913
+    rotation: -13.178811
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 3.4899828, y: -17.89984}
+    scale: 0.8853635
+    rotation: 7.1174626
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 6.2694483, y: -18.532139}
+    scale: 0.87530494
+    rotation: 3.7512774
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 8.52802, y: -17.766787}
+    scale: 1.1175262
+    rotation: 3.0440025
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 11.258613, y: -18.031898}
+    scale: 1.1629915
+    rotation: -14.213848
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 15.323149, y: -18.627361}
+    scale: 0.9104609
+    rotation: 0.09688139
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 20.673584, y: -17.635778}
+    scale: 0.99245113
+    rotation: 14.399763
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 26.928923, y: -17.42205}
+    scale: 0.9543452
+    rotation: 0.93481636
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 32.37081, y: -18.183653}
+    scale: 1.1758838
+    rotation: 16.841333
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 38.66434, y: -17.217913}
+    scale: 1.1794809
+    rotation: 10.70699
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 41.68199, y: -17.838621}
+    scale: 1.053448
+    rotation: 8.396801
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -47.375538, y: -14.237242}
+    scale: 0.8319291
+    rotation: -15.0578375
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -45.78901, y: -14.498049}
+    scale: 1.1272631
+    rotation: -6.844933
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -41.210354, y: -15.440474}
+    scale: 1.1369126
+    rotation: 16.38231
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -38.63432, y: -14.939177}
+    scale: 0.8459316
+    rotation: -10.506052
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -36.51343, y: -14.6911545}
+    scale: 0.8127707
+    rotation: -4.768916
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -33.463375, y: -14.348675}
+    scale: 1.176733
+    rotation: 17.41309
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -29.547674, y: -15.215141}
+    scale: 1.0034162
+    rotation: -15.082944
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -27.739105, y: -14.323593}
+    scale: 0.98960304
+    rotation: -15.805352
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -23.230293, y: -14.854682}
+    scale: 1.139356
+    rotation: 12.409367
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -21.355303, y: -15.00833}
+    scale: 1.1819884
+    rotation: 16.752064
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -15.671205, y: -14.359392}
+    scale: 0.8687583
+    rotation: -13.98577
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -12.643078, y: -15.289984}
+    scale: 1.0315194
+    rotation: -13.703154
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -9.144489, y: -14.2957115}
+    scale: 1.0666093
+    rotation: -5.4330087
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -5.9610224, y: -15.798191}
+    scale: 0.9162323
+    rotation: 7.13117
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 0.0053111077, y: -15.170383}
+    scale: 0.88704234
+    rotation: 11.130144
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 0.60531116, y: -14.770384}
+    scale: 1.014615
+    rotation: 1.0666695
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 3.2683885, y: -14.681379}
+    scale: 0.98286515
+    rotation: 1.6299591
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 6.0270367, y: -14.473911}
+    scale: 0.9504077
+    rotation: -0.16951561
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 12.655724, y: -14.927932}
+    scale: 1.046415
+    rotation: 9.9539995
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 14.36867, y: -14.643881}
+    scale: 1.0456934
+    rotation: 11.251639
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 17.733421, y: -15.178459}
+    scale: 0.89637005
+    rotation: 2.9081454
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 21.74446, y: -15.593609}
+    scale: 1.1138253
+    rotation: 11.123424
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 23.486002, y: -14.746573}
+    scale: 1.047921
+    rotation: -8.991085
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 26.325022, y: -14.584961}
+    scale: 0.975943
+    rotation: -7.1070976
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 26.925022, y: -14.184961}
+    scale: 0.8858287
+    rotation: 2.9961069
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 30.235117, y: -15.540955}
+    scale: 1.0839382
+    rotation: -7.7757607
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 32.59493, y: -14.733828}
+    scale: 1.1417439
+    rotation: -3.306814
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 33.194927, y: -14.333828}
+    scale: 0.93584234
+    rotation: 10.294638
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 35.59684, y: -15.064487}
+    scale: 0.92412966
+    rotation: -3.360958
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 38.42548, y: -15.670084}
+    scale: 1.1657692
+    rotation: 0.875649
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 41.420185, y: -14.764671}
+    scale: 1.1794184
+    rotation: -9.239358
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 44.350006, y: -15.794533}
+    scale: 0.9003643
+    rotation: 1.7510705
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -48.570522, y: -12.582527}
+    scale: 0.8510784
+    rotation: -5.932823
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -47.970524, y: -12.182528}
+    scale: 1.1458453
+    rotation: 16.66456
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -45.797173, y: -12.3079405}
+    scale: 1.0545689
+    rotation: 9.850138
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -42.281452, y: -12.367153}
+    scale: 1.0500941
+    rotation: 12.146978
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -39.680412, y: -12.214492}
+    scale: 1.0896758
+    rotation: -12.393743
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -26.548052, y: -12.28835}
+    scale: 1.1743256
+    rotation: 15.226995
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -24.212809, y: -11.846201}
+    scale: 0.8898196
+    rotation: 3.0881624
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -20.643261, y: -12.081335}
+    scale: 1.0264938
+    rotation: 6.9378834
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -17.356783, y: -11.452276}
+    scale: 0.99983025
+    rotation: -4.5284066
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -14.527935, y: -11.638398}
+    scale: 1.0256771
+    rotation: 16.869768
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -11.347663, y: -12.557168}
+    scale: 0.9325704
+    rotation: 7.762907
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -8.945, y: -11.994506}
+    scale: 0.86279815
+    rotation: 0.09199977
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -8.344999, y: -11.594506}
+    scale: 0.91070825
+    rotation: 12.434573
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -0.11412668, y: -12.451682}
+    scale: 0.913897
+    rotation: 4.578511
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 3.0936477, y: -12.197663}
+    scale: 1.0337231
+    rotation: 3.8029196
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 5.2208433, y: -11.3481}
+    scale: 1.1224983
+    rotation: 12.058637
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 8.661279, y: -11.413802}
+    scale: 0.8085929
+    rotation: -0.6074549
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 11.454843, y: -12.029428}
+    scale: 1.161102
+    rotation: -0.074243546
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 14.599413, y: -11.397995}
+    scale: 1.0393863
+    rotation: -13.460584
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 17.492262, y: -11.6920595}
+    scale: 1.096637
+    rotation: -10.907452
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 20.748926, y: -12.547485}
+    scale: 1.0421324
+    rotation: 10.958517
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 24.169117, y: -12.472595}
+    scale: 0.8868737
+    rotation: 4.5748634
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 26.949888, y: -11.675389}
+    scale: 0.9884383
+    rotation: -3.4786372
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 30.481071, y: -12.719887}
+    scale: 0.81855774
+    rotation: 0.41330266
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 33.68022, y: -12.044171}
+    scale: 1.0243287
+    rotation: -9.913038
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 36.10966, y: -11.500883}
+    scale: 0.9082217
+    rotation: 10.834133
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 39.52179, y: -11.345743}
+    scale: 0.88951284
+    rotation: 1.3279188
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 41.43335, y: -11.638529}
+    scale: 1.0169638
+    rotation: -14.120968
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -47.481625, y: -9.352818}
+    scale: 0.8613353
+    rotation: -15.614722
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -41.457348, y: -9.137262}
+    scale: 1.122221
+    rotation: 3.091469
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -38.43441, y: -8.823533}
+    scale: 0.95691675
+    rotation: -6.2442493
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -33.034683, y: -8.517853}
+    scale: 0.8241974
+    rotation: -1.9234872
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -32.434685, y: -8.117853}
+    scale: 1.0571761
+    rotation: 9.20061
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -29.449038, y: -8.659349}
+    scale: 0.94481754
+    rotation: 13.923452
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -26.9317, y: -9.316483}
+    scale: 1.0821769
+    rotation: 6.574706
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -23.380484, y: -8.61371}
+    scale: 1.0212395
+    rotation: -4.5140696
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -20.615976, y: -8.751583}
+    scale: 0.94148713
+    rotation: -12.384029
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -17.291306, y: -9.003647}
+    scale: 0.95804715
+    rotation: 15.346064
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -14.256792, y: -8.237622}
+    scale: 0.85581625
+    rotation: 1.7228086
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -11.923889, y: -8.7497835}
+    scale: 1.0537046
+    rotation: -2.336116
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -8.241566, y: -8.88233}
+    scale: 1.0314131
+    rotation: -2.8446126
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -5.321392, y: -9.337449}
+    scale: 0.99096453
+    rotation: -17.417473
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -2.333296, y: -9.119162}
+    scale: 1.1107706
+    rotation: -5.6360025
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -0.02394681, y: -9.42389}
+    scale: 0.94712824
+    rotation: 17.395916
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 5.5102487, y: -8.808122}
+    scale: 0.9184795
+    rotation: -5.6508427
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 8.413199, y: -8.856217}
+    scale: 0.8300462
+    rotation: 13.488145
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 11.634014, y: -8.889634}
+    scale: 0.8858142
+    rotation: -15.72795
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 15.767305, y: -9.341743}
+    scale: 1.1756482
+    rotation: 14.273853
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 18.068584, y: -8.503578}
+    scale: 0.99171185
+    rotation: 12.86955
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 21.192785, y: -9.668013}
+    scale: 1.0574706
+    rotation: 9.128881
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 24.3297, y: -9.544075}
+    scale: 0.8386247
+    rotation: -3.0873191
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 26.318481, y: -8.550578}
+    scale: 0.8949156
+    rotation: -15.667278
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 32.656345, y: -9.724802}
+    scale: 1.1418767
+    rotation: -3.765918
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 36.44604, y: -8.6100855}
+    scale: 1.163762
+    rotation: -4.066968
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 38.561577, y: -8.570226}
+    scale: 1.0803304
+    rotation: 10.620947
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 44.903255, y: -8.290311}
+    scale: 1.1041937
+    rotation: 2.1227753
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -47.46531, y: -6.2264614}
+    scale: 1.1710399
+    rotation: -7.01058
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -41.891674, y: -6.5365663}
+    scale: 0.96574897
+    rotation: -1.1275148
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -32.43679, y: -6.13575}
+    scale: 1.0094334
+    rotation: 17.395653
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -31.83679, y: -5.7357497}
+    scale: 0.8222101
+    rotation: 1.9025166
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -29.968954, y: -5.8234353}
+    scale: 1.143169
+    rotation: -3.0010936
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -23.581102, y: -6.7269197}
+    scale: 1.1146053
+    rotation: -15.18716
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -17.988735, y: -6.642579}
+    scale: 1.1560422
+    rotation: -3.921558
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -14.700269, y: -6.12061}
+    scale: 1.136405
+    rotation: 13.146302
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -9.416658, y: -6.4056215}
+    scale: 1.1623197
+    rotation: -14.753006
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -8.816658, y: -6.0056214}
+    scale: 1.0812774
+    rotation: 8.5345335
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -2.8336496, y: -6.561595}
+    scale: 0.95170164
+    rotation: 13.656712
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 0.55138236, y: -6.6785316}
+    scale: 1.061076
+    rotation: -10.632133
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 3.6850977, y: -5.4389873}
+    scale: 1.1832267
+    rotation: 7.2861156
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 5.845817, y: -5.22336}
+    scale: 0.8676986
+    rotation: -15.943276
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 8.898699, y: -6.397999}
+    scale: 0.9895808
+    rotation: 2.0667193
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 11.740789, y: -6.194706}
+    scale: 0.80490154
+    rotation: -13.503085
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 18.494215, y: -6.712888}
+    scale: 1.1599214
+    rotation: 14.456763
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 20.962996, y: -5.364348}
+    scale: 0.84211427
+    rotation: -4.501798
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 24.148462, y: -5.2129807}
+    scale: 1.1363959
+    rotation: -2.3818724
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 29.62028, y: -6.319169}
+    scale: 1.1705643
+    rotation: 1.7242527
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 33.622772, y: -6.201853}
+    scale: 1.1213114
+    rotation: -0.38675737
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 41.636837, y: -6.2872934}
+    scale: 1.0128502
+    rotation: -0.52783513
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 44.51552, y: -5.7898445}
+    scale: 0.8208237
+    rotation: 4.1919236
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -47.83831, y: -3.2823696}
+    scale: 1.1383833
+    rotation: -17.894794
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -45.798225, y: -2.9372225}
+    scale: 1.0010521
+    rotation: -16.200298
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -41.432076, y: -3.101188}
+    scale: 0.81502235
+    rotation: -0.7560353
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -38.699158, y: -3.3406339}
+    scale: 0.8634432
+    rotation: -8.716147
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -35.7188, y: -3.5010624}
+    scale: 1.0937637
+    rotation: 5.8506765
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -30.708849, y: -3.2890658}
+    scale: 1.0970459
+    rotation: 17.37747
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -26.557768, y: -2.320304}
+    scale: 1.0315546
+    rotation: 7.790721
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -23.78321, y: -3.2071369}
+    scale: 1.1377258
+    rotation: 16.494076
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -20.37583, y: -2.8357208}
+    scale: 1.1590976
+    rotation: -11.072401
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -19.77583, y: -2.4357207}
+    scale: 1.175823
+    rotation: -15.796317
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -17.80336, y: -2.822439}
+    scale: 0.9833461
+    rotation: 0.92728686
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -15.660057, y: -3.6677072}
+    scale: 1.0309759
+    rotation: -17.30073
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -12.75676, y: -2.2497656}
+    scale: 0.8528112
+    rotation: -14.443171
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -5.759359, y: -2.7323172}
+    scale: 1.082424
+    rotation: 2.3223445
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -3.3289928, y: -3.684807}
+    scale: 1.1304202
+    rotation: -15.42837
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 6.210147, y: -3.2940028}
+    scale: 0.85137
+    rotation: 13.029892
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 8.717166, y: -3.3321617}
+    scale: 0.9618196
+    rotation: 6.639815
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 12.6360445, y: -3.3840382}
+    scale: 0.83611065
+    rotation: -7.8098245
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 15.024847, y: -2.317083}
+    scale: 0.9863757
+    rotation: 13.725934
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 18.319431, y: -2.929273}
+    scale: 0.933661
+    rotation: 3.2054243
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 21.55059, y: -2.3611832}
+    scale: 1.1118387
+    rotation: -16.594774
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 26.719187, y: -2.8733578}
+    scale: 0.8445003
+    rotation: 14.56014
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 33.438274, y: -3.4811041}
+    scale: 1.145307
+    rotation: 2.3498662
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 35.614933, y: -2.9330318}
+    scale: 0.9915896
+    rotation: 2.1928518
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 39.00286, y: -3.3009448}
+    scale: 0.8397137
+    rotation: 7.9684114
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 44.887764, y: -3.107274}
+    scale: 1.1861331
+    rotation: -17.052956
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -47.658424, y: -0.68768334}
+    scale: 0.90801764
+    rotation: 14.98786
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -47.058426, y: -0.28768334}
+    scale: 0.86486715
+    rotation: 12.425029
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -44.220367, y: -0.63971615}
+    scale: 0.9613353
+    rotation: -3.5042644
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -42.47842, y: -0.6620201}
+    scale: 0.8291579
+    rotation: 5.9897676
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -39.679157, y: -0.5833271}
+    scale: 1.099021
+    rotation: 2.731405
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -35.444115, y: -0.060309745}
+    scale: 0.81674623
+    rotation: -8.945909
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -26.668385, y: 0.30810767}
+    scale: 1.1031725
+    rotation: 9.516416
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -21.74629, y: -0.7208748}
+    scale: 0.93533576
+    rotation: 10.92871
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -18.64386, y: 0.505495}
+    scale: 0.8932209
+    rotation: -8.100727
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -12.666397, y: -0.5774457}
+    scale: 1.0101047
+    rotation: 15.177975
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -9.0914345, y: -0.37457696}
+    scale: 1.124611
+    rotation: -4.6495824
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 8.426593, y: -0.041268777}
+    scale: 0.9586637
+    rotation: 9.483295
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 15.448472, y: 0.013290501}
+    scale: 0.9890132
+    rotation: 14.2375
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 18.741028, y: -0.62725395}
+    scale: 1.0171347
+    rotation: 12.055508
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 21.047504, y: 0.10327702}
+    scale: 1.1769872
+    rotation: -7.578676
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 29.561914, y: 0.7946686}
+    scale: 1.0615934
+    rotation: 6.649499
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 36.254307, y: -0.07610617}
+    scale: 1.0350591
+    rotation: 3.5562143
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 38.54121, y: 0.58714944}
+    scale: 0.9749845
+    rotation: 16.527763
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 41.69317, y: -0.64097446}
+    scale: 1.1480881
+    rotation: 14.617286
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -48.502285, y: 2.4894269}
+    scale: 1.0983105
+    rotation: -16.878456
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -41.506596, y: 3.606873}
+    scale: 0.90189195
+    rotation: -2.9644182
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -38.33307, y: 2.2437112}
+    scale: 0.9590637
+    rotation: -10.826245
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -37.73307, y: 2.6437113}
+    scale: 1.0738096
+    rotation: -10.420073
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -35.362095, y: 3.4046516}
+    scale: 0.92521626
+    rotation: 10.670914
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -33.066498, y: 2.9717479}
+    scale: 0.8670891
+    rotation: 6.316538
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -29.811737, y: 3.0211334}
+    scale: 0.93916047
+    rotation: -6.3453064
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -18.701996, y: 3.5129607}
+    scale: 1.0122471
+    rotation: 2.3024297
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -14.893991, y: 3.2310243}
+    scale: 1.1741251
+    rotation: -12.238835
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -11.424645, y: 2.2722127}
+    scale: 1.0326425
+    rotation: 12.59692
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -9.7585, y: 3.5802438}
+    scale: 0.90610605
+    rotation: -17.619118
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -9.1585, y: 3.980244}
+    scale: 0.83279896
+    rotation: 4.47471
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -5.647685, y: 2.9381146}
+    scale: 0.97381604
+    rotation: -16.7127
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -5.047685, y: 3.3381147}
+    scale: 0.98935765
+    rotation: 13.056498
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -2.542924, y: 3.0439227}
+    scale: 0.9867489
+    rotation: 17.814737
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 3.6595697, y: 2.308991}
+    scale: 0.88198566
+    rotation: -7.006241
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 6.085402, y: 2.401124}
+    scale: 1.1751724
+    rotation: -6.499055
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 9.317937, y: 3.377118}
+    scale: 0.9015173
+    rotation: 2.7762237
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 11.802433, y: 3.5859835}
+    scale: 1.0034014
+    rotation: 15.439387
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 15.670813, y: 3.4542084}
+    scale: 0.83072174
+    rotation: 11.086774
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 16.270813, y: 3.8542085}
+    scale: 0.95566976
+    rotation: -9.735267
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 18.607376, y: 3.0005317}
+    scale: 0.98072153
+    rotation: 12.518696
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 21.206238, y: 3.3698773}
+    scale: 0.8684289
+    rotation: -0.3882004
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 24.057137, y: 2.5230074}
+    scale: 1.0785843
+    rotation: -4.445628
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 30.648417, y: 2.807948}
+    scale: 0.9222034
+    rotation: 7.598655
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 33.037468, y: 3.3160124}
+    scale: 1.0175682
+    rotation: 2.1577299
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 38.899006, y: 2.4439352}
+    scale: 0.8818749
+    rotation: -8.198808
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 39.499004, y: 2.8439353}
+    scale: 1.0032824
+    rotation: 1.1921539
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 42.08306, y: 2.9850621}
+    scale: 1.0186173
+    rotation: -1.1601359
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 45.63198, y: 2.7174249}
+    scale: 0.9001615
+    rotation: 5.315589
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -47.98899, y: 6.2527347}
+    scale: 0.9583752
+    rotation: 8.991913
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -45.484585, y: 6.431305}
+    scale: 0.9244883
+    rotation: -16.632751
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -44.884586, y: 6.831305}
+    scale: 1.0840093
+    rotation: 4.1433864
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -42.528717, y: 5.4329524}
+    scale: 1.1912329
+    rotation: -17.517818
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -32.458553, y: 5.6432605}
+    scale: 1.0133454
+    rotation: 1.3468788
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -30.580517, y: 6.166545}
+    scale: 0.9486726
+    rotation: 16.625402
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -29.980516, y: 6.566545}
+    scale: 1.1709343
+    rotation: 9.363337
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -27.303877, y: 6.390376}
+    scale: 1.0584455
+    rotation: -6.9245925
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -24.07961, y: 6.624425}
+    scale: 0.81343025
+    rotation: -3.4308362
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -20.870726, y: 5.2546926}
+    scale: 1.0323291
+    rotation: -11.78605
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -17.895264, y: 6.1801987}
+    scale: 0.8065062
+    rotation: 13.89787
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -14.245352, y: 6.4418573}
+    scale: 0.9998216
+    rotation: -5.029184
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -13.645351, y: 6.8418574}
+    scale: 0.8584295
+    rotation: 12.725509
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -11.254063, y: 5.3223157}
+    scale: 1.1555324
+    rotation: 6.476951
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -9.604207, y: 5.599187}
+    scale: 0.8549867
+    rotation: 17.473227
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -5.3397703, y: 5.253583}
+    scale: 1.0654446
+    rotation: 2.3108947
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -0.22727704, y: 5.5238585}
+    scale: 1.0501435
+    rotation: -9.955908
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 0.37272298, y: 5.9238586}
+    scale: 1.1169629
+    rotation: 4.833967
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 6.410263, y: 5.74321}
+    scale: 1.0324333
+    rotation: -12.67996
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 9.492442, y: 5.916251}
+    scale: 0.81706965
+    rotation: -11.164505
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 12.28937, y: 5.8777437}
+    scale: 1.1865962
+    rotation: -6.4093156
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 15.350579, y: 6.198613}
+    scale: 0.8208108
+    rotation: -11.05343
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 18.693193, y: 6.672417}
+    scale: 1.1628789
+    rotation: -9.911332
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 20.944462, y: 5.375417}
+    scale: 0.9578542
+    rotation: 9.822203
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 23.489237, y: 6.059938}
+    scale: 0.8842749
+    rotation: -2.170556
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 27.022434, y: 6.31836}
+    scale: 1.0136989
+    rotation: -3.0975018
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 33.023056, y: 6.2834787}
+    scale: 0.91307116
+    rotation: -7.261447
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 36.68658, y: 5.3190427}
+    scale: 0.92498344
+    rotation: 5.860938
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 39.77917, y: 6.7781634}
+    scale: 0.83256376
+    rotation: 12.485294
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 40.37917, y: 7.1781635}
+    scale: 0.9286747
+    rotation: 9.122152
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 44.282127, y: 6.5806446}
+    scale: 1.0577441
+    rotation: -8.696597
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -48.22611, y: 8.848822}
+    scale: 0.8934036
+    rotation: -7.863315
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -44.201584, y: 8.522501}
+    scale: 1.140056
+    rotation: 1.7015612
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -36.765015, y: 8.319129}
+    scale: 1.187553
+    rotation: -17.169445
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -33.63287, y: 8.933504}
+    scale: 1.1138557
+    rotation: 4.6187706
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -33.03287, y: 9.333504}
+    scale: 0.8901589
+    rotation: 12.524414
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -30.594826, y: 8.696177}
+    scale: 0.86882037
+    rotation: 9.035376
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -26.80204, y: 9.767607}
+    scale: 1.0963595
+    rotation: -9.447986
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -24.15696, y: 8.813835}
+    scale: 0.957941
+    rotation: -6.7430897
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -20.368715, y: 9.388996}
+    scale: 0.8262003
+    rotation: 15.082793
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -17.875357, y: 8.561883}
+    scale: 0.92722034
+    rotation: 4.8277917
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -14.356153, y: 8.737731}
+    scale: 0.95973855
+    rotation: -7.571227
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -12.355928, y: 8.291563}
+    scale: 0.8788768
+    rotation: 15.4250345
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -6.1150007, y: 9.493932}
+    scale: 0.849498
+    rotation: -0.21607554
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -3.471349, y: 9.645412}
+    scale: 0.9379673
+    rotation: -11.432267
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 3.410838, y: 9.70862}
+    scale: 0.82584953
+    rotation: 8.646582
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 9.047374, y: 9.437006}
+    scale: 0.9909602
+    rotation: -10.584695
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 12.4009, y: 9.041065}
+    scale: 0.8337125
+    rotation: 7.9123945
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 15.59979, y: 9.339694}
+    scale: 0.9134326
+    rotation: 5.419809
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 17.993238, y: 9.54898}
+    scale: 1.0976334
+    rotation: -3.0909476
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 21.482288, y: 8.4038105}
+    scale: 1.1122541
+    rotation: -6.5879517
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 24.098902, y: 8.60365}
+    scale: 0.88791037
+    rotation: 7.014721
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 24.698902, y: 9.00365}
+    scale: 1.0206369
+    rotation: 15.835994
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 26.833485, y: 9.287416}
+    scale: 0.8781296
+    rotation: -6.3958626
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 29.621641, y: 9.506434}
+    scale: 0.9335766
+    rotation: -8.161956
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 32.616783, y: 8.992012}
+    scale: 0.93764
+    rotation: 2.083216
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 36.634865, y: 8.25008}
+    scale: 0.9951322
+    rotation: 10.833127
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 39.168243, y: 9.4867115}
+    scale: 1.0651042
+    rotation: 2.4288583
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 39.76824, y: 9.886711}
+    scale: 0.8205749
+    rotation: 7.7440414
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 42.75961, y: 9.621624}
+    scale: 0.8783599
+    rotation: 11.418494
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 45.520786, y: 8.793187}
+    scale: 0.92297894
+    rotation: 15.188369
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -48.260525, y: 11.73551}
+    scale: 1.031077
+    rotation: 10.40333
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -42.492924, y: 12.032816}
+    scale: 1.024216
+    rotation: -7.3952193
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -38.47077, y: 11.9988365}
+    scale: 1.0785059
+    rotation: 15.293142
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -36.21351, y: 12.315396}
+    scale: 0.88336235
+    rotation: -9.3103695
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -33.431526, y: 11.88271}
+    scale: 0.85496795
+    rotation: 15.7722645
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -29.78019, y: 11.309587}
+    scale: 1.050103
+    rotation: 0.5758445
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -29.18019, y: 11.709586}
+    scale: 1.1240808
+    rotation: 14.79602
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -23.275269, y: 12.221486}
+    scale: 0.850547
+    rotation: -2.792701
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -17.930021, y: 11.2519455}
+    scale: 0.9227701
+    rotation: -1.0459338
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -12.294844, y: 11.958849}
+    scale: 1.1741318
+    rotation: 4.5077033
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -9.18489, y: 11.981717}
+    scale: 1.0947323
+    rotation: 3.7803075
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -3.7823162, y: 12.025109}
+    scale: 0.80959195
+    rotation: -6.5757904
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 0.14846583, y: 11.800463}
+    scale: 0.93570226
+    rotation: -1.3559221
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 6.2195764, y: 11.462638}
+    scale: 0.8764153
+    rotation: 10.699595
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 11.673017, y: 12.0571165}
+    scale: 1.0124632
+    rotation: 0.31125855
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 14.320598, y: 11.663819}
+    scale: 1.0587913
+    rotation: -15.063004
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 18.512486, y: 11.272302}
+    scale: 0.87226695
+    rotation: 2.8668115
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 21.224167, y: 12.198586}
+    scale: 1.1280057
+    rotation: 7.865368
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 24.654161, y: 11.948866}
+    scale: 0.9188623
+    rotation: 12.225284
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 29.53132, y: 11.330917}
+    scale: 0.802883
+    rotation: 17.596869
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 32.920982, y: 12.189175}
+    scale: 1.1586678
+    rotation: 3.5413527
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 36.072453, y: 12.631269}
+    scale: 1.0642005
+    rotation: 5.7050266
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 38.809658, y: 12.517922}
+    scale: 1.1137711
+    rotation: 7.9361587
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 45.757748, y: 11.996496}
+    scale: 1.0467635
+    rotation: -6.652566
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 46.357746, y: 12.396496}
+    scale: 0.9071471
+    rotation: -13.201792
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -47.298656, y: 15.412207}
+    scale: 0.80195534
+    rotation: 1.7261925
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -44.870483, y: 14.445669}
+    scale: 1.1031868
+    rotation: -9.608787
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -39.484398, y: 14.302747}
+    scale: 0.8500064
+    rotation: 4.4920564
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -33.41347, y: 14.954376}
+    scale: 0.83961654
+    rotation: 13.872982
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -32.813473, y: 15.354376}
+    scale: 0.8813096
+    rotation: 7.7601776
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -27.100101, y: 14.879982}
+    scale: 1.109128
+    rotation: -13.95562
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -24.49111, y: 14.645547}
+    scale: 1.1568925
+    rotation: -0.6772202
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -21.219261, y: 14.611287}
+    scale: 1.0676022
+    rotation: 14.830629
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -20.61926, y: 15.011287}
+    scale: 1.0269578
+    rotation: -13.174274
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -17.584717, y: 14.776802}
+    scale: 0.9967343
+    rotation: 13.749941
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -14.699873, y: 14.519665}
+    scale: 0.99114037
+    rotation: -12.049533
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -12.72236, y: 14.50883}
+    scale: 0.88272405
+    rotation: -3.4497972
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -8.455501, y: 14.93361}
+    scale: 1.194855
+    rotation: -17.746454
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -6.5240817, y: 15.351571}
+    scale: 1.009949
+    rotation: -16.890388
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 6.2278976, y: 15.581499}
+    scale: 0.97835535
+    rotation: 15.380564
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 9.235443, y: 14.449646}
+    scale: 0.83348
+    rotation: 10.575989
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 14.689439, y: 14.478916}
+    scale: 1.0006788
+    rotation: -17.36271
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 18.38593, y: 15.695011}
+    scale: 0.8669462
+    rotation: 1.4185624
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 18.98593, y: 16.09501}
+    scale: 1.0354831
+    rotation: -12.263491
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 20.42977, y: 15.647989}
+    scale: 1.1169976
+    rotation: 14.548724
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 23.79015, y: 15.334241}
+    scale: 0.95733863
+    rotation: -3.163508
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 27.37163, y: 15.125943}
+    scale: 0.8465277
+    rotation: -12.933396
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 33.433804, y: 14.967659}
+    scale: 1.0563908
+    rotation: -0.18028629
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 35.819996, y: 14.532609}
+    scale: 0.9527315
+    rotation: -2.2561133
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 41.5938, y: 15.065657}
+    scale: 0.934082
+    rotation: 11.056896
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 44.377186, y: 14.268846}
+    scale: 0.93792874
+    rotation: -6.0416117
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -45.251717, y: 18.32963}
+    scale: 0.8041366
+    rotation: -17.120243
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -39.73498, y: 17.215137}
+    scale: 1.1190501
+    rotation: 12.62446
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -32.217216, y: 18.374638}
+    scale: 0.8791285
+    rotation: -14.773432
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -30.525375, y: 17.782856}
+    scale: 1.1524022
+    rotation: -4.297136
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -29.925375, y: 18.182856}
+    scale: 0.89841384
+    rotation: 10.156273
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -27.760387, y: 18.33748}
+    scale: 0.8399917
+    rotation: -15.476218
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -27.160387, y: 18.73748}
+    scale: 1.1043757
+    rotation: 1.6990721
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -24.408667, y: 18.272793}
+    scale: 1.1770921
+    rotation: -5.276272
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -17.582047, y: 17.290895}
+    scale: 1.0945243
+    rotation: -13.3756075
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -14.6142435, y: 18.16743}
+    scale: 1.0788697
+    rotation: -2.3883538
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -11.821389, y: 18.21467}
+    scale: 0.8006977
+    rotation: -6.1672397
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -5.5204263, y: 17.900648}
+    scale: 1.0520782
+    rotation: 4.1257334
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -4.9204264, y: 18.300648}
+    scale: 1.1798816
+    rotation: 0.78756094
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 3.602965, y: 17.289968}
+    scale: 1.0590459
+    rotation: 7.629391
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 5.7403207, y: 17.682709}
+    scale: 1.0424492
+    rotation: -1.967087
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 15.250303, y: 18.759119}
+    scale: 1.0428909
+    rotation: -0.57769096
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 21.244354, y: 17.892668}
+    scale: 1.1253159
+    rotation: -15.715036
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 21.844355, y: 18.292667}
+    scale: 0.86084753
+    rotation: 8.135187
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 24.395132, y: 17.725603}
+    scale: 0.9935295
+    rotation: 0.15642428
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 26.553442, y: 17.985178}
+    scale: 0.89280504
+    rotation: -12.612268
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 29.598808, y: 17.370674}
+    scale: 1.149076
+    rotation: -1.2588036
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 39.261925, y: 17.482565}
+    scale: 1.163793
+    rotation: 5.2541
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 41.397446, y: 18.767372}
+    scale: 1.0607061
+    rotation: -0.37388062
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 44.285496, y: 18.650469}
+    scale: 1.0323958
+    rotation: -0.16728294
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -45.348923, y: 20.211456}
+    scale: 0.8065027
+    rotation: 2.4749966
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -39.16034, y: 21.665783}
+    scale: 0.90258265
+    rotation: 14.891597
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -36.505512, y: 20.918858}
+    scale: 1.1326911
+    rotation: 13.702622
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -32.902363, y: 21.120785}
+    scale: 0.9202553
+    rotation: 3.2767668
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -29.615374, y: 20.342468}
+    scale: 1.0083451
+    rotation: -11.6282015
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -24.437033, y: 21.26013}
+    scale: 1.1047068
+    rotation: -13.682616
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -18.362097, y: 21.427986}
+    scale: 0.86693394
+    rotation: -7.194368
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -14.265051, y: 21.646849}
+    scale: 0.8846566
+    rotation: -11.673997
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -11.811729, y: 20.828468}
+    scale: 1.1092784
+    rotation: -0.09344494
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -8.861739, y: 20.470634}
+    scale: 1.1197027
+    rotation: -1.5997102
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -6.395254, y: 21.002571}
+    scale: 0.9286206
+    rotation: -12.279535
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -2.3970592, y: 21.243063}
+    scale: 1.1849998
+    rotation: -14.307016
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -0.056156684, y: 21.738558}
+    scale: 0.814704
+    rotation: -8.116503
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 2.2499316, y: 21.442057}
+    scale: 0.80251426
+    rotation: 16.676998
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 9.321096, y: 21.59409}
+    scale: 1.0836082
+    rotation: 8.430572
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 11.446902, y: 20.262823}
+    scale: 0.94223875
+    rotation: 0.17516541
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 15.388123, y: 21.382692}
+    scale: 1.1793021
+    rotation: 16.24685
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 17.6613, y: 20.764057}
+    scale: 0.9106633
+    rotation: -1.5454931
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 23.23401, y: 20.618902}
+    scale: 1.0548015
+    rotation: -8.9071665
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 26.285746, y: 21.611914}
+    scale: 1.1956347
+    rotation: 6.321973
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 26.885746, y: 22.011913}
+    scale: 0.9593655
+    rotation: -8.506476
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 30.62008, y: 21.100405}
+    scale: 1.108653
+    rotation: -3.7683115
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 32.229767, y: 21.50592}
+    scale: 1.0595946
+    rotation: 4.6823516
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 35.96111, y: 20.973774}
+    scale: 0.82016474
+    rotation: -14.321549
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 36.561108, y: 21.373774}
+    scale: 1.1578654
+    rotation: -15.521209
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 38.348553, y: 20.678762}
+    scale: 1.1663351
+    rotation: 13.616805
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 38.94855, y: 21.078762}
+    scale: 1.150493
+    rotation: -2.4053698
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 44.593716, y: 20.458626}
+    scale: 1.1506132
+    rotation: -11.332738
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -44.41994, y: 23.433376}
+    scale: 1.1658506
+    rotation: -2.1103191
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -42.67543, y: 23.683968}
+    scale: 1.0398427
+    rotation: 14.413046
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -35.527863, y: 23.496368}
+    scale: 0.9666403
+    rotation: 10.956203
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -32.61768, y: 24.745155}
+    scale: 0.8429942
+    rotation: -5.7681217
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -30.036787, y: 24.209898}
+    scale: 1.1920254
+    rotation: -16.404371
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -26.213114, y: 24.1531}
+    scale: 1.0133891
+    rotation: -14.4285345
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -24.391539, y: 24.12435}
+    scale: 1.1996952
+    rotation: 16.766321
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -21.459026, y: 24.366816}
+    scale: 0.8702709
+    rotation: -0.87632596
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -20.859026, y: 24.766815}
+    scale: 1.1881484
+    rotation: 16.657385
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -14.893712, y: 24.038113}
+    scale: 1.1213126
+    rotation: 3.2235646
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -12.420637, y: 24.613005}
+    scale: 0.84183234
+    rotation: 7.575627
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -9.476263, y: 23.206352}
+    scale: 0.9849284
+    rotation: -6.2745366
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 0.77228796, y: 23.907127}
+    scale: 0.81670994
+    rotation: 5.974125
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 1.372288, y: 24.307127}
+    scale: 0.8629992
+    rotation: 5.9422493
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 6.7616096, y: 24.553812}
+    scale: 0.8284386
+    rotation: 9.548046
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 9.584217, y: 24.74624}
+    scale: 1.1436433
+    rotation: 5.137679
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 12.724343, y: 24.120768}
+    scale: 1.0682013
+    rotation: -1.8179702
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 14.543008, y: 24.056896}
+    scale: 0.97164935
+    rotation: -16.385845
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 15.143008, y: 24.456896}
+    scale: 0.96409154
+    rotation: -16.661617
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 24.29249, y: 23.388071}
+    scale: 0.9819896
+    rotation: -11.423993
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 26.842176, y: 23.91677}
+    scale: 0.88028544
+    rotation: 13.511333
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 29.489374, y: 24.054035}
+    scale: 1.0529854
+    rotation: -1.3313842
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 33.203987, y: 23.98183}
+    scale: 0.8761216
+    rotation: -12.863536
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 35.336697, y: 23.706434}
+    scale: 1.195079
+    rotation: -6.049554
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 39.41505, y: 23.76463}
+    scale: 1.1924565
+    rotation: 12.241961
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 42.692497, y: 24.055862}
+    scale: 1.0733316
+    rotation: 4.435919
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 43.292496, y: 24.455862}
+    scale: 0.8329476
+    rotation: -7.6353865
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 44.675594, y: 24.5569}
+    scale: 0.9442945
+    rotation: 11.985509
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -42.653057, y: 27.578026}
+    scale: 1.0862252
+    rotation: -10.185652
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -38.478447, y: 27.76839}
+    scale: 0.83625394
+    rotation: 1.4181783
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -35.547047, y: 27.332165}
+    scale: 0.8993224
+    rotation: -13.967909
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -26.64687, y: 26.96202}
+    scale: 1.0062375
+    rotation: 15.723801
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -20.638824, y: 26.27956}
+    scale: 1.1616492
+    rotation: 8.596458
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -17.521072, y: 26.613716}
+    scale: 1.0800608
+    rotation: -14.731307
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -15.708593, y: 26.823576}
+    scale: 1.0893625
+    rotation: 4.84552
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -8.948369, y: 27.631718}
+    scale: 1.0549151
+    rotation: -6.1241364
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -6.2499323, y: 27.036114}
+    scale: 0.80065453
+    rotation: 17.988605
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 6.607429, y: 26.891726}
+    scale: 1.1006135
+    rotation: -9.694581
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 8.461166, y: 26.291945}
+    scale: 1.1375867
+    rotation: 10.711519
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 9.061167, y: 26.691944}
+    scale: 1.1714752
+    rotation: -5.330394
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 11.770176, y: 27.109161}
+    scale: 0.9552394
+    rotation: -8.405264
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 15.357391, y: 26.323475}
+    scale: 0.82907385
+    rotation: -10.48111
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 17.461035, y: 26.752441}
+    scale: 0.8848312
+    rotation: 14.383653
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 21.638477, y: 27.256392}
+    scale: 0.93888944
+    rotation: -4.562205
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 27.53321, y: 27.747282}
+    scale: 1.0160894
+    rotation: -16.407734
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 29.518307, y: 27.011738}
+    scale: 0.84275645
+    rotation: -0.16900384
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 32.28665, y: 27.215033}
+    scale: 1.1143234
+    rotation: -12.965197
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 35.589237, y: 27.562212}
+    scale: 1.1817809
+    rotation: 4.9928656
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 38.48691, y: 26.613539}
+    scale: 1.197418
+    rotation: -9.380591
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 42.63225, y: 27.488085}
+    scale: 1.1892858
+    rotation: 7.221753
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -48.056267, y: 29.668907}
+    scale: 1.0894836
+    rotation: 16.79058
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -44.641956, y: 30.296648}
+    scale: 0.835911
+    rotation: -7.8553953
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -42.768604, y: 29.5982}
+    scale: 0.8453385
+    rotation: -8.788412
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -35.898537, y: 29.466627}
+    scale: 1.1452384
+    rotation: 9.079226
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -30.095291, y: 30.631357}
+    scale: 0.8705484
+    rotation: 0.09321213
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -27.286749, y: 30.710407}
+    scale: 1.1983986
+    rotation: 6.5153646
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -23.750223, y: 29.899458}
+    scale: 1.0174581
+    rotation: -0.29045963
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -21.691404, y: 30.68377}
+    scale: 0.9364102
+    rotation: -14.894852
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -17.48452, y: 30.376362}
+    scale: 0.8034556
+    rotation: 2.8504436
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -12.154944, y: 29.57363}
+    scale: 1.0901603
+    rotation: 4.4213233
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -9.350963, y: 29.531176}
+    scale: 0.93345904
+    rotation: 4.687613
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -3.665623, y: 30.041342}
+    scale: 1.0981228
+    rotation: -0.05014336
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 0.5322586, y: 30.779772}
+    scale: 1.1986423
+    rotation: -2.8841107
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 2.4247766, y: 29.61346}
+    scale: 0.8807823
+    rotation: 10.08635
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 6.201911, y: 30.48897}
+    scale: 0.8197644
+    rotation: 8.640675
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 12.693264, y: 29.857819}
+    scale: 0.9952848
+    rotation: 15.114592
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 15.364983, y: 30.464245}
+    scale: 0.91121984
+    rotation: -10.426329
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 17.492453, y: 29.847157}
+    scale: 1.1438493
+    rotation: -14.009721
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 20.273523, y: 30.056591}
+    scale: 1.1965888
+    rotation: -12.26277
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 23.928585, y: 30.741486}
+    scale: 0.99463826
+    rotation: -14.69177
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 24.528585, y: 31.141485}
+    scale: 1.1080805
+    rotation: 5.8079414
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 26.958147, y: 30.784039}
+    scale: 1.0110224
+    rotation: -3.4219987
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 29.736874, y: 30.7808}
+    scale: 0.9666838
+    rotation: -4.650089
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 32.29017, y: 29.752346}
+    scale: 1.1935365
+    rotation: -1.0495205
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 38.404743, y: 29.853693}
+    scale: 0.92825025
+    rotation: -1.8708
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 45.035526, y: 29.35778}
+    scale: 0.91709596
+    rotation: 15.181957
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 45.635525, y: 29.75778}
+    scale: 1.0738711
+    rotation: -15.899801
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -47.428616, y: 33.362736}
+    scale: 0.9647887
+    rotation: 8.386334
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -45.795208, y: 33.08769}
+    scale: 1.089822
+    rotation: -8.028716
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -39.671265, y: 33.60567}
+    scale: 1.0463327
+    rotation: 1.2294624
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -35.92178, y: 33.305763}
+    scale: 1.0345258
+    rotation: 16.737156
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -30.005215, y: 32.257698}
+    scale: 0.82660913
+    rotation: 9.323283
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -27.546185, y: 32.798492}
+    scale: 1.0068002
+    rotation: 5.515053
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -23.833252, y: 32.48767}
+    scale: 0.84435165
+    rotation: 8.889999
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -21.505495, y: 33.636375}
+    scale: 1.192945
+    rotation: -3.6487162
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -17.75683, y: 32.8585}
+    scale: 1.131865
+    rotation: 4.144399
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -14.909256, y: 32.896248}
+    scale: 0.8740533
+    rotation: -4.578355
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -11.366512, y: 32.789955}
+    scale: 1.0259473
+    rotation: -17.780096
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -9.737631, y: 33.671135}
+    scale: 0.82063836
+    rotation: 4.055526
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -9.13763, y: 34.071136}
+    scale: 1.1039954
+    rotation: -3.810038
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -5.9614663, y: 32.368702}
+    scale: 0.97848874
+    rotation: 17.607445
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -5.3614664, y: 32.768703}
+    scale: 1.1938819
+    rotation: 6.3260584
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 0.3578128, y: 33.092705}
+    scale: 0.81517744
+    rotation: -3.059126
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 3.2271333, y: 32.453224}
+    scale: 1.0289525
+    rotation: -5.98141
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 5.6548123, y: 32.578945}
+    scale: 1.0390702
+    rotation: 12.55464
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 9.543676, y: 33.582733}
+    scale: 1.132251
+    rotation: -17.088528
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 11.543554, y: 33.261814}
+    scale: 0.8218855
+    rotation: -12.432318
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 18.715479, y: 33.363163}
+    scale: 1.0620984
+    rotation: -4.5734262
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 27.247952, y: 33.53217}
+    scale: 1.0665345
+    rotation: -14.373522
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 36.07945, y: 33.107876}
+    scale: 1.1573933
+    rotation: -0.027440071
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 42.099274, y: 33.784588}
+    scale: 0.9109132
+    rotation: -6.3046203
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 45.658646, y: 33.78138}
+    scale: 1.0691972
+    rotation: -10.004115
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -48.710865, y: 36.60545}
+    scale: 0.94659376
+    rotation: 16.232758
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -35.94643, y: 36.534798}
+    scale: 1.1799899
+    rotation: -12.261344
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: -30.723055, y: 35.585735}
+    scale: 0.938126
+    rotation: -8.894014
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: -26.45956, y: 36.193333}
+    scale: 1.1020018
+    rotation: -16.291897
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -24.759562, y: 36.679893}
+    scale: 1.1016098
+    rotation: -3.2303143
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -20.941761, y: 36.018627}
+    scale: 0.8642803
+    rotation: 14.446829
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -15.661606, y: 35.50913}
+    scale: 1.1786565
+    rotation: 5.061826
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -6.1676736, y: 36.46733}
+    scale: 0.982088
+    rotation: 1.3587663
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 0.37944347, y: 36.73193}
+    scale: 1.0928162
+    rotation: 14.465999
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 3.5288289, y: 36.737522}
+    scale: 0.9959191
+    rotation: -11.830209
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 6.2778378, y: 35.23935}
+    scale: 0.8867537
+    rotation: -5.0027757
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 9.424795, y: 35.37475}
+    scale: 1.0029199
+    rotation: -2.304924
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 11.6341095, y: 35.85017}
+    scale: 0.88379556
+    rotation: 6.593419
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 15.233789, y: 35.668163}
+    scale: 1.0269387
+    rotation: 16.126528
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 17.628252, y: 35.985306}
+    scale: 1.1217859
+    rotation: -14.341598
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 21.464933, y: 36.211033}
+    scale: 0.95044726
+    rotation: -5.169677
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 24.770052, y: 36.242153}
+    scale: 0.9165748
+    rotation: 15.759381
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 30.73903, y: 36.74817}
+    scale: 1.092797
+    rotation: 16.217943
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 32.86092, y: 36.440334}
+    scale: 1.0181806
+    rotation: 11.074163
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 35.734962, y: 36.055485}
+    scale: 1.1501524
+    rotation: 16.658102
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 38.722805, y: 36.63826}
+    scale: 1.1920952
+    rotation: -14.516024
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 41.216316, y: 35.41795}
+    scale: 1.0543735
+    rotation: 14.691804
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 44.72888, y: 35.293747}
+    scale: 1.1912906
+    rotation: 16.669558
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -48.219395, y: 38.36943}
+    scale: 1.182834
+    rotation: -3.4889994
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -42.59436, y: 39.225365}
+    scale: 0.83629507
+    rotation: 16.929386
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -32.41444, y: 38.909107}
+    scale: 0.8372256
+    rotation: 0.34632254
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -29.6071, y: 38.312008}
+    scale: 1.0254543
+    rotation: -13.902349
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -23.68104, y: 39.44733}
+    scale: 1.1871424
+    rotation: 16.842714
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -20.705027, y: 39.16736}
+    scale: 1.1510146
+    rotation: 16.320442
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -17.972652, y: 38.387165}
+    scale: 1.1147013
+    rotation: 12.731963
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -15.386886, y: 39.63246}
+    scale: 1.0221511
+    rotation: -3.3614955
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -14.786885, y: 40.032463}
+    scale: 1.1183045
+    rotation: 7.620124
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -11.828435, y: 38.53627}
+    scale: 1.1454314
+    rotation: -9.494238
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -9.188915, y: 39.52042}
+    scale: 1.1213452
+    rotation: -11.071105
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 0.64857817, y: 39.395622}
+    scale: 0.93522805
+    rotation: 14.656249
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 5.5688477, y: 39.041443}
+    scale: 0.95886564
+    rotation: -1.9076192
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 9.740296, y: 38.731937}
+    scale: 1.028874
+    rotation: 16.129295
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 10.340297, y: 39.13194}
+    scale: 1.0848509
+    rotation: -10.2097845
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 12.1131735, y: 38.599796}
+    scale: 1.0422246
+    rotation: 7.267209
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 15.157668, y: 38.7908}
+    scale: 0.8167263
+    rotation: -15.212986
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 18.073208, y: 39.11653}
+    scale: 0.94110966
+    rotation: 5.37766
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 18.673208, y: 39.516533}
+    scale: 0.9781895
+    rotation: 11.091778
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 21.533886, y: 38.48013}
+    scale: 0.91559875
+    rotation: -10.980323
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 24.073673, y: 38.67988}
+    scale: 1.1681365
+    rotation: 5.193014
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 27.477795, y: 38.324417}
+    scale: 0.9162586
+    rotation: -3.8044572
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 30.38733, y: 38.84365}
+    scale: 1.0838535
+    rotation: 13.090351
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 30.98733, y: 39.243652}
+    scale: 0.83810276
+    rotation: 15.91663
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 32.72996, y: 39.5891}
+    scale: 0.8641833
+    rotation: -9.485589
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 35.41278, y: 38.459896}
+    scale: 1.1653627
+    rotation: 8.864128
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 39.56121, y: 38.95532}
+    scale: 1.0069834
+    rotation: 13.6805
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 41.8928, y: 38.47371}
+    scale: 0.994143
+    rotation: -6.031452
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: 45.040237, y: 38.527466}
+    scale: 1.0356456
+    rotation: 9.938243
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -45.001007, y: 41.911858}
+    scale: 0.88475966
+    rotation: -9.600122
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -38.92188, y: 41.304718}
+    scale: 0.98048526
+    rotation: -3.6824477
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -36.046783, y: 41.728035}
+    scale: 1.1597043
+    rotation: 4.942382
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -33.772835, y: 41.451378}
+    scale: 0.8309315
+    rotation: 1.9717541
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -30.299885, y: 41.316074}
+    scale: 0.88844013
+    rotation: 15.758587
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -27.585653, y: 41.67729}
+    scale: 0.85568696
+    rotation: -7.038434
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -24.57936, y: 41.805363}
+    scale: 0.9786169
+    rotation: 2.097893
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -20.309383, y: 41.779316}
+    scale: 0.9996214
+    rotation: 3.1935174
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -12.523212, y: 42.53205}
+    scale: 1.1665543
+    rotation: -4.0769877
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -8.97626, y: 41.54395}
+    scale: 0.87451905
+    rotation: -2.5276117
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -6.769263, y: 41.526127}
+    scale: 0.8432915
+    rotation: 2.996536
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -6.169263, y: 41.92613}
+    scale: 0.9026435
+    rotation: 7.4245586
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -0.21638799, y: 42.573025}
+    scale: 0.88611215
+    rotation: -0.47257626
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 5.204671, y: 41.295666}
+    scale: 1.086667
+    rotation: 12.117396
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 8.310823, y: 41.55619}
+    scale: 0.89073485
+    rotation: 4.4853144
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 11.74512, y: 41.768974}
+    scale: 0.9687033
+    rotation: -7.235715
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 15.626318, y: 41.630035}
+    scale: 1.1737244
+    rotation: 6.433083
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 20.946232, y: 41.448166}
+    scale: 0.85051143
+    rotation: -2.7271938
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 24.215408, y: 41.791073}
+    scale: 1.1197505
+    rotation: 4.726958
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 24.815409, y: 42.191074}
+    scale: 1.1498321
+    rotation: -13.274487
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 27.367113, y: 42.525757}
+    scale: 0.8673372
+    rotation: -9.731089
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 30.643654, y: 41.5581}
+    scale: 0.9337703
+    rotation: 8.860184
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 32.95118, y: 42.53982}
+    scale: 1.0431343
+    rotation: -12.3872795
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 44.907803, y: 42.775036}
+    scale: 1.0519544
+    rotation: 13.683386
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -48.696953, y: 45.02837}
+    scale: 0.8972284
+    rotation: 15.777245
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -45.500053, y: 45.59338}
+    scale: 1.0474617
+    rotation: 14.469627
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -42.463093, y: 45.453674}
+    scale: 0.91680133
+    rotation: 12.057993
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: -38.773502, y: 45.21221}
+    scale: 1.1046879
+    rotation: -0.46669793
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -35.45664, y: 45.73167}
+    scale: 1.0173726
+    rotation: 4.9744015
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -32.415665, y: 45.288815}
+    scale: 1.1418641
+    rotation: -1.0566412
+    flipX: 0
+  - propId: Meadow_Shrub
+    position: {x: -29.344452, y: 45.167034}
+    scale: 0.8939688
+    rotation: -10.33389
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -26.899075, y: 44.3691}
+    scale: 1.1753411
+    rotation: -8.174577
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -24.726067, y: 45.517193}
+    scale: 1.0629944
+    rotation: -7.136576
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -21.328722, y: 45.696575}
+    scale: 1.0206916
+    rotation: 13.286412
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -17.552547, y: 44.942238}
+    scale: 0.9619922
+    rotation: -7.6445575
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -14.98872, y: 45.20265}
+    scale: 0.87320536
+    rotation: -13.919569
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: -8.785118, y: 45.04716}
+    scale: 1.1252654
+    rotation: -17.228327
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: -6.3256273, y: 44.69576}
+    scale: 0.8840769
+    rotation: 5.8038607
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: -2.801923, y: 44.894367}
+    scale: 1.0479956
+    rotation: -13.749158
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: -0.04418173, y: 44.40432}
+    scale: 1.0699942
+    rotation: -4.318379
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 0.5558183, y: 44.80432}
+    scale: 1.152146
+    rotation: -15.383339
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 3.183829, y: 44.575626}
+    scale: 0.82155544
+    rotation: 5.426465
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 14.940667, y: 45.697132}
+    scale: 0.96537733
+    rotation: 13.526769
+    flipX: 0
+  - propId: Meadow_Rock
+    position: {x: 17.366287, y: 45.45173}
+    scale: 1.1465048
+    rotation: -13.368791
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 21.270674, y: 45.274162}
+    scale: 0.8855975
+    rotation: -9.897172
+    flipX: 1
+  - propId: Meadow_Rock
+    position: {x: 23.716896, y: 44.55712}
+    scale: 1.038811
+    rotation: -7.314253
+    flipX: 0
+  - propId: Meadow_Flowers
+    position: {x: 26.304634, y: 45.015453}
+    scale: 1.0873146
+    rotation: 16.007637
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 29.473648, y: 44.52232}
+    scale: 1.1495178
+    rotation: 16.19853
+    flipX: 1
+  - propId: Meadow_Shrub
+    position: {x: 35.648357, y: 44.458725}
+    scale: 1.1754566
+    rotation: 17.99904
+    flipX: 1
+  - propId: Meadow_Grass
+    position: {x: 39.586205, y: 44.947453}
+    scale: 1.1994193
+    rotation: -14.580392
+    flipX: 0
+  - propId: Meadow_Grass
+    position: {x: 40.186203, y: 45.347454}
+    scale: 1.111579
+    rotation: 7.809683
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 42.34216, y: 44.49612}
+    scale: 0.8305048
+    rotation: 0.011567831
+    flipX: 1
+  - propId: Meadow_Flowers
+    position: {x: 45.58826, y: 45.578045}
+    scale: 1.0400587
+    rotation: -4.5870366
+    flipX: 0
+  - propId: Meadow_Tree_Oak
+    position: {x: -41.9529, y: -40.5980}
+    scale: 0.9262
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Young
+    position: {x: -24.5002, y: -39.2287}
+    scale: 0.9223
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Bent
+    position: {x: -6.9129, y: -39.4817}
+    scale: 0.9201
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Double
+    position: {x: 6.1873, y: -39.5542}
+    scale: 1.0027
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Oak
+    position: {x: 23.1441, y: -39.4574}
+    scale: 0.8763
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Young
+    position: {x: 42.0895, y: -40.5517}
+    scale: 1.0260
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Double
+    position: {x: -38.0211, y: -25.1198}
+    scale: 0.9267
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Oak
+    position: {x: -22.5421, y: -23.0870}
+    scale: 0.9027
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Young
+    position: {x: -6.3196, y: -24.8915}
+    scale: 1.0973
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Bent
+    position: {x: 8.2947, y: -26.0066}
+    scale: 0.8576
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Double
+    position: {x: 26.2608, y: -23.6675}
+    scale: 1.0411
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Oak
+    position: {x: 38.9720, y: -22.5971}
+    scale: 1.0171
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Bent
+    position: {x: -39.7730, y: -9.9164}
+    scale: 0.9887
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Double
+    position: {x: -25.2338, y: -10.4308}
+    scale: 1.0059
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Oak
+    position: {x: -7.6, y: -5.6}
+    scale: 0.9713
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Young
+    position: {x: 7.6, y: -5.6}
+    scale: 0.9213
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Bent
+    position: {x: 23.8804, y: -9.0907}
+    scale: 0.9692
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Double
+    position: {x: 38.2809, y: -10.0698}
+    scale: 1.0552
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Young
+    position: {x: -39.0822, y: 7.7349}
+    scale: 1.0504
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Bent
+    position: {x: -25.4515, y: 6.5948}
+    scale: 0.8785
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Double
+    position: {x: -7.6, y: 5.6}
+    scale: 1.0001
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Oak
+    position: {x: 7.6, y: 5.6}
+    scale: 0.9370
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Young
+    position: {x: 23.3423, y: 10.2099}
+    scale: 0.8741
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Bent
+    position: {x: 39.2446, y: 7.1340}
+    scale: 1.0945
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Oak
+    position: {x: -39.1474, y: 23.0910}
+    scale: 1.0256
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Young
+    position: {x: -23.7222, y: 26.1573}
+    scale: 0.9920
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Bent
+    position: {x: -10.4173, y: 24.4583}
+    scale: 0.9795
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Double
+    position: {x: 10.0941, y: 25.1320}
+    scale: 1.0572
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Oak
+    position: {x: 24.1254, y: 25.5153}
+    scale: 1.0977
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Young
+    position: {x: 41.1273, y: 21.8590}
+    scale: 0.9314
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Double
+    position: {x: -41.8590, y: 39.9727}
+    scale: 1.0081
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Oak
+    position: {x: -23.7321, y: 39.2220}
+    scale: 1.0254
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Young
+    position: {x: -6.9703, y: 37.5252}
+    scale: 0.9272
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Bent
+    position: {x: 7.6417, y: 41.3824}
+    scale: 1.0633
+    rotation: 0
+    flipX: 0
+  - propId: Meadow_Tree_Double
+    position: {x: 24.8485, y: 39.9463}
+    scale: 0.9838
+    rotation: 0
+    flipX: 1
+  - propId: Meadow_Tree_Oak
+    position: {x: 37.5303, y: 40.4402}
+    scale: 0.8989
+    rotation: 0
+    flipX: 0

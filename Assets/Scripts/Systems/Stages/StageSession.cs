@@ -65,6 +65,11 @@ namespace ProjectDM
             }
             settings.dungeonFloor.SetGroundRuleTile(Current.ground);
             settings.dungeonFloor.Configure(settings.fieldBounds != null ? settings.fieldBounds.Size : settings.fieldSize);
+            var scenery = settings.dungeonFloor.GetComponent<StageSceneryRenderer>();
+            if (scenery == null) scenery = settings.dungeonFloor.gameObject.AddComponent<StageSceneryRenderer>();
+            Bounds field = settings.dungeonFloor.TryGetWorldBounds(out Bounds floorBounds) ? floorBounds :
+                new Bounds(Vector3.zero, settings.fieldSize);
+            scenery.Configure(Current.scenery, field);
             if (settings.gameplayCamera != null) settings.gameplayCamera.backgroundColor = Current.background;
         }
     }

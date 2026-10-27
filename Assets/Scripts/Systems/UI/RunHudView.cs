@@ -29,26 +29,19 @@ namespace ProjectDM
             this.selection = selection;
             this.graphics = graphics;
             this.manaBar = manaBar;
-            timerTrackTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_TimerTrack_v1");
             timerFillTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_TimerFill_v1");
         }
-
-        internal GUIStyle timerTrackStyle;
-
-        internal Texture2D timerTrackTexture;
 
         internal Texture2D timerFillTexture;
 
         // UV crops select the artwork within the generated transparent canvases, preserving source PNGs.
-        internal static readonly Rect TimerTrackUv = new Rect(40f / 2172f, 309f / 724f, 2092f / 2172f, 119f / 724f);
-
         internal static readonly Rect TimerFillUv = new Rect(40f / 1774f, 411f / 887f, 1694f / 1774f, 65f / 887f);
 
         internal void DrawNavigationControls()
         {
-            if (GUI.Button(new Rect(Screen.width - 190, 20, 165, 36), "성장 지도  [TAB]")) run.ToggleMetaTree();
+            if (graphics.DrawButton(new Rect(Screen.width - 190, 20, 165, 36), "성장 지도  [TAB]")) run.ToggleMetaTree();
             if (settings.enablePrototypeDebug && !selection.choosingUpgrade && !run.showMetaTree &&
-                GUI.Button(new Rect(Screen.width - 190, 64, 165, 30), "디버그 레벨업")) selection.TriggerDebugLevelUp();
+                graphics.DrawButton(new Rect(Screen.width - 190, 64, 165, 30), "디버그 레벨업")) selection.TriggerDebugLevelUp();
         }
 
         internal void DrawRunHudInformation()
@@ -76,11 +69,11 @@ namespace ProjectDM
             float fraction = run.mana.Fraction;
             float impact = manaBar.Hit.Intensity;
             Color accent = Color.Lerp(Color.Lerp(manaBar.CurrentColor, Color.white, .35f), new Color(.6f, .92f, 1), impact);
-            GUI.Label(new Rect(x, y - 3f, 34f, 30f), "MP", new GUIStyle(graphics.statStyle)
+            UiGraphics.DrawStaticLabel(new Rect(x, y - 3f, 34f, 30f), "MP", new GUIStyle(graphics.statStyle)
                 { fontSize = 18, fontStyle = FontStyle.Bold, normal = { textColor = accent } });
             Rect track = new Rect(x + 36f, y, Mathf.Max(24, width - 174f), area.height);
-            DrawTimerTrack(track);
-            Rect fill = new Rect(track.x + 5f, track.y + 4f, Mathf.Max(0f, track.width - 10f), track.height - 8f);
+            Rect fill = new Rect(track.x + 7f, track.y + 4f, Mathf.Max(0f, track.width - 14f), track.height - 8f);
+            UiGraphics.DrawSolidRect(fill, new Color(.045f, .035f, .08f));
             Texture liquid = Event.current.type == EventType.Repaint
                 ? manaBar.Render(Mathf.CeilToInt(fill.width), Mathf.CeilToInt(fill.height)) : null;
             if (liquid != null) GUI.DrawTexture(fill, liquid, ScaleMode.StretchToFill, true);
@@ -92,13 +85,9 @@ namespace ProjectDM
                 UiGraphics.DrawSolidRect(fill, manaBar.CurrentColor);
                 if (timerFillTexture != null) UiGraphics.DrawTimerTexture(fill, timerFillTexture, fillUv, new Color(1, 1, 1, .12f));
             }
+            // The transparent opening preserves the flowing liquid beneath the pixel frame.
+            PixelUiArt.Draw(track, PixelUiArt.Mana, 8, Color.white);
 
-            // Display-only slider: no handle, keyboard focus or pointer interaction.
-            timerTrackStyle ??= new GUIStyle(GUIStyle.none) { fixedHeight = 32f };
-            bool wasEnabled = GUI.enabled;
-            GUI.enabled = false;
-            GUI.HorizontalSlider(track, fraction, 0f, 1f, timerTrackStyle, GUIStyle.none);
-            GUI.enabled = wasEnabled;
             if (impact > .002f)
             {
                 Color shield = new Color(.38f, .82f, 1, impact * .85f);
@@ -118,7 +107,7 @@ namespace ProjectDM
             string text = remaining.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "/" +
                 run.mana.Maximum.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
             while (timeStyle.fontSize > 10 && timeStyle.CalcSize(new GUIContent(text)).x > 126) timeStyle.fontSize--;
-            GUI.Label(new Rect(track.xMax + 10f, y - 3f, 126f, 30f), text, timeStyle);
+            UiGraphics.DrawStaticLabel(new Rect(track.xMax + 10f, y - 3f, 126f, 30f), text, timeStyle);
         }
 
         internal void DrawManaShieldHit() => manaBar.Hit.DrawShield(new Rect(0, 0, Screen.width, Screen.height));
@@ -145,21 +134,7 @@ namespace ProjectDM
                 fontSize = 20, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleLeft,
                 normal = { textColor = new Color(.9f, .92f, .96f) }
             };
-            GUI.Label(area, "경과 " + ElapsedTimeText(run.elapsed), style);
-        }
-
-        internal void DrawTimerTrack(Rect rect)
-        {
-            if (timerTrackTexture == null) return;
-            // Three horizontal slices keep the end caps intact when the HUD width changes.
-            float capWidth = Mathf.Min(8f, rect.width * .5f);
-            float uvCapWidth = 36f / 2172f;
-            UiGraphics.DrawTimerTexture(new Rect(rect.x, rect.y, capWidth, rect.height), timerTrackTexture,
-                new Rect(TimerTrackUv.x, TimerTrackUv.y, uvCapWidth, TimerTrackUv.height), Color.white);
-            UiGraphics.DrawTimerTexture(new Rect(rect.x + capWidth, rect.y, rect.width - capWidth * 2f, rect.height), timerTrackTexture,
-                new Rect(TimerTrackUv.x + uvCapWidth, TimerTrackUv.y, TimerTrackUv.width - uvCapWidth * 2f, TimerTrackUv.height), Color.white);
-            UiGraphics.DrawTimerTexture(new Rect(rect.xMax - capWidth, rect.y, capWidth, rect.height), timerTrackTexture,
-                new Rect(TimerTrackUv.xMax - uvCapWidth, TimerTrackUv.y, uvCapWidth, TimerTrackUv.height), Color.white);
+            UiGraphics.DrawStaticLabel(area, "경과 " + ElapsedTimeText(run.elapsed), style);
         }
 
     }

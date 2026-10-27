@@ -57,7 +57,21 @@ namespace ProjectDM
 
         internal float resultPresentationOpenedAt;
 
+        internal ScreenTransition transition;
+
+        internal void ChangeScreen(Action change)
+        {
+            if (transition == null) { change(); return; }
+            if (transition.Begin(change)) RefreshPauseState();
+        }
+
         internal void EndRun()
+        {
+            if (runEnded) return;
+            ChangeScreen(EndRunNow);
+        }
+
+        private void EndRunNow()
         {
             if (runEnded) return;
             runEnded = true;
@@ -78,24 +92,35 @@ namespace ProjectDM
         internal void ToggleMetaTree()
         {
             if (isChoosing()) return;
-            showMetaTree = !showMetaTree;
-            resetNavigation();
-            RefreshPauseState();
+            ChangeScreen(() =>
+            {
+                showMetaTree = !showMetaTree;
+                resetNavigation();
+                RefreshPauseState();
+            });
         }
 
         internal void ReturnToGrowthMap()
         {
-            showMetaTree = true;
-            resetNavigation();
-            RefreshPauseState();
+            ChangeScreen(() =>
+            {
+                showMetaTree = true;
+                resetNavigation();
+                RefreshPauseState();
+            });
         }
 
         internal void RefreshPauseState()
         {
-            Time.timeScale = runEnded || isChoosing() || showMetaTree ? 0f : 1f;
+            Time.timeScale = runEnded || isChoosing() || showMetaTree || (transition != null && transition.Active) ? 0f : 1f;
         }
 
         internal void BeginRun()
+        {
+            ChangeScreen(BeginRunNow);
+        }
+
+        private void BeginRunNow()
         {
             characters?.ApplySelected();
             resetWorld();

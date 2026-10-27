@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: "\uCD08\uC6D0"
   ground: {fileID: 11400000, guid: 14d3f0253e5493143abcc5946fb6c8af, type: 2}
   background: {r: 0.22, g: 0.17, b: 0.1, a: 1}
+  scenery: {fileID: 11400000, guid: 0112c6c277966cb419cc0707305efd7c, type: 2}
   monsters:
   - displayName: "\uD480 \uC2AC\uB77C\uC784"
     frames:

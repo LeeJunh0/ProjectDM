@@ -25,19 +25,12 @@ namespace ProjectDM
             this.boss = boss;
             this.playerCombat = playerCombat;
             this.graphics = graphics;
-            resultPanelTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_ResultPanel_v1");
             resultGlowTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_ResultGlowOrange_v1");
-            permanentKillTrackTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_TimerTrack_v1");
             permanentKillFillTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_TimerFill_v1");
         }
 
-        internal Texture2D resultPanelTexture;
-
         internal Texture2D resultGlowTexture;
-        internal Texture2D permanentKillTrackTexture;
         internal Texture2D permanentKillFillTexture;
-
-        internal static readonly Rect ResultPanelUv = new Rect(56f / 1205f, 59f / 1305f, 1095f / 1205f, 1188f / 1305f);
 
         internal void DrawRunResults()
         {
@@ -52,7 +45,7 @@ namespace ProjectDM
             bool restart = false;
             try
             {
-                UiGraphics.DrawResultArtwork(new Rect(0f, 0f, panelWidth, panelHeight), resultPanelTexture, ResultPanelUv, Color.white);
+                PixelUiArt.Draw(new Rect(0f, 0f, panelWidth, panelHeight), PixelUiArt.Result, 28, Color.white);
                 float presentationElapsed = Mathf.Max(0f, Time.unscaledTime - run.resultPresentationOpenedAt);
                 DrawResultEdgeGlow(panelWidth, panelHeight, presentationElapsed);
                 Color ivory = new Color(.96f, .94f, .87f);
@@ -63,9 +56,9 @@ namespace ProjectDM
                 GUIStyle section = new GUIStyle(body) { fontSize = 30, fontStyle = FontStyle.Bold };
                 GUIStyle mutedBody = new GUIStyle(body) { normal = { textColor = subdued } };
                 GUIStyle mutedValue = new GUIStyle(value) { normal = { textColor = subdued } };
-                GUI.Label(new Rect(44f, 24f, 632f, 48f), boss.bossArrived ? "스테이지 보스 도달" : playerCombat.playerDefeated ? "피격으로 마나 고갈" : run.mana.IsDepleted ? "마나 고갈" : "진행 종료", heading);
+                UiGraphics.DrawStaticLabel(new Rect(44f, 24f, 632f, 48f), boss.bossArrived ? "스테이지 보스 도달" : playerCombat.playerDefeated ? "피격으로 마나 고갈" : run.mana.IsDepleted ? "마나 고갈" : "진행 종료", heading);
                 UiGraphics.DrawResultDivider(92f);
-                GUI.Label(new Rect(44f, 116f, 632f, 34f), "획득 재화", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(.58f, .55f, .50f) } });
+                UiGraphics.DrawStaticLabel(new Rect(44f, 116f, 632f, 34f), "획득 재화", new GUIStyle(body) { alignment = TextAnchor.MiddleCenter, normal = { textColor = new Color(.58f, .55f, .50f) } });
 
                 GUIStyle currencyStyle = new GUIStyle(heading) { fontSize = 68, alignment = TextAnchor.MiddleLeft, normal = { textColor = new Color(.92f, .68f, .34f) } };
                 // Reserve every reachable compact format so the coin/value group stays fixed during count-up.
@@ -77,14 +70,14 @@ namespace ProjectDM
                 amountWidth = Mathf.Min(500f, amountWidth);
                 float currencyX = (panelWidth - amountWidth - 82f) * .5f;
                 UiGraphics.DrawResultSprite(new Rect(currencyX, 163f, 64f, 64f), art.coinSprite);
-                GUI.Label(new Rect(currencyX + 82f, 151f, amountWidth + 4f, 90f), amount, currencyStyle);
+                UiGraphics.DrawStaticLabel(new Rect(currencyX + 82f, 151f, amountWidth + 4f, 90f), amount, currencyStyle);
                 UiGraphics.DrawResultDivider(258f);
 
                 int totalKills = 0;
                 foreach (int count in run.monsterKillCounts) totalKills = (int)Math.Min(int.MaxValue, (long)totalKills + count);
-                GUI.Label(new Rect(62f, 280f, 350f, 42f), "이번 런 총 처치", section);
-                GUI.Label(new Rect(446f, 280f, 210f, 42f), $"{AnimatedResultCount(totalKills, 1, presentationElapsed):N0}", new GUIStyle(value) { fontSize = 30, fontStyle = FontStyle.Bold });
-                GUI.Label(new Rect(136f, 322f, 520f, 18f), "이번 런 처치 · 영구 처치 스택", new GUIStyle(mutedBody) { fontSize = 16 });
+                UiGraphics.DrawStaticLabel(new Rect(62f, 280f, 350f, 42f), "이번 런 총 처치", section);
+                UiGraphics.DrawStaticLabel(new Rect(446f, 280f, 210f, 42f), $"{AnimatedResultCount(totalKills, 1, presentationElapsed):N0}", new GUIStyle(value) { fontSize = 30, fontStyle = FontStyle.Bold });
+                UiGraphics.DrawStaticLabel(new Rect(136f, 322f, 520f, 18f), "이번 런 처치 · 영구 처치 스택", new GUIStyle(mutedBody) { fontSize = 16 });
                 for (int i = 0; i < run.monsterKillCounts.Length; i++)
                 {
                     float rowY = 342f + i * 57f;
@@ -142,7 +135,7 @@ namespace ProjectDM
         {
             GUIStyle style = new GUIStyle(source) { wordWrap = false, clipping = TextClipping.Clip };
             while (style.fontSize > minimumSize && style.CalcSize(new GUIContent(text)).x > rect.width) style.fontSize--;
-            GUI.Label(rect, text, style);
+            UiGraphics.DrawStaticLabel(rect, text, style);
         }
 
         private static float CurrencyWidth(GUIStyle style, int target)
@@ -171,7 +164,7 @@ namespace ProjectDM
         private void DrawPermanentKillBar(Rect rect, RunResultPresentation.PermanentKillProgress progress, int displayedTotal)
         {
             Color tint = progress.available ? Color.white : new Color(.45f, .45f, .45f, .55f);
-            UiGraphics.DrawResultArtwork(rect, permanentKillTrackTexture, RunHudView.TimerTrackUv, tint);
+            UiGraphics.DrawSolidRect(rect, new Color(.045f, .035f, .08f));
             Rect fill = new Rect(rect.x + 2, rect.y + 1, rect.width - 4, rect.height - 2);
             void DrawFill(double fraction, Color color)
             {
@@ -183,6 +176,7 @@ namespace ProjectDM
             }
             DrawFill(RunResultPresentation.PermanentKillFraction(progress, displayedTotal), new Color(1f, .82f, .55f));
             DrawFill(RunResultPresentation.PermanentKillFraction(progress, progress.before), new Color(.55f, .55f, .55f));
+            PixelUiArt.Draw(rect, PixelUiArt.Mana, Mathf.Min(4, rect.height * .25f), tint);
             // Draw-only: no slider handle, GUI input control, or persistence writes.
         }
 

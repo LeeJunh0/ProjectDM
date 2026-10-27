@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-27",
+  "tool": "image_gen.imagegen (built-in)",
+  "assets": [
+    {
+      "name": "Meadow_Grass",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated transparent pixel-art scenery sprite for a top-down 2D fantasy incremental game. Actual crisp native-looking 32x32-pixel-era art enlarged with nearest-neighbor square pixel blocks, very limited 5-8 color palette, chunky irregular handmade pixels, no smooth gradients, no blur, no vector edges, no text. Viewed from a slight top-down RPG angle. Fits a calm olive-green meadow and dark blue-violet stone dungeon. Object centered, occupies 70-85% of canvas with transparent padding, genuine transparent background. No ground tile, no circular soil island, no landscape, no UI, no huge cast shadow, no sprite sheet. Low contrast environmental detail that does not compete with enemies or loot. A small asymmetrical tuft of 5-7 wild grass blades, olive and moss greens with muted yellow-green tips, broad recognizable silhouette, tiny dark roots, no flowers.",
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-8769bea4-30a9-4f94-8635-101ab7bb4b15.png",
+      "file": "Assets/GameContent/Art/Scenery/Meadow_Grass.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "b8fdb31e3cb91756da4678f99faa07d88067977d7853e2acdea2b2dc21698493"
+    },
+    {
+      "name": "Meadow_Flowers",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated transparent pixel-art scenery sprite for a top-down 2D fantasy incremental game. Actual crisp native-looking 32x32-pixel-era art enlarged with nearest-neighbor square pixel blocks, very limited 5-8 color palette, chunky irregular handmade pixels, no smooth gradients, no blur, no vector edges, no text. Viewed from a slight top-down RPG angle. Fits a calm olive-green meadow and dark blue-violet stone dungeon. Object centered, occupies 70-85% of canvas with transparent padding, genuine transparent background. No ground tile, no circular soil island, no landscape, no UI, no huge cast shadow, no sprite sheet. Low contrast environmental detail that does not compete with enemies or loot. One small wildflower clump: four tiny cream and pale lavender flowers among short olive-green leaves, asymmetrical and grounded, only a few simple chunky pixels per blossom, no pot.",
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-9dc2fbd5-f213-4d31-9b8a-2c5278d529a4.png",
+      "file": "Assets/GameContent/Art/Scenery/Meadow_Flowers.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "4a4a225897777c14c633252d0f2c26cc7c3d2f4f68af852b9015c05202500b54"
+    },
+    {
+      "name": "Meadow_Rock",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated transparent pixel-art scenery sprite for a top-down 2D fantasy incremental game. Actual crisp native-looking 32x32-pixel-era art enlarged with nearest-neighbor square pixel blocks, very limited 5-8 color palette, chunky irregular handmade pixels, no smooth gradients, no blur, no vector edges, no text. Viewed from a slight top-down RPG angle. Fits a calm olive-green meadow and dark blue-violet stone dungeon. Object centered, occupies 70-85% of canvas with transparent padding, genuine transparent background. No ground tile, no circular soil island, no landscape, no UI, no huge cast shadow, no sprite sheet. Low contrast environmental detail that does not compete with enemies or loot. A low squat weathered grey-beige field stone with two tiny pebbles touching its base and a little muted green moss on one side, understated chunky rock, no sparkles.",
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-97a8a02f-7579-4ecc-93fa-98d6767fdef0.png",
+      "file": "Assets/GameContent/Art/Scenery/Meadow_Rock.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "8c13e5fe2fda8c262b8bd3cb4408f43a9c1c68f54b61591fdc4a55311a51c002"
+    },
+    {
+      "name": "Meadow_Shrub",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated transparent pixel-art scenery sprite for a top-down 2D fantasy incremental game. Actual crisp native-looking 32x32-pixel-era art enlarged with nearest-neighbor square pixel blocks, very limited 5-8 color palette, chunky irregular handmade pixels, no smooth gradients, no blur, no vector edges, no text. Viewed from a slight top-down RPG angle. Fits a calm olive-green meadow and dark blue-violet stone dungeon. Object centered, occupies 70-85% of canvas with transparent padding, genuine transparent background. No ground tile, no circular soil island, no landscape, no UI, no huge cast shadow, no sprite sheet. Low contrast environmental detail that does not compete with enemies or loot. One compact low leafy shrub with an irregular broad silhouette, muted olive and sage-green leaves, two tiny pale berries, visibly short rather than a tall tree.",
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-f14790a3-5e45-47ec-b494-aa24b2c94f74.png",
+      "file": "Assets/GameContent/Art/Scenery/Meadow_Shrub.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "24e92704fdf555ced87540f95f1af99cb3fd96971d09b0439586870ecfc8185f"
+    },
+    {
+      "name": "Dungeon_Bricks",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated transparent pixel-art scenery sprite for a top-down 2D fantasy incremental game. Actual crisp native-looking 32x32-pixel-era art enlarged with nearest-neighbor square pixel blocks, very limited 5-8 color palette, chunky irregular handmade pixels, no smooth gradients, no blur, no vector edges, no text. Viewed from a slight top-down RPG angle. Fits a calm olive-green meadow and dark blue-violet stone dungeon. Object centered, occupies 70-85% of canvas with transparent padding, genuine transparent background. No ground tile, no circular soil island, no landscape, no UI, no huge cast shadow, no sprite sheet. Low contrast environmental detail that does not compete with enemies or loot. A loose irregular small pile of four broken rectangular old stone bricks, blue-grey and muted dusty violet, chipped pixel corners, fallen flat in different orientations. No intact wall.",
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-3ede147f-ed22-4b37-8c98-b850940a389f.png",
+      "file": "Assets/GameContent/Art/Scenery/Dungeon_Bricks.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "bcbba6ceab626bccc4a762cfb4b12ebb0ac6ba19a74cb212b79f6beb4c05a564"
+    },
+    {
+      "name": "Dungeon_Rubble",
+      "prompt": "Edit target: this pixel-art dungeon rubble sprite. Remove ALL the soft blue haze/glow, soft shadows and blurry background around and between the stones. Leave genuinely transparent empty pixels everywhere outside the hard-edged stone silhouettes, including gaps between stones. Preserve the rubble's stone shapes, composition, canvas dimensions, chunky pixel-art style, colors and position. No glow, no blur, no ground, no background. One transparent isolated rubble resource.",
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-00b7ffd3-34d5-452e-9e35-5ce8741082d9.png",
+      "file": "Assets/GameContent/Art/Scenery/Dungeon_Rubble.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "97f89ac13242c64c651ac218a98523b99996f73ab6a1a38d720d1453cc5b0f8a",
+      "edit_reference": {
+        "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-936f589a-761a-4a54-b922-afb3594278b1.png",
+        "original_prompt": "Use case: stylized-concept. Asset type: ONE isolated transparent pixel-art scenery sprite for a top-down 2D fantasy incremental game. Actual crisp native-looking 32x32-pixel-era art enlarged with nearest-neighbor square pixel blocks, very limited 5-8 color palette, chunky irregular handmade pixels, no smooth gradients, no blur, no vector edges, no text. Viewed from a slight top-down RPG angle. Fits a calm olive-green meadow and dark blue-violet stone dungeon. Object centered, occupies 70-85% of canvas with transparent padding, genuine transparent background. No ground tile, no circular soil island, no landscape, no UI, no huge cast shadow, no sprite sheet. Low contrast environmental detail that does not compete with enemies or loot. A compact scattered group of broken masonry fragments, one cracked flat slate slab and small angular blue-grey stone chips, dusty and low, matches dark bluish dungeon floor. No upright pillar."
+      }
+    },
+    {
+      "name": "Dungeon_Torch",
+      "prompt": "Use case: stylized-concept. Asset type: ONE isolated transparent pixel-art scenery sprite for a top-down 2D fantasy incremental game. Actual crisp native-looking 32x32-pixel-era art enlarged with nearest-neighbor square pixel blocks, very limited 5-8 color palette, chunky irregular handmade pixels, no smooth gradients, no blur, no vector edges, no text. Viewed from a slight top-down RPG angle. Fits a calm olive-green meadow and dark blue-violet stone dungeon. Object centered, occupies 70-85% of canvas with transparent padding, genuine transparent background. No ground tile, no circular soil island, no landscape, no UI, no huge cast shadow, no sprite sheet. Low contrast environmental detail that does not compete with enemies or loot. One short freestanding medieval dungeon torch: squat dark iron tripod base, weathered brown wooden pole and small iron basket holding a compact orange-yellow flame. Entire torch and base visible, bottom anchored, no wall, no ground platform. Small flame made of chunky yellow/amber pixel clusters, no large glow baked into image. Silhouette simple enough to read at 32px height.",
+      "source": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-0de6b974-e159-4571-9dc7-8fdf4ebde5b9.png",
+      "file": "Assets/GameContent/Art/Scenery/Dungeon_Torch.png",
+      "width": 1199,
+      "height": 1312,
+      "sha256": "e9022a290759d6087d2b0702be9bfa76895dee4a12323c9872b0e80b9077954e"
+    }
+  ]
+}

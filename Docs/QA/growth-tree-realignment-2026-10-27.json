@@ -1,0 +1,966 @@
+{
+  "changes": [
+    {
+      "tree": "common",
+      "id": "speed_1",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "damage_4",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "population_1",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "experienceGradeChance_3",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "extension_1",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "time_2",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "damage_2",
+      "previousParent": "speed_1",
+      "previousRanks": 1,
+      "parent": "damage_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "speed_2",
+      "previousParent": "damage_1",
+      "previousRanks": 1,
+      "parent": "speed_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "respawn_1",
+      "previousParent": "population_1",
+      "previousRanks": 1,
+      "parent": "magnet_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "population_2",
+      "previousParent": "yield_1",
+      "previousRanks": 1,
+      "parent": "population_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "extension_2",
+      "previousParent": "xp_1",
+      "previousRanks": 1,
+      "parent": "extension_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "xp_2",
+      "previousParent": "population_1",
+      "previousRanks": 1,
+      "parent": "xp_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "damage_3",
+      "previousParent": "time_1",
+      "previousRanks": 1,
+      "parent": "damage_2",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "speed_3",
+      "previousParent": "extension_1",
+      "previousRanks": 1,
+      "parent": "speed_2",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "time_2",
+      "previousParent": "extension_1",
+      "previousRanks": 1,
+      "parent": "time_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "yield_2",
+      "previousParent": "time_1",
+      "previousRanks": 1,
+      "parent": "yield_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "damage_4",
+      "previousParent": "damage_1",
+      "previousRanks": 1,
+      "parent": "damage_3",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "speed_4",
+      "previousParent": "damage_2",
+      "previousRanks": 3,
+      "parent": "speed_3",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "respawn_2",
+      "previousParent": "speed_2",
+      "previousRanks": 3,
+      "parent": "respawn_1",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "xp_3",
+      "previousParent": "damage_3",
+      "previousRanks": 3,
+      "parent": "xp_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "damage_5",
+      "previousParent": "yield_2",
+      "previousRanks": 3,
+      "parent": "damage_4",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "speed_5",
+      "previousParent": "yield_2",
+      "previousRanks": 3,
+      "parent": "speed_4",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "time_3",
+      "previousParent": "population_2",
+      "previousRanks": 3,
+      "parent": "time_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "yield_3",
+      "previousParent": "extension_2",
+      "previousRanks": 3,
+      "parent": "yield_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "population_3",
+      "previousParent": "xp_2",
+      "previousRanks": 3,
+      "parent": "population_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "extension_3",
+      "previousParent": "damage_1",
+      "previousRanks": 1,
+      "parent": "extension_2",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "damage_6",
+      "previousParent": "time_2",
+      "previousRanks": 3,
+      "parent": "damage_5",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "speed_6",
+      "previousParent": "time_2",
+      "previousRanks": 3,
+      "parent": "speed_5",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "respawn_3",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "respawn_2",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "damage_7",
+      "previousParent": "speed_4",
+      "previousRanks": 3,
+      "parent": "damage_6",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "speed_7",
+      "previousParent": "respawn_2",
+      "previousRanks": 3,
+      "parent": "speed_6",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "xp_4",
+      "previousParent": "respawn_2",
+      "previousRanks": 3,
+      "parent": "xp_3",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "damage_8",
+      "previousParent": "xp_3",
+      "previousRanks": 3,
+      "parent": "damage_7",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "speed_8",
+      "previousParent": "damage_5",
+      "previousRanks": 3,
+      "parent": "speed_7",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "yield_4",
+      "previousParent": "time_3",
+      "previousRanks": 3,
+      "parent": "yield_3",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "respawn_4",
+      "previousParent": "yield_3",
+      "previousRanks": 3,
+      "parent": "respawn_3",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "extension_4",
+      "previousParent": "population_3",
+      "previousRanks": 3,
+      "parent": "extension_3",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "population_4",
+      "previousParent": "respawn_1",
+      "previousRanks": 3,
+      "parent": "population_3",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "time_4",
+      "previousParent": "respawn_1",
+      "previousRanks": 1,
+      "parent": "time_3",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "damage_9",
+      "previousParent": "speed_6",
+      "previousRanks": 3,
+      "parent": "damage_8",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "speed_9",
+      "previousParent": "respawn_3",
+      "previousRanks": 3,
+      "parent": "speed_8",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "damage_10",
+      "previousParent": "damage_4",
+      "previousRanks": 1,
+      "parent": "damage_9",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "speed_10",
+      "previousParent": "damage_7",
+      "previousRanks": 3,
+      "parent": "speed_9",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "xp_5",
+      "previousParent": "speed_7",
+      "previousRanks": 3,
+      "parent": "xp_4",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "damage_11",
+      "previousParent": "speed_8",
+      "previousRanks": 3,
+      "parent": "damage_10",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "yield_5",
+      "previousParent": "speed_8",
+      "previousRanks": 3,
+      "parent": "yield_4",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "respawn_5",
+      "previousParent": "yield_4",
+      "previousRanks": 3,
+      "parent": "respawn_4",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "damage_12",
+      "previousParent": "population_4",
+      "previousRanks": 1,
+      "parent": "damage_11",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "damage_13",
+      "previousParent": "damage_6",
+      "previousRanks": 3,
+      "parent": "damage_12",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "damage_14",
+      "previousParent": "speed_9",
+      "previousRanks": 3,
+      "parent": "damage_13",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "silverDropChance_1",
+      "previousParent": "yield_1",
+      "previousRanks": 1,
+      "parent": "yield_4",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "experienceGradeChance_1",
+      "previousParent": "xp_1",
+      "previousRanks": 1,
+      "parent": "xp_4",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "silverDropChance_2",
+      "previousParent": "yield_3",
+      "previousRanks": 2,
+      "parent": "silverDropChance_1",
+      "parentRanks": 2
+    },
+    {
+      "tree": "common",
+      "id": "experienceGradeChance_2",
+      "previousParent": "xp_3",
+      "previousRanks": 2,
+      "parent": "experienceGradeChance_1",
+      "parentRanks": 2
+    },
+    {
+      "tree": "common",
+      "id": "silverDropChance_3",
+      "previousParent": "yield_5",
+      "previousRanks": 3,
+      "parent": "silverDropChance_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "experienceGradeChance_3",
+      "previousParent": "xp_5",
+      "previousRanks": 3,
+      "parent": "experienceGradeChance_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "goldDropChance_1",
+      "previousParent": "yield_2",
+      "previousRanks": 1,
+      "parent": "yield_4",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "goldDropChance_2",
+      "previousParent": "damage_3",
+      "previousRanks": 2,
+      "parent": "goldDropChance_1",
+      "parentRanks": 2
+    },
+    {
+      "tree": "common",
+      "id": "goldDropChance_3",
+      "previousParent": "damage_4",
+      "previousRanks": 3,
+      "parent": "goldDropChance_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "emeraldDropChance_1",
+      "previousParent": "speed_3",
+      "previousRanks": 1,
+      "parent": "silverDropChance_2",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "emeraldDropChance_2",
+      "previousParent": "yield_3",
+      "previousRanks": 2,
+      "parent": "emeraldDropChance_1",
+      "parentRanks": 2
+    },
+    {
+      "tree": "common",
+      "id": "emeraldDropChance_3",
+      "previousParent": "damage_5",
+      "previousRanks": 3,
+      "parent": "emeraldDropChance_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "amethystDropChance_1",
+      "previousParent": "time_2",
+      "previousRanks": 1,
+      "parent": "silverDropChance_3",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "amethystDropChance_2",
+      "previousParent": "respawn_3",
+      "previousRanks": 2,
+      "parent": "amethystDropChance_1",
+      "parentRanks": 2
+    },
+    {
+      "tree": "common",
+      "id": "amethystDropChance_3",
+      "previousParent": "speed_5",
+      "previousRanks": 3,
+      "parent": "amethystDropChance_2",
+      "parentRanks": 3
+    },
+    {
+      "tree": "common",
+      "id": "health_1",
+      "previousParent": "population_1",
+      "previousRanks": 1,
+      "parent": "time_3",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "movement_1",
+      "previousParent": "time_1",
+      "previousRanks": 1,
+      "parent": "experienceGradeChance_2",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "criticalChance_1",
+      "previousParent": "speed_1",
+      "previousRanks": 1,
+      "parent": "damage_13",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "criticalDamage_1",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "speed_4",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "invulnerability_1",
+      "previousParent": "respawn_2",
+      "previousRanks": 1,
+      "parent": "extension_2",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "magnet_1",
+      "previousParent": "time_3",
+      "previousRanks": 1,
+      "parent": "xp_4",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "luck_1",
+      "previousParent": "xp_1",
+      "previousRanks": 1,
+      "parent": "magnet_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "populationCap_1",
+      "previousParent": "population_1",
+      "previousRanks": 1,
+      "parent": "movement_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "spawnBatch_1",
+      "previousParent": "population_1",
+      "previousRanks": 1,
+      "parent": "movement_1",
+      "parentRanks": 1
+    },
+    {
+      "tree": "common",
+      "id": "magnetDropChance_1",
+      "previousParent": "magnet_1",
+      "previousRanks": 1,
+      "parent": "population_4",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.speed",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "magic.projectile.damage",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.count",
+      "previousParent": "magic.projectile.damage",
+      "previousRanks": 1,
+      "parent": "magic.projectile.speed",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.pierce",
+      "previousParent": "magic.projectile.damage",
+      "previousRanks": 1,
+      "parent": "magic.projectile.count",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.homing",
+      "previousParent": "magic.projectile.damage",
+      "previousRanks": 1,
+      "parent": "magic.projectile.pierce",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.beamWidth",
+      "previousParent": "magic.projectile.beamUnlock",
+      "previousRanks": 1,
+      "parent": "magic.projectile.beamPower",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.beamCount",
+      "previousParent": "magic.projectile.beamUnlock",
+      "previousRanks": 1,
+      "parent": "magic.projectile.beamWidth",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.beamSweep",
+      "previousParent": "magic.projectile.beamUnlock",
+      "previousRanks": 1,
+      "parent": "magic.projectile.beamCount",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.satelliteCount",
+      "previousParent": "magic.projectile.satelliteUnlock",
+      "previousRanks": 1,
+      "parent": "magic.projectile.satellitePower",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.satelliteRate",
+      "previousParent": "magic.projectile.satelliteUnlock",
+      "previousRanks": 1,
+      "parent": "magic.projectile.satelliteCount",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.satelliteVolley",
+      "previousParent": "magic.projectile.satelliteUnlock",
+      "previousRanks": 1,
+      "parent": "magic.projectile.satelliteRate",
+      "parentRanks": 1
+    },
+    {
+      "tree": "projectile",
+      "id": "magic.projectile.split",
+      "previousParent": "magic.projectile.damage",
+      "previousRanks": 1,
+      "parent": "magic.projectile.homing",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.speed",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "magic.flame.damage",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.range",
+      "previousParent": "magic.flame.damage",
+      "previousRanks": 1,
+      "parent": "magic.flame.speed",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.width",
+      "previousParent": "magic.flame.damage",
+      "previousRanks": 1,
+      "parent": "magic.flame.range",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.burn",
+      "previousParent": "magic.flame.damage",
+      "previousRanks": 1,
+      "parent": "magic.flame.width",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.firefieldRange",
+      "previousParent": "magic.flame.firefieldUnlock",
+      "previousRanks": 1,
+      "parent": "magic.flame.firefieldPower",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.firefieldCount",
+      "previousParent": "magic.flame.firefieldUnlock",
+      "previousRanks": 1,
+      "parent": "magic.flame.firefieldRange",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.firefieldDuration",
+      "previousParent": "magic.flame.firefieldUnlock",
+      "previousRanks": 1,
+      "parent": "magic.flame.firefieldCount",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.meteorRange",
+      "previousParent": "magic.flame.meteorUnlock",
+      "previousRanks": 1,
+      "parent": "magic.flame.meteorPower",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.meteorCount",
+      "previousParent": "magic.flame.meteorUnlock",
+      "previousRanks": 1,
+      "parent": "magic.flame.meteorRange",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.meteorIgnite",
+      "previousParent": "magic.flame.meteorUnlock",
+      "previousRanks": 1,
+      "parent": "magic.flame.meteorCount",
+      "parentRanks": 1
+    },
+    {
+      "tree": "flame",
+      "id": "magic.flame.spread",
+      "previousParent": "magic.flame.damage",
+      "previousRanks": 1,
+      "parent": "magic.flame.burn",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.speed",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "magic.lightning.damage",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.jumps",
+      "previousParent": "magic.lightning.damage",
+      "previousRanks": 1,
+      "parent": "magic.lightning.speed",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.range",
+      "previousParent": "magic.lightning.damage",
+      "previousRanks": 1,
+      "parent": "magic.lightning.jumps",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.echo",
+      "previousParent": "magic.lightning.damage",
+      "previousRanks": 1,
+      "parent": "magic.lightning.range",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.orbRange",
+      "previousParent": "magic.lightning.orbUnlock",
+      "previousRanks": 1,
+      "parent": "magic.lightning.orbPower",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.orbCount",
+      "previousParent": "magic.lightning.orbUnlock",
+      "previousRanks": 1,
+      "parent": "magic.lightning.orbRange",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.orbLink",
+      "previousParent": "magic.lightning.orbUnlock",
+      "previousRanks": 1,
+      "parent": "magic.lightning.orbCount",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.thunderRange",
+      "previousParent": "magic.lightning.thunderUnlock",
+      "previousRanks": 1,
+      "parent": "magic.lightning.thunderPower",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.thunderCount",
+      "previousParent": "magic.lightning.thunderUnlock",
+      "previousRanks": 1,
+      "parent": "magic.lightning.thunderRange",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.thunderChain",
+      "previousParent": "magic.lightning.thunderUnlock",
+      "previousRanks": 1,
+      "parent": "magic.lightning.thunderCount",
+      "parentRanks": 1
+    },
+    {
+      "tree": "lightning",
+      "id": "magic.lightning.fork",
+      "previousParent": "magic.lightning.damage",
+      "previousRanks": 1,
+      "parent": "magic.lightning.echo",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.speed",
+      "previousParent": "ROOT",
+      "previousRanks": 0,
+      "parent": "magic.frost.damage",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.count",
+      "previousParent": "magic.frost.damage",
+      "previousRanks": 1,
+      "parent": "magic.frost.speed",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.orbitSpeed",
+      "previousParent": "magic.frost.damage",
+      "previousRanks": 1,
+      "parent": "magic.frost.count",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.range",
+      "previousParent": "magic.frost.damage",
+      "previousRanks": 1,
+      "parent": "magic.frost.orbitSpeed",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.size",
+      "previousParent": "magic.frost.damage",
+      "previousRanks": 1,
+      "parent": "magic.frost.range",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.chill",
+      "previousParent": "magic.frost.damage",
+      "previousRanks": 1,
+      "parent": "magic.frost.size",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.freezeDuration",
+      "previousParent": "magic.frost.damage",
+      "previousRanks": 1,
+      "parent": "magic.frost.chill",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.blizzardRange",
+      "previousParent": "magic.frost.blizzardUnlock",
+      "previousRanks": 1,
+      "parent": "magic.frost.blizzardPower",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.blizzardCount",
+      "previousParent": "magic.frost.blizzardUnlock",
+      "previousRanks": 1,
+      "parent": "magic.frost.blizzardRange",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.blizzardCold",
+      "previousParent": "magic.frost.blizzardUnlock",
+      "previousRanks": 1,
+      "parent": "magic.frost.blizzardCount",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.shatterRange",
+      "previousParent": "magic.frost.shatterUnlock",
+      "previousRanks": 1,
+      "parent": "magic.frost.shatterPower",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.shatterShards",
+      "previousParent": "magic.frost.shatterUnlock",
+      "previousRanks": 1,
+      "parent": "magic.frost.shatterRange",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.shatterCascade",
+      "previousParent": "magic.frost.shatterUnlock",
+      "previousRanks": 1,
+      "parent": "magic.frost.shatterShards",
+      "parentRanks": 1
+    },
+    {
+      "tree": "frost",
+      "id": "magic.frost.rings",
+      "previousParent": "magic.frost.damage",
+      "previousRanks": 1,
+      "parent": "magic.frost.freezeDuration",
+      "parentRanks": 1
+    }
+  ],
+  "skillOrderExceptions": [
+    "magic.projectile.beamUnlock",
+    "magic.projectile.satelliteUnlock",
+    "magic.flame.firefieldUnlock",
+    "magic.flame.meteorUnlock",
+    "magic.lightning.orbUnlock",
+    "magic.lightning.thunderUnlock",
+    "magic.frost.blizzardUnlock",
+    "magic.frost.shatterUnlock"
+  ]
+}

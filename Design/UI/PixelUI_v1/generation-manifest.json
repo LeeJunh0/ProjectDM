@@ -1,0 +1,321 @@
+{
+  "version": 1,
+  "date": "2026-10-27",
+  "tool": "image_gen.imagegen (built-in)",
+  "reference": "reference/mockup.png",
+  "common_prompt": "Generate ONE isolated reusable game UI RESOURCE PNG, NOT a mockup, NOT a spritesheet, NOT a screenshot. The attached image is a STYLE REFERENCE ONLY: match its pixel-art UI frame vocabulary precisely. This is a Korean 2D fantasy incremental RPG. Dark charcoal-plum interior (#15111e), crisp dark-purple outer outline, restrained aged-brass/gold double border, stepped square-pixel corners with tiny diamond notches, 2-3 shade pixel bevels. Hand-placed crisp square pixels, consistent 32-bit-era RPG pixel scale, no antialiased vector edges, no smooth metallic rendering, no blurring. Straight flat edges and a calm almost-flat center, so the art can later be nine-sliced. No text, no letters, no numbers, no icons, no illustrations, no symbols in the interior, no drop shadows outside the art, no cast lighting, no backdrop. Transparent background outside the isolated resource with modest even transparent padding on all sides. Do not show a checkerboard as image content. Keep borders proportional and slim like the reference. No gigantic medieval ornaments. One asset only, centered and fully visible. ",
+  "usage": "Integrated into runtime UI. Initial prompt is common_prompt + prompt_suffix. For revised assets, see edits for subsequent full edit prompts and current_generated_path.",
+  "assets": [
+    {
+      "name": "panel_result",
+      "file": "panel_result.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-56df760d-e9ab-4754-93e9-9b1e3327dec5.png",
+      "prompt_suffix": "A tall EMPTY result window panel, portrait proportions about 720 wide by 780 tall. Dark plum opaque interior completely blank, thin double brass/gold pixel border, small stepped corner details. NO divisions, NO controls, NO heading badge. Canvas portrait, panel fills about 88% of width and height.",
+      "image": {
+        "width": 1205,
+        "height": 1305,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.21652,
+        "alpha_bounds": [
+          85,
+          46,
+          1117,
+          1281
+        ],
+        "sha256": "6326b3a883c16b17dd3d35d0c793c62a59d0332fefaee4a1f17e0ce15ee0be5f"
+      }
+    },
+    {
+      "name": "panel_tooltip",
+      "file": "panel_tooltip.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-d9374060-009c-4ae3-b2a1-10b058a1fc6d.png",
+      "prompt_suffix": "An EMPTY wide short tooltip/info panel, proportions about 680 wide by 200 tall. Dark plum opaque interior, very slim double brass/gold pixel border and tiny stepped corner accents. NO divisions or controls. Wide landscape canvas with small even margins, resource dominates canvas.",
+      "image": {
+        "width": 2066,
+        "height": 761,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.38148,
+        "alpha_bounds": [
+          32,
+          70,
+          2033,
+          621
+        ],
+        "sha256": "242d8481c020e9ef025f55f0eea2e69eb8c4dfcd021de608125fec57bcf2a1ea"
+      }
+    },
+    {
+      "name": "button_primary",
+      "file": "button_primary.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-700a4f65-8daf-454f-b9c7-06360be88e47.png",
+      "prompt_suffix": "ONE primary action button. Wide horizontal rectangle proportions 300 wide by 84 tall, stepped pixel corners, rich deep royal BLUE inset face with a restrained center highlight, brass/gold two-line pixel frame, tactile top-edge bevel and dark lower-edge shadow INSIDE the frame. Completely empty face. Wide landscape canvas, modest transparent padding.",
+      "image": {
+        "width": 2146,
+        "height": 733,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.53103,
+        "alpha_bounds": [
+          43,
+          129,
+          2002,
+          711
+        ],
+        "sha256": "959d504533c23cf67a8a9066bde8c8773f02800e11e2a0f5645cc59bd40b9e6a"
+      }
+    },
+    {
+      "name": "button_secondary",
+      "file": "button_secondary.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-d80c21a5-a351-4b2f-a23a-80a9c1a2a921.png",
+      "prompt_suffix": "ONE secondary action button. Wide horizontal rectangle proportions 300 wide by 84 tall, stepped pixel corners, dark muted PLUM inset face, brass/gold two-line pixel frame, subtle ivory top-left pixels, tactile bevel. Completely empty face. Match the primary action button's exact shape and proportions; only dark plum instead of blue. Wide landscape canvas, modest transparent padding.",
+      "image": {
+        "width": 2146,
+        "height": 733,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.51713,
+        "alpha_bounds": [
+          0,
+          60,
+          2000,
+          733
+        ],
+        "sha256": "63800a97692713f2913e8e77aa93dd6f57b80fd8dd046161923df65cbb66c826"
+      }
+    },
+    {
+      "name": "card_bronze",
+      "file": "card_bronze.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-ac13f0ab-8895-4c7f-949b-b638056bb965.png",
+      "prompt_suffix": "ONE empty BRONZE upgrade card frame matching the left card in the reference. Tall portrait proportions 236 wide by 354 tall, dark plum opaque blank face, copper/bronze double pixel border with tiny stepped corners, a small centered blank beveled grade-tab protruding slightly from the top. No gold highlights: warm copper grade identity. Absolutely NO icons, dividers, text or numbers. Portrait canvas, modest transparent padding.",
+      "image": {
+        "width": 1024,
+        "height": 1536,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.16073,
+        "alpha_bounds": [
+          0,
+          0,
+          1024,
+          1536
+        ],
+        "sha256": "29a342ad2c8e86eca7ed732375bc13798ed96b3ef56c840bdcd65f7ed8672546"
+      },
+      "edits": [
+        {
+          "date": "2026-10-27",
+          "tool": "image_gen.imagegen (built-in)",
+          "use_case": "precise-object-edit",
+          "prompt": "Edit this pixel-art game UI card frame. Remove ONLY the empty protruding badge/tab centered above the card. Restore a continuous straight horizontal top border of the main rectangular card, matching its existing layered pixel-art border and material perfectly. Keep the main card body's existing position, width, height, corner details, dark plum interior, border thickness, metal palette and subtle existing outer glow. Keep the same canvas dimensions and transparent padding, and preserve transparency. Do not crop or recenter the card. No badge, no text, no icon, no new ornament. Everything else must stay as close to the reference as possible. This is the bronze card; preserve its bronze metallic border color.",
+          "reference": "originals/with-grade-tab/card_bronze.png",
+          "previous_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-ac13f0ab-8895-4c7f-949b-b638056bb965.png",
+          "previous_image": {
+            "width": 1024,
+            "height": 1536,
+            "mode": "RGBA",
+            "transparent_pixel_fraction": 0.38942,
+            "alpha_bounds": [
+              0,
+              0,
+              1016,
+              1536
+            ],
+            "sha256": "7ab6292b724c55cbfb4fb54db6229efdb887be40d031a9f83472daa3326ab15a"
+          },
+          "generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-1f092fac-14f1-4a66-b147-7b735e1f72ea.png"
+        }
+      ],
+      "current_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-1f092fac-14f1-4a66-b147-7b735e1f72ea.png"
+    },
+    {
+      "name": "card_silver",
+      "file": "card_silver.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-9737d323-29b9-4fd1-9a7c-6dfbd1d2203a.png",
+      "prompt_suffix": "ONE empty SILVER upgrade card frame matching the middle card in the reference. Tall portrait proportions 236 wide by 354 tall, dark plum opaque blank face, cool silver/ivory double pixel border with tiny stepped corners, a small centered blank beveled grade-tab protruding slightly from the top. No bronze or gold: silver grade identity. Absolutely NO icons, dividers, text or numbers. Portrait canvas, modest transparent padding.",
+      "image": {
+        "width": 1024,
+        "height": 1536,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.37654,
+        "alpha_bounds": [
+          44,
+          21,
+          928,
+          1536
+        ],
+        "sha256": "0cf87ce6b8b702f3aecaea6c24e32178ad7d9066613c628b76c5c5f5bd0506f2"
+      },
+      "edits": [
+        {
+          "date": "2026-10-27",
+          "tool": "image_gen.imagegen (built-in)",
+          "use_case": "precise-object-edit",
+          "prompt": "Edit this pixel-art game UI card frame. Remove ONLY the empty protruding badge/tab centered above the card. Restore a continuous straight horizontal top border of the main rectangular card, matching its existing layered pixel-art border and material perfectly. Keep the main card body's existing position, width, height, corner details, dark plum interior, border thickness, metal palette and subtle existing outer glow. Keep the same canvas dimensions and transparent padding, and preserve transparency. Do not crop or recenter the card. No badge, no text, no icon, no new ornament. Everything else must stay as close to the reference as possible. This is the silver card; preserve its silver metallic border color.",
+          "reference": "originals/with-grade-tab/card_silver.png",
+          "previous_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-9737d323-29b9-4fd1-9a7c-6dfbd1d2203a.png",
+          "previous_image": {
+            "width": 1024,
+            "height": 1536,
+            "mode": "RGBA",
+            "transparent_pixel_fraction": 0.37098,
+            "alpha_bounds": [
+              25,
+              136,
+              920,
+              1518
+            ],
+            "sha256": "6b128c4e55475e94b63c74827624edabd254df4dd229937055c1e63263566f35"
+          },
+          "generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-887e1da5-ecff-485d-b091-3aa1e304b97c.png"
+        }
+      ],
+      "current_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-887e1da5-ecff-485d-b091-3aa1e304b97c.png"
+    },
+    {
+      "name": "card_gold",
+      "file": "card_gold.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-a2dec711-37fe-4c6a-afbf-a97b8ff7a7a3.png",
+      "prompt_suffix": "ONE empty GOLD upgrade card frame matching the right card in the reference. Tall portrait proportions 236 wide by 354 tall, dark plum opaque blank face, bright warm gold double pixel border with tiny stepped corners, a small centered blank beveled grade-tab protruding slightly from the top. Restrained sharp gold highlight pixels at the corners, NO large fuzzy glow, NO flare. Absolutely NO icons, dividers, text or numbers. Portrait canvas, modest transparent padding.",
+      "image": {
+        "width": 1024,
+        "height": 1536,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.02232,
+        "alpha_bounds": [
+          0,
+          0,
+          1024,
+          1536
+        ],
+        "sha256": "0e411e713e340f84e0d08236e4187335d46b1deb53a6d9ac0d87b8d0ffc8ccd8"
+      },
+      "edits": [
+        {
+          "date": "2026-10-27",
+          "tool": "image_gen.imagegen (built-in)",
+          "use_case": "precise-object-edit",
+          "prompt": "Edit this pixel-art game UI card frame. Remove ONLY the empty protruding badge/tab centered above the card. Restore a continuous straight horizontal top border of the main rectangular card, matching its existing layered pixel-art border and material perfectly. Keep the main card body's existing position, width, height, corner details, dark plum interior, border thickness, metal palette and subtle existing outer glow. Keep the same canvas dimensions and transparent padding, and preserve transparency. Do not crop or recenter the card. No badge, no text, no icon, no new ornament. Everything else must stay as close to the reference as possible. This is the gold card; preserve its gold metallic border color.",
+          "reference": "originals/with-grade-tab/card_gold.png",
+          "previous_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-a2dec711-37fe-4c6a-afbf-a97b8ff7a7a3.png",
+          "previous_image": {
+            "width": 1024,
+            "height": 1536,
+            "mode": "RGBA",
+            "transparent_pixel_fraction": 0.38667,
+            "alpha_bounds": [
+              0,
+              9,
+              996,
+              1513
+            ],
+            "sha256": "566eb4394f95a918b567800463caf3120a0a9cc453091b86c0eb353c5f76ddf8"
+          },
+          "generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-2f48dd3f-3786-4461-b421-3f744c2f111e.png"
+        }
+      ],
+      "current_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-2f48dd3f-3786-4461-b421-3f744c2f111e.png"
+    },
+    {
+      "name": "mana_frame",
+      "file": "mana_frame.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-ebc3ac2c-412c-41ee-93b5-07c7f21a5a06.png",
+      "prompt_suffix": "ONE long thin horizontal EMPTY mana gauge FRAME, proportions about 760 wide by 76 tall. Gold/brass and very dark navy pixel border, stepped square corners, subtle blue accent on inner edge. The ENTIRE INNER GAUGE WINDOW must be genuinely TRANSPARENT, a clear empty rectangular opening for animated liquid rendered later. No blue liquid baked inside, no dark opaque center, no text or value fields, no MP letters, no labels, no icons. Only the border/frame is visible. Wide landscape canvas with close modest transparent padding; full resource must fit without cropping.",
+      "image": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.87194,
+        "alpha_bounds": [
+          79,
+          69,
+          2132,
+          648
+        ],
+        "sha256": "0f9e3ffc7d593c43faff13247208eaf670aa612994c361434e20424e6e5beea8"
+      }
+    },
+    {
+      "name": "growth_node",
+      "file": "growth_node.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-be6dc36f-2a7c-4edf-aab0-3c95d6dadf14.png",
+      "prompt_suffix": "ONE small square empty growth skill node background, exact square proportions. Neutral cool SILVER-GRAY beveled double pixel border with tiny stepped/chamfered square corners so the frame can later be tinted to each character's color. Dark plum opaque empty interior. Border about 8% of node width. No icon, glyph, text, rank, number, circle or glow. Tight centered square canvas with even transparent padding. Readable at 48x48 game pixels.",
+      "image": {
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.84722,
+        "alpha_bounds": [
+          146,
+          214,
+          1226,
+          1053
+        ],
+        "sha256": "b6e8dc2ea16958934d4b40e817a0cfb19c2a411d1ae8c508daa9e5a1ace56a4a"
+      }
+    },
+    {
+      "name": "tab",
+      "file": "tab.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-8fe048aa-1692-4979-a566-ea92c2c523ff.png",
+      "prompt_suffix": "ONE compact horizontal character TAB background, proportions about 180 wide by 52 tall. Dark plum opaque empty face, thin brass/gold two-line border, tiny stepped pixel corners. A slightly brighter fine upper edge indicates selectable UI. Completely EMPTY with no icon, no label. Wide landscape canvas with modest even transparent padding.",
+      "image": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.63388,
+        "alpha_bounds": [
+          106,
+          32,
+          2106,
+          676
+        ],
+        "sha256": "adcf96ed1163a451d3a54d0b2b00b4a7c39af516095ade1ce58ad6078caf3d13"
+      }
+    },
+    {
+      "name": "currency_badge",
+      "file": "currency_badge.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-9829a225-94f8-4201-ab24-b7c0b2565c7a.png",
+      "prompt_suffix": "ONE compact horizontal coin-counter badge background, proportions about 240 wide by 56 tall. Dark plum opaque empty inset face, very thin warm gold double pixel border, tiny stepped corners, reserved and understated like the upper-right coin counter in the reference. No coin or other icon, no text, no numbers, no partitions. Wide landscape canvas, modest transparent padding.",
+      "image": {
+        "width": 1920,
+        "height": 819,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.73806,
+        "alpha_bounds": [
+          89,
+          71,
+          1852,
+          737
+        ],
+        "sha256": "0cd3401c914b56b0b00196376bedef23ff3e5007203b6e3b9e3eb991d36e2a51"
+      }
+    },
+    {
+      "name": "divider",
+      "file": "divider.png",
+      "original_generated_path": "C:\\Users\\tjdi1\\.codex\\generated_images\\01a1763d-2381-7d61-b80e-59a0a0d046cd\\exec-f10ef329-34d5-45cb-a2a1-dbd972133d2c.png",
+      "prompt_suffix": "ONE very thin straight horizontal gold pixel divider, proportions about 500 wide by 8 tall. A hairline muted-brass line with small brighter pixel tips and ONE tiny pixel diamond in the center. Everything else transparent, including all surrounding background. No text, labels, icons, border rectangle or other objects. Very wide landscape canvas. Pixel crisp, quiet, suitable between sections in the existing result panel.",
+      "image": {
+        "width": 2172,
+        "height": 724,
+        "mode": "RGBA",
+        "transparent_pixel_fraction": 0.96802,
+        "alpha_bounds": [
+          71,
+          135,
+          2107,
+          531
+        ],
+        "sha256": "c6d1fa0e948244747dcb81caca0c1c7bc5201d36daae6d437f138b647a0f7f3e"
+      }
+    }
+  ],
+  "revision": 2,
+  "runtime_integration": {
+    "date": "2026-10-27",
+    "resources_directory": "Assets/Resources/ProjectDM/UI/PixelUI",
+    "renderer": "Assets/Scripts/Systems/UI/Common/PixelUiArt.cs",
+    "source_images_modified": false,
+    "card_glow": "Shared procedural border halo, grade color, 3.8 second unscaled-time breathing and hover highlight."
+  }
+}

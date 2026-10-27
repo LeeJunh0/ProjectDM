@@ -32,7 +32,7 @@ namespace ProjectDM
             while (active.Count >= maximum) { available.Enqueue(active[0]); active.RemoveAt(0); }
             Popup popup = available.Count > 0 ? available.Dequeue() : new Popup();
             popup.position = position;
-            string amount = damage < .01f ? "<0.01" : damage.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
+            string amount = System.Math.Truncate((double)damage).ToString("0", System.Globalization.CultureInfo.InvariantCulture);
             popup.text = kind == CombatDamageKind.Critical ? amount + "!" : kind == CombatDamageKind.Received ? "−" + amount : amount;
             popup.kind = kind;
             popup.element = element;

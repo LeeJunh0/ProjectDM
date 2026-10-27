@@ -45,5 +45,5 @@ Assert-True ($run.Contains('Array.Copy(save.progress.kills, permanentKillsAtRunS
 Assert-True ($view.Contains('AnimatedPermanentKillCount(progress, i + 2, presentationElapsed)')) 'Permanent count and bar must share the existing unscaled presentation'
 Assert-True ($view.Contains('이번 런: ') -and $view.Contains('미해금') -and $view.Contains('최종 몬스터 · 다음 해금 없음')) 'Result states not distinguished'
 Assert-True ($view -notmatch 'save\.progress\.kills|SetRank\(|MarkPrototypeProgressDirty\(|SaveMetaProgress\(') 'Viewing statistics must not modify progression'
-Assert-True ($view.Contains('ProjectDM_TimerTrack_v1') -and $view.Contains('ProjectDM_TimerFill_v1')) 'Reuse approved progress-bar artwork'
+Assert-True ($view.Contains('PixelUiArt.Mana') -and $view.Contains('ProjectDM_TimerFill_v1')) 'Use the approved pixel progress frame and existing fill artwork'
 Write-Output "Permanent kill results: $checks assertions PASS (previous-to-final count-up, unclipped lifetime totals, capped bars, unlock/locked/final states, overflow, snapshots, read-only and existing artwork)."

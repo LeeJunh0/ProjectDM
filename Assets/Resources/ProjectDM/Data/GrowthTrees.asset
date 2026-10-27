@@ -32,12 +32,12 @@ MonoBehaviour:
       id: speed_1
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 I"
-      parent: ROOT
+      parent: damage_4
       displayParent: damage_4
       displayOrthogonal: 1
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: 1470
       y: -160
     - enabled: 1
@@ -80,31 +80,31 @@ MonoBehaviour:
       id: population_1
       growthId: population
       name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 I"
-      parent: ROOT
+      parent: experienceGradeChance_3
       displayParent: experienceGradeChance_3
       displayOrthogonal: 1
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: -2100
       y: -1600
     - enabled: 1
       id: extension_1
       growthId: extension
       name: "\uCC98\uCE58 \uB9C8\uB098 \uD761\uC218 I"
-      parent: ROOT
+      parent: time_2
       displayParent: time_2
       displayOrthogonal: 1
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: 1050
       y: 160
     - enabled: 1
       id: damage_2
       growthId: damage
       name: "\uACF5\uACA9\uB825 II"
-      parent: speed_1
+      parent: damage_1
       displayParent: damage_1
       displayOrthogonal: 0
       displayLinks: []
@@ -116,7 +116,7 @@ MonoBehaviour:
       id: speed_2
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 II"
-      parent: damage_1
+      parent: speed_1
       displayParent: speed_1
       displayOrthogonal: 0
       displayLinks: []
@@ -128,7 +128,7 @@ MonoBehaviour:
       id: respawn_1
       growthId: respawn
       name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 I"
-      parent: population_1
+      parent: magnet_1
       displayParent: magnet_1
       displayOrthogonal: 1
       displayLinks: []
@@ -140,7 +140,7 @@ MonoBehaviour:
       id: population_2
       growthId: population
       name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 II"
-      parent: yield_1
+      parent: population_1
       displayParent: population_1
       displayOrthogonal: 0
       displayLinks: []
@@ -152,7 +152,7 @@ MonoBehaviour:
       id: extension_2
       growthId: extension
       name: "\uCC98\uCE58 \uB9C8\uB098 \uD761\uC218 II"
-      parent: xp_1
+      parent: extension_1
       displayParent: extension_1
       displayOrthogonal: 0
       displayLinks: []
@@ -164,7 +164,7 @@ MonoBehaviour:
       id: xp_2
       growthId: xp
       name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 II"
-      parent: population_1
+      parent: xp_1
       displayParent: xp_1
       displayOrthogonal: 0
       displayLinks: []
@@ -176,7 +176,7 @@ MonoBehaviour:
       id: damage_3
       growthId: damage
       name: "\uACF5\uACA9\uB825 III"
-      parent: time_1
+      parent: damage_2
       displayParent: damage_2
       displayOrthogonal: 0
       displayLinks: []
@@ -188,7 +188,7 @@ MonoBehaviour:
       id: speed_3
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 III"
-      parent: extension_1
+      parent: speed_2
       displayParent: speed_2
       displayOrthogonal: 0
       displayLinks: []
@@ -200,7 +200,7 @@ MonoBehaviour:
       id: time_2
       growthId: time
       name: "\uCD5C\uB300 \uB9C8\uB098 II"
-      parent: extension_1
+      parent: time_1
       displayParent: time_1
       displayOrthogonal: 0
       displayLinks: []
@@ -212,7 +212,7 @@ MonoBehaviour:
       id: yield_2
       growthId: yield
       name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 II"
-      parent: time_1
+      parent: yield_1
       displayParent: yield_1
       displayOrthogonal: 0
       displayLinks: []
@@ -224,7 +224,7 @@ MonoBehaviour:
       id: damage_4
       growthId: damage
       name: "\uACF5\uACA9\uB825 IV"
-      parent: damage_1
+      parent: damage_3
       displayParent: damage_3
       displayOrthogonal: 0
       displayLinks: []
@@ -236,7 +236,7 @@ MonoBehaviour:
       id: speed_4
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 IV"
-      parent: damage_2
+      parent: speed_3
       displayParent: speed_3
       displayOrthogonal: 0
       displayLinks: []
@@ -248,7 +248,7 @@ MonoBehaviour:
       id: respawn_2
       growthId: respawn
       name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 II"
-      parent: speed_2
+      parent: respawn_1
       displayParent: respawn_1
       displayOrthogonal: 0
       displayLinks: []
@@ -260,7 +260,7 @@ MonoBehaviour:
       id: xp_3
       growthId: xp
       name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 III"
-      parent: damage_3
+      parent: xp_2
       displayParent: xp_2
       displayOrthogonal: 0
       displayLinks: []
@@ -272,7 +272,7 @@ MonoBehaviour:
       id: damage_5
       growthId: damage
       name: "\uACF5\uACA9\uB825 V"
-      parent: yield_2
+      parent: damage_4
       displayParent: damage_4
       displayOrthogonal: 0
       displayLinks: []
@@ -284,7 +284,7 @@ MonoBehaviour:
       id: speed_5
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 V"
-      parent: yield_2
+      parent: speed_4
       displayParent: speed_4
       displayOrthogonal: 0
       displayLinks: []
@@ -296,7 +296,7 @@ MonoBehaviour:
       id: time_3
       growthId: time
       name: "\uCD5C\uB300 \uB9C8\uB098 III"
-      parent: population_2
+      parent: time_2
       displayParent: time_2
       displayOrthogonal: 0
       displayLinks: []
@@ -308,7 +308,7 @@ MonoBehaviour:
       id: yield_3
       growthId: yield
       name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 III"
-      parent: extension_2
+      parent: yield_2
       displayParent: yield_2
       displayOrthogonal: 0
       displayLinks: []
@@ -320,7 +320,7 @@ MonoBehaviour:
       id: population_3
       growthId: population
       name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 III"
-      parent: xp_2
+      parent: population_2
       displayParent: population_2
       displayOrthogonal: 0
       displayLinks: []
@@ -332,7 +332,7 @@ MonoBehaviour:
       id: extension_3
       growthId: extension
       name: "\uCC98\uCE58 \uB9C8\uB098 \uD761\uC218 III"
-      parent: damage_1
+      parent: extension_2
       displayParent: extension_2
       displayOrthogonal: 0
       displayLinks: []
@@ -344,7 +344,7 @@ MonoBehaviour:
       id: damage_6
       growthId: damage
       name: "\uACF5\uACA9\uB825 VI"
-      parent: time_2
+      parent: damage_5
       displayParent: damage_5
       displayOrthogonal: 0
       displayLinks:
@@ -357,7 +357,7 @@ MonoBehaviour:
       id: speed_6
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 VI"
-      parent: time_2
+      parent: speed_5
       displayParent: speed_5
       displayOrthogonal: 0
       displayLinks:
@@ -370,19 +370,19 @@ MonoBehaviour:
       id: respawn_3
       growthId: respawn
       name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 III"
-      parent: ROOT
+      parent: respawn_2
       displayParent: respawn_2
       displayOrthogonal: 0
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: -2310
       y: -2400
     - enabled: 1
       id: damage_7
       growthId: damage
       name: "\uACF5\uACA9\uB825 VII"
-      parent: speed_4
+      parent: damage_6
       displayParent: damage_6
       displayOrthogonal: 0
       displayLinks:
@@ -395,7 +395,7 @@ MonoBehaviour:
       id: speed_7
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 VII"
-      parent: respawn_2
+      parent: speed_6
       displayParent: speed_6
       displayOrthogonal: 0
       displayLinks:
@@ -408,7 +408,7 @@ MonoBehaviour:
       id: xp_4
       growthId: xp
       name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 IV"
-      parent: respawn_2
+      parent: xp_3
       displayParent: xp_3
       displayOrthogonal: 0
       displayLinks: []
@@ -420,7 +420,7 @@ MonoBehaviour:
       id: damage_8
       growthId: damage
       name: "\uACF5\uACA9\uB825 VIII"
-      parent: xp_3
+      parent: damage_7
       displayParent: damage_7
       displayOrthogonal: 0
       displayLinks:
@@ -433,7 +433,7 @@ MonoBehaviour:
       id: speed_8
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 VIII"
-      parent: damage_5
+      parent: speed_7
       displayParent: speed_7
       displayOrthogonal: 0
       displayLinks:
@@ -446,7 +446,7 @@ MonoBehaviour:
       id: yield_4
       growthId: yield
       name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 IV"
-      parent: time_3
+      parent: yield_3
       displayParent: yield_3
       displayOrthogonal: 0
       displayLinks: []
@@ -458,7 +458,7 @@ MonoBehaviour:
       id: respawn_4
       growthId: respawn
       name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 IV"
-      parent: yield_3
+      parent: respawn_3
       displayParent: respawn_3
       displayOrthogonal: 0
       displayLinks: []
@@ -470,7 +470,7 @@ MonoBehaviour:
       id: extension_4
       growthId: extension
       name: "\uCC98\uCE58 \uB9C8\uB098 \uD761\uC218 IV"
-      parent: population_3
+      parent: extension_3
       displayParent: extension_3
       displayOrthogonal: 0
       displayLinks:
@@ -483,7 +483,7 @@ MonoBehaviour:
       id: population_4
       growthId: population
       name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 IV"
-      parent: respawn_1
+      parent: population_3
       displayParent: population_3
       displayOrthogonal: 0
       displayLinks: []
@@ -495,7 +495,7 @@ MonoBehaviour:
       id: time_4
       growthId: time
       name: "\uCD5C\uB300 \uB9C8\uB098 IV"
-      parent: respawn_1
+      parent: time_3
       displayParent: time_3
       displayOrthogonal: 0
       displayLinks:
@@ -508,7 +508,7 @@ MonoBehaviour:
       id: damage_9
       growthId: damage
       name: "\uACF5\uACA9\uB825 IX"
-      parent: speed_6
+      parent: damage_8
       displayParent: damage_8
       displayOrthogonal: 0
       displayLinks: []
@@ -520,7 +520,7 @@ MonoBehaviour:
       id: speed_9
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 IX"
-      parent: respawn_3
+      parent: speed_8
       displayParent: speed_8
       displayOrthogonal: 0
       displayLinks: []
@@ -532,7 +532,7 @@ MonoBehaviour:
       id: damage_10
       growthId: damage
       name: "\uACF5\uACA9\uB825 X"
-      parent: damage_4
+      parent: damage_9
       displayParent: damage_9
       displayOrthogonal: 0
       displayLinks:
@@ -545,7 +545,7 @@ MonoBehaviour:
       id: speed_10
       growthId: speed
       name: "\uACF5\uACA9\uC18D\uB3C4 X"
-      parent: damage_7
+      parent: speed_9
       displayParent: speed_9
       displayOrthogonal: 0
       displayLinks:
@@ -558,7 +558,7 @@ MonoBehaviour:
       id: xp_5
       growthId: xp
       name: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 V"
-      parent: speed_7
+      parent: xp_4
       displayParent: xp_4
       displayOrthogonal: 0
       displayLinks:
@@ -571,7 +571,7 @@ MonoBehaviour:
       id: damage_11
       growthId: damage
       name: "\uACF5\uACA9\uB825 XI"
-      parent: speed_8
+      parent: damage_10
       displayParent: damage_10
       displayOrthogonal: 0
       displayLinks:
@@ -584,7 +584,7 @@ MonoBehaviour:
       id: yield_5
       growthId: yield
       name: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 V"
-      parent: speed_8
+      parent: yield_4
       displayParent: yield_4
       displayOrthogonal: 0
       displayLinks:
@@ -597,7 +597,7 @@ MonoBehaviour:
       id: respawn_5
       growthId: respawn
       name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 V"
-      parent: yield_4
+      parent: respawn_4
       displayParent: respawn_4
       displayOrthogonal: 0
       displayLinks:
@@ -610,7 +610,7 @@ MonoBehaviour:
       id: damage_12
       growthId: damage
       name: "\uACF5\uACA9\uB825 XII"
-      parent: population_4
+      parent: damage_11
       displayParent: damage_11
       displayOrthogonal: 0
       displayLinks:
@@ -623,7 +623,7 @@ MonoBehaviour:
       id: damage_13
       growthId: damage
       name: "\uACF5\uACA9\uB825 XIII"
-      parent: damage_6
+      parent: damage_12
       displayParent: damage_12
       displayOrthogonal: 0
       displayLinks: []
@@ -635,7 +635,7 @@ MonoBehaviour:
       id: damage_14
       growthId: damage
       name: "\uACF5\uACA9\uB825 XIV"
-      parent: speed_9
+      parent: damage_13
       displayParent: damage_13
       displayOrthogonal: 0
       displayLinks:
@@ -648,7 +648,7 @@ MonoBehaviour:
       id: silverDropChance_1
       growthId: silverDropChance
       name: "\uC740\uD654 \uD655\uB960 I"
-      parent: yield_1
+      parent: yield_4
       displayParent: yield_4
       displayOrthogonal: 1
       displayLinks: []
@@ -660,7 +660,7 @@ MonoBehaviour:
       id: experienceGradeChance_1
       growthId: experienceGradeChance
       name: "\uC0C1\uC704 \uACBD\uD5D8\uCE58 \uD655\uB960 I"
-      parent: xp_1
+      parent: xp_4
       displayParent: xp_4
       displayOrthogonal: 1
       displayLinks: []
@@ -672,7 +672,7 @@ MonoBehaviour:
       id: silverDropChance_2
       growthId: silverDropChance
       name: "\uC740\uD654 \uD655\uB960 II"
-      parent: yield_3
+      parent: silverDropChance_1
       displayParent: silverDropChance_1
       displayOrthogonal: 0
       displayLinks: []
@@ -684,7 +684,7 @@ MonoBehaviour:
       id: experienceGradeChance_2
       growthId: experienceGradeChance
       name: "\uC0C1\uC704 \uACBD\uD5D8\uCE58 \uD655\uB960 II"
-      parent: xp_3
+      parent: experienceGradeChance_1
       displayParent: experienceGradeChance_1
       displayOrthogonal: 0
       displayLinks: []
@@ -696,7 +696,7 @@ MonoBehaviour:
       id: silverDropChance_3
       growthId: silverDropChance
       name: "\uC740\uD654 \uD655\uB960 III"
-      parent: yield_5
+      parent: silverDropChance_2
       displayParent: silverDropChance_2
       displayOrthogonal: 0
       displayLinks: []
@@ -708,7 +708,7 @@ MonoBehaviour:
       id: experienceGradeChance_3
       growthId: experienceGradeChance
       name: "\uC0C1\uC704 \uACBD\uD5D8\uCE58 \uD655\uB960 III"
-      parent: xp_5
+      parent: experienceGradeChance_2
       displayParent: experienceGradeChance_2
       displayOrthogonal: 0
       displayLinks: []
@@ -720,7 +720,7 @@ MonoBehaviour:
       id: goldDropChance_1
       growthId: goldDropChance
       name: "\uAE08\uD654 \uD655\uB960 I"
-      parent: yield_2
+      parent: yield_4
       displayParent: yield_4
       displayOrthogonal: 1
       displayLinks: []
@@ -732,7 +732,7 @@ MonoBehaviour:
       id: goldDropChance_2
       growthId: goldDropChance
       name: "\uAE08\uD654 \uD655\uB960 II"
-      parent: damage_3
+      parent: goldDropChance_1
       displayParent: goldDropChance_1
       displayOrthogonal: 0
       displayLinks: []
@@ -744,7 +744,7 @@ MonoBehaviour:
       id: goldDropChance_3
       growthId: goldDropChance
       name: "\uAE08\uD654 \uD655\uB960 III"
-      parent: damage_4
+      parent: goldDropChance_2
       displayParent: goldDropChance_2
       displayOrthogonal: 0
       displayLinks: []
@@ -756,7 +756,7 @@ MonoBehaviour:
       id: emeraldDropChance_1
       growthId: emeraldDropChance
       name: "\uC5D0\uBA54\uB784\uB4DC \uD654\uD3D0 \uD655\uB960 I"
-      parent: speed_3
+      parent: silverDropChance_2
       displayParent: silverDropChance_2
       displayOrthogonal: 1
       displayLinks: []
@@ -768,7 +768,7 @@ MonoBehaviour:
       id: emeraldDropChance_2
       growthId: emeraldDropChance
       name: "\uC5D0\uBA54\uB784\uB4DC \uD654\uD3D0 \uD655\uB960 II"
-      parent: yield_3
+      parent: emeraldDropChance_1
       displayParent: emeraldDropChance_1
       displayOrthogonal: 0
       displayLinks: []
@@ -780,7 +780,7 @@ MonoBehaviour:
       id: emeraldDropChance_3
       growthId: emeraldDropChance
       name: "\uC5D0\uBA54\uB784\uB4DC \uD654\uD3D0 \uD655\uB960 III"
-      parent: damage_5
+      parent: emeraldDropChance_2
       displayParent: emeraldDropChance_2
       displayOrthogonal: 0
       displayLinks: []
@@ -792,7 +792,7 @@ MonoBehaviour:
       id: amethystDropChance_1
       growthId: amethystDropChance
       name: "\uC790\uC218\uC815 \uD654\uD3D0 \uD655\uB960 I"
-      parent: time_2
+      parent: silverDropChance_3
       displayParent: silverDropChance_3
       displayOrthogonal: 1
       displayLinks: []
@@ -804,7 +804,7 @@ MonoBehaviour:
       id: amethystDropChance_2
       growthId: amethystDropChance
       name: "\uC790\uC218\uC815 \uD654\uD3D0 \uD655\uB960 II"
-      parent: respawn_3
+      parent: amethystDropChance_1
       displayParent: amethystDropChance_1
       displayOrthogonal: 0
       displayLinks: []
@@ -816,7 +816,7 @@ MonoBehaviour:
       id: amethystDropChance_3
       growthId: amethystDropChance
       name: "\uC790\uC218\uC815 \uD654\uD3D0 \uD655\uB960 III"
-      parent: speed_5
+      parent: amethystDropChance_2
       displayParent: amethystDropChance_2
       displayOrthogonal: 0
       displayLinks: []
@@ -828,7 +828,7 @@ MonoBehaviour:
       id: health_1
       growthId: health
       name: "\uCD5C\uB300 \uB9C8\uB098"
-      parent: population_1
+      parent: time_3
       displayParent: time_3
       displayOrthogonal: 1
       displayLinks: []
@@ -840,7 +840,7 @@ MonoBehaviour:
       id: movement_1
       growthId: movement
       name: "\uC774\uB3D9\uC18D\uB3C4"
-      parent: time_1
+      parent: experienceGradeChance_2
       displayParent: experienceGradeChance_2
       displayOrthogonal: 1
       displayLinks: []
@@ -852,7 +852,7 @@ MonoBehaviour:
       id: criticalChance_1
       growthId: criticalChance
       name: "\uCE58\uBA85\uD0C0 \uD655\uB960"
-      parent: speed_1
+      parent: damage_13
       displayParent: damage_13
       displayOrthogonal: 1
       displayLinks: []
@@ -864,19 +864,19 @@ MonoBehaviour:
       id: criticalDamage_1
       growthId: criticalDamage
       name: "\uCE58\uBA85\uD0C0 \uD53C\uD574\uB7C9"
-      parent: ROOT
+      parent: speed_4
       displayParent: speed_4
       displayOrthogonal: 1
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: 2730
       y: -160
     - enabled: 1
       id: invulnerability_1
       growthId: invulnerability
       name: "\uD53C\uACA9 \uD6C4 \uBB34\uC801 \uC2DC\uAC04"
-      parent: respawn_2
+      parent: extension_2
       displayParent: extension_2
       displayOrthogonal: 1
       displayLinks: []
@@ -888,7 +888,7 @@ MonoBehaviour:
       id: magnet_1
       growthId: magnet
       name: "\uC544\uC774\uD15C \uB04C\uC5B4\uC624\uAE30 \uBC94\uC704"
-      parent: time_3
+      parent: xp_4
       displayParent: xp_4
       displayOrthogonal: 1
       displayLinks: []
@@ -900,7 +900,7 @@ MonoBehaviour:
       id: luck_1
       growthId: luck
       name: "\uD589\uC6B4"
-      parent: xp_1
+      parent: magnet_1
       displayParent: magnet_1
       displayOrthogonal: 1
       displayLinks: []
@@ -1001,7 +1001,7 @@ MonoBehaviour:
       id: populationCap_1
       growthId: populationCap
       name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
-      parent: population_1
+      parent: movement_1
       displayParent: movement_1
       displayOrthogonal: 1
       displayLinks: []
@@ -1087,7 +1087,7 @@ MonoBehaviour:
       id: spawnBatch_1
       growthId: spawnBatch
       name: "\uD55C \uBC88\uC5D0 \uC0DD\uC131\uB418\uB294 \uBAAC\uC2A4\uD130"
-      parent: population_1
+      parent: movement_1
       displayParent: movement_1
       displayOrthogonal: 1
       displayLinks: []
@@ -1136,7 +1136,7 @@ MonoBehaviour:
       id: magnetDropChance_1
       growthId: magnetDropChance
       name: "\uC790\uC11D \uB4DC\uB78D \uD655\uB960"
-      parent: magnet_1
+      parent: population_4
       displayParent: population_4
       displayOrthogonal: 1
       displayLinks: []
@@ -1163,19 +1163,19 @@ MonoBehaviour:
       id: magic.projectile.speed
       growthId: magic.projectile.speed
       name: "\uBE60\uB978 \uC2DC\uC804"
-      parent: ROOT
+      parent: magic.projectile.damage
       displayParent: magic.projectile.damage
       displayOrthogonal: 0
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: 420
       y: -160
     - enabled: 1
       id: magic.projectile.count
       growthId: magic.projectile.count
       name: "\uCD94\uAC00 \uB9C8\uB825\uD0C4"
-      parent: magic.projectile.damage
+      parent: magic.projectile.speed
       displayParent: magic.projectile.speed
       displayOrthogonal: 0
       displayLinks: []
@@ -1187,7 +1187,7 @@ MonoBehaviour:
       id: magic.projectile.pierce
       growthId: magic.projectile.pierce
       name: "\uAD00\uD1B5 \uB9C8\uB825\uD0C4"
-      parent: magic.projectile.damage
+      parent: magic.projectile.count
       displayParent: magic.projectile.count
       displayOrthogonal: 0
       displayLinks: []
@@ -1199,7 +1199,7 @@ MonoBehaviour:
       id: magic.projectile.homing
       growthId: magic.projectile.homing
       name: "\uC720\uB3C4 \uB9C8\uB825\uD0C4"
-      parent: magic.projectile.damage
+      parent: magic.projectile.pierce
       displayParent: magic.projectile.pierce
       displayOrthogonal: 0
       displayLinks:
@@ -1236,7 +1236,7 @@ MonoBehaviour:
       id: magic.projectile.beamWidth
       growthId: magic.projectile.beamWidth
       name: "\uB9C8\uB825 \uAD11\uC120 \uAD75\uAE30"
-      parent: magic.projectile.beamUnlock
+      parent: magic.projectile.beamPower
       displayParent: magic.projectile.beamPower
       displayOrthogonal: 0
       displayLinks: []
@@ -1248,7 +1248,7 @@ MonoBehaviour:
       id: magic.projectile.beamCount
       growthId: magic.projectile.beamCount
       name: "\uB9C8\uB825 \uAD11\uC120 \uAD11\uC120 \uC218"
-      parent: magic.projectile.beamUnlock
+      parent: magic.projectile.beamWidth
       displayParent: magic.projectile.beamWidth
       displayOrthogonal: 0
       displayLinks: []
@@ -1260,7 +1260,7 @@ MonoBehaviour:
       id: magic.projectile.beamSweep
       growthId: magic.projectile.beamSweep
       name: "\uB9C8\uB825 \uAD11\uC120 \uD68C\uC804 \uC18D\uB3C4"
-      parent: magic.projectile.beamUnlock
+      parent: magic.projectile.beamCount
       displayParent: magic.projectile.beamCount
       displayOrthogonal: 0
       displayLinks:
@@ -1297,7 +1297,7 @@ MonoBehaviour:
       id: magic.projectile.satelliteCount
       growthId: magic.projectile.satelliteCount
       name: "\uB9C8\uB825 \uC704\uC131 \uC704\uC131 \uC218"
-      parent: magic.projectile.satelliteUnlock
+      parent: magic.projectile.satellitePower
       displayParent: magic.projectile.satellitePower
       displayOrthogonal: 0
       displayLinks: []
@@ -1309,7 +1309,7 @@ MonoBehaviour:
       id: magic.projectile.satelliteRate
       growthId: magic.projectile.satelliteRate
       name: "\uB9C8\uB825 \uC704\uC131 \uBC1C\uC0AC \uC18D\uB3C4"
-      parent: magic.projectile.satelliteUnlock
+      parent: magic.projectile.satelliteCount
       displayParent: magic.projectile.satelliteCount
       displayOrthogonal: 0
       displayLinks: []
@@ -1321,7 +1321,7 @@ MonoBehaviour:
       id: magic.projectile.satelliteVolley
       growthId: magic.projectile.satelliteVolley
       name: "\uB9C8\uB825 \uC704\uC131 \uC77C\uC81C \uC0AC\uACA9"
-      parent: magic.projectile.satelliteUnlock
+      parent: magic.projectile.satelliteRate
       displayParent: magic.projectile.satelliteRate
       displayOrthogonal: 0
       displayLinks:
@@ -1334,7 +1334,7 @@ MonoBehaviour:
       id: magic.projectile.split
       growthId: magic.projectile.split
       name: "\uBD84\uC5F4 \uB9C8\uB825\uD0C4"
-      parent: magic.projectile.damage
+      parent: magic.projectile.homing
       displayParent: magic.projectile.homing
       displayOrthogonal: 0
       displayLinks:
@@ -1362,19 +1362,19 @@ MonoBehaviour:
       id: magic.flame.speed
       growthId: magic.flame.speed
       name: "\uD654\uC5FC \uC2DC\uC804 \uC18D\uB3C4"
-      parent: ROOT
+      parent: magic.flame.damage
       displayParent: magic.flame.damage
       displayOrthogonal: 0
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: 420
       y: -160
     - enabled: 1
       id: magic.flame.range
       growthId: magic.flame.range
       name: "\uD654\uC5FC \uC0AC\uAC70\uB9AC"
-      parent: magic.flame.damage
+      parent: magic.flame.speed
       displayParent: magic.flame.speed
       displayOrthogonal: 0
       displayLinks: []
@@ -1386,7 +1386,7 @@ MonoBehaviour:
       id: magic.flame.width
       growthId: magic.flame.width
       name: "\uB113\uC740 \uD654\uC5FC"
-      parent: magic.flame.damage
+      parent: magic.flame.range
       displayParent: magic.flame.range
       displayOrthogonal: 0
       displayLinks: []
@@ -1398,7 +1398,7 @@ MonoBehaviour:
       id: magic.flame.burn
       growthId: magic.flame.burn
       name: "\uC9C0\uC18D \uD654\uC0C1"
-      parent: magic.flame.damage
+      parent: magic.flame.width
       displayParent: magic.flame.width
       displayOrthogonal: 0
       displayLinks:
@@ -1435,7 +1435,7 @@ MonoBehaviour:
       id: magic.flame.firefieldRange
       growthId: magic.flame.firefieldRange
       name: "\uBD88\uAE38 \uC9C0\uB300 \uBC94\uC704"
-      parent: magic.flame.firefieldUnlock
+      parent: magic.flame.firefieldPower
       displayParent: magic.flame.firefieldPower
       displayOrthogonal: 0
       displayLinks: []
@@ -1447,7 +1447,7 @@ MonoBehaviour:
       id: magic.flame.firefieldCount
       growthId: magic.flame.firefieldCount
       name: "\uBD88\uAE38 \uC9C0\uB300 \uAC1C\uC218"
-      parent: magic.flame.firefieldUnlock
+      parent: magic.flame.firefieldRange
       displayParent: magic.flame.firefieldRange
       displayOrthogonal: 0
       displayLinks: []
@@ -1459,7 +1459,7 @@ MonoBehaviour:
       id: magic.flame.firefieldDuration
       growthId: magic.flame.firefieldDuration
       name: "\uBD88\uAE38 \uC9C0\uB300 \uC9C0\uC18D\uC2DC\uAC04"
-      parent: magic.flame.firefieldUnlock
+      parent: magic.flame.firefieldCount
       displayParent: magic.flame.firefieldCount
       displayOrthogonal: 0
       displayLinks:
@@ -1496,7 +1496,7 @@ MonoBehaviour:
       id: magic.flame.meteorRange
       growthId: magic.flame.meteorRange
       name: "\uC720\uC131 \uB099\uD558 \uD3ED\uBC1C \uBC18\uACBD"
-      parent: magic.flame.meteorUnlock
+      parent: magic.flame.meteorPower
       displayParent: magic.flame.meteorPower
       displayOrthogonal: 0
       displayLinks: []
@@ -1508,7 +1508,7 @@ MonoBehaviour:
       id: magic.flame.meteorCount
       growthId: magic.flame.meteorCount
       name: "\uC720\uC131 \uB099\uD558 \uC6B4\uC11D \uC218"
-      parent: magic.flame.meteorUnlock
+      parent: magic.flame.meteorRange
       displayParent: magic.flame.meteorRange
       displayOrthogonal: 0
       displayLinks: []
@@ -1520,7 +1520,7 @@ MonoBehaviour:
       id: magic.flame.meteorIgnite
       growthId: magic.flame.meteorIgnite
       name: "\uC720\uC131 \uB099\uD558 \uD654\uC0C1 \uC99D\uD3ED"
-      parent: magic.flame.meteorUnlock
+      parent: magic.flame.meteorCount
       displayParent: magic.flame.meteorCount
       displayOrthogonal: 0
       displayLinks:
@@ -1533,7 +1533,7 @@ MonoBehaviour:
       id: magic.flame.spread
       growthId: magic.flame.spread
       name: "\uD654\uC0C1 \uC804\uD30C"
-      parent: magic.flame.damage
+      parent: magic.flame.burn
       displayParent: magic.flame.burn
       displayOrthogonal: 0
       displayLinks:
@@ -1561,19 +1561,19 @@ MonoBehaviour:
       id: magic.lightning.speed
       growthId: magic.lightning.speed
       name: "\uBC88\uAC1C \uC2DC\uC804 \uC18D\uB3C4"
-      parent: ROOT
+      parent: magic.lightning.damage
       displayParent: magic.lightning.damage
       displayOrthogonal: 0
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: 420
       y: -160
     - enabled: 1
       id: magic.lightning.jumps
       growthId: magic.lightning.jumps
       name: "\uCD94\uAC00 \uC5F0\uC1C4"
-      parent: magic.lightning.damage
+      parent: magic.lightning.speed
       displayParent: magic.lightning.speed
       displayOrthogonal: 0
       displayLinks: []
@@ -1585,7 +1585,7 @@ MonoBehaviour:
       id: magic.lightning.range
       growthId: magic.lightning.range
       name: "\uC5F0\uC1C4 \uB3C4\uC57D \uAC70\uB9AC"
-      parent: magic.lightning.damage
+      parent: magic.lightning.jumps
       displayParent: magic.lightning.jumps
       displayOrthogonal: 0
       displayLinks: []
@@ -1597,7 +1597,7 @@ MonoBehaviour:
       id: magic.lightning.echo
       growthId: magic.lightning.echo
       name: "\uBC88\uAC1C \uC7AC\uD0C0\uACA9"
-      parent: magic.lightning.damage
+      parent: magic.lightning.range
       displayParent: magic.lightning.range
       displayOrthogonal: 0
       displayLinks:
@@ -1634,7 +1634,7 @@ MonoBehaviour:
       id: magic.lightning.orbRange
       growthId: magic.lightning.orbRange
       name: "\uC804\uAE30 \uAD6C\uCCB4 \uBC29\uC804 \uBC18\uACBD"
-      parent: magic.lightning.orbUnlock
+      parent: magic.lightning.orbPower
       displayParent: magic.lightning.orbPower
       displayOrthogonal: 0
       displayLinks: []
@@ -1646,7 +1646,7 @@ MonoBehaviour:
       id: magic.lightning.orbCount
       growthId: magic.lightning.orbCount
       name: "\uC804\uAE30 \uAD6C\uCCB4 \uAD6C\uCCB4 \uC218"
-      parent: magic.lightning.orbUnlock
+      parent: magic.lightning.orbRange
       displayParent: magic.lightning.orbRange
       displayOrthogonal: 0
       displayLinks: []
@@ -1658,7 +1658,7 @@ MonoBehaviour:
       id: magic.lightning.orbLink
       growthId: magic.lightning.orbLink
       name: "\uC804\uB958 \uC5F0\uACB0 \uC704\uB825"
-      parent: magic.lightning.orbUnlock
+      parent: magic.lightning.orbCount
       displayParent: magic.lightning.orbCount
       displayOrthogonal: 0
       displayLinks:
@@ -1695,7 +1695,7 @@ MonoBehaviour:
       id: magic.lightning.thunderRange
       growthId: magic.lightning.thunderRange
       name: "\uB099\uB8B0 \uD3ED\uBC1C \uBC18\uACBD"
-      parent: magic.lightning.thunderUnlock
+      parent: magic.lightning.thunderPower
       displayParent: magic.lightning.thunderPower
       displayOrthogonal: 0
       displayLinks: []
@@ -1707,7 +1707,7 @@ MonoBehaviour:
       id: magic.lightning.thunderCount
       growthId: magic.lightning.thunderCount
       name: "\uB099\uB8B0 \uB099\uB8B0 \uC218"
-      parent: magic.lightning.thunderUnlock
+      parent: magic.lightning.thunderRange
       displayParent: magic.lightning.thunderRange
       displayOrthogonal: 0
       displayLinks: []
@@ -1719,7 +1719,7 @@ MonoBehaviour:
       id: magic.lightning.thunderChain
       growthId: magic.lightning.thunderChain
       name: "\uB099\uB8B0 \uC794\uB958 \uC5F0\uC1C4"
-      parent: magic.lightning.thunderUnlock
+      parent: magic.lightning.thunderCount
       displayParent: magic.lightning.thunderCount
       displayOrthogonal: 0
       displayLinks:
@@ -1732,7 +1732,7 @@ MonoBehaviour:
       id: magic.lightning.fork
       growthId: magic.lightning.fork
       name: "\uBD84\uAE30 \uBC88\uAC1C"
-      parent: magic.lightning.damage
+      parent: magic.lightning.echo
       displayParent: magic.lightning.echo
       displayOrthogonal: 0
       displayLinks:
@@ -1760,19 +1760,19 @@ MonoBehaviour:
       id: magic.frost.speed
       growthId: magic.frost.speed
       name: "\uBE60\uB978 \uC7AC\uC2DC\uC804"
-      parent: ROOT
+      parent: magic.frost.damage
       displayParent: magic.frost.damage
       displayOrthogonal: 0
       displayLinks: []
       ranks: 3
-      parentRanks: 0
+      parentRanks: 1
       x: 420
       y: -160
     - enabled: 1
       id: magic.frost.count
       growthId: magic.frost.count
       name: "\uCD94\uAC00 \uC5BC\uC74C \uC870\uAC01"
-      parent: magic.frost.damage
+      parent: magic.frost.speed
       displayParent: magic.frost.speed
       displayOrthogonal: 0
       displayLinks: []
@@ -1784,7 +1784,7 @@ MonoBehaviour:
       id: magic.frost.orbitSpeed
       growthId: magic.frost.orbitSpeed
       name: "\uBE60\uB978 \uACF5\uC804"
-      parent: magic.frost.damage
+      parent: magic.frost.count
       displayParent: magic.frost.count
       displayOrthogonal: 0
       displayLinks: []
@@ -1796,7 +1796,7 @@ MonoBehaviour:
       id: magic.frost.range
       growthId: magic.frost.range
       name: "\uB113\uC740 \uADA4\uB3C4"
-      parent: magic.frost.damage
+      parent: magic.frost.orbitSpeed
       displayParent: magic.frost.orbitSpeed
       displayOrthogonal: 0
       displayLinks:
@@ -1809,7 +1809,7 @@ MonoBehaviour:
       id: magic.frost.size
       growthId: magic.frost.size
       name: "\uD070 \uC5BC\uC74C \uC870\uAC01"
-      parent: magic.frost.damage
+      parent: magic.frost.range
       displayParent: magic.frost.range
       displayOrthogonal: 0
       displayLinks:
@@ -1822,7 +1822,7 @@ MonoBehaviour:
       id: magic.frost.chill
       growthId: magic.frost.chill
       name: "\uC9D9\uC740 \uB0C9\uAE30"
-      parent: magic.frost.damage
+      parent: magic.frost.size
       displayParent: magic.frost.size
       displayOrthogonal: 0
       displayLinks: []
@@ -1834,7 +1834,7 @@ MonoBehaviour:
       id: magic.frost.freezeDuration
       growthId: magic.frost.freezeDuration
       name: "\uC624\uB798\uAC00\uB294 \uBE59\uACB0"
-      parent: magic.frost.damage
+      parent: magic.frost.chill
       displayParent: magic.frost.chill
       displayOrthogonal: 0
       displayLinks:
@@ -1871,7 +1871,7 @@ MonoBehaviour:
       id: magic.frost.blizzardRange
       growthId: magic.frost.blizzardRange
       name: "\uB208\uBCF4\uB77C \uB208\uBCF4\uB77C \uBC18\uACBD"
-      parent: magic.frost.blizzardUnlock
+      parent: magic.frost.blizzardPower
       displayParent: magic.frost.blizzardPower
       displayOrthogonal: 0
       displayLinks: []
@@ -1883,7 +1883,7 @@ MonoBehaviour:
       id: magic.frost.blizzardCount
       growthId: magic.frost.blizzardCount
       name: "\uB208\uBCF4\uB77C \uB208\uBCF4\uB77C \uC218"
-      parent: magic.frost.blizzardUnlock
+      parent: magic.frost.blizzardRange
       displayParent: magic.frost.blizzardRange
       displayOrthogonal: 0
       displayLinks: []
@@ -1895,7 +1895,7 @@ MonoBehaviour:
       id: magic.frost.blizzardCold
       growthId: magic.frost.blizzardCold
       name: "\uB208\uBCF4\uB77C \uCD94\uAC00 \uB0C9\uAE30"
-      parent: magic.frost.blizzardUnlock
+      parent: magic.frost.blizzardCount
       displayParent: magic.frost.blizzardCount
       displayOrthogonal: 0
       displayLinks:
@@ -1932,7 +1932,7 @@ MonoBehaviour:
       id: magic.frost.shatterRange
       growthId: magic.frost.shatterRange
       name: "\uC1C4\uBE59 \uD30C\uB3D9 \uD30C\uB3D9 \uBC18\uACBD"
-      parent: magic.frost.shatterUnlock
+      parent: magic.frost.shatterPower
       displayParent: magic.frost.shatterPower
       displayOrthogonal: 0
       displayLinks: []
@@ -1944,7 +1944,7 @@ MonoBehaviour:
       id: magic.frost.shatterShards
       growthId: magic.frost.shatterShards
       name: "\uC1C4\uBE59 \uD30C\uB3D9 \uD30C\uD3B8 \uB300\uC0C1"
-      parent: magic.frost.shatterUnlock
+      parent: magic.frost.shatterRange
       displayParent: magic.frost.shatterRange
       displayOrthogonal: 0
       displayLinks: []
@@ -1956,7 +1956,7 @@ MonoBehaviour:
       id: magic.frost.shatterCascade
       growthId: magic.frost.shatterCascade
       name: "\uC1C4\uBE59 \uD30C\uB3D9 \uC5F0\uC1C4 \uD30C\uC1C4"
-      parent: magic.frost.shatterUnlock
+      parent: magic.frost.shatterShards
       displayParent: magic.frost.shatterShards
       displayOrthogonal: 0
       displayLinks:
@@ -1969,7 +1969,7 @@ MonoBehaviour:
       id: magic.frost.rings
       growthId: magic.frost.rings
       name: "\uC774\uC911 \uC5BC\uC74C \uADA4\uB3C4"
-      parent: magic.frost.damage
+      parent: magic.frost.freezeDuration
       displayParent: magic.frost.freezeDuration
       displayOrthogonal: 0
       displayLinks:

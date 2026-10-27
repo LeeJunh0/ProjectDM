@@ -1,0 +1,2629 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738e78e8483604748bef9d55d0473a44, type: 3}
+  m_Name: DungeonScenery
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectDM.StageSceneryLayout
+  referenceSize: {x: 100, y: 100}
+  palette:
+  - id: Dungeon_Bricks
+    displayName: "\uD769\uC5B4\uC9C4 \uBCBD\uB3CC"
+    sprite: {fileID: 21300000, guid: 07c533981584426382ec79ba11a9e346, type: 3}
+    height: 1.6
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Dungeon_Rubble
+    displayName: "\uC11D\uC7AC \uC794\uD574"
+    sprite: {fileID: 21300000, guid: b64605d0796047d0865411a0848ad653, type: 3}
+    height: 2.1
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Dungeon_Torch
+    displayName: "\uD683\uBD88"
+    sprite: {fileID: 21300000, guid: dc57a2e61a8546cf934ea76d9a2bfdeb, type: 3}
+    height: 3.3
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 1
+  - id: Dungeon_Pillar_Stump
+    displayName: "\uc9e7\uc740 \uc11d\uc7ac \uae30\ub465"
+    sprite: {fileID: 21300000, guid: abb427e47a074b9c9476f24dcef91b08, type: 3}
+    height: 4
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Dungeon_Pillar_Tall
+    displayName: "\ub192\uc740 \uc11d\uc7ac \uae30\ub465"
+    sprite: {fileID: 21300000, guid: b14e1a96818547118144f784b32af732, type: 3}
+    height: 5
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Dungeon_Pillar_Cracked
+    displayName: "\uac08\ub77c\uc9c4 \uc11d\uc7ac \uae30\ub465"
+    sprite: {fileID: 21300000, guid: ff384a38025a43f897a98c892c731f4f, type: 3}
+    height: 4.4
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  - id: Dungeon_Pillar_Fallen
+    displayName: "\uc4f0\ub7ec\uc9c4 \uc11d\uc7ac \uae30\ub465"
+    sprite: {fileID: 21300000, guid: e921e77e52a74e448f409075f895c6ba, type: 3}
+    height: 3.2
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    flame: 0
+  placements:
+  - propId: Dungeon_Bricks
+    position: {x: -47.64711, y: -48.498333}
+    scale: 0.800202
+    rotation: 13.805578
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -44.403046, y: -48.68262}
+    scale: 0.83525085
+    rotation: -5.410152
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -31.902601, y: -48.161274}
+    scale: 1.1900045
+    rotation: -8.264707
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -28.271936, y: -47.330738}
+    scale: 1.1081096
+    rotation: -14.863201
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -23.34042, y: -48.530594}
+    scale: 0.8917484
+    rotation: -2.4520025
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -20.206253, y: -48.79384}
+    scale: 0.9869013
+    rotation: -4.9728765
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -15.448663, y: -47.696808}
+    scale: 1.1644197
+    rotation: -12.797777
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -8.251593, y: -47.63187}
+    scale: 0.9319229
+    rotation: 12.662739
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -3.2310784, y: -48.79841}
+    scale: 1.0961334
+    rotation: 1.9136467
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -0.53203815, y: -48.100346}
+    scale: 0.95814174
+    rotation: 12.371266
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 4.0124125, y: -47.346302}
+    scale: 0.8915175
+    rotation: 15.284744
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 8.57476, y: -47.291798}
+    scale: 0.83539164
+    rotation: -2.35818
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 11.998865, y: -48.350338}
+    scale: 0.8608429
+    rotation: 14.662287
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 15.946015, y: -48.452477}
+    scale: 0.85453516
+    rotation: 11.105394
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 19.958025, y: -48.136223}
+    scale: 0.8945014
+    rotation: 17.92222
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 24.514431, y: -47.92554}
+    scale: 1.1708666
+    rotation: -16.912725
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 27.293386, y: -47.762897}
+    scale: 0.84746474
+    rotation: -4.813033
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 31.449991, y: -47.843304}
+    scale: 1.1745442
+    rotation: 2.8099294
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 36.306175, y: -48.206608}
+    scale: 0.8464372
+    rotation: 2.5225875
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 40.044426, y: -47.235718}
+    scale: 0.97466224
+    rotation: -7.658741
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -48.440094, y: -43.396667}
+    scale: 1.027605
+    rotation: 15.460148
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -44.771717, y: -44.092514}
+    scale: 1.1267703
+    rotation: -4.669183
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -36.591743, y: -44.518936}
+    scale: 1.1244295
+    rotation: -1.4353144
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -31.951038, y: -43.72718}
+    scale: 1.0728025
+    rotation: -15.154292
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -28.125214, y: -44.666508}
+    scale: 0.82371074
+    rotation: 1.0304103
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -20.680353, y: -43.721737}
+    scale: 1.0843362
+    rotation: 3.865561
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -15.916267, y: -44.77301}
+    scale: 1.0235351
+    rotation: -7.973996
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -12.137813, y: -44.132874}
+    scale: 1.1594005
+    rotation: -7.547635
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -8.262928, y: -44.21899}
+    scale: 1.0933973
+    rotation: -12.16531
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -4.4150143, y: -43.374138}
+    scale: 1.093697
+    rotation: -6.9408154
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -0.5805456, y: -43.233105}
+    scale: 0.8252539
+    rotation: 5.6507645
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 4.264219, y: -43.863537}
+    scale: 1.1219729
+    rotation: -8.045573
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 11.558153, y: -44.558273}
+    scale: 0.92431337
+    rotation: -4.248515
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 16.763756, y: -44.087517}
+    scale: 0.85028255
+    rotation: -5.9807906
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 23.642733, y: -44.09977}
+    scale: 1.1341466
+    rotation: 4.8016005
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 28.272854, y: -43.55545}
+    scale: 1.1714244
+    rotation: 13.880264
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 32.15727, y: -43.718273}
+    scale: 1.0332652
+    rotation: -16.878036
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 36.5222, y: -43.844284}
+    scale: 1.0471332
+    rotation: -5.7862897
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 43.261295, y: -43.46619}
+    scale: 0.8818714
+    rotation: 2.5018873
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -44.690277, y: -39.947296}
+    scale: 0.8195145
+    rotation: 2.150608
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -28.560331, y: -40.45581}
+    scale: 0.9879581
+    rotation: -13.280297
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -23.595165, y: -39.208694}
+    scale: 1.0929092
+    rotation: -3.8298855
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -19.672329, y: -40.167217}
+    scale: 0.85043645
+    rotation: -7.4363384
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -16.229586, y: -39.530197}
+    scale: 0.8888621
+    rotation: -14.767045
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -8.039508, y: -39.396164}
+    scale: 0.99346644
+    rotation: -11.845949
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -4.1589365, y: -39.30004}
+    scale: 0.8578874
+    rotation: 16.338852
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 0.0406703, y: -40.288303}
+    scale: 0.94413525
+    rotation: -11.665052
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 8.469254, y: -40.125618}
+    scale: 0.899096
+    rotation: -16.513252
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 12.169345, y: -40.483696}
+    scale: 1.1419498
+    rotation: -16.946724
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 20.415905, y: -40.49821}
+    scale: 0.8847162
+    rotation: 12.231735
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 27.35302, y: -39.54105}
+    scale: 1.1192522
+    rotation: 7.9380407
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 32.202274, y: -40.70052}
+    scale: 0.86116993
+    rotation: 14.262314
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 40.513718, y: -39.727127}
+    scale: 0.8017465
+    rotation: -13.111389
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -48.687172, y: -35.86961}
+    scale: 1.0625485
+    rotation: -5.565794
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -44.624557, y: -35.489605}
+    scale: 0.9334197
+    rotation: -13.162567
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -40.703266, y: -36.545677}
+    scale: 1.0428065
+    rotation: -7.4720955
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -35.94985, y: -36.37638}
+    scale: 1.1542457
+    rotation: 4.0245624
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -32.653965, y: -35.758324}
+    scale: 0.9238281
+    rotation: 12.618694
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -24.232492, y: -35.50795}
+    scale: 1.0192379
+    rotation: -4.6712666
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -20.019962, y: -35.942127}
+    scale: 1.1381656
+    rotation: 15.219268
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -16.139885, y: -36.48621}
+    scale: 0.92669237
+    rotation: -0.2025454
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -11.566789, y: -35.62624}
+    scale: 0.86717945
+    rotation: -7.5606313
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -8.761634, y: -36.345833}
+    scale: 1.0713983
+    rotation: -8.79735
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 0.7731988, y: -35.368767}
+    scale: 0.93977714
+    rotation: 16.383457
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 8.290893, y: -36.618477}
+    scale: 1.0912786
+    rotation: 17.498987
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 12.134295, y: -36.681713}
+    scale: 0.95205843
+    rotation: -15.110636
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 15.94167, y: -36.39629}
+    scale: 0.86676735
+    rotation: 6.016618
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 20.180937, y: -35.991497}
+    scale: 0.96888435
+    rotation: -15.408423
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 23.874104, y: -35.55439}
+    scale: 0.975863
+    rotation: 0.23315263
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 28.656843, y: -35.49179}
+    scale: 1.0769651
+    rotation: -15.550208
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 32.360893, y: -36.331036}
+    scale: 1.1257039
+    rotation: 9.018368
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -44.456806, y: -32.539806}
+    scale: 1.160271
+    rotation: 15.857595
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -40.22304, y: -31.915173}
+    scale: 0.91713524
+    rotation: -0.91779935
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -36.583992, y: -31.379953}
+    scale: 1.1811286
+    rotation: 3.8862398
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -31.776192, y: -32.281296}
+    scale: 1.0774332
+    rotation: -4.3742
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -19.434315, y: -31.632706}
+    scale: 0.88809144
+    rotation: 5.8541183
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -16.176142, y: -31.551704}
+    scale: 1.0487529
+    rotation: 3.7596138
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -11.80589, y: -32.51009}
+    scale: 0.9107863
+    rotation: 7.129236
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -7.880614, y: -31.45851}
+    scale: 0.8828379
+    rotation: 2.2317953
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -4.6111307, y: -32.398994}
+    scale: 0.92459536
+    rotation: 7.062752
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -0.15128694, y: -32.06817}
+    scale: 0.9160828
+    rotation: -4.7709
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 4.575514, y: -31.7412}
+    scale: 0.8356597
+    rotation: 14.990761
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 7.298178, y: -31.349657}
+    scale: 0.91332614
+    rotation: -11.314753
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 12.625804, y: -32.310646}
+    scale: 0.84024805
+    rotation: -2.9935448
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 16.04729, y: -32.529037}
+    scale: 1.1632985
+    rotation: 7.7961173
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 20.358078, y: -31.538939}
+    scale: 0.9322238
+    rotation: 5.79782
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 23.482689, y: -31.622326}
+    scale: 1.0582337
+    rotation: 7.012629
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 27.750662, y: -31.266825}
+    scale: 1.0041945
+    rotation: -1.2027948
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 31.442476, y: -31.36377}
+    scale: 1.1802517
+    rotation: 5.749111
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 43.7401, y: -32.610718}
+    scale: 1.1811024
+    rotation: 0.88742924
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -43.3677, y: -28.071943}
+    scale: 0.8741573
+    rotation: -10.399768
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -40.348446, y: -28.163584}
+    scale: 1.0289001
+    rotation: 14.0587
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -35.524525, y: -28.192112}
+    scale: 1.0737126
+    rotation: 3.589285
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -27.64941, y: -28.43862}
+    scale: 0.8301669
+    rotation: 17.490078
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -20.254826, y: -27.624718}
+    scale: 0.8578985
+    rotation: -7.873865
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -12.461749, y: -27.575499}
+    scale: 0.8930297
+    rotation: 2.621722
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -4.594568, y: -27.266966}
+    scale: 0.9984272
+    rotation: 16.543106
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -0.39575624, y: -28.469114}
+    scale: 1.1606735
+    rotation: 17.65812
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 4.1296554, y: -28.699806}
+    scale: 0.8960139
+    rotation: -3.4920096
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 7.648014, y: -28.55376}
+    scale: 1.1815224
+    rotation: 17.930906
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 11.60348, y: -27.995853}
+    scale: 1.1078821
+    rotation: 4.0193267
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 15.81214, y: -27.639603}
+    scale: 0.8740862
+    rotation: 5.444498
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 19.79684, y: -28.20605}
+    scale: 1.109924
+    rotation: -9.119766
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 32.55742, y: -27.513206}
+    scale: 1.016905
+    rotation: 16.612202
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 40.198498, y: -28.588835}
+    scale: 0.8793786
+    rotation: -5.85458
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -43.370613, y: -24.382875}
+    scale: 0.90052783
+    rotation: -15.040013
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -40.006268, y: -23.545382}
+    scale: 1.1730518
+    rotation: 2.8202999
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -35.330288, y: -24.15011}
+    scale: 0.85832494
+    rotation: 6.0772676
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -31.234522, y: -24.515608}
+    scale: 1.0703651
+    rotation: 11.972897
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -23.656212, y: -23.293756}
+    scale: 0.84363514
+    rotation: -4.9224114
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -20.395124, y: -23.330791}
+    scale: 1.1359696
+    rotation: 17.619825
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -16.372059, y: -23.807833}
+    scale: 0.8808875
+    rotation: 11.917934
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -11.346147, y: -24.418926}
+    scale: 0.8331834
+    rotation: 10.189497
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -7.8793488, y: -24.400574}
+    scale: 1.1599019
+    rotation: -8.383086
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -3.214037, y: -23.909159}
+    scale: 0.8171657
+    rotation: -17.505972
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 8.446587, y: -24.710709}
+    scale: 0.8623351
+    rotation: -16.080194
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 12.489935, y: -23.67483}
+    scale: 0.8104518
+    rotation: 2.888091
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 16.284225, y: -23.730217}
+    scale: 1.1760678
+    rotation: 8.002912
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 19.641977, y: -24.698673}
+    scale: 0.86372185
+    rotation: 11.423908
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 24.289762, y: -24.492077}
+    scale: 1.1578614
+    rotation: 15.25079
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 40.618515, y: -23.546635}
+    scale: 0.88647246
+    rotation: 2.121945
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 44.245197, y: -24.48267}
+    scale: 1.0011523
+    rotation: 17.72924
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -48.0334, y: -19.205547}
+    scale: 0.850043
+    rotation: 0.38806844
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -43.314083, y: -20.589638}
+    scale: 0.86321646
+    rotation: -13.46482
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -40.267056, y: -20.650011}
+    scale: 1.1952965
+    rotation: -11.9783125
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -36.23746, y: -19.685415}
+    scale: 0.8488635
+    rotation: -9.101086
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -31.875021, y: -20.114159}
+    scale: 1.0108482
+    rotation: -4.6981754
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -27.222952, y: -19.823313}
+    scale: 1.1108863
+    rotation: 4.595931
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -7.958639, y: -20.595942}
+    scale: 0.8258174
+    rotation: -17.89384
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -3.9530861, y: -20.239061}
+    scale: 0.8626701
+    rotation: 4.7131453
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 0.41989538, y: -20.244102}
+    scale: 1.1566983
+    rotation: -10.403081
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 7.807712, y: -20.101198}
+    scale: 0.9675667
+    rotation: -0.9531369
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 11.377431, y: -19.346895}
+    scale: 0.92076546
+    rotation: 6.6865325
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 15.79624, y: -20.490917}
+    scale: 1.0429149
+    rotation: 16.165869
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 20.435724, y: -20.11645}
+    scale: 1.1890883
+    rotation: 4.3658743
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 23.9531, y: -20.314219}
+    scale: 0.9711312
+    rotation: -3.26158
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 31.376646, y: -19.3967}
+    scale: 0.89939404
+    rotation: 15.444364
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 40.66533, y: -19.68229}
+    scale: 0.83285224
+    rotation: 9.023659
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 44.17199, y: -20.784748}
+    scale: 0.97847843
+    rotation: 12.680988
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -47.77567, y: -15.832678}
+    scale: 1.1496344
+    rotation: -8.0518875
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -35.919254, y: -15.961852}
+    scale: 1.0121677
+    rotation: -6.8032217
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -31.942377, y: -15.56461}
+    scale: 1.101721
+    rotation: 6.378145
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -27.29622, y: -15.810785}
+    scale: 1.0656834
+    rotation: -17.106739
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -24.10854, y: -15.769746}
+    scale: 1.0345742
+    rotation: -4.1269436
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -11.6524515, y: -16.66616}
+    scale: 1.1889833
+    rotation: -13.133722
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -3.8848634, y: -16.395346}
+    scale: 0.8784159
+    rotation: -13.442455
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -0.036856413, y: -16.28203}
+    scale: 0.8473213
+    rotation: 13.67762
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 12.244283, y: -16.174362}
+    scale: 0.96979994
+    rotation: 12.823616
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 15.283173, y: -16.328905}
+    scale: 0.8310239
+    rotation: 2.3066783
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 20.70519, y: -15.755652}
+    scale: 0.9872471
+    rotation: -16.402494
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 23.96252, y: -16.592655}
+    scale: 1.0395658
+    rotation: -10.666223
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 27.82567, y: -16.75444}
+    scale: 0.93416905
+    rotation: 14.944235
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 31.4895, y: -15.43918}
+    scale: 0.93593127
+    rotation: -17.292164
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 35.492046, y: -15.528484}
+    scale: 1.0216916
+    rotation: -9.562133
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 39.528484, y: -15.912858}
+    scale: 0.9282663
+    rotation: 7.6390495
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 43.618294, y: -15.590556}
+    scale: 1.0609982
+    rotation: 2.9202282
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -48.374462, y: -12.288771}
+    scale: 1.0595827
+    rotation: -7.204852
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -43.51647, y: -12.7141285}
+    scale: 0.8098852
+    rotation: 7.7177925
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -40.26417, y: -11.304222}
+    scale: 1.1877323
+    rotation: -0.6818701
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -36.041584, y: -11.944639}
+    scale: 0.8811687
+    rotation: -11.8950405
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -23.333488, y: -12.039714}
+    scale: 1.1621088
+    rotation: 15.64272
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -20.155043, y: -11.99873}
+    scale: 0.9183811
+    rotation: 17.921257
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -15.317537, y: -11.486335}
+    scale: 1.0732659
+    rotation: -14.397902
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -7.636192, y: -12.086344}
+    scale: 1.0830377
+    rotation: 15.095
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -0.1960394, y: -11.424457}
+    scale: 0.8557655
+    rotation: -16.746809
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 4.452228, y: -11.242852}
+    scale: 1.0875218
+    rotation: -10.616071
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 8.788744, y: -12.362289}
+    scale: 0.8016672
+    rotation: -5.8144903
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 11.399392, y: -11.695583}
+    scale: 0.9836948
+    rotation: 10.952532
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 16.312805, y: -11.869619}
+    scale: 1.0839138
+    rotation: -12.64027
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 19.30692, y: -12.035186}
+    scale: 1.0593415
+    rotation: 14.542246
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 24.509972, y: -12.184626}
+    scale: 0.89637035
+    rotation: 12.33925
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 27.89444, y: -12.150691}
+    scale: 0.8990728
+    rotation: -1.4875939
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 31.471127, y: -11.702445}
+    scale: 0.89222956
+    rotation: 9.052494
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 35.826767, y: -11.324625}
+    scale: 0.8224911
+    rotation: 10.186029
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 40.472897, y: -12.581777}
+    scale: 0.9738141
+    rotation: 7.1171064
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 43.68904, y: -12.245321}
+    scale: 1.1845921
+    rotation: 3.503171
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -48.51893, y: -7.3188095}
+    scale: 1.0760814
+    rotation: -8.937876
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -40.131554, y: -8.556011}
+    scale: 0.9849999
+    rotation: 11.005095
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -31.778458, y: -8.368915}
+    scale: 1.1252588
+    rotation: 9.3953
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -27.417915, y: -8.257124}
+    scale: 0.90763754
+    rotation: -12.450678
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -19.924932, y: -8.214361}
+    scale: 0.80140954
+    rotation: -3.829732
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -15.299145, y: -8.348733}
+    scale: 1.1372608
+    rotation: 1.4751785
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -12.74622, y: -7.357331}
+    scale: 1.1624969
+    rotation: 12.075708
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -7.7616715, y: -7.3132434}
+    scale: 0.9810957
+    rotation: 7.5355053
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 3.9242208, y: -7.490122}
+    scale: 1.0539763
+    rotation: 13.529148
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 7.4287047, y: -7.950232}
+    scale: 0.8082605
+    rotation: 10.739537
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 11.885204, y: -8.212119}
+    scale: 0.9239266
+    rotation: -12.206569
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 16.63674, y: -8.101118}
+    scale: 1.0203139
+    rotation: 6.6347637
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 20.462957, y: -8.346086}
+    scale: 0.95080686
+    rotation: 2.0542846
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 28.780918, y: -8.751308}
+    scale: 0.8471402
+    rotation: -8.621185
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 31.220665, y: -7.75293}
+    scale: 1.1125044
+    rotation: 0.73114014
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 40.087482, y: -8.189004}
+    scale: 0.8336624
+    rotation: -11.105615
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 43.765747, y: -8.404147}
+    scale: 1.0574538
+    rotation: -9.314748
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -48.4587, y: -3.2090414}
+    scale: 0.91175365
+    rotation: 14.938582
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -39.22834, y: -3.3658142}
+    scale: 0.803235
+    rotation: 9.481939
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -31.84959, y: -3.4670932}
+    scale: 1.1615671
+    rotation: 12.201184
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -23.461548, y: -4.2091494}
+    scale: 1.1431508
+    rotation: 10.328815
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -20.219936, y: -3.8052092}
+    scale: 1.1098256
+    rotation: -10.598629
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -11.747413, y: -4.247192}
+    scale: 1.0533328
+    rotation: 2.5856345
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -3.507372, y: -4.3029532}
+    scale: 1.0621859
+    rotation: 14.748107
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -0.5547955, y: -3.81919}
+    scale: 0.8289314
+    rotation: -10.03767
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 3.7965944, y: -4.567893}
+    scale: 1.1277769
+    rotation: 4.589032
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 8.754436, y: -3.6541953}
+    scale: 1.1039572
+    rotation: -4.088842
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 19.228905, y: -4.716983}
+    scale: 0.9390937
+    rotation: 13.136198
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 23.454548, y: -4.3169107}
+    scale: 1.0342153
+    rotation: -13.52415
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 35.463688, y: -3.4618073}
+    scale: 0.90281445
+    rotation: 14.24058
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 44.029278, y: -4.625474}
+    scale: 1.167746
+    rotation: -6.4445124
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -43.6899, y: 0.15921126}
+    scale: 1.0733982
+    rotation: -3.0783424
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -39.456272, y: -0.742904}
+    scale: 0.92258245
+    rotation: -2.3654861
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -35.682076, y: -0.50928885}
+    scale: 1.1504579
+    rotation: -1.7221509
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -31.28751, y: -0.46553484}
+    scale: 0.90477914
+    rotation: 17.67024
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -27.796436, y: 0.6830539}
+    scale: 0.8865525
+    rotation: 14.956365
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -23.895525, y: -0.5331533}
+    scale: 1.1370183
+    rotation: -8.639714
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -3.8193574, y: 0.3976104}
+    scale: 1.1301019
+    rotation: -2.8242836
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 3.374042, y: -0.49527058}
+    scale: 1.007535
+    rotation: 5.9722347
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 7.2238646, y: 0.5990012}
+    scale: 0.8768618
+    rotation: 5.696169
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 16.139458, y: -0.6064032}
+    scale: 0.825313
+    rotation: -5.182665
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 19.562359, y: -0.31591535}
+    scale: 1.1934285
+    rotation: 9.278242
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 23.870232, y: -0.17423144}
+    scale: 0.8178641
+    rotation: -5.651319
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 27.449518, y: -0.47368547}
+    scale: 1.1957003
+    rotation: -15.280355
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -47.366886, y: 4.581761}
+    scale: 1.1834304
+    rotation: -16.871609
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -36.423973, y: 4.564287}
+    scale: 1.0328556
+    rotation: -11.995146
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -32.351215, y: 3.2495844}
+    scale: 1.0218341
+    rotation: 9.298406
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -27.348927, y: 3.9144166}
+    scale: 0.859108
+    rotation: 10.742356
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -19.44239, y: 4.107171}
+    scale: 0.9054182
+    rotation: -17.138239
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -15.572378, y: 4.171399}
+    scale: 1.1992517
+    rotation: -3.4856937
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -7.9137163, y: 4.5835295}
+    scale: 1.1203424
+    rotation: -10.789671
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -4.4644375, y: 3.7847838}
+    scale: 0.8158564
+    rotation: -5.387546
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 0.46031103, y: 4.1512218}
+    scale: 0.8060629
+    rotation: -0.88593364
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 3.2271135, y: 3.211284}
+    scale: 1.1789844
+    rotation: -8.243575
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 8.654066, y: 3.2693362}
+    scale: 1.1966101
+    rotation: 11.769722
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 12.132187, y: 4.517259}
+    scale: 0.946678
+    rotation: -16.615244
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 27.707289, y: 3.4622555}
+    scale: 1.0147926
+    rotation: 12.875528
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 36.23152, y: 3.681496}
+    scale: 1.0881269
+    rotation: -16.267826
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 43.872463, y: 3.2334332}
+    scale: 1.0154204
+    rotation: -13.719944
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -47.82966, y: 8.564786}
+    scale: 0.97031325
+    rotation: 0.18634057
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -44.13826, y: 7.6590767}
+    scale: 0.847733
+    rotation: 8.098673
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -39.546455, y: 7.5108085}
+    scale: 0.94477695
+    rotation: 2.7324243
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -36.631622, y: 8.287211}
+    scale: 0.9509532
+    rotation: 4.766
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -32.326145, y: 8.024715}
+    scale: 0.9672364
+    rotation: -4.4612036
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -28.104319, y: 7.4603395}
+    scale: 1.1183035
+    rotation: -11.14387
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -24.10657, y: 8.379912}
+    scale: 0.9920459
+    rotation: 16.228806
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -19.477375, y: 7.537668}
+    scale: 1.0171959
+    rotation: 8.061077
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -12.72256, y: 8.596459}
+    scale: 1.1085902
+    rotation: -15.597285
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -7.6780133, y: 7.758217}
+    scale: 0.8126171
+    rotation: -17.607517
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -3.8941064, y: 7.8167243}
+    scale: 1.1768249
+    rotation: -8.392933
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 3.9512298, y: 7.6870475}
+    scale: 1.1500405
+    rotation: 5.477719
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 7.6181073, y: 7.528639}
+    scale: 1.1691886
+    rotation: 1.8029144
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 12.25907, y: 8.273125}
+    scale: 0.8524917
+    rotation: 0.9637177
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 20.17668, y: 7.4520593}
+    scale: 0.89256877
+    rotation: 6.856205
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 32.432873, y: 8.521825}
+    scale: 0.8349392
+    rotation: 11.741168
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 39.466587, y: 7.215877}
+    scale: 1.0080135
+    rotation: 9.577411
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 44.106174, y: 8.279074}
+    scale: 0.97777975
+    rotation: 7.832306
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -48.694748, y: 11.247832}
+    scale: 0.80775476
+    rotation: 8.343826
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -39.407135, y: 11.865591}
+    scale: 0.8803239
+    rotation: 16.882353
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -35.417618, y: 12.74754}
+    scale: 1.1277852
+    rotation: 16.562256
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -31.975983, y: 11.816148}
+    scale: 1.1893951
+    rotation: -4.938967
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -28.278246, y: 11.373722}
+    scale: 0.82298106
+    rotation: -6.7969975
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -23.224096, y: 12.658302}
+    scale: 1.1260302
+    rotation: -1.2012874
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -20.633537, y: 11.730458}
+    scale: 1.0821867
+    rotation: -7.7140265
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -16.036423, y: 11.832638}
+    scale: 0.827933
+    rotation: -1.7900784
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -11.78513, y: 12.312629}
+    scale: 1.1328167
+    rotation: -8.236615
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -8.30813, y: 11.311104}
+    scale: 1.0631039
+    rotation: -16.876564
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -4.710762, y: 11.60164}
+    scale: 0.99737275
+    rotation: -6.8602514
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 3.628834, y: 11.323336}
+    scale: 1.0852711
+    rotation: -11.258081
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 8.780192, y: 12.577471}
+    scale: 0.8864184
+    rotation: 0.9503882
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 12.772854, y: 11.512681}
+    scale: 0.9048387
+    rotation: 4.3950334
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 15.276331, y: 11.6072235}
+    scale: 0.85774946
+    rotation: 3.6587026
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 20.122242, y: 11.425341}
+    scale: 1.1263698
+    rotation: 6.8688173
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 24.40793, y: 11.529831}
+    scale: 1.1528659
+    rotation: -6.549668
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 28.474945, y: 11.716993}
+    scale: 1.0898502
+    rotation: 4.0984497
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 31.67681, y: 11.357833}
+    scale: 0.9029538
+    rotation: 4.7429113
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 36.516113, y: 11.961037}
+    scale: 1.034258
+    rotation: 17.093925
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 43.840195, y: 12.536959}
+    scale: 1.1957127
+    rotation: 0.54746246
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -48.19211, y: 15.686431}
+    scale: 1.1725577
+    rotation: -15.803666
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -44.128403, y: 16.780457}
+    scale: 0.81687695
+    rotation: -16.058563
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -39.906338, y: 15.294485}
+    scale: 1.0921985
+    rotation: -8.345275
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -23.530758, y: 15.693959}
+    scale: 0.9646108
+    rotation: 16.321138
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -19.248882, y: 16.625881}
+    scale: 0.8596223
+    rotation: 3.5229635
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -8.0194435, y: 15.673105}
+    scale: 0.87077737
+    rotation: -14.997145
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -4.2848983, y: 15.478569}
+    scale: 0.85685134
+    rotation: 1.1060014
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -0.11631975, y: 16.751472}
+    scale: 0.95110095
+    rotation: 3.7863007
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 3.452201, y: 15.265937}
+    scale: 1.1505524
+    rotation: 7.151741
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 8.178708, y: 15.838195}
+    scale: 1.03921
+    rotation: -13.950727
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 11.996138, y: 15.2799015}
+    scale: 0.93124574
+    rotation: 17.732843
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 16.472548, y: 15.588955}
+    scale: 1.0473334
+    rotation: 3.923971
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 19.461048, y: 15.550615}
+    scale: 0.89456266
+    rotation: -7.8197403
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 27.6809, y: 15.815605}
+    scale: 1.1100937
+    rotation: -5.3768764
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 32.070564, y: 15.869188}
+    scale: 1.1678927
+    rotation: -13.595906
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 35.27942, y: 16.180153}
+    scale: 1.1192456
+    rotation: -10.665676
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 39.612877, y: 15.343456}
+    scale: 0.8718949
+    rotation: 16.326641
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 43.778587, y: 16.527512}
+    scale: 0.84280413
+    rotation: 0.42916632
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -47.290623, y: 20.193235}
+    scale: 1.1569817
+    rotation: 3.1493468
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -44.479855, y: 19.409943}
+    scale: 0.8387194
+    rotation: 15.731585
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -36.069813, y: 20.382715}
+    scale: 0.9180372
+    rotation: -14.047845
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -31.847204, y: 19.8354}
+    scale: 1.0354191
+    rotation: -7.3104925
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -27.499645, y: 20.176662}
+    scale: 1.1967297
+    rotation: 7.8228426
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -23.350945, y: 20.185999}
+    scale: 1.1833783
+    rotation: 13.132254
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -20.667297, y: 19.226446}
+    scale: 1.1189272
+    rotation: -10.335068
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -11.762771, y: 20.017584}
+    scale: 0.9981319
+    rotation: -9.43809
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -7.821531, y: 20.534853}
+    scale: 0.9945536
+    rotation: -1.277196
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -3.7888217, y: 19.70412}
+    scale: 0.84917915
+    rotation: 1.654187
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -0.26136476, y: 19.591995}
+    scale: 0.95223814
+    rotation: 8.20424
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 7.911853, y: 19.526402}
+    scale: 0.99233365
+    rotation: -1.9475241
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 11.856528, y: 19.80547}
+    scale: 0.84966487
+    rotation: -12.450471
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 16.154488, y: 20.083212}
+    scale: 0.992897
+    rotation: 3.137395
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 23.698593, y: 19.625587}
+    scale: 0.84589374
+    rotation: 0.35766935
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 44.74134, y: 20.061033}
+    scale: 0.91287184
+    rotation: 14.97613
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -47.91504, y: 23.74217}
+    scale: 1.065535
+    rotation: -10.798463
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -43.723, y: 23.43422}
+    scale: 0.8022037
+    rotation: -7.3585534
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -40.719448, y: 24.20176}
+    scale: 1.1154479
+    rotation: -6.689821
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -36.50265, y: 24.72747}
+    scale: 0.8382623
+    rotation: 0.012093544
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -32.209206, y: 23.358618}
+    scale: 1.1984199
+    rotation: -7.69874
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -28.490541, y: 24.018122}
+    scale: 1.1143005
+    rotation: 15.798469
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -23.451897, y: 24.698097}
+    scale: 1.1379124
+    rotation: 13.5376625
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -16.010303, y: 24.162931}
+    scale: 0.953675
+    rotation: 7.053068
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -11.890909, y: 24.31953}
+    scale: 0.81890035
+    rotation: -16.571075
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -3.4289088, y: 23.383636}
+    scale: 0.80114746
+    rotation: -4.488291
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 3.482007, y: 23.6014}
+    scale: 0.98287994
+    rotation: -8.620343
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 7.902507, y: 23.83075}
+    scale: 1.1236899
+    rotation: 11.354677
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 12.125988, y: 23.337671}
+    scale: 1.1181258
+    rotation: 14.27827
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 19.289698, y: 24.475636}
+    scale: 0.99627656
+    rotation: -9.845759
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 23.238369, y: 23.785328}
+    scale: 0.9269226
+    rotation: -15.284987
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 28.554688, y: 24.458727}
+    scale: 1.0460967
+    rotation: 13.820065
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 31.276333, y: 23.678986}
+    scale: 1.1667298
+    rotation: 13.784003
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 36.07674, y: 23.394783}
+    scale: 0.9662175
+    rotation: 5.7561216
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 44.7174, y: 23.468338}
+    scale: 0.97735804
+    rotation: -14.598706
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -48.381702, y: 27.217003}
+    scale: 0.8034438
+    rotation: -7.7535486
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -44.675213, y: 28.722305}
+    scale: 0.9991627
+    rotation: -9.608852
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -39.881813, y: 27.749788}
+    scale: 0.897636
+    rotation: -14.920404
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -35.357178, y: 27.86484}
+    scale: 0.8977025
+    rotation: 8.470131
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -27.8331, y: 27.527817}
+    scale: 1.1624789
+    rotation: 12.698271
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -23.937035, y: 28.539385}
+    scale: 0.9856413
+    rotation: -17.367569
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -16.200787, y: 28.518549}
+    scale: 0.87972206
+    rotation: -17.678303
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -12.224523, y: 28.152164}
+    scale: 1.1057414
+    rotation: 1.7763197
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 0.12315178, y: 28.268272}
+    scale: 1.1746658
+    rotation: -3.3489256
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 4.085784, y: 27.900255}
+    scale: 0.8098928
+    rotation: 15.656223
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 8.05843, y: 28.197498}
+    scale: 0.96200293
+    rotation: -10.945825
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 12.794584, y: 27.697752}
+    scale: 1.1100001
+    rotation: -7.6401544
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 16.439306, y: 28.759136}
+    scale: 1.1475998
+    rotation: -4.771256
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 20.330942, y: 27.73313}
+    scale: 1.1169324
+    rotation: -15.1715145
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 31.252256, y: 27.211239}
+    scale: 1.1996137
+    rotation: -14.505409
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 36.128567, y: 27.77052}
+    scale: 0.8646657
+    rotation: -13.708772
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 40.446476, y: 27.941118}
+    scale: 0.862293
+    rotation: 2.4274807
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 44.52749, y: 27.66437}
+    scale: 1.0450706
+    rotation: -13.77431
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -48.680637, y: 31.382318}
+    scale: 1.1782169
+    rotation: 1.0892816
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -39.973373, y: 32.435085}
+    scale: 0.94010556
+    rotation: -10.83263
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -35.214005, y: 32.277008}
+    scale: 0.98352605
+    rotation: 15.512704
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -31.691034, y: 31.619246}
+    scale: 1.0867175
+    rotation: 7.5146294
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -28.181828, y: 32.767506}
+    scale: 0.89705026
+    rotation: 5.7168517
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -20.78159, y: 32.456528}
+    scale: 0.953522
+    rotation: -14.909595
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -16.032934, y: 31.345821}
+    scale: 1.1758187
+    rotation: -4.2055387
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -11.814741, y: 31.492867}
+    scale: 1.0734056
+    rotation: -10.868983
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -8.718802, y: 32.750607}
+    scale: 1.1168944
+    rotation: 16.925833
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -4.6277785, y: 32.06447}
+    scale: 0.83367485
+    rotation: 15.954165
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 0.2775776, y: 32.123913}
+    scale: 0.87047344
+    rotation: 6.946668
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 4.201049, y: 32.286037}
+    scale: 1.0386049
+    rotation: -16.57877
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 7.2953353, y: 32.74583}
+    scale: 0.9563437
+    rotation: -2.1358387
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 12.5059185, y: 31.433035}
+    scale: 0.84627306
+    rotation: -5.081999
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 20.568575, y: 31.904013}
+    scale: 1.0422381
+    rotation: -0.2817607
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 24.011728, y: 32.008194}
+    scale: 0.9161423
+    rotation: -17.078455
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 27.513157, y: 32.689095}
+    scale: 1.029659
+    rotation: -15.395643
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 40.348366, y: 31.296803}
+    scale: 0.829924
+    rotation: 15.363994
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 44.146324, y: 31.450407}
+    scale: 0.9815958
+    rotation: -0.93703187
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: -43.942936, y: 36.041348}
+    scale: 0.9583383
+    rotation: -11.340029
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -40.282043, y: 36.76272}
+    scale: 0.8648126
+    rotation: 15.750294
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -32.724377, y: 35.91493}
+    scale: 0.9401131
+    rotation: -4.9111924
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -28.652765, y: 35.262753}
+    scale: 1.0376258
+    rotation: -14.393656
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -24.452415, y: 36.49214}
+    scale: 0.93257755
+    rotation: -6.7769456
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -20.284986, y: 36.600803}
+    scale: 0.8392448
+    rotation: -9.103539
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -11.419756, y: 35.64831}
+    scale: 1.0313792
+    rotation: 7.730897
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -8.503387, y: 35.459625}
+    scale: 0.9426505
+    rotation: 7.662773
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -3.632545, y: 36.602436}
+    scale: 0.9417768
+    rotation: -9.040128
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 7.5951095, y: 35.603474}
+    scale: 1.0650405
+    rotation: 11.528055
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 12.128149, y: 35.702194}
+    scale: 1.055517
+    rotation: -14.657673
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 19.68607, y: 36.74441}
+    scale: 0.9193616
+    rotation: -10.022758
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 28.082775, y: 35.37453}
+    scale: 1.0671929
+    rotation: -17.743666
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 31.667084, y: 36.69314}
+    scale: 0.8055163
+    rotation: 1.3104908
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 36.712933, y: 35.86526}
+    scale: 1.0596251
+    rotation: -8.582417
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 39.27506, y: 36.135025}
+    scale: 1.1040503
+    rotation: -3.2874923
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -40.15556, y: 40.112587}
+    scale: 1.1431302
+    rotation: -8.064478
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -35.33579, y: 39.664005}
+    scale: 1.1577789
+    rotation: 13.774145
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -27.406437, y: 40.007717}
+    scale: 1.0029625
+    rotation: 14.682841
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -20.594336, y: 40.556374}
+    scale: 1.1743973
+    rotation: -0.91534674
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -16.633656, y: 39.582764}
+    scale: 0.8965231
+    rotation: 9.753334
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -12.537257, y: 39.471355}
+    scale: 0.82832235
+    rotation: -15.626721
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 0.09106827, y: 40.63259}
+    scale: 0.8956674
+    rotation: 0.51976275
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 8.388104, y: 39.484955}
+    scale: 1.0443536
+    rotation: -12.586891
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 12.376253, y: 40.20747}
+    scale: 0.8698357
+    rotation: -5.8388395
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 15.686159, y: 40.597446}
+    scale: 1.040344
+    rotation: 11.537617
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 20.331446, y: 39.725204}
+    scale: 0.88343793
+    rotation: 2.7618148
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 24.542484, y: 40.36299}
+    scale: 0.83872634
+    rotation: -6.992566
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: 27.386389, y: 40.241493}
+    scale: 0.95092654
+    rotation: -16.126404
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 35.811726, y: 40.092094}
+    scale: 0.9463054
+    rotation: -9.4689045
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 39.83035, y: 39.595055}
+    scale: 1.139938
+    rotation: 14.0982485
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -47.36623, y: 44.64448}
+    scale: 0.8311093
+    rotation: -16.846273
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -44.50023, y: 43.555954}
+    scale: 0.88941747
+    rotation: 9.664021
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -40.2277, y: 43.92705}
+    scale: 1.0604138
+    rotation: -0.33143413
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -36.04274, y: 43.983833}
+    scale: 1.1399627
+    rotation: -14.62132
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -32.373363, y: 44.4149}
+    scale: 1.1214677
+    rotation: -15.803881
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -28.085335, y: 44.06003}
+    scale: 1.0102049
+    rotation: -14.470432
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -20.527323, y: 43.96554}
+    scale: 0.9581751
+    rotation: -9.143515
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: -15.597993, y: 43.332565}
+    scale: 0.965162
+    rotation: 8.10762
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -12.435413, y: 44.701115}
+    scale: 0.9852632
+    rotation: -8.276144
+    flipX: 1
+  - propId: Dungeon_Rubble
+    position: {x: -8.128201, y: 44.331905}
+    scale: 1.1667553
+    rotation: -5.024728
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: -4.599164, y: 43.8284}
+    scale: 1.1308026
+    rotation: 7.441536
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 4.593937, y: 44.021282}
+    scale: 1.0883263
+    rotation: -6.30945
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 11.322702, y: 44.139706}
+    scale: 1.0720533
+    rotation: -3.8598652
+    flipX: 0
+  - propId: Dungeon_Rubble
+    position: {x: 16.400879, y: 44.433636}
+    scale: 0.99141985
+    rotation: 13.881212
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 20.201172, y: 44.304165}
+    scale: 1.0343595
+    rotation: -17.333916
+    flipX: 1
+  - propId: Dungeon_Bricks
+    position: {x: 24.570278, y: 43.909462}
+    scale: 1.1799428
+    rotation: 10.249358
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 32.603615, y: 43.36733}
+    scale: 1.0152824
+    rotation: 8.254528
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 36.239784, y: 43.89476}
+    scale: 1.040168
+    rotation: -4.839524
+    flipX: 0
+  - propId: Dungeon_Bricks
+    position: {x: 44.680916, y: 43.249138}
+    scale: 0.9791451
+    rotation: 10.5769825
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -42.55947, y: -42.712196}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -29.856354, y: -41.539448}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -18.406551, y: -42.89702}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -6.240968, y: -41.221115}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 5.5702105, y: -42.314533}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 18.921623, y: -41.13582}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 29.303349, y: -41.72659}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 41.51201, y: -42.844307}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -41.68633, y: -30.35571}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -30.794767, y: -29.663307}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -18.755293, y: -30.141205}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -6.0720453, y: -29.041374}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 6.2497025, y: -29.96079}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 18.652296, y: -30.829853}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 29.424204, y: -29.027895}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 41.037384, y: -30.314787}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -41.323906, y: -18.860199}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -30.631224, y: -18.407621}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -17.671337, y: -17.07148}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -5.6914177, y: -17.170025}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 6.5329304, y: -18.611784}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 17.613667, y: -18.485674}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 29.126387, y: -17.357744}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 42.386444, y: -18.328081}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -41.953266, y: -6.3489475}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -30.255186, y: -6.912195}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -18.538548, y: -5.7237124}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -6.5174956, y: -6.4708605}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 17.266417, y: -6.6926484}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 29.030106, y: -6.343503}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 42.209236, y: -5.977084}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -41.218067, y: 6.433249}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -29.54222, y: 6.518755}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -17.957043, y: 5.473879}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 6.3220434, y: 6.941325}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 17.583849, y: 6.840716}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 29.84713, y: 5.553687}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 42.050426, y: 6.8590755}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -41.811043, y: 17.638395}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -29.180965, y: 17.042965}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -18.270054, y: 17.730799}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -6.976183, y: 17.531689}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 6.311566, y: 17.27727}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 17.942698, y: 18.36529}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 29.008625, y: 17.23949}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 42.51142, y: 17.553886}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -41.903584, y: 30.015444}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -30.292028, y: 30.09399}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -18.834269, y: 30.06894}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -5.1361456, y: 29.621578}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 5.86508, y: 29.091963}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 18.777143, y: 30.559704}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: 29.297554, y: 30.298227}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 42.889603, y: 30.272282}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -41.77728, y: 42.90443}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -29.058937, y: 42.0418}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -17.159615, y: 42.677536}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Torch
+    position: {x: -6.6714163, y: 41.72262}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 5.5073466, y: 41.021976}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 17.960186, y: 42.858086}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 30.398478, y: 42.447712}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 42.90642, y: 41.077618}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: -5, y: 3.2}
+    scale: 1
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Torch
+    position: {x: 5, y: 3.2}
+    scale: 1
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Stump
+    position: {x: -41.4235, y: -38.4243}
+    scale: 1.0176
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Tall
+    position: {x: -25.7340, y: -40.0338}
+    scale: 1.0001
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Cracked
+    position: {x: -8.2612, y: -41.2601}
+    scale: 0.8971
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: 9.8553, y: -41.3049}
+    scale: 1.0343
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Stump
+    position: {x: 23.5523, y: -38.6920}
+    scale: 0.8617
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Tall
+    position: {x: 39.5653, y: -42.3348}
+    scale: 1.0850
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: -39.3231, y: -25.1113}
+    scale: 0.9329
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Stump
+    position: {x: -22.0571, y: -23.2127}
+    scale: 0.9787
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Tall
+    position: {x: -5.6261, y: -21.8045}
+    scale: 0.9816
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Cracked
+    position: {x: 8.7278, y: -24.3481}
+    scale: 0.9155
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: 21.9761, y: -25.4945}
+    scale: 0.8977
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Stump
+    position: {x: 41.8645, y: -24.9340}
+    scale: 0.9720
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Cracked
+    position: {x: -37.6498, y: -6.4006}
+    scale: 1.0059
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: -26.4827, y: -10.0678}
+    scale: 0.8541
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Stump
+    position: {x: -7.6, y: -5.6}
+    scale: 1.0860
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Tall
+    position: {x: 7.6, y: -5.6}
+    scale: 0.9567
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Cracked
+    position: {x: 22.5714, y: -5.7819}
+    scale: 0.9777
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: 39.2114, y: -10.4376}
+    scale: 1.0219
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Tall
+    position: {x: -42.0151, y: 9.3373}
+    scale: 0.9421
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Cracked
+    position: {x: -25.3013, y: 7.0760}
+    scale: 1.0493
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: -7.6, y: 5.6}
+    scale: 1.0670
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Stump
+    position: {x: 7.6, y: 5.6}
+    scale: 0.9693
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Tall
+    position: {x: 24.6593, y: 8.6380}
+    scale: 0.8883
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Cracked
+    position: {x: 41.1863, y: 6.1324}
+    scale: 1.0201
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Stump
+    position: {x: -38.8698, y: 24.7741}
+    scale: 0.8790
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Tall
+    position: {x: -25.3323, y: 23.9931}
+    scale: 0.8513
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Cracked
+    position: {x: -5.8702, y: 24.6011}
+    scale: 0.9796
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: 5.8216, y: 24.6728}
+    scale: 1.0583
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Stump
+    position: {x: 21.5405, y: 24.0716}
+    scale: 0.9342
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Tall
+    position: {x: 40.7062, y: 25.0763}
+    scale: 1.0342
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: -38.0542, y: 37.6403}
+    scale: 0.8557
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Stump
+    position: {x: -25.2948, y: 39.7039}
+    scale: 1.0061
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Tall
+    position: {x: -10.0567, y: 42.1881}
+    scale: 0.9210
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Cracked
+    position: {x: 7.9568, y: 41.7434}
+    scale: 0.9797
+    rotation: 0
+    flipX: 0
+  - propId: Dungeon_Pillar_Fallen
+    position: {x: 23.0549, y: 38.5627}
+    scale: 0.9395
+    rotation: 0
+    flipX: 1
+  - propId: Dungeon_Pillar_Stump
+    position: {x: 38.1325, y: 39.7097}
+    scale: 0.9877
+    rotation: 0
+    flipX: 0

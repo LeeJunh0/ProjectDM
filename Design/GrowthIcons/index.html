@@ -1,0 +1,25 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project DM · 성장 아이콘 v2</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:28px;background:#15111e;color:#eee3d1;font:14px/1.6 system-ui,sans-serif}h1{margin:0;color:#ecd18f;font-size:25px}h2{margin:30px 0 10px;font-size:18px;color:#f1dcb2}p{color:#b8abc4;max-width:900px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;max-width:1250px}.card{background:#251e31;border:1px solid #5b4931;padding:12px;text-align:center}.preview{position:relative;width:90px;height:90px;margin:0 auto 10px}.art{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background-repeat:no-repeat;image-rendering:pixelated}.overlay{position:absolute;right:0;top:0;left:auto;transform:none}.id{font-size:10px;color:#a99bb7;overflow-wrap:anywhere}a{color:#ebcd89}
+</style>
+<h1>성장 아이콘 · 스킬 + 보조 속성</h1><p>게임에 있는 마법과 아이템의 색·형태를 참고해 성장 전용 아이콘을 새로 그렸어. 전용 성장에서는 스킬 그림의 오른쪽 위에 위력·속도·범위 등의 보조 아이콘이 붙어.</p>
+<main id="main"></main>
+<script>
+const root='../../Assets/Resources/ProjectDM/UI/GrowthIcons/';
+const atlases={stats:['MatchedStats_v2',[0,322,645,968,1290],[0,344,619,914,1219]],utility:['MatchedUtility_v2',[0,373,724,1086,1448],[0,362,708,1086]],skill:['OrganicSkills_v3',[0,410,840,1230],[0,342,680,988,1278]],mod:['MatchedModifiers_v2',[0,330,627,940,1254],[0,321,627,919,1254]],dungeon:['MatchedDungeonPopulation_v2',[0,645,1263],[0,623,1246]]};
+const stats=[['damage','공격력'],['speed','공격속도'],['time','최대 마나'],['extension','마나 흡수'],['yield','재화 획득'],['xp','경험치'],['movement','이동속도'],['criticalChance','치명타 확률'],['criticalDamage','치명타 피해'],['invulnerability','피격 무적'],['magnet','끌어오기 범위'],['luck','행운'],['population','생성량'],['populationCap','최대 개체 수'],['spawnBatch','동시 생성'],['respawn','리스폰 속도']];
+const utility=[['experienceGradeChance','상위 경험치'],['silverDropChance','은화'],['goldDropChance','금화'],['emeraldDropChance','에메랄드'],['amethystDropChance','자수정'],['magnetDropChance','자석 드롭'],['multishot','다중 공격'],['chain','연쇄 번개'],['splash','스플래시'],['meteor','운석'],['range','범위'],['duration','지속시간']];
+const skills=[['missile','마력탄'],['beam','마력 광선'],['satellite','마력 위성'],['cone','화염 분사'],['firefield','화염 지대'],['meteor','화염 운석'],['chain','연쇄 번개'],['orb','뇌전 구체'],['thunder','낙뢰'],['orbit','얼음 공전'],['blizzard','눈보라'],['shatter','빙결 파쇄']];
+const mods=[['power','위력'],['speed','속도'],['count','개수'],['range','범위'],['width','넓이·크기'],['duration','지속시간'],['rotation','회전·재타격'],['homing','유도'],['pierce','관통'],['fork','분열·분기'],['chain','연쇄·연결'],['burn','화상'],['cold','냉기'],['freeze','빙결'],['unlock','해금'],['chance','확률']];
+const examples=[['마력탄 위력',0,0],['빠른 시전',0,1],['추가 마력탄',0,2],['관통 마력탄',0,8],['마력 광선 굵기',1,4],['마력 위성 발사 속도',2,1],['화염 사거리',3,3],['지속 화상',3,11],['추가 연쇄',6,10],['전기 구체 수',7,2],['빠른 얼음 공전',9,6],['오래가는 빙결',9,5]];
+function art(sheet,index,size,extra=''){if(sheet==='skill'&&index===7)return `<span class="art ${extra}" style="width:${size}px;height:${size}px;background-image:url('${root}OrganicLightningOrb_v3.png?v=3');background-size:contain;background-position:center"></span>`;const [name,xs,ys]=atlases[sheet],cols=xs.length-1,col=index%cols,row=Math.floor(index/cols),w=xs.at(-1),h=ys.at(-1),cw=xs[col+1]-xs[col],ch=(sheet==='skill'?[330,658,965,1278][row]:ys[row+1])-ys[row],aspect=cw/ch,width=aspect>=1?size:size*aspect,height=aspect>=1?size/aspect:size;return `<span class="art ${extra}" style="width:${width}px;height:${height}px;background-image:url('${root+name}.png?v=2');background-size:${w/cw*100}% ${h/ch*100}%;background-position:${xs[col]/(w-cw)*100}% ${ys[row]/(h-ch)*100}%"></span>`}
+function grid(items){return `<div class="grid">${items.join('')}</div>`}
+function card(name,id,main,sub=''){return `<article class="card"><div class="preview">${main}${sub}</div><div>${name}</div><div class="id">${id}</div></article>`}
+let html='<h2>조합 예시</h2><p>같은 스킬도 어떤 속성을 올리는지 우측 상단 그림으로 구분해.</p>';
+html+=grid(examples.map(([name,base,mod])=>card(name,skills[base][1]+' · '+mods[mod][1],art('skill',base,76),art('mod',mod,36,'overlay'))));
+html+='<h2>스킬 기본 아이콘 · 12종</h2>'+grid(skills.map(([id,name],i)=>card(name,id,art('skill',i,76))));
+html+='<h2>성장 보조 아이콘 · 16종</h2>'+grid(mods.map(([id,name],i)=>card(name,id,art('mod',i,64))));
+html+='<h2>공통 성장</h2>'+grid(stats.map(([id,name],i)=>card(name,id,art('stats',i,76))).concat(utility.map(([id,name],i)=>card(name,id,art('utility',i,76)))));
+html+='<h2>던전 몬스터 생성</h2><p>선택한 스테이지에 따라 풀 슬라임이나 동굴 박쥐를 닮은 새 아이콘으로 표시해.</p>'+grid(['생성량','최대 개체 수','동시 생성','리스폰 속도'].map((name,i)=>card(name,'던전',art('dungeon',i,76))));
+document.getElementById('main').innerHTML=html;
+</script></html>

@@ -19,14 +19,11 @@ namespace ProjectDM
             this.art = art;
             this.selection = selection;
             this.graphics = graphics;
-            upgradeCardFrameTexture = Resources.Load<Texture2D>("ProjectDM/UI/ProjectDM_UpgradeCardFrame_Neutral_v1");
         }
 
         internal readonly float[] upgradeCardHoverTilts = new float[3];
 
         internal readonly bool[] upgradeCardWasHovered = new bool[3];
-
-        internal Texture2D upgradeCardFrameTexture;
 
         internal void DrawRunUpgradeSelection()
         {
@@ -87,8 +84,9 @@ namespace ProjectDM
             Matrix4x4 previousGuiMatrix = GUI.matrix;
             GUIUtility.RotateAroundPivot(tilt, cardRect.center);
             GUIUtility.ScaleAroundPivot(Vector2.one * (hovered ? settings.upgradeCardHoverScale : 1f), cardRect.center);
-            UiGraphics.DrawSolidRect(cardRect, new Color(.055f, .065f, .14f, .98f));
-            DrawUpgradeCardFrame(cardRect, presentation.accent);
+            PixelUiArt.DrawCardGlow(cardRect, presentation.accent, hovered, index);
+            PixelUiArt.Draw(cardRect, PixelUiArt.Card(presentation.grade), compactLayout ? 14 : 24,
+                hovered ? new Color(1.08f, 1.08f, 1.08f) : Color.white);
 
             bool longTitle = presentation.title.Length > 12;
             GUIStyle nameStyle = new GUIStyle(graphics.titleStyle)
@@ -126,9 +124,9 @@ namespace ProjectDM
                 nameStyle.fontSize--;
             GUI.Label(new Rect(cardRect.x + horizontalPadding, cardRect.y + titleY, cardRect.width - horizontalPadding * 2f, titleHeight), presentation.title, nameStyle);
             UiGraphics.DrawResultSprite(new Rect(cardRect.center.x - iconHeight * .5f, cardRect.y + iconY, iconHeight, iconHeight), art.PrototypeIcon(presentation.icon));
-            UiGraphics.DrawSolidRect(new Rect(cardRect.x + horizontalPadding, cardRect.y + upperDividerY, cardRect.width - horizontalPadding * 2f, 1f), new Color(presentation.accent.r, presentation.accent.g, presentation.accent.b, .45f));
+            DrawCardDivider(cardRect, horizontalPadding, upperDividerY, presentation.accent);
             GUI.Label(new Rect(cardRect.x + horizontalPadding, cardRect.y + upperDividerY + 12f, cardRect.width - horizontalPadding * 2f, lowerDividerY - upperDividerY - 18f), presentation.description, descriptionStyle);
-            UiGraphics.DrawSolidRect(new Rect(cardRect.x + horizontalPadding, cardRect.y + lowerDividerY, cardRect.width - horizontalPadding * 2f, 1f), new Color(presentation.accent.r, presentation.accent.g, presentation.accent.b, .35f));
+            DrawCardDivider(cardRect, horizontalPadding, lowerDividerY, presentation.accent);
             GUI.Label(new Rect(cardRect.x + horizontalPadding, cardRect.y + lowerDividerY + 7f, cardRect.width - horizontalPadding * 2f, 18f), $"{presentation.category}  ·  이번 런  [{index + 1}]", footerStyle);
             GUI.matrix = previousGuiMatrix;
 
@@ -170,20 +168,11 @@ namespace ProjectDM
             return 1f + (overshoot + 1f) * offset * offset * offset + overshoot * offset * offset;
         }
 
-        internal void DrawUpgradeCardFrame(Rect rect, Color accent)
+        private static void DrawCardDivider(Rect rect, float padding, float y, Color accent)
         {
-            if (upgradeCardFrameTexture != null)
-            {
-                Color previousColor = GUI.color;
-                GUI.color = accent;
-                GUI.DrawTexture(rect, upgradeCardFrameTexture, ScaleMode.StretchToFill, true);
-                GUI.color = previousColor;
-                return;
-            }
-
-            // A plain fallback preserves the choice UI if the optional frame asset is unavailable.
-            UiGraphics.DrawOutline(rect, accent, 2f);
-            UiGraphics.DrawOutline(new Rect(rect.x + 5f, rect.y + 5f, rect.width - 10f, rect.height - 10f), new Color(accent.r, accent.g, accent.b, .58f), 1f);
+            // Grade-colored rules keep the small card dividers legible at game resolution.
+            UiGraphics.DrawSolidRect(new Rect(rect.x + padding, rect.y + y, rect.width - padding * 2, 1),
+                new Color(accent.r, accent.g, accent.b, .4f));
         }
 
         internal void ResetHover()

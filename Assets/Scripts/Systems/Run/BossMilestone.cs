@@ -40,7 +40,7 @@ namespace ProjectDM
                 GameObject instance = new GameObject("최종보스 도달 미리보기 (전투 미구현)");
                 prototypeBoss = instance.transform;
                 SpriteRenderer renderer = instance.AddComponent<SpriteRenderer>();
-                renderer.sortingOrder = 8;
+                renderer.sortingOrder = 2;
             }
             SpriteRenderer bossRenderer = prototypeBoss.GetComponent<SpriteRenderer>();
             bossRenderer.sprite = art.stage != null ? art.stage.bossFrames[0] : art.boarSprite ?? art.slimeSprite;

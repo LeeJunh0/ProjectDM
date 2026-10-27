@@ -15,24 +15,33 @@ namespace ProjectDM
             internal readonly List<Vector2> uv=new();
             internal readonly List<Color> colors=new();
             internal readonly List<int> triangles=new();
+            internal bool colorsDirty;
+        }
+        readonly struct ColorHandle
+        {
+            internal readonly Page page;
+            internal readonly int start;
+            internal ColorHandle(Page page,int start){this.page=page;this.start=start;}
         }
         readonly Dictionary<Texture,Page> pages=new();
+        readonly List<ColorHandle> colorHandles;
         readonly GameObject root;
         readonly int sortingOrder;
+        readonly Shader shader;
         internal int Count {get;private set;}
-        internal SpriteQuadBatch(string name,int sortingOrder)
-        {root=new GameObject(name);this.sortingOrder=sortingOrder;}
+        internal SpriteQuadBatch(string name,int sortingOrder,Transform parent=null,HideFlags hideFlags=HideFlags.None,Shader shader=null,bool trackColors=false)
+        {root=new GameObject(name){hideFlags=hideFlags};root.transform.SetParent(parent,true);this.sortingOrder=sortingOrder;this.shader=shader;colorHandles=trackColors?new List<ColorHandle>():null;}
         internal void Begin()
-        {Count=0;foreach(var p in pages.Values){p.vertices.Clear();p.uv.Clear();p.colors.Clear();p.triangles.Clear();}}
-        internal void Add(Sprite sprite,Vector3 center,Vector2 size,float rotation,Color color)
+        {Count=0;colorHandles?.Clear();foreach(var p in pages.Values){p.vertices.Clear();p.uv.Clear();p.colors.Clear();p.triangles.Clear();p.colorsDirty=false;}}
+        internal int Add(Sprite sprite,Vector3 center,Vector2 size,float rotation,Color color)
         {
-            if(sprite==null)return;
+            if(sprite==null)return -1;
             if(!pages.TryGetValue(sprite.texture,out var p))
             {
-                var child=new GameObject("텍스처 일괄 그리기");child.transform.SetParent(root.transform,false);
+                var child=new GameObject("텍스처 일괄 그리기"){hideFlags=root.hideFlags};child.transform.SetParent(root.transform,false);
                 p=new Page{mesh=new Mesh{name="전체 스프라이트 배치",indexFormat=IndexFormat.UInt32},renderer=child.AddComponent<MeshRenderer>()};
                 p.mesh.MarkDynamic();child.AddComponent<MeshFilter>().sharedMesh=p.mesh;
-                p.renderer.sharedMaterial=new Material(Shader.Find("Sprites/Default")){mainTexture=sprite.texture};
+                p.renderer.sharedMaterial=new Material(shader!=null?shader:Shader.Find("Sprites/Default")){mainTexture=sprite.texture};
                 p.renderer.sortingOrder=sortingOrder;pages.Add(sprite.texture,p);
             }
             int n=p.vertices.Count;float r=rotation*Mathf.Deg2Rad,c=Mathf.Cos(r),s=Mathf.Sin(r);
@@ -41,8 +50,18 @@ namespace ProjectDM
             Rect uv=sprite.textureRect;float l=uv.xMin/sprite.texture.width,rr=uv.xMax/sprite.texture.width,b=uv.yMin/sprite.texture.height,t=uv.yMax/sprite.texture.height;
             p.uv.Add(new Vector2(l,b));p.uv.Add(new Vector2(rr,b));p.uv.Add(new Vector2(rr,t));p.uv.Add(new Vector2(l,t));
             for(int i=0;i<4;i++)p.colors.Add(color);
-            p.triangles.Add(n);p.triangles.Add(n+2);p.triangles.Add(n+1);p.triangles.Add(n);p.triangles.Add(n+3);p.triangles.Add(n+2);Count++;
+            colorHandles?.Add(new ColorHandle(p,n));
+            p.triangles.Add(n);p.triangles.Add(n+2);p.triangles.Add(n+1);p.triangles.Add(n);p.triangles.Add(n+3);p.triangles.Add(n+2);return Count++;
         }
+        internal void SetColor(int handle,Color color)
+        {
+            if(colorHandles==null||handle<0||handle>=colorHandles.Count)return;
+            var item=colorHandles[handle];
+            for(int i=0;i<4;i++)item.page.colors[item.start+i]=color;
+            item.page.colorsDirty=true;
+        }
+        internal void CommitColors()
+        {foreach(var p in pages.Values)if(p.colorsDirty){p.mesh.SetColors(p.colors);p.colorsDirty=false;}}
         internal void End()
         {
             foreach(var p in pages.Values)
@@ -50,6 +69,8 @@ namespace ProjectDM
         }
         internal void Clear(){Begin();End();}
         internal void Dispose()
-        {foreach(var p in pages.Values){Object.Destroy(p.mesh);Object.Destroy(p.renderer.sharedMaterial);}Object.Destroy(root);pages.Clear();}
+        {foreach(var p in pages.Values){DestroyOwned(p.mesh);DestroyOwned(p.renderer.sharedMaterial);}DestroyOwned(root);pages.Clear();}
+        static void DestroyOwned(Object value)
+        {if(value==null)return;if(Application.isPlaying)Object.Destroy(value);else Object.DestroyImmediate(value);}
     }
 }

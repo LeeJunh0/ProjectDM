@@ -201,14 +201,15 @@ namespace ProjectDM
                 }
 
                 float distance = Vector2.Distance(playerWorld.player.position, pickup.Position);
-                float magnetRadius = playerStats.MagnetRadius;
-                if (pickup.vacuum || (magnetRadius > 0 && distance < magnetRadius && pickup.kind != PickupKind.Magnet))
+                float magnetBonus = playerStats.MagnetRangeBonus;
+                float magnetRadius = settings.pickupCollectionRadius + magnetBonus;
+                if (pickup.vacuum || (magnetBonus > 0 && distance < magnetRadius && pickup.kind != PickupKind.Magnet))
                 {
                     pickup.Position = Vector3.MoveTowards(pickup.Position, playerWorld.player.position,
                         (pickup.vacuum ? 16f + Mathf.Min(distance,30) : 2.5f + (1 - distance / magnetRadius) * 12f) * dt);
                 }
 
-                if (distance < 0.28f)
+                if (distance < settings.pickupCollectionRadius)
                 {
                     if (pickup.kind == PickupKind.Chest)
                     {

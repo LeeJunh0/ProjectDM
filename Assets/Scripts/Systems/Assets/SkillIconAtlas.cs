@@ -10,6 +10,14 @@ namespace ProjectDM
         internal static Sprite Find(string id)
         {
             if (id == null || !id.StartsWith("skill.")) return null;
+            Sprite growth = GrowthIconAtlas.Find(id);
+            if (growth != null) return growth;
+            return FindOriginal(id);
+        }
+
+        internal static Sprite FindOriginal(string id)
+        {
+            if (id == null || !id.StartsWith("skill.")) return null;
             if (icons.TryGetValue(id, out var cached)) return cached;
             atlas ??= Resources.Load<Texture2D>("ProjectDM/Skills/SkillIcons");
             if (atlas == null) return null;

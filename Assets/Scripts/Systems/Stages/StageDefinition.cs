@@ -11,6 +11,7 @@ namespace ProjectDM
         [InspectorName("스테이지 이름")] public string displayName;
         [InspectorName("바닥 룰타일")] public DungeonGroundRuleTile ground;
         [InspectorName("배경 색상")] public Color background;
+        [InspectorName("지형 장식 배치")] public StageSceneryLayout scenery;
         [InspectorName("몬스터 구성 (기존 성장 슬롯 순서)")] public MonsterVisual[] monsters;
         [InspectorName("보스 이름")] public string bossName;
         [InspectorName("보스 미리보기 프레임")] public Sprite[] bossFrames;
@@ -29,6 +30,7 @@ namespace ProjectDM
 
         public void ValidateContent()
         {
+            if (scenery != null) scenery.ValidateContent();
             if (stageId < 1 || string.IsNullOrWhiteSpace(displayName) || ground == null || !ground.HasRuleTilePalette)
                 throw new InvalidOperationException($"스테이지 {stageId}: 이름 또는 3×3 바닥 룰타일이 누락되었습니다.");
             if (monsters == null || monsters.Length != 5)

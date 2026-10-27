@@ -55,7 +55,8 @@ namespace ProjectDM
 
         internal void ApplyPlayerDamage(float damage)
         {
-            if (run.runEnded || playerDefeated || playerInvulnerabilityRemaining > 0 || damage <= 0) return;
+            if (run.runEnded || playerDefeated || playerInvulnerabilityRemaining > 0 || damage <= 0 || float.IsNaN(damage) || float.IsInfinity(damage)) return;
+            damage = Mathf.Max(1f, damage);
             float before = run.mana.Current;
             run.mana.Consume(damage);
             float lostMana = before - run.mana.Current;

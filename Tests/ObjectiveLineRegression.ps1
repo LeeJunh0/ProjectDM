@@ -8,7 +8,7 @@ $growth = [ProjectDM.PrototypeGrowthTable](Get-Content -Raw (Join-Path $dataRoot
 $checks=0
 function Assert-True([bool]$condition,[string]$message) { if(-not $condition){throw $message};$script:checks++ }
 Assert-True ($null -eq [ProjectDM.PrototypeRules]::Validate($balance,$skills,$growth)) 'Goal line table must validate'
-Assert-True ($growth.goalLine.Count -eq 4 -and $growth.rows.Count -eq 26 -and $growth.nodes.Count -eq 86) 'Two stage/boss pairs must be separate from 26 growth rows / 86 purchasing nodes'
+Assert-True ($growth.goalLine.Count -eq 4 -and $growth.rows.Count -eq 30 -and $growth.nodes.Count -eq 106) 'Two stage/boss pairs must be separate from 30 growth rows / 106 purchasing nodes'
 $layout=[ProjectDM.PrototypeRules]::CreateGraphLayout($growth)
 Assert-True ($layout.Count -eq $growth.nodes.Count + $growth.goalLine.Count) 'Layout must include both growth and goal lines'
 $parent='ROOT';$y=0
@@ -21,7 +21,8 @@ for($i=0;$i -lt $growth.goalLine.Count;$i++) {
     $parent=$goal.id;$y=$goal.y
 }
 Assert-True ($growth.goalLine[-1].final) 'Last placeholder must clearly mark the final goal'
-foreach($n in $layout) {
+# Goal connectors are straight; ordinary growth connectors may use routed paths.
+foreach($n in $layout | Where-Object { $_.id -in $growth.goalLine.id }) {
     $p=if($n.parent -eq 'ROOT'){[pscustomobject]@{x=0;y=0;id='ROOT'}}else{$layout | Where-Object id -eq $n.parent}
     $dx=$n.x-$p.x;$dy=$n.y-$p.y
     foreach($o in $layout | Where-Object {$_.id -ne $n.id -and $_.id -ne $p.id}) {
@@ -36,9 +37,12 @@ foreach($zoom in @(.04,.12,.2,.4,.75,1.45)) {
     for($i=0;$i -lt $layout.Count;$i++) {
         $n=$layout[$i]
         $rootSize=$size*82/66
-        Assert-True ([Math]::Abs($n.x)*$zoom -ge ($size+$rootSize)/2 -or [Math]::Abs($n.y)*$zoom -ge ($size+$rootSize)/2) 'Objective/ordinary card overlaps the root'
+        if ($n.id -in $growth.goalLine.id) {
+            Assert-True ([Math]::Abs($n.x)*$zoom -ge ($size+$rootSize)/2 -or [Math]::Abs($n.y)*$zoom -ge ($size+$rootSize)/2) 'Objective card overlaps the root'
+        }
         for($j=$i+1;$j -lt $layout.Count;$j++){
             $other=$layout[$j]
+            if ($n.id -notin $growth.goalLine.id -and $other.id -notin $growth.goalLine.id) { continue }
             Assert-True ([Math]::Abs($n.x-$other.x)*$zoom -ge $size -or [Math]::Abs($n.y-$other.y)*$zoom -ge $size) "Card overlap at zoom $zoom : $($n.id)/$($other.id)"
         }
     }

@@ -80,7 +80,7 @@ namespace ProjectDM
                 bolt.transform.localScale = Vector3.one * .32f;
                 SpriteRenderer renderer = bolt.GetComponentInChildren<SpriteRenderer>();
                 renderer.sprite = art.boltSprite;
-                renderer.sortingOrder = 4;
+                renderer.sortingOrder = 5;
                 renderer.color = new Color(1f, .7f, 1f);
                 Animator animator = bolt.GetComponentInChildren<Animator>();
                 if (animator != null)

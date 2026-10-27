@@ -372,11 +372,21 @@ namespace ProjectDM
         public static bool IsNodeRevealed(PrototypeGrowthTable table, PrototypeGrowthNode node, PrototypeSave save, int stage)
         {
             if (table?.nodes == null || node == null || save == null) return false;
-            if (IsNodeOpen(table, node, save, stage) || node.parent == "ROOT") return true;
-            PrototypeGrowthNode parent = Array.Find(table.nodes, n => n.id == node.parent);
-            // Preview exactly one link ahead. Revealed-but-locked nodes do not extend visibility.
-            return parent != null && IsNodeOpen(table, parent, save, stage);
+            if (HasNodeInvestment(node, save) || node.VisualParent == "ROOT") return true;
+            foreach (PrototypeGrowthNode other in table.nodes)
+            {
+                if (other == null) continue;
+                // Follow only visible connections, in either direction, including grid links.
+                bool connected = node.VisualParent == other.id || other.VisualParent == node.id ||
+                    (node.displayLinks != null && Array.IndexOf(node.displayLinks, other.id) >= 0) ||
+                    (other.displayLinks != null && Array.IndexOf(other.displayLinks, node.id) >= 0);
+                if (connected && HasNodeInvestment(other, save)) return true;
+            }
+            return false;
         }
+
+        private static bool HasNodeInvestment(PrototypeGrowthNode node, PrototypeSave save)
+            => save.Rank(node.growthId) + save.PartialRank(node.growthId) > node.startRank;
 
         public static bool TryPurchaseNode(PrototypeBalance balance, PrototypeGrowth row, PrototypeGrowthNode node,
             PrototypeSave save, int stage, ref int gold, PrototypeGrowthTable table = null)

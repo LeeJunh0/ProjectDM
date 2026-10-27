@@ -127,7 +127,7 @@ namespace ProjectDM
                 int gain = Mathf.Min(UpgradeGradeRules.RankGain(grade), row.maxRank - skills.RunRank(row.id));
                 offeredRankGains[row.id] = gain;
                 runUpgradeChoices[i] = new RunUpgradePresentation(row.id, row.icon, GradeName(grade),
-                    row.name + $"  {skills.RunRank(row.id) + gain}단계", DescribePrototypeSkill(row, gain), GradeColor(grade));
+                    row.name + $"  {skills.RunRank(row.id) + gain}단계", DescribePrototypeSkill(row, gain), GradeColor(grade), grade);
             }
         }
 
@@ -164,7 +164,7 @@ namespace ProjectDM
                     gain = Mathf.Min(gain, Mathf.CeilToInt((character.chillThreshold - 1 - skills.PersonalAmount("chill")) / row.step));
                 offeredRankGains[key] = gain;
                 choices.Add(new RunUpgradePresentation(key, row.icon, GradeName(grade),
-                    row.name + $"  {skills.RunRank(key) + gain}단계", DescribePersonalUpgrade(character, row, gain), GradeColor(grade)));
+                    row.name + $"  {skills.RunRank(key) + gain}단계", DescribePersonalUpgrade(character, row, gain), GradeColor(grade), grade));
             }
             runUpgradeChoices = choices.ToArray();
         }

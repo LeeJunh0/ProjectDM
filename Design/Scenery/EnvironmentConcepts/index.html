@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>스테이지 환경 리소스 시안</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 40px; background: #131520; color: #f0ead8; font: 15px/1.5 system-ui, sans-serif; }
+    main { max-width: 1420px; margin: auto; }
+    h1 { margin: 0 0 5px; font-size: 28px; }
+    h2 { margin: 28px 0 12px; font-size: 21px; }
+    p { color: #aaa9a8; margin: 0; }
+    .switch { display: flex; gap: 8px; margin-top: 14px; }
+    button { padding: 7px 14px; border: 1px solid #70695c; background: #28272c; color: #eee8d9; cursor: pointer; }
+    button[aria-pressed="true"] { background: #6f663e; border-color: #baa766; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    article { border: 1px solid #494750; background: #23232d; overflow: hidden; }
+    .frame { height: 250px; display: flex; align-items: center; justify-content: center; overflow: hidden; background-size: cover; background-position: center; }
+    .meadow { background-image: url('../preview-meadow.png'); }
+    .dungeon { background-image: url('../preview-dungeon.png'); }
+    .frame img { display: block; max-width: 92%; max-height: 92%; width: auto; height: auto; object-fit: contain; image-rendering: pixelated; }
+    .label { padding: 10px 13px; font-weight: 700; }
+    small { color: #b6b1ad; font-weight: 400; margin-left: 6px; }
+    .note { margin-top: 25px; font-size: 13px; }
+    @media (max-width: 850px) { body { padding: 20px; } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 450px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body><main>
+  <h1>스테이지 환경 리소스 시안</h1>
+  <p>기존 스테이지의 색감과 도트풍을 참고한 개별 PNG 8종</p>
+  <div class="switch" role="group" aria-label="시안 비교">
+    <button type="button" data-version="soft" aria-pressed="true">수정한 시안</button>
+    <button type="button" data-version="original" aria-pressed="false">처음 시안</button>
+  </div>
+  <h2>초원 · 나무</h2>
+  <div class="grid">
+    <article><div class="frame meadow"><img src="Meadow_Tree_Oak_soft.png" alt="풍성한 나무"></div><div class="label">01 풍성한 나무 <small>둥근 수관</small></div></article>
+    <article><div class="frame meadow"><img src="Meadow_Tree_Young_soft.png" alt="어린 나무"></div><div class="label">02 어린 나무 <small>가느다란 줄기</small></div></article>
+    <article><div class="frame meadow"><img src="Meadow_Tree_Bent_soft.png" alt="기울어진 나무"></div><div class="label">03 기울어진 나무 <small>넓게 뻗은 뿌리</small></div></article>
+    <article><div class="frame meadow"><img src="Meadow_Tree_Double_soft.png" alt="갈라진 나무"></div><div class="label">04 갈라진 나무 <small>두 갈래 줄기</small></div></article>
+  </div>
+  <h2>석재 던전 · 부서진 기둥</h2>
+  <div class="grid">
+    <article><div class="frame dungeon"><img src="Dungeon_Pillar_Stump_soft.png" alt="짧게 부서진 기둥"></div><div class="label">01 짧은 기둥 <small>부서진 상단</small></div></article>
+    <article><div class="frame dungeon"><img src="Dungeon_Pillar_Tall_soft.png" alt="높이 남은 기둥"></div><div class="label">02 높은 기둥 <small>금이 간 몸체</small></div></article>
+    <article><div class="frame dungeon"><img src="Dungeon_Pillar_Cracked_soft.png" alt="갈라진 기둥"></div><div class="label">03 갈라진 기둥 <small>주변 석재</small></div></article>
+    <article><div class="frame dungeon"><img src="Dungeon_Pillar_Fallen_soft.png" alt="쓰러진 기둥"></div><div class="label">04 쓰러진 기둥 <small>두 조각</small></div></article>
+  </div>
+  <p class="note">비교를 위한 미리보기이며 게임 내 배치 크기는 아직 정하지 않았습니다. PNG는 각각 투명 배경입니다.</p>
+</main>
+<script>
+  const buttons = document.querySelectorAll('[data-version]');
+  const images = document.querySelectorAll('.frame img');
+  for (const button of buttons) button.addEventListener('click', () => {
+    const soft = button.dataset.version === 'soft';
+    for (const img of images) img.src = img.getAttribute('src').replace(/(?:_soft)?\.png$/, soft ? '_soft.png' : '.png');
+    for (const item of buttons) item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+  });
+</script></body></html>
