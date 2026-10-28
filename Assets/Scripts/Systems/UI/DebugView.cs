@@ -56,9 +56,11 @@ namespace ProjectDM
 
         internal void DrawPrototypeDebugTools()
         {
-            if (graphics.DrawButton(new Rect(Screen.width - 190, 100, 165, 27), debugPanelOpen ? "디버그 도구 닫기" : "디버그 도구 열기", false, 12)) debugPanelOpen = !debugPanelOpen;
+            Rect navigation = RunHudView.NavigationHudRect(new Vector2(Screen.width, Screen.height));
+            Rect toggle = new Rect(navigation.x, navigation.y + 80f, navigation.width, 27f);
+            if (graphics.DrawButton(toggle, debugPanelOpen ? "디버그 도구 닫기" : "디버그 도구 열기", false, 12)) debugPanelOpen = !debugPanelOpen;
             if (!debugPanelOpen) return;
-            Rect panel = new Rect(Screen.width - 250, 133, 225, 260);
+            Rect panel = new Rect(navigation.xMax - 225f, toggle.yMax + 6f, 225, 260);
             PixelUiArt.Draw(panel, PixelUiArt.Panel, 10, Color.white);
             GUI.Label(new Rect(panel.x + 10, panel.y + 6, 205, 24), save.sandboxThisSession ? "실험 모드 · 저장 안 됨" : "일반 모드 · 재화/처치 저장됨", graphics.statStyle);
             if (graphics.DrawButton(new Rect(panel.x + 10, panel.y + 34, 205, 28), "재화 +1,000", false, 12))

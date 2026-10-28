@@ -19,8 +19,9 @@ namespace ProjectDM
         private readonly Action<float> addExperience;
         private readonly PlayerStats playerStats;
         private readonly Action<Vector3, float> showManaGain;
+        private readonly Action<Vector3, Sprite, PickupKind, double> showPickupFlight;
 
-        internal PickupSystem(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, RunController run, GameObjectPool objectPool, Action<float> addExperience, PlayerStats playerStats, Action<Vector3, float> showManaGain = null)
+        internal PickupSystem(GameSettings settings, SaveService save, GameTables tables, ProgressionService progression, WorldArtAssets art, PlayerWorld playerWorld, RunController run, GameObjectPool objectPool, Action<float> addExperience, PlayerStats playerStats, Action<Vector3, float> showManaGain = null, Action<Vector3, Sprite, PickupKind, double> showPickupFlight = null)
         {
             this.settings = settings;
             this.save = save;
@@ -33,6 +34,7 @@ namespace ProjectDM
             this.addExperience = addExperience;
             this.playerStats = playerStats;
             this.showManaGain = showManaGain;
+            this.showPickupFlight = showPickupFlight;
         }
 
         internal readonly List<Pickup> pickups = new();
@@ -75,6 +77,7 @@ namespace ProjectDM
                 float multiplier=kind==PickupKind.Experience?settings.experiencePickupScaleMultiplier:kind==PickupKind.Currency?settings.currencyPickupScaleMultiplier:settings.manaPickupScaleMultiplier;
                 var item=new Pickup{batched=true,kind=kind,grade=grade,amount=amount,baseScale=scale*multiplier,serial=++nextSerial,bornAt=Time.time,
                     batchSprite=kind==PickupKind.Magnet?Resources.Load<Sprite>("ProjectDM/Skills/Magnet"):frame.sprite ?? sprite,floatPhase=Random.value};
+                if (kind == PickupKind.Mana && item.batchSprite != null) item.baseScale = ManaWorldScale(item.batchSprite, item.baseScale);
                 item.Position=position;item.VisualScale=item.baseScale;BeginPickupFountain(item,position);pickups.Add(item);return;
             }
             GameObject pickupObject = objectPool.Rent(prefab);
@@ -130,6 +133,19 @@ namespace ProjectDM
             };
             BeginPickupFountain(pickup, position);
             pickups.Add(pickup);
+        }
+
+        private float ManaWorldScale(Sprite sprite, float fallback)
+        {
+            Camera camera = settings.gameplayCamera;
+            if (camera == null || !camera.orthographic || camera.pixelHeight <= 0) return fallback;
+            Rect uv = PickupFlightPresentation.ContentUv(sprite);
+            Rect rect = sprite.textureRect;
+            Vector2 visible = new Vector2(sprite.bounds.size.x * uv.width * sprite.texture.width / rect.width,
+                sprite.bounds.size.y * uv.height * sprite.texture.height / rect.height);
+            float pixelsPerUnit = camera.pixelHeight / (2 * camera.orthographicSize);
+            return PickupFlightPresentation.VisualSize(Screen.height) / Mathf.Max(.001f, Mathf.Max(visible.x, visible.y) * pixelsPerUnit)
+                * settings.manaPickupScaleMultiplier / 3f;
         }
         internal void BeginPickupFountain(Pickup pickup, Vector3 origin)
         {
@@ -294,17 +310,50 @@ namespace ProjectDM
                 vacuumThrough=nextSerial;
                 return;
             }
-            if (pickup.kind == PickupKind.Experience) { addExperience(pickup.amount); return; }
+            if (pickup.kind == PickupKind.Experience)
+            {
+                addExperience(pickup.amount);
+                if (pickup.amount > 0) ShowPickupFlight(pickup, pickup.amount);
+                return;
+            }
             if (pickup.kind == PickupKind.Mana)
             {
                 float added = run.mana.Absorb(pickup.amount);
-                if (added > 0) showManaGain?.Invoke(playerWorld.player.position, added);
+                if (added > 0)
+                {
+                    showManaGain?.Invoke(playerWorld.player.position, added);
+                    ShowPickupFlight(pickup, added);
+                }
                 return;
             }
             int currency = (int)System.Math.Min(int.MaxValue, System.Math.Max(0, System.Math.Round((double)pickup.amount)));
+            int previousCurrency = save.metaCurrency;
             run.runCurrency = (int)System.Math.Min(int.MaxValue, (long)run.runCurrency + currency);
             save.metaCurrency = (int)System.Math.Min(int.MaxValue, (long)save.metaCurrency + currency);
             save.SaveMetaProgress();
+            if (currency > 0) ShowPickupFlight(pickup, save.metaCurrency - previousCurrency);
+        }
+
+        private void ShowPickupFlight(Pickup pickup, double amount)
+        {
+            if (showPickupFlight == null) return;
+            Vector3 position = pickup.Position;
+            Sprite sprite = pickup.batchSprite;
+            if (pickup.kind == PickupKind.Chest) sprite = art.coinSprite;
+            else if (pickup.batched)
+            {
+                GameObject prefab = SelectPickupPrefab(pickup.kind, pickup.grade);
+                if (prefab != null) sprite = Frames(prefab).sprite ?? sprite;
+                var curve = pickup.kind == PickupKind.Currency ? settings.currencyPickupFloatYCurve : settings.experiencePickupFloatYCurve;
+                float phase = Mathf.Repeat(Time.time / Mathf.Max(.05f, settings.collectibleFloatLoopDuration) + pickup.floatPhase, 1);
+                position += Vector3.up * (curve?.Evaluate(phase) ?? 0) * settings.collectibleFloatYAmplitude;
+            }
+            else if (pickup.transform != null)
+            {
+                var renderer = pickup.transform.GetComponentInChildren<SpriteRenderer>();
+                if (renderer != null) { sprite = renderer.sprite; position = renderer.transform.position; }
+            }
+            showPickupFlight(position, sprite, pickup.kind == PickupKind.Chest ? PickupKind.Currency : pickup.kind, amount);
         }
 
         internal static void UpdatePickupFountain(Pickup pickup, float dt)

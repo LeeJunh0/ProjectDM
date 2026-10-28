@@ -335,14 +335,14 @@ namespace ProjectDM
             manaBar = new ManaBarRenderer(mana, Resources.Load<ManaBarSettings>("ProjectDM/UI/ManaBarSettings"));
             run = new RunController(settings, save, tables, progression, playerWorld, ResetWorld, () => enemiesSystem.SpawnPrototypeInitialEnemies(), () => cameraSystem.SnapCameraToPlayer(), () => growthView?.ResetNavigation(), () => { if (selection != null) selection.choosingUpgrade = false; }, () => selection != null && selection.choosingUpgrade, mana, stages);
             boss = new BossMilestone(save, art, playerWorld, run);
-            pickupsSystem = new PickupSystem(settings, save, tables, progression, art, playerWorld, run, pool, amount => selection.AddExperience(amount), playerStats, effects.ManaAbsorb);
+            pickupsSystem = new PickupSystem(settings, save, tables, progression, art, playerWorld, run, pool, amount => selection.AddExperience(amount), playerStats, effects.ManaAbsorb, (world, sprite, kind, amount) => hud?.ShowPickupFlight(world, sprite, kind, amount));
             enemiesSystem = new EnemySystem(settings, save, tables, progression, art, playerWorld, run, pickupsSystem, boss, notifications, pool, presentation.ShowCombatDamage, effects.BossDeath, presentation.ShowElementalDamage);
             skills = new SkillSystem(tables, progression, art, run, enemiesSystem, effects, () => combat.RollCriticalHit(), () => stats.MainDamage, playerStats);
             stats = new CombatStats(tables, progression, skills);
             combat = new CombatSystem(settings, tables, progression, art, playerWorld, enemiesSystem, skills, stats, pool, playerStats, mana);
             playerCombat = new PlayerCombatSystem(settings, tables, playerWorld, run, enemiesSystem, combat, presentation, playerStats, manaBar.NotifyHit);
             selection = new LevelUpController(tables, progression, run, skills);
-            hud = new RunHudView(settings, save, tables, run, enemiesSystem, stats, selection, graphics, manaBar);
+            hud = new RunHudView(settings, save, tables, run, enemiesSystem, stats, selection, graphics, manaBar, art);
             results = new RunResultView(settings, tables, art, run, boss, playerCombat, graphics);
             levelUpView = new LevelUpView(settings, art, selection, graphics);
             growthView = new GrowthGraphView(settings, save, tables, progression, art, run, notifications, graphics);
@@ -375,6 +375,7 @@ namespace ProjectDM
         private void ResetWorld()
         {
             manaBar.Reset();
+            hud?.ResetPickupFeedback();
             enemiesSystem.Reset();
             combat.Reset();
             pickupsSystem.Reset();
@@ -392,6 +393,7 @@ namespace ProjectDM
         {
             if (!isInitialized) return;
             SynchronizeSettings();
+            hud.TickPickupFeedback(Time.unscaledDeltaTime);
             if (run.transition.Active)
             {
                 run.transition.Tick(Time.unscaledDeltaTime);
@@ -462,9 +464,9 @@ namespace ProjectDM
 
                 hud.DrawRunHudInformation();
                 hud.DrawElapsedTime();
+                hud.DrawCurrencyHud();
                 hud.DrawManaBar();
                 presentation.DrawCombatDamage();
-
                 hud.DrawNavigationControls();
                 if (enablePrototypeDebug && !selection.choosingUpgrade) debugView.DrawPrototypeDebugTools();
                 debugView.DrawPrototypeNotices();
@@ -472,6 +474,7 @@ namespace ProjectDM
                 {
                     levelUpView.DrawRunUpgradeSelection();
                 }
+                hud.DrawPickupFlights();
             }
             finally
             {
@@ -479,7 +482,6 @@ namespace ProjectDM
                     UiGraphics.DrawSolidRect(new Rect(0, 0, Screen.width, Screen.height), new Color(0, 0, 0, run.transition.Opacity));
             }
         }
-
         private void LateUpdate()
         {
             if (!isInitialized || run.showMetaTree || settings.dungeonFloor == null) return;
@@ -487,7 +489,6 @@ namespace ProjectDM
             if (scenery == null) return;
             scenery.UpdateOcclusion(sceneryPlayerRenderer, Time.unscaledDeltaTime, settings.gameplayCamera);
         }
-
         private void OnApplicationPause(bool paused) { if (paused) save?.FlushPrototypeProgress(); }
         public void SetManaVisualState(ManaVisualState state) => manaBar?.SetState(state);
         private void OnDestroy() { manaBar?.Dispose(); growthView?.Dispose(); pickupsSystem?.Dispose(); }

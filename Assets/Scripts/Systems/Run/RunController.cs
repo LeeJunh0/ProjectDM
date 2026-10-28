@@ -68,7 +68,7 @@ namespace ProjectDM
         internal void EndRun()
         {
             if (runEnded) return;
-            ChangeScreen(EndRunNow);
+            EndRunNow();
         }
 
         private void EndRunNow()

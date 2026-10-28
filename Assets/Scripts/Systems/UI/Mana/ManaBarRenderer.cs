@@ -57,7 +57,7 @@ namespace ProjectDM
             animationTime += deltaTime;
         }
 
-        internal Texture Render(int width, int height)
+        internal Texture Render(int width, int height, float? displayedFraction = null)
         {
             if (settings == null || settings.liquidShader == null || !settings.liquidShader.isSupported) return null;
             material ??= new Material(settings.liquidShader) { hideFlags = HideFlags.HideAndDontSave };
@@ -69,7 +69,8 @@ namespace ProjectDM
                 { name = "액체 MP 바", filterMode = FilterMode.Bilinear, wrapMode = TextureWrapMode.Clamp, hideFlags = HideFlags.HideAndDontSave };
                 target.Create();
             }
-            material.SetFloat("_Fill", mana.Fraction);
+            float fraction = displayedFraction ?? mana.Fraction;
+            material.SetFloat("_Fill", fraction);
             material.SetColor("_LiquidColor", currentColor);
             material.SetFloat("_Clock", animationTime);
             material.SetFloat("_WaveSpeed", settings.waveSpeed);
@@ -80,7 +81,7 @@ namespace ProjectDM
             material.SetFloat("_Reaction", reaction * settings.reactionStrength);
             material.SetFloat("_HitImpact", Hit.Intensity);
             material.SetFloat("_HitClock", Hit.Age);
-            material.SetFloat("_LowPulse", mana.Fraction <= settings.lowManaThreshold ? settings.lowManaPulse : 0);
+            material.SetFloat("_LowPulse", fraction <= settings.lowManaThreshold ? settings.lowManaPulse : 0);
             material.SetVector("_Resolution", new Vector4(width, height, 0, 0));
             RenderTexture previous = RenderTexture.active;
             try { Graphics.Blit(Texture2D.whiteTexture, target, material); }
