@@ -1,0 +1,58 @@
+[
+  {
+    "sha256": "E9022A290759D6087D2B0702BE9BFA76895DEE4A12323C9872B0E80B9077954E",
+    "path": "Assets/GameContent/Art/Scenery/Dungeon_Torch.png"
+  },
+  {
+    "sha256": "8490D6C630CCE57E184A6D44BEF6A4B733C4A739AF5B5C9176C79CC4CBEB0E77",
+    "path": "Assets/GameContent/Art/Scenery/Dungeon_Torch.png.meta"
+  },
+  {
+    "sha256": "8B7AA95F87706990AC6F5D3AC401B1A86ED1CF91B7E4ADFC3E27EEE1BA77B2A6",
+    "path": "Assets/Resources/ProjectDM/Stages/DungeonScenery.asset"
+  },
+  {
+    "sha256": "B9BE789F8EA80D63FDDC012DB87448218638E9B3E88817198E547589B9BB38A3",
+    "path": "Assets/Resources/ProjectDM/Stages/MeadowScenery.asset"
+  },
+  {
+    "sha256": "35D0A542A6C2EC0FE437C8F403B10618772B08C0CF7A0A236FD806E266AC9BD6",
+    "path": "Assets/Resources/ProjectDM/Stages/Stage1_Meadow.asset"
+  },
+  {
+    "sha256": "ACC33800601F69372137A2D3F92306219DE4B3E10107E852E0B48669A14B523C",
+    "path": "Assets/GameContent/Art/ProjectDM_MeadowRuleTiles_3x3_v1.png"
+  },
+  {
+    "sha256": "AF486A9A9D7D96BAED1C34AAE262FFC233E911C866B47700E239C2AFBFBD2EBC",
+    "path": "Assets/GameContent/Art/Scenery/Dungeon_Bricks.png.meta"
+  },
+  {
+    "sha256": "6F19385E27FDAC6EEAA7D36CF8DFE0C13104653BA3A085854D519A5F80B2EC48",
+    "path": "Assets/GameContent/Art/Scenery/Dungeon_Rubble.png.meta"
+  },
+  {
+    "sha256": "D579A197F40E841CF1C71B6C8F7111D54762AE29F2148EBEC82686A8343769FC",
+    "path": "Assets/GameContent/Art/Scenery/Dungeon_Pillar_Stump.png.meta"
+  },
+  {
+    "sha256": "036ACC240FD23DE4E28059D152EAC3B3FC1EEBAC0153ED894A3F2021D3EAFD64",
+    "path": "Assets/GameContent/Art/Scenery/Dungeon_Pillar_Tall.png.meta"
+  },
+  {
+    "sha256": "69980B22D6BE919E14C5EA5929FC71A57C864EE1825A2C9780A6477D9A481A66",
+    "path": "Assets/GameContent/Art/Scenery/Dungeon_Pillar_Cracked.png.meta"
+  },
+  {
+    "sha256": "20EBD6D608B84D8AE183724157C1097498A1868B86D897AC49202EFC53D57A12",
+    "path": "Assets/GameContent/Art/Scenery/Dungeon_Pillar_Fallen.png.meta"
+  },
+  {
+    "sha256": "5652F0235067B81B522F4773E4DD8BC6D8958642A047DDC3B135E7154B0464E2",
+    "path": "Assets/GameContent/Art/ProjectDM_DungeonInterior_Continuous_v1.png.meta"
+  },
+  {
+    "sha256": "1922245392786F181E6FD1939A16B2A213BF038C7FCCB4746B4135C85B9C1B3E",
+    "path": "Assets/GameContent/Art/ProjectDM_GroundRuleTiles_3x3_v1.png.meta"
+  }
+]

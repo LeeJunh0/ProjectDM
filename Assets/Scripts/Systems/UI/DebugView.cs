@@ -60,7 +60,7 @@ namespace ProjectDM
             Rect toggle = new Rect(navigation.x, navigation.y + 80f, navigation.width, 27f);
             if (graphics.DrawButton(toggle, debugPanelOpen ? "디버그 도구 닫기" : "디버그 도구 열기", false, 12)) debugPanelOpen = !debugPanelOpen;
             if (!debugPanelOpen) return;
-            Rect panel = new Rect(navigation.xMax - 225f, toggle.yMax + 6f, 225, 260);
+            Rect panel = new Rect(navigation.xMax - 225f, toggle.yMax + 6f, 225, 296);
             PixelUiArt.Draw(panel, PixelUiArt.Panel, 10, Color.white);
             GUI.Label(new Rect(panel.x + 10, panel.y + 6, 205, 24), save.sandboxThisSession ? "실험 모드 · 저장 안 됨" : "일반 모드 · 재화/처치 저장됨", graphics.statStyle);
             if (graphics.DrawButton(new Rect(panel.x + 10, panel.y + 34, 205, 28), "재화 +1,000", false, 12))
@@ -87,6 +87,13 @@ namespace ProjectDM
             if (graphics.DrawButton(new Rect(panel.x + 10, panel.y + 195, 205, 28), "피격 테스트 (-10 MP)", false, 12)) playerCombat.ApplyPlayerDamage(10);
             if (graphics.DrawTab(new Rect(panel.x + 10, panel.y + 229, 205, 24), "치명타 100% (이번 런)", combat.forceCriticalHits, Color.cyan))
                 combat.forceCriticalHits = !combat.forceCriticalHits;
+            if (run.stages?.Ready == true)
+            {
+                int targetStage = run.stages.Current?.stageId == 2 ? 1 : 2;
+                string stageName = targetStage == 2 ? "석재 던전" : "초원";
+                if (graphics.DrawButton(new Rect(panel.x + 10, panel.y + 262, 205, 28), stageName + " 진입 (새 런)", false, 12))
+                    run.BeginDebugStage(targetStage);
+            }
         }
     }
 }

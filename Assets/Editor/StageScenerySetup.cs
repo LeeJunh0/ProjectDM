@@ -23,7 +23,7 @@ namespace ProjectDM.Editor
                 importer.alphaIsTransparency = true; importer.textureCompression = TextureImporterCompression.Uncompressed;
                 importer.isReadable = true; // Cache the visible pixel mask for accurate player occlusion.
                 importer.wrapMode = TextureWrapMode.Clamp; importer.npotScale = TextureImporterNPOTScale.None;
-                importer.maxTextureSize = 64;
+                importer.maxTextureSize = 256;
                 importer.spritePixelsPerUnit = 64;
                 var settings = new TextureImporterSettings(); importer.ReadTextureSettings(settings);
                 settings.spriteMeshType = SpriteMeshType.FullRect; settings.spriteAlignment = (int)SpriteAlignment.Center;

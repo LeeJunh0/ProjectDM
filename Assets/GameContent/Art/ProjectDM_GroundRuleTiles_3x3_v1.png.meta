@@ -48,11 +48,11 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 418
+  spritePixelsToUnits: 410
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -100,14 +100,14 @@ TextureImporter:
       name: GroundRule_0_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 836
-        width: 418
-        height: 418
+        x: 4
+        y: 840
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -115,21 +115,21 @@ TextureImporter:
       spriteID: cbf92f81684354c42a09258e6176dd17
       internalID: -273592862
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
       name: GroundRule_0_1
       rect:
         serializedVersion: 2
-        x: 418
-        y: 836
-        width: 418
-        height: 418
+        x: 422
+        y: 840
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -137,21 +137,21 @@ TextureImporter:
       spriteID: 5c2128af0d5ccff49aaf33df5031bb3f
       internalID: 661541211
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
       name: GroundRule_0_2
       rect:
         serializedVersion: 2
-        x: 836
-        y: 836
-        width: 418
-        height: 418
+        x: 840
+        y: 840
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -159,21 +159,21 @@ TextureImporter:
       spriteID: b0efce26a61b5124386db2760a90046f
       internalID: -184469226
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
       name: GroundRule_1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 418
-        width: 418
-        height: 418
+        x: 4
+        y: 422
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -181,21 +181,21 @@ TextureImporter:
       spriteID: bf8cbaa7d1cf6eb408217b81b9372367
       internalID: 1422703653
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
       name: GroundRule_1_1
       rect:
         serializedVersion: 2
-        x: 418
-        y: 418
-        width: 418
-        height: 418
+        x: 422
+        y: 422
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -203,21 +203,21 @@ TextureImporter:
       spriteID: 14c463557404ef240b56b75cc1c38d81
       internalID: 2095471671
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
       name: GroundRule_1_2
       rect:
         serializedVersion: 2
-        x: 836
-        y: 418
-        width: 418
-        height: 418
+        x: 840
+        y: 422
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -225,21 +225,21 @@ TextureImporter:
       spriteID: 1c03f8d3376820b4996e061d40fac350
       internalID: 2105740905
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
       name: GroundRule_2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 418
-        height: 418
+        x: 4
+        y: 4
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -247,21 +247,21 @@ TextureImporter:
       spriteID: 7b5bfbb313604f9498aac565e261ee13
       internalID: -1907720221
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
       name: GroundRule_2_1
       rect:
         serializedVersion: 2
-        x: 418
-        y: 0
-        width: 418
-        height: 418
+        x: 422
+        y: 4
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -269,21 +269,21 @@ TextureImporter:
       spriteID: d769b2cbceb187947a657fea37e64ea4
       internalID: -105652648
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
       name: GroundRule_2_2
       rect:
         serializedVersion: 2
-        x: 836
-        y: 0
-        width: 418
-        height: 418
+        x: 840
+        y: 4
+        width: 410
+        height: 410
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -291,17 +291,17 @@ TextureImporter:
       spriteID: f8bd53d09a15c324aa1e99312710b35b
       internalID: -2015814783
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     outline: []
-    customData: 
+    customData:
     physicsShape: []
     bones: []
     spriteID: b3c81276712243148b08463e24ca9e5e
     internalID: 0
     vertices: []
-    indices: 
+    indices:
     edges: []
     weights: []
     secondaryTextures: []
@@ -317,8 +317,8 @@ TextureImporter:
       GroundRule_2_0: -1907720221
       GroundRule_2_1: -105652648
       GroundRule_2_2: -2015814783
-  mipmapLimitGroupName: 
+  mipmapLimitGroupName:
   pSDRemoveMatte: 0
   userData: ProjectDM_ArtPipeline_v2
-  assetBundleName: 
-  assetBundleVariant: 
+  assetBundleName:
+  assetBundleVariant:

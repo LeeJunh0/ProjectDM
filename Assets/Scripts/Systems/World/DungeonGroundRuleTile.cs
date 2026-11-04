@@ -14,6 +14,7 @@ namespace ProjectDM
         [SerializeField, HideInInspector] private TileBase[] borderTiles = new TileBase[16];
         [SerializeField] private TileBase[] ruleTiles = new TileBase[9];
         [SerializeField] private RuleDefinition[] customRules = new RuleDefinition[0];
+        [SerializeField] private bool useInteriorPattern;
 
         public enum NeighborCondition
         {
@@ -162,6 +163,8 @@ namespace ProjectDM
             if (!south) return RuleTile(2, 1);
             if (!west) return RuleTile(1, 0);
             if (!east) return RuleTile(1, 2);
+            if (useInteriorPattern && HasSixteenTiles(floorTiles))
+                return floorTiles[(3 - PositiveModulo(position.y, 4)) * 4 + PositiveModulo(position.x, 4)];
             return RuleTile(1, 1);
         }
 
