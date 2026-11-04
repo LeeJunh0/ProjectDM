@@ -17,16 +17,22 @@ namespace ProjectDM
         private BossDeathRippleVisuals deathRipples;
         private Sprite lineSprite;
         private SpriteQuadBatch batch;
-        private struct BatchEffect {internal Sprite sprite;internal Vector3 center;internal Vector2 size;internal float angle,age,duration;internal Color color;}
+        private struct BatchEffect {internal Sprite sprite;internal string clip;internal Vector3 center;internal Vector2 size;internal float angle,age,duration;internal Color color;}
         private readonly List<BatchEffect> batched = new();
         internal int BatchedEffectCount => batched.Count;
         void AddBatch(Sprite sprite,Vector3 center,Vector2 size,float angle,Color color,float duration)
         {if(sprite==null)return;batched.Add(new BatchEffect{sprite=sprite,center=center,size=size,angle=angle,color=color,duration=Mathf.Max(.01f,duration)});}
+        internal bool PixelEffect(string clip,Vector3 center,Vector2 size,float angle,float duration,Color color)
+        {
+            Sprite frame=PixelFxLibrary.Frame(clip,0);if(frame==null)return false;
+            batched.Add(new BatchEffect{sprite=frame,clip=clip,center=center,size=size,angle=angle,color=color,duration=Mathf.Max(.01f,duration)});return true;
+        }
         void TickBatch(float dt)
         {
             batch ??= new SpriteQuadBatch("전체 스킬 이펙트 일괄 그리기",6);batch.Begin();
             for(int i=batched.Count-1;i>=0;i--){var e=batched[i];e.age+=dt;
                 if(e.age>=e.duration){batched[i]=batched[batched.Count-1];batched.RemoveAt(batched.Count-1);continue;}
+                if(e.clip!=null)e.sprite=PixelFxLibrary.Frame(e.clip,e.age);
                 Color color=e.color;color.a*=1-e.age/e.duration;
                 batch.Add(e.sprite,e.center,e.size,e.angle,color);batched[i]=e;}
             batch.End();
@@ -45,6 +51,7 @@ namespace ProjectDM
             public Vector3 from, to, size;
             public float age, duration, expansionDuration, startScale = .2f;
             public bool falling, expanding, lightning, warning;
+            public string clip;
         }
 
         private sealed class FloatingText
@@ -100,12 +107,18 @@ namespace ProjectDM
         }
         internal void SkillLine(Vector3 from, Vector3 to, float width, Color color, float duration)
         {
+            Vector3 axis=to-from;
+            if(axis.sqrMagnitude>.00001f && PixelEffect(color.r>.65f && color.b>.7f?"beam":"chain",(from+to)*.5f,
+                new Vector2(axis.magnitude*1.2f,width*4),Mathf.Atan2(axis.y,axis.x)*Mathf.Rad2Deg,duration,new Color(1,1,1,color.a)))return;
             lineSprite ??= Sprite.Create(Texture2D.whiteTexture,new Rect(0,0,Texture2D.whiteTexture.width,Texture2D.whiteTexture.height),new Vector2(.5f,.5f),Texture2D.whiteTexture.width);
             Vector3 delta=to-from;if(delta.sqrMagnitude<.00001f)return;
             AddBatch(lineSprite,(from+to)*.5f,new Vector2(delta.magnitude,width),Mathf.Atan2(delta.y,delta.x)*Mathf.Rad2Deg,color,duration);
         }
         internal void SkillPulse(Vector3 center,float radius,string icon,Color color,float duration)
         {
+            string clip=icon switch{"skill.projectile.satellite"=>"satellite","skill.flame.firefield"=>"firefield","skill.lightning.orb"=>"orb","skill.frost.blizzard"=>"blizzard","skill.frost.shatter"=>"shatter",_=>null};
+            float span=clip=="satellite"||clip=="orb"?30:64;
+            if(clip!=null&&PixelEffect(clip,center,Vector2.one*(radius*2*96/span),0,duration,new Color(1,1,1,color.a)))return;
             Sprite sprite=SkillIconAtlas.Find(icon) ?? gem ?? bolt;
             AddBatch(sprite,center,Vector2.one*radius*2,0,new Color(1,1,1,color.a),duration);
         }
@@ -116,16 +129,18 @@ namespace ProjectDM
             float diameter = generated ? Mathf.Clamp(artwork.frostArtworkDiameter, .1f, 1) : 1;
             for (int i = 0; i < count; i++)
             {
-                SpriteRenderer renderer = Rent(generated ? artwork.frostShard : gem ?? bolt);
+                Sprite pixelShard=PixelFxLibrary.Frame("frostshard",0);
+                SpriteRenderer renderer = Rent(pixelShard != null ? pixelShard : generated ? artwork.frostShard : gem ?? bolt);
                 if (renderer == null) break; // Visual budget never changes combat's shard count.
-                renderer.transform.localScale = SpriteScale(renderer.sprite, radius * 2 / diameter, radius * 2 / diameter);
-                renderer.color = generated ? Color.white : new Color(.65f, .95f, 1, .95f);
+                renderer.transform.localScale = SpriteScale(renderer.sprite, radius * 2 / (pixelShard!=null?24f/96:diameter), radius * 2 / (pixelShard!=null?24f/96:diameter));
+                renderer.color = pixelShard!=null||generated ? Color.white : new Color(.65f, .95f, 1, .95f);
                 frostShards.Add(renderer);
             }
         }
         internal void MoveFrostShard(int index, Vector3 position, float angle)
         {
             if (index >= frostShards.Count) return;
+            if(frostShards[index].sprite.name.StartsWith("PixelFX."))frostShards[index].sprite=PixelFxLibrary.Frame("frostshard",Time.time+index*.07f);
             frostShards[index].transform.position = position;
             frostShards[index].transform.rotation = Quaternion.Euler(0, 0, angle);
         }
@@ -138,6 +153,7 @@ namespace ProjectDM
         internal void Link(Vector3 from, Vector3 to)
         {
             Vector3 direction=to-from;if(direction.sqrMagnitude<.0001f)return;
+            if(PixelEffect("chain",(from+to)*.5f,new Vector2(direction.magnitude*1.2f,.9f),Mathf.Atan2(direction.y,direction.x)*Mathf.Rad2Deg,.18f,Color.white))return;
             if(artwork!=null && artwork.chain!=null)
             {
                 Sprite sprite=artwork.chain;Vector3 start=Anchor(sprite,artwork.chainStart),end=Anchor(sprite,artwork.chainEnd),axis=end-start;
@@ -151,6 +167,25 @@ namespace ProjectDM
             Vector3 perpendicular=new Vector3(-direction.y,direction.x).normalized*.14f;
             Vector3 a=from+direction/3+perpendicular,b=from+direction*2/3-perpendicular;
             SkillLine(from,a,.1f,new Color(.5f,.75f,1),.18f);SkillLine(a,b,.1f,new Color(.5f,.75f,1),.18f);SkillLine(b,to,.1f,new Color(.5f,.75f,1),.18f);
+        }
+
+        internal void Thunder(Vector3 from,Vector3 to)
+        {
+            float length=Vector3.Distance(from,to);
+            if(!PixelEffect("thunder",(from+to)*.5f,new Vector2(1.1f,length*96/72),0,.25f,Color.white))Link(from,to);
+        }
+
+        internal void SatelliteShot(Vector3 point,Vector3 direction)
+        {
+            if(!PixelEffect("missile",point,Vector2.one*1.8f,Mathf.Atan2(direction.y,direction.x)*Mathf.Rad2Deg,.09f,Color.white))
+                SkillLine(point-direction*.15f,point,.12f,new Color(.8f,.4f,1),.12f);
+        }
+
+        internal void HitSpark(Vector3 point,CombatDamageElement element)
+        {
+            Color tint=element switch{CombatDamageElement.Flame=>new Color(1,.65f,.3f),CombatDamageElement.Frost=>new Color(.6f,.9f,1),
+                CombatDamageElement.Lightning=>new Color(.7f,.8f,1),_=>new Color(.9f,.65f,1)};
+            PixelEffect("hit",point,Vector2.one*2,0,.25f,tint);
         }
 
         private void Stroke(Vector3 from, Vector3 to)
@@ -171,6 +206,8 @@ namespace ProjectDM
         internal void FlameCone(Vector3 origin, Vector2 direction, float range, float fullAngle)
         {
             float heading = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float height=2*range*Mathf.Sin(Mathf.Clamp(fullAngle,1,180)*.5f*Mathf.Deg2Rad);
+            if(PixelEffect("cone",origin+(Vector3)direction*(range*36/42),new Vector2(range*96/42,height*64/40),heading,.24f,Color.white))return;
             for (int i = 0; i <= 8; i++)
             {
                 SpriteRenderer renderer = Rent(bolt, true);
@@ -189,6 +226,7 @@ namespace ProjectDM
 
         internal void Burst(Vector3 center, float radius, Color color, float duration)
         {
+            if(PixelEffect("hit",center,Vector2.one*radius*5,0,duration,Color.white))return;
             bool generated = artwork != null && artwork.splash != null;
             Expand(center, radius, generated ? artwork.splash : gem,
                 generated ? new Color(1, 1, 1, Mathf.Clamp01(artwork.splashOpacity)) : new Color(color.r, color.g, color.b, .35f),
@@ -197,6 +235,7 @@ namespace ProjectDM
 
         internal void MeteorImpact(Vector3 center, float radius)
         {
+            if(PixelEffect("fireimpact",center,Vector2.one*radius*3.2f,0,.4f,Color.white))return;
             bool generated = artwork != null && artwork.splash != null && artwork.impactMaterial != null;
             Color color = generated ? artwork.impactColor : new Color(1, .45f, .12f);
             color.a = generated ? Mathf.Clamp01(artwork.impactOpacity) : .35f;
@@ -241,19 +280,22 @@ namespace ProjectDM
                     duration = Mathf.Max(.01f, delay), warning = true });
             }
             Sprite sprite = generated ? artwork.meteor : bolt;
+            Sprite pixelMeteor=PixelFxLibrary.Frame("meteor",0);
+            if(pixelMeteor!=null)sprite=pixelMeteor;
             SpriteRenderer falling = Rent(sprite);
             if (falling == null) return;
-            falling.transform.rotation = Quaternion.Euler(0, 0, generated ? artwork.meteorRotation : -90);
+            falling.transform.rotation = Quaternion.Euler(0, 0, pixelMeteor!=null?0:generated ? artwork.meteorRotation : -90);
             float width = generated ? Mathf.Max(.01f, artwork.meteorWidth) : .9f;
+            if(pixelMeteor!=null)width*=96f/18;
             float height = generated ? width * sprite.rect.height / sprite.rect.width : .55f;
             Vector3 size = SpriteScale(sprite, width, height);
             falling.transform.localScale = size;
-            Vector3 offset = generated ? falling.transform.rotation * Vector3.Scale(Anchor(sprite, artwork.meteorAnchor), size) : Vector3.zero;
+            Vector3 offset = generated && pixelMeteor==null ? falling.transform.rotation * Vector3.Scale(Anchor(sprite, artwork.meteorAnchor), size) : Vector3.zero;
             Vector3 end = center - offset;
             falling.transform.position = end + Vector3.up * (generated ? Mathf.Max(0, artwork.meteorFallHeight) : 3);
-            falling.color = generated ? Color.white : new Color(1f, .55f, .2f);
+            falling.color = pixelMeteor!=null||generated ? Color.white : new Color(1f, .55f, .2f);
             active.Add(new Visual { renderer = falling, color = falling.color, size = size,
-                from = falling.transform.position, to = end, duration = Mathf.Max(.01f, delay), falling = true });
+                from = falling.transform.position, to = end, duration = Mathf.Max(.01f, delay), falling = true,clip=pixelMeteor!=null?"meteor":null });
         }
 
         // Normalized anchors remain correct after import resizing and with non-central sprite pivots.
@@ -291,6 +333,7 @@ namespace ProjectDM
             {
                 Visual visual = active[i];
                 visual.age += dt;
+                if(visual.clip!=null)visual.renderer.sprite=PixelFxLibrary.Frame(visual.clip,visual.age);
                 float progress = Mathf.Clamp01(visual.age / visual.duration);
                 if (visual.falling) visual.renderer.transform.position = Vector3.Lerp(visual.from, visual.to, progress * progress);
                 if (visual.expanding)

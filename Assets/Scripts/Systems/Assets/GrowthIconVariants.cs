@@ -81,7 +81,7 @@ namespace ProjectDM
         internal static Sprite Find(string rowId, string skillId, int stageId)
         {
             EnsureLoaded();
-            rowId = rowId switch { "health" => "time", "chainChance" => "chain", "splashChance" => "splash", "meteorChance" => "meteor", _ => rowId };
+            rowId = rowId switch { "health" => "time", "manaEfficiency" => "extension", "chainChance" => "chain", "splashChance" => "splash", "meteorChance" => "meteor", _ => rowId };
             if (stageId == 2 && rowId != null && dungeon.TryGetValue(rowId, out Sprite bat)) return bat;
             if (rowId != null && icons.TryGetValue(rowId, out Sprite common)) return common;
             return skillId != null && icons.TryGetValue(skillId, out Sprite skill) ? skill : null;

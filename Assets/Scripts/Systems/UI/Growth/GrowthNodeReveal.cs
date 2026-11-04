@@ -6,7 +6,7 @@ namespace ProjectDM
     /// <summary>Transient purchase-only reveal state, independent of saved progression and timeScale.</summary>
     internal sealed class GrowthNodeReveal
     {
-        internal const float LineDuration = .42f, NodeDelay = .34f, NodeDuration = .4f;
+        internal const float LineDuration = .26f, NodeDelay = .2f, NodeDuration = .28f;
         private readonly Dictionary<string, float> starts = new();
 
         internal void Begin(string id, float now) => starts[id] = now;
@@ -15,13 +15,13 @@ namespace ProjectDM
         internal float Line(string id, float now) => starts.TryGetValue(id, out float start)
             ? Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((now - start) / LineDuration)) : 1f;
         internal float Opacity(string id, float now) => starts.TryGetValue(id, out float start)
-            ? Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((now - start - NodeDelay) / .2f)) : 1f;
+            ? Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((now - start - NodeDelay) / .13f)) : 1f;
         internal float Scale(string id, float now)
         {
             if (!starts.TryGetValue(id, out float start)) return 1f;
             float age = now - start - NodeDelay;
             if (age < 0f || age >= NodeDuration) return 1f;
-            return CombatDamageScaleAnimation.Evaluate(age, NodeDuration, .55f, 1.2f, 1f, .13f, .025f, .245f, 1f);
+            return CombatDamageScaleAnimation.Evaluate(age, NodeDuration, .55f, 1.2f, 1f, .09f, .018f, .172f, 1f);
         }
     }
 }

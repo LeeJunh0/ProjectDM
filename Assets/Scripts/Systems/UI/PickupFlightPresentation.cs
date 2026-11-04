@@ -11,7 +11,7 @@ namespace ProjectDM
         private readonly List<Spark> sparks = new(512);
         private readonly List<Settlement> settling = new(64);
         private readonly Dictionary<Sprite, Rect> contentUvs = new();
-        private int serial;
+        private readonly System.Random visualRandom = new();
         internal float CurrencyPulse { get; private set; }
         internal float ManaPulse { get; private set; }
         internal float ExperiencePulse { get; private set; }
@@ -123,7 +123,7 @@ namespace ProjectDM
             Vector3 point = camera.WorldToScreenPoint(world);
             if (point.z <= 0 || !camera.pixelRect.Contains(point)) return;
             if (!contentUvs.ContainsKey(sprite)) contentUvs.Add(sprite, ContentUv(sprite));
-            int seed = ++serial;
+            int seed = visualRandom.Next();
             amount = System.Math.Max(0, amount);
             Pending(kind, amount);
             flights.Add(new Flight
@@ -150,7 +150,7 @@ namespace ProjectDM
 
         internal static Route CreateRoute(int seed)
         {
-            int kind = seed % 3;
+            int kind = Mathf.Min(2, Mathf.FloorToInt(Variation(seed, 7) * 3));
             float side = Variation(seed, 19) < .5f ? -1 : 1;
             float firstSide = kind == 0 ? Mathf.Lerp(.12f, .22f, Variation(seed, 37))
                 : Mathf.Lerp(.4f, .65f, Variation(seed, 37));
@@ -274,7 +274,8 @@ namespace ProjectDM
                     Color previous = GUI.color;
                     Color light = Tint(spark.kind); light.a = opacity * .8f;
                     GUI.color = previous * light;
-                    GUI.DrawTexture(new Rect(point.x - diameter * .5f, point.y - diameter * .5f, diameter, diameter), SparkHalo);
+                    if(!PixelFxLibrary.DrawMote(point,spark.size*16,new Color(1,1,1,.9f),spark.age+(spark.seed&15)*.03f))
+                        GUI.DrawTexture(new Rect(point.x - diameter * .5f, point.y - diameter * .5f, diameter, diameter), SparkHalo);
                     GUI.color = previous;
                 }
                 UiGraphics.DrawSolidRect(new Rect(x, y, spark.size, spark.size), color);
@@ -303,7 +304,7 @@ namespace ProjectDM
 
         internal void Clear()
         {
-            flights.Clear(); sparks.Clear(); serial = 0;
+            flights.Clear(); sparks.Clear();
             settling.Clear();
             CurrencyPulse = ManaPulse = ExperiencePulse = 0;
             PendingCurrency = PendingMana = PendingExperience = 0;

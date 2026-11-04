@@ -34,7 +34,8 @@
           "permanentStep": 0.1,
           "maxRank": 99,
           "cost": 10,
-          "skill": "missile"
+          "skill": "missile",
+          "permanentOnly": true
         },
         {
           "id": "count",
@@ -46,7 +47,8 @@
           "permanentStep": 1,
           "maxRank": 3,
           "cost": 35,
-          "skill": "missile"
+          "skill": "missile",
+          "permanentOnly": true
         },
         {
           "id": "pierce",
@@ -58,7 +60,8 @@
           "permanentStep": 1,
           "maxRank": 3,
           "cost": 25,
-          "skill": "missile"
+          "skill": "missile",
+          "permanentOnly": true
         },
         {
           "id": "homing",
@@ -70,7 +73,8 @@
           "permanentStep": 60,
           "maxRank": 3,
           "cost": 35,
-          "skill": "missile"
+          "skill": "missile",
+          "permanentOnly": true
         },
         {
           "id": "beamUnlock",
@@ -200,7 +204,8 @@
           "cost": 30,
           "skill": "satellite",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentOnly": true
         },
         {
           "id": "satelliteVolley",
@@ -333,7 +338,8 @@
           "permanentStep": 0.1,
           "maxRank": 99,
           "cost": 10,
-          "skill": "chain"
+          "skill": "chain",
+          "permanentOnly": true
         },
         {
           "id": "jumps",
@@ -632,7 +638,8 @@
           "permanentStep": 0.1,
           "maxRank": 99,
           "cost": 10,
-          "skill": "cone"
+          "skill": "cone",
+          "permanentOnly": true
         },
         {
           "id": "range",
@@ -938,7 +945,8 @@
           "permanentStep": 0.1,
           "maxRank": 99,
           "cost": 10,
-          "skill": "orbit"
+          "skill": "orbit",
+          "permanentOnly": true
         },
         {
           "id": "count",

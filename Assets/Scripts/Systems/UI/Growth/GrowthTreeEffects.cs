@@ -14,6 +14,35 @@ namespace ProjectDM
         internal static float SymbolScale(float zoom) => Mathf.Clamp(zoom * 1.45f, .2f, 2.1f);
         internal static float SymbolFloatY(float zoom, float time) => Mathf.Sin(time * (Mathf.PI * 2f / 4.8f)) * 6f * SymbolScale(zoom);
 
+        internal const float PurchaseSparkleDuration = .85f;
+        internal static float PurchaseSparkleOpacity(float age, int particle)
+        {
+            float t = (age - particle * .022f) / (.48f + particle % 3 * .1f);
+            return t < 0 || t >= 1 ? 0 : Mathf.Sin(t * Mathf.PI) * (1 - t * .35f);
+        }
+
+        internal static void DrawPurchaseSparkles(Rect node, Color accent, float age)
+        {
+            if (Event.current?.type != EventType.Repaint || age < 0 || age >= PurchaseSparkleDuration) return;
+            float scale = Mathf.Clamp(node.width / 72, .5f, 2);
+            for (int i = 0; i < 8; i++)
+            {
+                float alpha = PurchaseSparkleOpacity(age, i);
+                if (alpha <= .001f) continue;
+                float angle = i * 2.39996f + .35f;
+                float distance = node.width * (.62f + i % 3 * .035f) + (1 - Mathf.Exp(-age * 5)) * (9 + i % 3 * 5) * scale;
+                Vector2 center = node.center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance + Vector2.up * age * (10 + i % 3 * 4) * scale;
+                float size = Mathf.Max(1, Mathf.Round((i % 3 == 0 ? 3 : 2) * scale * (.6f + alpha * .4f)));
+                Color tint = Color.Lerp(accent, Color.white, i % 3 == 0 ? .65f : .15f);
+                if(!PixelFxLibrary.DrawMote(center,size*16,WithAlpha(accent,alpha*.8f),age+i*.07f))Light(center, size * 3, WithAlpha(accent, alpha * .25f));
+                tint.a = alpha * (i % 3 == 0 ? 1 : .7f);
+                UiGraphics.DrawSolidRect(new Rect(center.x - size * .5f, center.y - size * .5f, size, size), tint);
+                if (i % 3 != 0) continue;
+                UiGraphics.DrawSolidRect(new Rect(center.x - size * 1.5f, center.y - size * .5f, size * 3, size), WithAlpha(tint, tint.a * .65f));
+                UiGraphics.DrawSolidRect(new Rect(center.x - size * .5f, center.y - size * 1.5f, size, size * 3), WithAlpha(tint, tint.a * .8f));
+            }
+        }
+
         internal static Texture2D GlowTexture
         {
             get

@@ -14,14 +14,14 @@ function Get-Row([string] $id) { return $growth.rows | Where-Object id -eq $id }
 function Get-Source([string] $id) { if ($id -in @('chainChance','splashChance','meteorChance')) { return $proposal.upgrades.proc }; return $proposal.upgrades.($id) }
 Assert-True ($null -eq [ProjectDM.PrototypeRules]::Validate($balance, $skills, $growth)) 'Runtime tables must validate.'
 Assert-True ($balance.ResolvedInitialMana -eq 40 -and $balance.basicAttackManaCost -eq 1 -and $balance.bossElapsedSeconds -eq 180) 'Initial mana / basic attack cost / independent boss cap mismatch.'
-Assert-True ($growth.rows.Count -eq 30 -and $skills.rows.Count -eq 6) 'Missing growth or skill rows.'
+Assert-True ($growth.rows.Count -eq 31 -and $skills.rows.Count -eq 6) 'Missing growth or skill rows.'
 
 # Legacy metadata remains available for save migration; current economy uses direct rank prices.
 $proposal = Get-Content (Join-Path $projectRoot 'Tools/Balance/progression_v2.json') -Raw | ConvertFrom-Json
 foreach ($row in $growth.rows) {
     if ($row.id -eq 'population') { Assert-True ($row.maxRank -eq 30 -and $row.step -eq 5) 'Population growth must expand to +150 monsters.'; continue }
     $source = Get-Source $row.id
-    if ($null -eq $source) { Assert-True ($row.id -in @('silverDropChance','goldDropChance','emeraldDropChance','amethystDropChance','experienceGradeChance','health','movement','criticalChance','criticalDamage','invulnerability','magnet','luck','populationCap','spawnBatch','magnetDropChance')) 'Unknown new growth'; continue }
+    if ($null -eq $source) { Assert-True ($row.id -in @('silverDropChance','goldDropChance','emeraldDropChance','amethystDropChance','experienceGradeChance','health','movement','criticalChance','criticalDamage','invulnerability','magnet','luck','populationCap','spawnBatch','magnetDropChance','manaEfficiency')) 'Unknown new growth'; continue }
     $separateChance = $row.id.EndsWith('Chance')
     Assert-True ($row.maxRank -le $source.max_rank -and (($separateChance -and $row.baseCost -eq 10) -or
         (-not $separateChance -and $row.baseCost -eq $source.base_cost -and $row.minStage -eq $source.min_stage))) "V2 growth cap/cost/stage mismatch: $($row.id)"
@@ -96,7 +96,7 @@ $brokenGrowth = [ProjectDM.PrototypeGrowthTable](Get-Content (Join-Path $dataRoo
 $brokenGrowth.rows[0].parent = 'damage'
 Assert-True ($null -ne [ProjectDM.PrototypeRules]::Validate($balance, $skills, $brokenGrowth)) 'Validation must reject graph cycles.'
 # Split presentation nodes keep the original saved rank and continuous cost curve.
-Assert-True ($growth.nodes.Count -eq 106) 'Expected 106 growth nodes excluding root.'
+Assert-True ($growth.nodes.Count -eq 111) 'Expected 111 growth nodes excluding root.'
 foreach ($row in $growth.rows) {
     $segments = @($growth.nodes | Where-Object growthId -eq $row.id | Sort-Object startRank)
     $end = 0
@@ -166,7 +166,7 @@ foreach ($id in @('playerContactRadius','projectileSpeed','projectileLifetime'))
     Assert-True (@($growth.rows | Where-Object id -eq $id).Count -eq 0) "Excluded attribute became a growth: $id"
 }
 $totalPurchases = ($growth.rows | Measure-Object maxRank -Sum).Sum
-Assert-True ($totalPurchases -eq 298) 'Unexpected radial total purchase count.'
+Assert-True ($totalPurchases -eq 303) 'Unexpected radial total purchase count.'
 foreach ($node in $growth.nodes) {
     Assert-True ($node.ranks -le 3) "Node still requires excessive repeated purchases: $($node.id)"
     if ($node.parent -ne 'ROOT') {

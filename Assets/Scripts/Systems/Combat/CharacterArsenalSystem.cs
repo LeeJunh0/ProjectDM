@@ -115,7 +115,7 @@ namespace ProjectDM
                     {
                         Enemy next=Nearest(target.transform.position,s.range,visited); if(next==null)break;
                         visited.Add(next); Vector3 point=next.transform.position;
-                        visuals?.Link(point+Vector3.up*5,point); Area(point,radius,power);
+                        visuals?.Thunder(point+Vector3.up*5,point); Area(point,radius,power);
                         for(int j=0;j<Mathf.Min(3,Mathf.FloorToInt(amount("thunderChain")));j++)
                         { Enemy tail=Nearest(point,3,visited);if(tail==null)break;visited.Add(tail);visuals?.Link(point,tail.transform.position);point=tail.transform.position;hit(tail,power*.5f); }
                     }
@@ -231,7 +231,7 @@ namespace ProjectDM
             for(int i=bolts.Count-1;i>=0;i--){var b=bolts[i];Vector3 end=b.center+b.direction*b.speed*dt;Enemy nearest=null;float along=float.MaxValue;
                 enemies.spatial.Bounds(Vector3.Min(b.center,end)-Vector3.one*1.5f,Vector3.Max(b.center,end)+Vector3.one*1.5f,collisionCandidates);
                 foreach(var e in collisionCandidates)if(EnemySystem.IsLive(e)&&SegmentDistance(e.transform.position,b.center,end)<.4f*e.hitRadiusMultiplier){float d=(e.transform.position-b.center).sqrMagnitude;if(d<along){nearest=e;along=d;}}
-                visuals?.SkillLine(b.center,end,.12f,new Color(.8f,.4f,1),.12f);b.center=end;b.remaining-=dt;
+                visuals?.SatelliteShot(end,b.direction);b.center=end;b.remaining-=dt;
                 if(nearest!=null)hit(nearest,b.power);if(nearest!=null||b.remaining<=0)bolts.RemoveAt(i);}
         }
         void Area(Vector3 point,float radius,float power)

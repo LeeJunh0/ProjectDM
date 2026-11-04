@@ -28,6 +28,7 @@ MonoBehaviour:
     visualScale: 0.92018783
     mirrorToMovement: 1
     animatorController: {fileID: 0}
+    attack: 0
   - displayName: "\uC0C8\uC2F9 \uC815\uB839"
     frames:
     - {fileID: 21300000, guid: e11034efb30135845b0f68b038532ce8, type: 3}
@@ -38,6 +39,7 @@ MonoBehaviour:
     visualScale: 1.217877
     mirrorToMovement: 0
     animatorController: {fileID: 0}
+    attack: 0
   - displayName: "\uB4E4\uD310 \uACE0\uBE14\uB9B0"
     frames:
     - {fileID: 21300000, guid: dc8e83d709334d84091cc9602928b15f, type: 3}
@@ -48,6 +50,7 @@ MonoBehaviour:
     visualScale: 1.2254335
     mirrorToMovement: 1
     animatorController: {fileID: 0}
+    attack: 0
   - displayName: "\uBC84\uC12F \uC694\uC815"
     frames:
     - {fileID: 21300000, guid: 200e0b8d4aa53f44595d5fb9777493c2, type: 3}
@@ -58,6 +61,7 @@ MonoBehaviour:
     visualScale: 1.2138728
     mirrorToMovement: 0
     animatorController: {fileID: 0}
+    attack: 1
   - displayName: "\uBA67\uB3FC\uC9C0"
     frames:
     - {fileID: 21300000, guid: 1d5e43ea50a35d14f84157e653607d3e, type: 3}
@@ -68,6 +72,7 @@ MonoBehaviour:
     visualScale: 1.2270269
     mirrorToMovement: 1
     animatorController: {fileID: 0}
+    attack: 4
   bossName: "\uACE0\uBAA9 \uC218\uD638\uC790"
   bossFrames:
   - {fileID: 21300000, guid: 4d6b6f3c8b53bdf41b5b458d52b7f003, type: 3}

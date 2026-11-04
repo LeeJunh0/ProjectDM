@@ -11,9 +11,10 @@ namespace ProjectDM {
   public static void Run(){try{
    var state=new GrowthNodeReveal();state.Begin("new",5);
    Near(state.Line("new",5),0,"Line starts invisible");Near(state.Opacity("new",5.2f),0,"Node waits for line");
-   Check(state.Line("new",5.21f)>.1f&&state.Line("new",5.21f)<.9f,"Line grows");
-   Check(state.Opacity("new",5.37f)>0&&state.Opacity("new",5.37f)<1,"Node fades in");
-   Check(state.Scale("new",5.47f)>1,"Node pops larger");Near(state.Scale("new",6f),1,"Node settles");
+   Check(state.Line("new",5.13f)>.1f&&state.Line("new",5.13f)<.9f,"Line grows");
+   Check(state.Opacity("new",5.25f)>0&&state.Opacity("new",5.25f)<1,"Node fades in");
+   Check(state.Scale("new",5.29f)>1,"Node pops larger");Near(state.Scale("new",5.5f),1,"Node settles");
+   Check(!state.IsAnimating("new",5.5f),"New node must finish revealing within half a second");
    Check(!state.IsAnimating("old",5.1f),"Existing nodes must not animate");state.Clear();Near(state.Line("new",5.1f),1,"Navigation clears reveals");
    var settings=new GameSettings();var tables=GameTables.LoadResources(settings);var save=new SaveService(tables,new MemoryProgressStore(),true){progress=new PrototypeSave()};
    var run=new RunController(settings,save,tables,null,null,null,null,null,()=>{},()=>{},()=>false,new RunMana());

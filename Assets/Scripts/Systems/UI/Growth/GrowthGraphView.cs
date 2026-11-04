@@ -27,6 +27,8 @@ namespace ProjectDM
         private readonly UiGraphics graphics;
         private readonly GrowthPotionRenderer potion = new();
         private readonly GrowthNodeReveal reveal = new();
+        private readonly GrowthPurchaseHold purchaseHold = new();
+        private readonly GrowthNodeFeedback nodeFeedback = new();
 
         public void Dispose() => potion.Dispose();
 
@@ -133,6 +135,7 @@ namespace ProjectDM
 
             if (currentEvent.type == EventType.ScrollWheel && canvas.Contains(currentEvent.mousePosition))
             {
+                purchaseHold.Clear();
                 float previousZoom = metaTreeZoom;
                 metaTreeZoom = Mathf.Clamp(metaTreeZoom - currentEvent.delta.y * .06f, .04f, 1.45f);
                 Vector2 canvasCenter = canvas.size * .5f;
@@ -143,6 +146,7 @@ namespace ProjectDM
 
             if (currentEvent.type == EventType.MouseDown && currentEvent.button == 2 && canvas.Contains(currentEvent.mousePosition))
             {
+                purchaseHold.Clear();
                 isPanningMetaTree = true;
                 metaTreeLastPointer = currentEvent.mousePosition;
                 currentEvent.Use();
@@ -165,6 +169,8 @@ namespace ProjectDM
                     hoveredMetaTreeNode = i;
                 }
             }
+
+            HandleGrowthPurchaseHold();
 
             for (int i = 0; i < metaTreeNodes.Length; i++)
             {
@@ -313,13 +319,14 @@ namespace ProjectDM
             Color previousGuiColor = GUI.color;
             Matrix4x4 previousGuiMatrix = GUI.matrix;
             GUI.color = previousGuiColor * new Color(1, 1, 1, revealOpacity);
-            float revealScale = reveal.Scale(node.id, Time.unscaledTime);
+            float interactionScale = nodeFeedback.Scale(node.id, hoveredMetaTreeNode == index,
+                purchaseHold.IsHolding && purchaseHold.NodeId == node.id, purchaseHold.Progress(Time.unscaledTime), Time.unscaledTime);
+            float revealScale = reveal.Scale(node.id, Time.unscaledTime) * interactionScale;
             if (!Mathf.Approximately(revealScale, 1f))
                 GUI.matrix = previousGuiMatrix * Matrix4x4.TRS(nodeRect.center, Quaternion.identity, Vector3.one * revealScale) * Matrix4x4.Translate(-nodeRect.center);
             try
             {
             Rect labelRect = GetMetaTreeNodeLabelRect(nodeRect);
-            Rect hitRect = GetMetaTreeNodeHitRect(node, canvasSize);
             float detailScale = NodeDetailScale(nodeRect);
             bool isSelected = selectedMetaTreeNode == index;
             bool isHovered = hoveredMetaTreeNode == index;
@@ -341,6 +348,15 @@ namespace ProjectDM
             if (node.state == MetaTreeNodeState.Locked) frameTint *= .65f;
             frameTint.a = 1;
             PixelUiArt.Draw(nodeRect, PixelUiArt.Node, Mathf.Max(2, nodeRect.width * .14f), frameTint);
+            if (purchaseHold.NodeId == node.id)
+            {
+                Rect inside = new Rect(nodeRect.x + nodeRect.width * .14f, nodeRect.y + nodeRect.height * .14f,
+                    nodeRect.width * .72f, nodeRect.height * .72f);
+                Rect fill = GrowthHoldFillRect(inside, purchaseHold.Progress(Time.unscaledTime));
+                Color tint = ThemeTint(new Color(1f, .72f, .24f, .55f));
+                UiGraphics.DrawSolidRect(fill, tint);
+                UiGraphics.DrawSolidRect(new Rect(fill.x, fill.y, fill.width, Mathf.Min(2, fill.height)), new Color(tint.r, tint.g, tint.b, .95f));
+            }
             if (isSelected || isHovered)
             { Color outline = border; outline.a *= revealOpacity; UiGraphics.DrawOutline(new Rect(nodeRect.x + 2, nodeRect.y + 2, nodeRect.width - 4, nodeRect.height - 4), outline, 1); }
 
@@ -393,17 +409,46 @@ namespace ProjectDM
             }
             if (metaTreeZoom >= .4f || (isGoal && metaTreeZoom >= .2f)) GUI.Label(labelRect, node.title, title);
 
-            if (!reveal.IsAnimating(node.id, Time.unscaledTime) && !IsPrototypeGraphOverlay(Event.current.mousePosition) && GUI.Button(hitRect, GUIContent.none, GUIStyle.none))
-            {
-                selectedMetaTreeNode = index;
-            }
             }
             finally { GUI.color = previousGuiColor; GUI.matrix = previousGuiMatrix; }
+            GrowthTreeEffects.DrawPurchaseSparkles(nodeRect, SymbolAccent, nodeFeedback.PurchaseAge(node.id, Time.unscaledTime));
         }
 
         internal void DrawMetaTreeHoverDescription()
         {
             DrawPrototypeGraphTooltip();
+        }
+
+        internal static Rect GrowthHoldFillRect(Rect inside, float progress)
+        {
+            float height = inside.height * Mathf.Clamp01(progress);
+            return new Rect(inside.x, inside.yMax - height, inside.width, height);
+        }
+
+        private void HandleGrowthPurchaseHold()
+        {
+            Event e = Event.current;
+            bool pressed = e.type == EventType.MouseDown && e.button == 0;
+            bool released = e.rawType == EventType.MouseUp && e.button == 0;
+            bool navigating = isPanningMetaTree || e.type == EventType.ScrollWheel;
+            string id = hoveredMetaTreeNode > 0 ? metaTreeNodes[hoveredMetaTreeNode].id : null;
+            PrototypeGrowthNode node = id != null && tables.growthNodeLookup.TryGetValue(id, out var definition) ? definition : null;
+            PrototypeGrowth row = node == null ? null : tables.GrowthRow(node.growthId);
+            int stage = PrototypeRules.Stage(tables.balance, save.progress);
+            bool canPurchase = row != null && !navigating && Application.isFocused &&
+                PrototypeRules.NodePurchaseBlock(tables.balance, row, node, save.progress, stage, save.metaCurrency, tables.growthTable) == null;
+            if (pressed && hoveredMetaTreeNode > 0) selectedMetaTreeNode = hoveredMetaTreeNode;
+            bool complete = purchaseHold.Update(id, canPurchase, pressed, !released && (pressed || Input.GetMouseButton(0)), Time.unscaledTime);
+            if (pressed && hoveredMetaTreeNode > 0) e.Use();
+            if (!complete) return;
+            if (PrototypeRules.TryPurchaseNode(tables.balance, row, node, save.progress, stage, ref save.metaCurrency, tables.growthTable))
+            {
+                nodeFeedback.Purchased(node.id, Time.unscaledTime);
+                AnimateNewlyRevealedNodes(Time.unscaledTime);
+                save.MarkPrototypeProgressDirty();
+                save.FlushPrototypeProgress();
+                notifications.Notice(row.name + " 구매 완료 · 다음 런에 적용");
+            }
         }
 
         private static void DrawGrowthModifier(Rect rect, string id)
@@ -498,7 +543,7 @@ namespace ProjectDM
                     characters.SelectedId == character.id, accent) && characters.Select(character.id))
                 {
                     save.MarkPrototypeProgressDirty(); save.FlushPrototypeProgress();
-                    reveal.Clear(); selectedMetaTreeNode = -1; hoveredMetaTreeNode = -1; prototypeGraphViewInitialized = false;
+                    ResetNavigation(); selectedMetaTreeNode = -1; prototypeGraphViewInitialized = false;
                 }
                 GUI.enabled = enabled;
             }
@@ -506,7 +551,7 @@ namespace ProjectDM
             bool personal = graphics.DrawTab(new Rect(area.x + 118, area.y + 34, 150, 28), "선택 캐릭터 전용 성장", personalGraph, SymbolAccent);
             if ((common && personalGraph) || (personal && !personalGraph))
             {
-                reveal.Clear(); personalGraph = !personalGraph; selectedMetaTreeNode = -1; hoveredMetaTreeNode = -1; prototypeGraphViewInitialized = false;
+                ResetNavigation(); personalGraph = !personalGraph; selectedMetaTreeNode = -1; prototypeGraphViewInitialized = false;
             }
             GUI.Label(new Rect(area.x + 278, area.y + 36, area.width - 278, 24), "선택·구매는 다음 런부터 적용");
         }
@@ -538,7 +583,7 @@ namespace ProjectDM
                 GrowthDetailsRect.Contains(pointer) || GrowthNavigationRect.Contains(pointer);
         }
 
-        private static Rect GetGrowthDetailsRect(Vector2 size) => new Rect(22, size.y - 222, Mathf.Min(355f, size.x - 44f), 198);
+        private static Rect GetGrowthDetailsRect(Vector2 size) => new Rect(22, size.y - 174, Mathf.Min(355f, size.x - 44f), 150);
         private static Rect GetGrowthNavigationRect(Vector2 size, bool ended) =>
             new Rect(size.x - 202, size.y - (ended ? 66 : 118), 180, ended ? 44 : 96);
         private static Rect GetGrowthWalletRect(Vector2 size)
@@ -633,6 +678,7 @@ namespace ProjectDM
             {
                 // Keep the former health ID so existing purchases now grant the same amount of mana.
                 case "health": return $"최대 마나 +{amount:0.##} MP";
+                case "manaEfficiency": return $"공격 마나 소모 -{Mathf.Clamp(amount, 0, .5f) * 100:0.##}%";
                 case "movement": return $"{PlayerStats.Calculate(tables.balance, row.id, amount):0.##} / +{amount * 100:0.##}%";
                 case "criticalChance": return $"{PlayerStats.Calculate(tables.balance, row.id, amount) * 100:0.##}%";
                 case "criticalDamage": return $"기본 피해의 {PlayerStats.Calculate(tables.balance, row.id, amount) * 100:0.##}%";
@@ -686,43 +732,9 @@ namespace ProjectDM
             GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = ThemeTint(new Color(.92f, .8f, .6f)) } };
             GUIStyle heading = new GUIStyle(body) { fontSize = 16, fontStyle = FontStyle.Bold };
             string mode = save.sandboxThisSession ? "  [실험: 저장 안 됨]" : "";
-            bool goalSelected = selectedMetaTreeNode > 0 && selectedMetaTreeNode < metaTreeNodes.Length && tables.goalNodeLookup.ContainsKey(metaTreeNodes[selectedMetaTreeNode].id);
-            GUI.Label(new Rect(38, panel.y + 10, width - 30, 25), $"{(goalSelected ? "목표 정보" : "성장 정보")}{mode}", heading);
-            if (selectedMetaTreeNode <= 0 || selectedMetaTreeNode >= metaTreeNodes.Length ||
-                metaTreeNodes[selectedMetaTreeNode].state == MetaTreeNodeState.Hidden)
-            {
-                GUI.Label(new Rect(38, panel.y + 43, width - 30, 88), "노드에 마우스를 올려 설명을 확인하고,\n클릭한 뒤 구매를 눌러 성장하세요.\n휠: 확대/축소 · 가운데 버튼: 이동\n구매한 성장은 다음 런부터 적용됩니다.", body);
-                DrawPrototypeStageProgress(new Rect(38, panel.y + 139, width - 30, 42), body);
-                return;
-            }
-            if (tables.goalNodeLookup.TryGetValue(metaTreeNodes[selectedMetaTreeNode].id, out PrototypeGoalNode goal))
-            {
-                GUI.Label(new Rect(38, panel.y + 37, width - 30, 23), goal.name, heading);
-                GUI.Label(new Rect(38, panel.y + 62, width - 30, 88), GoalDescription(goal), body);
-                GUI.Label(new Rect(38, panel.y + 151, width - 30, 34), GoalStatus(goal), body);
-                return; // Preview only: do not invent a purchase, defeat or stage transition.
-            }
-            PrototypeGrowthNode node = tables.GrowthNode(metaTreeNodes[selectedMetaTreeNode].id);
-            PrototypeGrowth row = tables.GrowthRow(node.growthId);
-            int rank = save.progress.Rank(row.id);
-            GUI.Label(new Rect(38, panel.y + 37, width - 30, 23), $"{node.name}  {progression.GrowthNodeRankLabel(node.id)}", heading);
-            GUI.Label(new Rect(38, panel.y + 62, width - 30, 78), GrowthDescription(row, node), body);
-            int cost = PrototypeRules.Cost(row, Mathf.Max(rank, node.startRank), tables.balance.latePriceScale);
-            string status = GrowthPurchaseStatus(row, node);
-            GUI.Label(new Rect(38, panel.y + 142, width - 30, 20), status, body);
-            bool previousEnabled = GUI.enabled;
-            GUI.enabled = PrototypeRules.NodePurchaseBlock(tables.balance, row, node, save.progress, PrototypeRules.Stage(tables.balance, save.progress), save.metaCurrency, tables.growthTable) == null;
-            if (graphics.DrawButton(new Rect(38, panel.y + 164, width - 30, 25), $"구매 · {CompactNumber.Format(cost)} 재화", true, 12))
-            {
-                if (PrototypeRules.TryPurchaseNode(tables.balance, row, node, save.progress, PrototypeRules.Stage(tables.balance, save.progress), ref save.metaCurrency, tables.growthTable))
-                {
-                    AnimateNewlyRevealedNodes(Time.unscaledTime);
-                    save.MarkPrototypeProgressDirty();
-                    save.FlushPrototypeProgress();
-                    notifications.Notice(row.name + " 구매 완료 · 다음 런에 적용");
-                }
-            }
-            GUI.enabled = previousEnabled;
+            GUI.Label(new Rect(38, panel.y + 10, width - 30, 25), $"성장 지도 조작{mode}", heading);
+            GUI.Label(new Rect(38, panel.y + 43, width - 30, 60), "노드를 꾹 눌러 한 단계 구매\n손을 떼거나 노드를 벗어나면 취소\n휠: 확대/축소 · 가운데 버튼: 이동", body);
+            DrawPrototypeStageProgress(new Rect(38, panel.y + 106, width - 30, 34), body);
         }
 
         internal void DrawPrototypeStageProgress(Rect rect, GUIStyle style)
@@ -740,29 +752,47 @@ namespace ProjectDM
             MetaTreeNodePresentation node = metaTreeNodes[hoveredMetaTreeNode];
             if (node.state == MetaTreeNodeState.Hidden) return;
             if (node.id == "ROOT") return;
-            float width = Mathf.Min(330f, Screen.width - 36f), height = 158;
-            Vector2 pointer = Event.current.mousePosition;
-            float x = pointer.x + 20, y = pointer.y + 18;
-            if (x + width > Screen.width - 18) x = pointer.x - width - 20;
-            if (y + height > Screen.height - 18) y = pointer.y - height - 18;
-            Rect rect = new Rect(Mathf.Clamp(x, 18, Screen.width - width - 18), Mathf.Clamp(y, 18, Mathf.Max(18, Screen.height - height - 18)), width, height);
-            PixelUiArt.Draw(rect, PixelUiArt.Panel, 12, Color.white);
+            float width = Mathf.Max(1, Mathf.Min(360f, Screen.width - 36f));
             GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = ThemeTint(new Color(.92f, .78f, .56f)) } };
-            GUI.Label(new Rect(rect.x + 16, rect.y + 10, width - 32, 24), node.title,
-                new GUIStyle(body) { fontSize = 17, fontStyle = FontStyle.Bold });
+            GUIStyle heading = new GUIStyle(body) { fontSize = 17, fontStyle = FontStyle.Bold };
+            string description, status;
             if (tables.goalNodeLookup.TryGetValue(node.id, out PrototypeGoalNode goal))
             {
-                GUI.Label(new Rect(rect.x + 16, rect.y + 40, width - 32, 76), GoalDescription(goal), body);
-                GUI.Label(new Rect(rect.x + 16, rect.y + 118, width - 32, 36), GoalStatus(goal), body);
-                return;
+                description = GoalDescription(goal);
+                status = GoalStatus(goal);
             }
-            PrototypeGrowthNode definition = tables.GrowthNode(node.id);
-            PrototypeGrowth row = tables.GrowthRow(definition.growthId);
-            GUI.Label(new Rect(rect.x + 16, rect.y + 40, width - 32, 76), GrowthDescription(row, definition), body);
-            int cost = PrototypeRules.Cost(row, Mathf.Max(save.progress.Rank(row.id), definition.startRank), tables.balance.latePriceScale);
-            GUI.Label(new Rect(rect.x + 16, rect.y + 118, width - 32, 36), $"{progression.GrowthNodeRankLabel(node.id)} · 비용 {CompactNumber.Format(cost)}\n{GrowthPurchaseStatus(row, definition)}", body);
+            else
+            {
+                PrototypeGrowthNode definition = tables.GrowthNode(node.id);
+                PrototypeGrowth row = tables.GrowthRow(definition.growthId);
+                description = GrowthDescription(row, definition);
+                int cost = PrototypeRules.Cost(row, Mathf.Max(save.progress.Rank(row.id), definition.startRank), tables.balance.latePriceScale);
+                status = $"{progression.GrowthNodeRankLabel(node.id)} · 비용 {CompactNumber.Format(cost)}\n{GrowthPurchaseStatus(row, definition)}\n꾹 눌러 구매 · 손을 떼면 취소";
+            }
+            float contentWidth = Mathf.Max(1, width - 32);
+            float titleHeight = heading.CalcHeight(new GUIContent(node.title), contentWidth);
+            float bodyHeight = body.CalcHeight(new GUIContent(description), contentWidth);
+            float statusHeight = body.CalcHeight(new GUIContent(status), contentWidth);
+            Rect rect = GrowthTooltipRect(Event.current.mousePosition, new Vector2(width, titleHeight + bodyHeight + statusHeight + 40), new Vector2(Screen.width, Screen.height));
+            PixelUiArt.Draw(rect, PixelUiArt.Panel, 12, Color.white);
+            GUI.BeginGroup(rect);
+            GUI.Label(new Rect(16, 12, contentWidth, titleHeight), node.title, heading);
+            GUI.Label(new Rect(16, 20 + titleHeight, contentWidth, bodyHeight), description, body);
+            GUI.Label(new Rect(16, 28 + titleHeight + bodyHeight, contentWidth, statusHeight), status, body);
+            GUI.EndGroup();
         }
 
-        internal void ResetNavigation() { reveal.Clear(); isPanningMetaTree = false; hoveredMetaTreeNode = -1; }
+        internal static Rect GrowthTooltipRect(Vector2 pointer, Vector2 requestedSize, Vector2 screen)
+        {
+            float margin = Mathf.Min(18, Mathf.Min(screen.x, screen.y) * .1f);
+            float width = Mathf.Clamp(requestedSize.x, 1, Mathf.Max(1, screen.x - margin * 2));
+            float height = Mathf.Clamp(requestedSize.y, 1, Mathf.Max(1, screen.y - margin * 2));
+            float x = pointer.x + 20, y = pointer.y + 18;
+            if (x + width > screen.x - margin) x = pointer.x - width - 20;
+            if (y + height > screen.y - margin) y = pointer.y - height - 18;
+            return new Rect(Mathf.Clamp(x, margin, screen.x - margin - width), Mathf.Clamp(y, margin, screen.y - margin - height), width, height);
+        }
+
+        internal void ResetNavigation() { purchaseHold.Clear(); nodeFeedback.Clear(); reveal.Clear(); isPanningMetaTree = false; hoveredMetaTreeNode = -1; }
     }
 }

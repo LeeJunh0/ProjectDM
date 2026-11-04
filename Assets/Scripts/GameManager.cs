@@ -491,7 +491,7 @@ namespace ProjectDM
         }
         private void OnApplicationPause(bool paused) { if (paused) save?.FlushPrototypeProgress(); }
         public void SetManaVisualState(ManaVisualState state) => manaBar?.SetState(state);
-        private void OnDestroy() { manaBar?.Dispose(); growthView?.Dispose(); pickupsSystem?.Dispose(); }
+        private void OnDestroy() { enemiesSystem?.specialAttacks.Dispose(); manaBar?.Dispose(); growthView?.Dispose(); pickupsSystem?.Dispose(); }
         private void OnApplicationQuit() { save?.FlushPrototypeProgress(); }
         private void OnDisable() { save?.FlushPrototypeProgress(); Time.timeScale = 1f; }
     }

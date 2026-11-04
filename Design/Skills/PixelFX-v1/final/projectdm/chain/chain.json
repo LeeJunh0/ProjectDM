@@ -1,0 +1,303 @@
+{
+ "frames": [
+  {
+   "filename": "chain 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 1",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 2",
+   "frame": {
+    "x": 0,
+    "y": 32,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 3",
+   "frame": {
+    "x": 96,
+    "y": 32,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 4",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 5",
+   "frame": {
+    "x": 96,
+    "y": 64,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 6",
+   "frame": {
+    "x": 0,
+    "y": 96,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 7",
+   "frame": {
+    "x": 96,
+    "y": 96,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 8",
+   "frame": {
+    "x": 0,
+    "y": 128,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 9",
+   "frame": {
+    "x": 96,
+    "y": 128,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 10",
+   "frame": {
+    "x": 0,
+    "y": 160,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  },
+  {
+   "filename": "chain 11",
+   "frame": {
+    "x": 96,
+    "y": 160,
+    "w": 96,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 32
+   },
+   "duration": 42
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "chain.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 192,
+   "h": 192
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "chain",
+    "from": 0,
+    "to": 11,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "projectdm/chain",
+   "name": "Project DM chain",
+   "fps": 24,
+   "loop": true,
+   "frames": 12,
+   "frameSize": [
+    96,
+    32
+   ],
+   "pivot": [
+    48,
+    16
+   ],
+   "columns": 2
+  }
+ }
+}

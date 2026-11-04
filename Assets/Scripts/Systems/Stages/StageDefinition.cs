@@ -26,6 +26,7 @@ namespace ProjectDM
             [InspectorName("그림 크기 보정"), Min(.01f)] public float visualScale = 1f;
             [InspectorName("이동 방향으로 좌우 반전")] public bool mirrorToMovement = true;
             [InspectorName("애니메이터 (비어 있으면 프레임 자동 재생)")] public RuntimeAnimatorController animatorController;
+            [InspectorName("특수 공격")] public MonsterAttackKind attack;
         }
 
         public void ValidateContent()
@@ -39,6 +40,9 @@ namespace ProjectDM
                 if (monster == null || string.IsNullOrWhiteSpace(monster.displayName) || !HasFrames(monster.frames) ||
                     !Positive(monster.frameSeconds) || !Positive(monster.visualScale))
                     throw new InvalidOperationException($"스테이지 {stageId}: 몬스터 이름/프레임이 누락되었습니다.");
+            foreach (MonsterVisual monster in monsters)
+                if (!Enum.IsDefined(typeof(MonsterAttackKind), monster.attack))
+                    throw new InvalidOperationException($"스테이지 {stageId}: 특수 공격 종류가 올바르지 않습니다.");
             if (string.IsNullOrWhiteSpace(bossName) || !HasFrames(bossFrames) || bossScale <= 0 || float.IsNaN(bossScale) || float.IsInfinity(bossScale))
                 throw new InvalidOperationException($"스테이지 {stageId}: 보스 리소스가 누락되었습니다.");
         }

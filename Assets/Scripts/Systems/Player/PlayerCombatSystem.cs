@@ -29,6 +29,7 @@ namespace ProjectDM
             this.presentation = presentation;
             this.stats = stats;
             this.onManaHit = onManaHit;
+            enemiesSystem.specialAttacks.HitPlayer = damage => { if (settings.enablePlayerContactDamage) ApplyPlayerDamage(damage); };
         }
 
         internal float playerInvulnerabilityRemaining;

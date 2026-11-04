@@ -79,18 +79,20 @@ namespace ProjectDM
                 bolt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
                 bolt.transform.localScale = Vector3.one * .32f;
                 SpriteRenderer renderer = bolt.GetComponentInChildren<SpriteRenderer>();
-                renderer.sprite = art.boltSprite;
+                Sprite pixelMissile=PixelFxLibrary.Frame("missile",0);
+                renderer.sprite = pixelMissile!=null?pixelMissile:art.boltSprite;
+                renderer.transform.localScale=pixelMissile!=null?Vector3.one*2:Vector3.one;
                 renderer.sortingOrder = 5;
-                renderer.color = new Color(1f, .7f, 1f);
+                renderer.color = pixelMissile!=null?Color.white:new Color(1f, .7f, 1f);
                 Animator animator = bolt.GetComponentInChildren<Animator>();
                 if (animator != null)
                 {
                     animator.runtimeAnimatorController = art.boltController;
-                    animator.enabled = art.boltController != null;
+                    animator.enabled = pixelMissile==null&&art.boltController != null;
                     animator.applyRootMotion = false;
                     if (animator.enabled) { animator.Rebind(); animator.Update(0f); }
                 }
-                projectiles.Add(new Projectile { transform = bolt.transform, direction = direction,
+                projectiles.Add(new Projectile { transform = bolt.transform, renderer=renderer,pixelFx=pixelMissile!=null,direction = direction,
                     damage = stats.MainDamage * (i == 0 ? 1f : tables.GrowthRow("multishot").damageRatio), lifetime = tables.balance.projectileLifetime,
                     pierces = Mathf.FloorToInt(skills.PersonalAmount("pierce")) });
             }
@@ -102,6 +104,7 @@ namespace ProjectDM
             {
                 Projectile bolt = projectiles[i];
                 if (bolt.transform == null) { projectiles.RemoveAt(i); continue; }
+                if(bolt.pixelFx && bolt.renderer!=null){bolt.visualAge+=dt;bolt.renderer.sprite=PixelFxLibrary.Frame("missile",bolt.visualAge);}
                 Vector2 from = bolt.transform.position;
                 float homing = skills.PersonalAmount("homing");
                 if (homing > 0)

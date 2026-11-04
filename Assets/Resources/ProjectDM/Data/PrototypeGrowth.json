@@ -563,6 +563,22 @@
       "step": 0.01,
       "costRampRanks": 2,
       "rankCostGrowth": 1.12
+    },
+    {
+      "id": "manaEfficiency",
+      "name": "마나 효율",
+      "description": "노드 하나당 공격 마나 소모 -10%p. 다섯 노드를 모두 구매하면 최대 50% 감소. 피격 마나 피해에는 적용되지 않으며 다음 런부터 적용됩니다.",
+      "icon": "extension",
+      "unit": "%",
+      "parent": "time",
+      "x": 210,
+      "y": 480,
+      "baseCost": 120,
+      "costGrowth": 1.35,
+      "rankCostGrowth": 1.35,
+      "maxRank": 5,
+      "minStage": 0,
+      "step": 0.1
     }
   ],
   "nodes": [
@@ -1731,6 +1747,61 @@
       "x": 800,
       "y": 7450,
       "parentRanks": 1
+    },
+    {
+      "id": "manaEfficiency_1",
+      "growthId": "manaEfficiency",
+      "name": "마나 효율 1",
+      "parent": "time_4",
+      "startRank": 0,
+      "ranks": 1,
+      "parentRanks": 1,
+      "x": 210,
+      "y": 480
+    },
+    {
+      "id": "manaEfficiency_2",
+      "growthId": "manaEfficiency",
+      "name": "마나 효율 2",
+      "parent": "manaEfficiency_1",
+      "startRank": 1,
+      "ranks": 1,
+      "parentRanks": 1,
+      "x": 420,
+      "y": 480
+    },
+    {
+      "id": "manaEfficiency_3",
+      "growthId": "manaEfficiency",
+      "name": "마나 효율 3",
+      "parent": "manaEfficiency_2",
+      "startRank": 2,
+      "ranks": 1,
+      "parentRanks": 1,
+      "x": 420,
+      "y": 640
+    },
+    {
+      "id": "manaEfficiency_4",
+      "growthId": "manaEfficiency",
+      "name": "마나 효율 4",
+      "parent": "manaEfficiency_3",
+      "startRank": 3,
+      "ranks": 1,
+      "parentRanks": 1,
+      "x": 210,
+      "y": 640
+    },
+    {
+      "id": "manaEfficiency_5",
+      "growthId": "manaEfficiency",
+      "name": "마나 효율 5",
+      "parent": "manaEfficiency_4",
+      "startRank": 4,
+      "ranks": 1,
+      "parentRanks": 1,
+      "x": 210,
+      "y": 800
     }
   ]
 }

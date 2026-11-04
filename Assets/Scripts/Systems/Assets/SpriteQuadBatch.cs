@@ -11,6 +11,7 @@ namespace ProjectDM
         {
             internal Mesh mesh;
             internal MeshRenderer renderer;
+            internal Material material;
             internal readonly List<Vector3> vertices=new();
             internal readonly List<Vector2> uv=new();
             internal readonly List<Color> colors=new();
@@ -41,7 +42,8 @@ namespace ProjectDM
                 var child=new GameObject("텍스처 일괄 그리기"){hideFlags=root.hideFlags};child.transform.SetParent(root.transform,false);
                 p=new Page{mesh=new Mesh{name="전체 스프라이트 배치",indexFormat=IndexFormat.UInt32},renderer=child.AddComponent<MeshRenderer>()};
                 p.mesh.MarkDynamic();child.AddComponent<MeshFilter>().sharedMesh=p.mesh;
-                p.renderer.sharedMaterial=new Material(shader!=null?shader:Shader.Find("Sprites/Default")){mainTexture=sprite.texture};
+                p.material=new Material(shader!=null?shader:Shader.Find("Sprites/Default")){mainTexture=sprite.texture};
+                p.renderer.sharedMaterial=p.material;
                 p.renderer.sortingOrder=sortingOrder;pages.Add(sprite.texture,p);
             }
             int n=p.vertices.Count;float r=rotation*Mathf.Deg2Rad,c=Mathf.Cos(r),s=Mathf.Sin(r);
@@ -69,7 +71,7 @@ namespace ProjectDM
         }
         internal void Clear(){Begin();End();}
         internal void Dispose()
-        {foreach(var p in pages.Values){DestroyOwned(p.mesh);DestroyOwned(p.renderer.sharedMaterial);}DestroyOwned(root);pages.Clear();}
+        {foreach(var p in pages.Values){DestroyOwned(p.mesh);DestroyOwned(p.material);}DestroyOwned(root);pages.Clear();}
         static void DestroyOwned(Object value)
         {if(value==null)return;if(Application.isPlaying)Object.Destroy(value);else Object.DestroyImmediate(value);}
     }

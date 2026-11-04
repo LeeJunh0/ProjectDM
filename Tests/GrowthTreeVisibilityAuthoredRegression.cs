@@ -78,6 +78,19 @@ namespace ProjectDM.Editor
                     Debug.Log("GROWTH VISIBILITY " + id + ": " + graph.growthTable.nodes.Length + " nodes, " + purchases + " purchases, no deadlocks.");
                 }
                 Check(unlockExceptions == 8, "The second and third skill unlocks must preserve their existing order.");
+                Check(tables.characters.CommonGraph.growthLookup.ContainsKey("speed"), "Common attack speed must remain a permanent growth");
+                var fallbackTables = new GameTables(tables.balance, tables.skillTable, tables.growthTable);
+                var fallbackSave = new SaveService(fallbackTables, new MemoryProgressStore(), true) { progress = new PrototypeSave() };
+                var fallbackProgression = new ProgressionService(fallbackSave, fallbackTables);
+                var fallbackRun = new RunController(settings, fallbackSave, fallbackTables, fallbackProgression, null, null, null, null, () => { }, () => { }, () => false, new RunMana());
+                var fallbackStats = new PlayerStats(fallbackTables, fallbackProgression);
+                var fallbackSkills = new SkillSystem(fallbackTables, fallbackProgression, null, fallbackRun, null, null, () => false, () => 1, fallbackStats);
+                var fallbackChoices = new LevelUpController(fallbackTables, fallbackProgression, fallbackRun, fallbackSkills);
+                for (int sample = 0; sample < 100; sample++)
+                {
+                    fallbackChoices.BuildPrototypeRunChoices();
+                    Check(fallbackChoices.runUpgradeChoices.Length > 0 && fallbackChoices.runUpgradeChoices.All(choice => choice.upgrade != "speed"), "Fallback run cards must exclude attack speed");
+                }
 
                 var huntingSave = new SaveService(tables, new MemoryProgressStore(), true) { progress = new PrototypeSave() };
                 var progression = new ProgressionService(huntingSave, tables);
@@ -94,6 +107,15 @@ namespace ProjectDM.Editor
                     Check(field.FieldTarget == tables.balance.stages[0].target, character.id + ": hunting leaked across characters.");
                     huntingSave.progress.SetRank("magic." + character.id + ".hunt", 12);
                     foreach (var upgrade in character.upgrades.Where(upgrade => upgrade.unlock)) huntingSave.progress.SetRank(upgrade.Key(character.id), 1);
+                    Check(character.upgrades.Single(upgrade => upgrade.id == "speed").permanentOnly, "Casting speed must be permanent growth only");
+                    Check(tables.characters.Graphs[character.id].growthTable.nodes.Any(node => node.growthId == "magic." + character.id + ".speed"), "Casting speed must remain on the growth tree");
+                    if (character.id == "projectile") Check(character.upgrades.Single(upgrade => upgrade.id == "satelliteRate").permanentOnly, "Satellite fire rate must be permanent growth only");
+                    if (character.id == "projectile") foreach (string attribute in new[] { "homing", "pierce", "count" })
+                    {
+                        Check(character.upgrades.Single(upgrade => upgrade.id == attribute).permanentOnly, attribute + ": missile attribute must not appear in run cards");
+                        Check(tables.characters.Graphs[character.id].growthTable.nodes.Any(node => node.growthId == "magic.projectile." + attribute), attribute + ": missile attribute must remain on its personal tree");
+                    }
+                    if (character.id == "frost") Check(!character.upgrades.Single(upgrade => upgrade.id == "count").permanentOnly, "Missile multishot restriction must not remove frost shard count cards");
                     Check(field.FieldTarget == tables.balance.stages[0].target, "A purchase changed the active run before ResetSnapshot.");
                     progression.ResetSnapshot();
                     Check(field.FieldTarget == tables.balance.stages[0].target + 36 && field.FieldCap == tables.balance.stages[0].cap + 36 && field.RefillBatch == tables.balance.stages[0].batch + 6,
@@ -101,7 +123,7 @@ namespace ProjectDM.Editor
                     for (int sample = 0; sample < 500; sample++)
                     {
                         choices.BuildPrototypeRunChoices();
-                        Check(choices.runUpgradeChoices.All(choice => !choice.upgrade.EndsWith(".hunt", StringComparison.Ordinal)), "Permanent-only hunting appeared in a run card.");
+                        Check(choices.runUpgradeChoices.All(choice => !character.upgrades.Single(upgrade => upgrade.Key(character.id) == choice.upgrade).permanentOnly), "Permanent-only growth appeared in a run card.");
                     }
                     Check(progression.CombatScale == 1, "Other characters' mastery changed this character's combat scale.");
                     huntingSave.progress.SetRank("damage", 40); huntingSave.progress.SetRank("criticalDamage", 3);

@@ -60,6 +60,24 @@ namespace ProjectDM
                 var settings = new GameSettings { gameplayCamera = camera };
                 Sprite sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, Texture2D.whiteTexture.width, Texture2D.whiteTexture.height), Vector2.one * .5f);
                 var flights = new PickupFlightPresentation(settings);
+                var flightField = typeof(PickupFlightPresentation).GetField("flights", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                var randomBefore = UnityEngine.Random.state;
+                var routeShapes = new System.Collections.Generic.HashSet<int>();
+                var routeSeeds = new System.Collections.Generic.HashSet<int>();
+                for (int i = 0; i < 128; i++)
+                {
+                    flights.Show(Vector3.zero, sprite, PickupKind.Currency);
+                    object flight = ((System.Collections.IList)flightField.GetValue(flights))[0];
+                    var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+                    routeSeeds.Add((int)flight.GetType().GetField("seed", flags).GetValue(flight));
+                    var route = (PickupFlightPresentation.Route)flight.GetType().GetField("route", flags).GetValue(flight);
+                    routeShapes.Add(route.kind);
+                    Check(Vector2.Distance(PickupFlightPresentation.Sample(start, routeEnd, 1, route, testScreen), routeEnd) < .001f,
+                        "Randomized flights must still land exactly on the HUD");
+                    flights.Clear();
+                }
+                Check(routeSeeds.Count > 120 && routeShapes.Count == 3, "Screen resets must not replay the same flight route sequence");
+                Check(UnityEngine.Random.state.Equals(randomBefore), "Presentation randomness must not change drop or upgrade RNG");
                 Vector2 screen = new Vector2(Screen.width, Screen.height);
                 Vector2 currency = RunHudView.CurrencyIconRect(screen).center, manaTarget = RunHudView.ManaTrackRect(screen).center;
                 Vector2 experienceTarget = RunHudView.ExperienceTrackRect(screen).center;

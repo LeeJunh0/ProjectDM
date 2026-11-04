@@ -84,6 +84,7 @@ namespace ProjectDM
                 "frost" => CombatDamageElement.Frost,
                 _ => CombatDamageElement.None
             };
+            skillVisuals?.HitSpark(target.transform.position,element);
             enemiesSystem.DamageElementalEnemy(target, damage * (critical ? playerStats.CriticalDamage : 1),
                 critical ? CombatDamageKind.Critical : CombatDamageKind.Attack, element);
         }

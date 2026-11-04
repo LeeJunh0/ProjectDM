@@ -15,6 +15,9 @@ namespace ProjectDM
         public float frameSeconds = .16f;
         public int animationFrame;
         public bool mirrorToMovement = true;
+        internal MonsterAttackKind specialAttack;
+        internal float attackCooldown;
+        internal bool specialAttacking;
 
         internal void AdvanceAnimation(float elapsed)
         {
@@ -42,6 +45,9 @@ namespace ProjectDM
     internal sealed class Projectile
     {
         public Transform transform;
+        internal SpriteRenderer renderer;
+        internal float visualAge;
+        internal bool pixelFx;
         public Vector2 direction;
         public float damage;
         public float lifetime;

@@ -152,7 +152,7 @@ namespace ProjectDM
             elapsed = 0f;
             // Former health purchases retain their save ID and now increase mana capacity.
             mana.Reset(Mathf.Max(1f, (settings.useTableStartingMana ? tables.balance.ResolvedInitialMana : settings.startingMana)
-                + progression.PermanentAmount("time") + progression.PermanentAmount("health")), characters?.Current.manaCost ?? tables.balance.basicAttackManaCost);
+                + progression.PermanentAmount("time") + progression.PermanentAmount("health")), RunMana.EfficientCost(characters?.Current.manaCost ?? tables.balance.basicAttackManaCost, progression.PermanentAmount("manaEfficiency")));
             runEnded = showMetaTree = false;
             resetNavigation();
             playerWorld.ResetPosition(characters?.Current.id);

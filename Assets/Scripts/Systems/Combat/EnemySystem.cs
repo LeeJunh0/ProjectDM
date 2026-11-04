@@ -44,6 +44,7 @@ namespace ProjectDM
         internal readonly List<Enemy> enemies = new();
         internal readonly EnemySpatialGrid spatial = new();
         internal float MaxDamageThisRun { get; private set; }
+        internal readonly EnemySpecialAttacks specialAttacks = new();
 
         internal float nextSpawn;
         internal float nextMiniBoss;
@@ -60,6 +61,10 @@ namespace ProjectDM
 
         internal void UpdateEnemies(float dt)
         {
+            Bounds attackBounds = new Bounds(settings.fieldBounds != null ? settings.fieldBounds.transform.position : Vector3.zero,
+                settings.fieldBounds != null ? (Vector3)settings.fieldBounds.Size : (Vector3)settings.fieldSize);
+            if (settings.dungeonFloor != null && settings.dungeonFloor.TryGetWorldBounds(out var floorBounds)) attackBounds = floorBounds;
+            specialAttacks.Tick(enemies, playerWorld.player.position, dt, tables.balance, attackBounds);
             for (int i = enemies.Count - 1; i >= 0; i--)
             {
                 Enemy enemy = enemies[i];
@@ -80,9 +85,12 @@ namespace ProjectDM
                 if (enemy.renderer != null) enemy.renderer.color = enemy.freezeRemaining > 0 ? new Color(.45f, .85f, 1) :
                     enemy.chillRemaining > 0 ? new Color(.75f, .9f, 1) : Color.white;
                 Vector2 direction = ((Vector2)playerWorld.player.position - (Vector2)enemy.transform.position).normalized;
-                enemy.transform.position += (Vector3)(direction * enemy.speed * movementTime);
-                enemy.AdvanceAnimation(movementTime);
-                if (enemy.renderer != null && enemy.mirrorToMovement && Mathf.Abs(direction.x) > 0.01f)
+                if (!enemy.specialAttacking)
+                {
+                    enemy.transform.position += (Vector3)(direction * enemy.speed * movementTime);
+                    enemy.AdvanceAnimation(movementTime);
+                }
+                if (!enemy.specialAttacking && enemy.renderer != null && enemy.mirrorToMovement && Mathf.Abs(direction.x) > 0.01f)
                 {
                     enemy.renderer.flipX = direction.x > 0f;
                 }
@@ -181,6 +189,8 @@ namespace ProjectDM
             renderer.transform.localScale = Vector3.one * art.MonsterVisualScale((MonsterKind)kind);
             Sprite alternate = art.MonsterAlternate((MonsterKind)kind);
             enemies.Add(new Enemy { kind = (MonsterKind)kind, transform = instance.transform, renderer = renderer, animator = animator,
+                specialAttack = art.stage != null ? art.stage.monsters[kind].attack : MonsterAttackKind.None,
+                attackCooldown = 1.2f + enemies.Count % 5 * .3f,
                 baseSprite = renderer.sprite, alternateSprite = alternate,
                 animationFrames = art.MonsterFrames((MonsterKind)kind), frameSeconds = art.MonsterFrameSeconds((MonsterKind)kind),
                 mirrorToMovement = art.MonsterMirrorToMovement((MonsterKind)kind),
@@ -210,6 +220,7 @@ namespace ProjectDM
             enemy.hitPoints -= damage;
             if (enemy.hitPoints > damage * .000001f) return;
             enemy.dead = true; // Single owner of death, rewards and pool return, including AoE overlaps.
+            specialAttacks.Remove(enemy);
             Vector3 position = enemy.transform.position;
             int kind = (int)enemy.kind;
             run.monsterKillCounts[kind]++;
@@ -227,6 +238,7 @@ namespace ProjectDM
 
         internal void Reset()
         {
+            specialAttacks.Reset();
             MaxDamageThisRun = 0;
             foreach (Enemy enemy in enemies) if (enemy.transform != null) objectPool.Return(enemy.transform.gameObject);
             enemies.Clear(); spatial.Rebuild(enemies); nextSpawn = 0; nextMiniBoss = tables.balance.miniBossInterval; debugStageOverride = -1;

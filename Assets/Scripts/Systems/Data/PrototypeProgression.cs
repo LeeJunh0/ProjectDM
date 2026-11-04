@@ -489,8 +489,8 @@ namespace ProjectDM
             }
             string lootError = LootGradeRules.Validate(b);
             if (lootError != null) return lootError;
-            string[] playerGrowthIds = { "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet", "luck", "populationCap", "spawnBatch", "magnetDropChance" };
-            string[] growthIds = { "damage", "speed", "time", "yield", "xp", "population", "respawn", "extension", "multishot", "chain", "splash", "meteor", "chainChance", "splashChance", "meteorChance", "currencyGradeChance", "experienceGradeChance", "silverDropChance", "goldDropChance", "emeraldDropChance", "amethystDropChance", "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet", "luck", "populationCap", "spawnBatch", "magnetDropChance" };
+            string[] playerGrowthIds = { "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet", "luck", "populationCap", "spawnBatch", "magnetDropChance", "manaEfficiency" };
+            string[] growthIds = { "damage", "speed", "time", "yield", "xp", "population", "respawn", "extension", "multishot", "chain", "splash", "meteor", "chainChance", "splashChance", "meteorChance", "currencyGradeChance", "experienceGradeChance", "silverDropChance", "goldDropChance", "emeraldDropChance", "amethystDropChance", "health", "movement", "criticalChance", "criticalDamage", "invulnerability", "magnet", "luck", "populationCap", "spawnBatch", "magnetDropChance", "manaEfficiency" };
             HashSet<string> ids = new HashSet<string>();
             foreach (PrototypeGrowth r in growth.rows)
             {

@@ -101,6 +101,7 @@ namespace ProjectDM
             List<PrototypeSkill> candidates = new();
             foreach (PrototypeSkill row in tables.skillTable.rows)
             {
+                if (row.id == "speed") continue;
                 if (skills.RunRank(row.id) >= row.maxRank) continue;
                 if (!string.IsNullOrEmpty(row.unlock) && progression.ActiveRank(row.unlock) < 1) continue;
                 if (row.id == "proc" && skills.RunRank("chain") + skills.RunRank("splash") + skills.RunRank("meteor") == 0) continue;

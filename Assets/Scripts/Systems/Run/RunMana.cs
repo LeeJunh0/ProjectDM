@@ -12,6 +12,7 @@ namespace ProjectDM
         internal float AbsorbedThisRun { get; private set; }
         internal float SpentThisRun { get; private set; }
         internal float Fraction => Current / Maximum;
+        internal static float EfficientCost(float baseCost, float efficiency) => baseCost * (1 - Math.Min(.5f, Math.Max(0, efficiency)));
         internal bool IsDepleted => Current <= 0;
 
         internal void Reset(float maximum, float basicAttackCost)

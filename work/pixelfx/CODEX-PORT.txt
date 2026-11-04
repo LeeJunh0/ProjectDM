@@ -1,0 +1,4 @@
+Bundled from https://github.com/patch-gg/pixelfx
+Upstream revision: a84159688af3ca37a4be05a0d422b94451b2e24e
+Library source and tools are unchanged. See LICENSE and NOTICE.md.
+Codex adaptation: ../../SKILL.md and ../../agents/openai.yaml

@@ -1,0 +1,16 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'Design/Skills/PixelFX-v1/index.html'),'utf8');
+const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
+let frames=[],draws=0,coordinates=new Set();const elements=new Map();
+const ctx={drawImage(...args){draws++;if(args.length===9)coordinates.add(args.slice(1,5).join(','));},imageSmoothingEnabled:false};
+const element=id=>{if(!elements.has(id))elements.set(id,{value:'1',getContext:()=>ctx});return elements.get(id);};
+const sandbox={Image:class{set src(value){assert(value.startsWith('data:image/png;base64,'));this.onload();}},document:{querySelector:element,getElementById:element},requestAnimationFrame:f=>frames.push(f)};
+vm.createContext(sandbox);vm.runInContext(script,sandbox);
+assert.equal(frames.length,1);for(let i=0;i<60;i++)frames.shift()(i*30);
+assert.equal(draws,60*15*2);assert(coordinates.size>100,'Preview must animate distinct atlas frames');
+element('#biome').value='2';frames.shift()(1900);element('#play').onclick();const paused=vm.runInContext('time',sandbox);frames.shift()(2000);assert.equal(vm.runInContext('time',sandbox),paused);
+const resources=JSON.parse(fs.readFileSync(path.join(root,'Assets/Resources/ProjectDM/Skills/PixelFX/skill-effects.json'),'utf8'));
+assert.equal(resources.clips.length,15);assert.equal(resources.clips.reduce((n,c)=>n+c.frames.length,0),183);
+assert.deepEqual(fs.readFileSync(path.join(root,'Design/Skills/PixelFX-v1/skill-effects.png')),fs.readFileSync(path.join(root,'Assets/Resources/ProjectDM/Skills/PixelFX/skill-effects.png')));
+assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root,'Design/Skills/PixelFX-v1/skill-effects.json'),'utf8')),resources);
+console.log('PixelFX preview PASS: 15 moving clips, embedded images, 60 real scheduled frames, scene switch, pause, runtime atlas parity.');

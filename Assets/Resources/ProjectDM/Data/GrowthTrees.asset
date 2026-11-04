@@ -1144,6 +1144,66 @@ MonoBehaviour:
       parentRanks: 1
       x: -1260
       y: -640
+    - enabled: 1
+      id: manaEfficiency_1
+      growthId: manaEfficiency
+      name: "\ub9c8\ub098 \ud6a8\uc728 1"
+      parent: time_4
+      displayParent: time_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: 480
+    - enabled: 1
+      id: manaEfficiency_2
+      growthId: manaEfficiency
+      name: "\ub9c8\ub098 \ud6a8\uc728 2"
+      parent: manaEfficiency_1
+      displayParent: manaEfficiency_1
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 420
+      y: 480
+    - enabled: 1
+      id: manaEfficiency_3
+      growthId: manaEfficiency
+      name: "\ub9c8\ub098 \ud6a8\uc728 3"
+      parent: manaEfficiency_2
+      displayParent: manaEfficiency_2
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 420
+      y: 640
+    - enabled: 1
+      id: manaEfficiency_4
+      growthId: manaEfficiency
+      name: "\ub9c8\ub098 \ud6a8\uc728 4"
+      parent: manaEfficiency_3
+      displayParent: manaEfficiency_3
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: 640
+    - enabled: 1
+      id: manaEfficiency_5
+      growthId: manaEfficiency
+      name: "\ub9c8\ub098 \ud6a8\uc728 5"
+      parent: manaEfficiency_4
+      displayParent: manaEfficiency_4
+      displayOrthogonal: 1
+      displayLinks: []
+      ranks: 1
+      parentRanks: 1
+      x: 210
+      y: 800
   - id: projectile
     name: "\uB9C8\uBC95\uBBF8\uC0AC\uC77C"
     nodes:
