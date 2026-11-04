@@ -43,6 +43,14 @@ namespace ProjectDM
         }
 
         internal int runCurrency;
+        internal float runExperience;
+        internal sealed class RunSummary
+        {
+            internal int coins, kills;
+            internal float experience;
+        }
+        private readonly Dictionary<string, RunSummary> lastResults = new();
+        internal RunSummary previousResult;
 
         internal bool showMetaTree;
 
@@ -75,6 +83,11 @@ namespace ProjectDM
         {
             if (runEnded) return;
             runEnded = true;
+            string resultKey = (characters?.Current.id ?? "projectile") + ":" + stages?.Current?.stageId;
+            lastResults.TryGetValue(resultKey, out previousResult);
+            int kills = 0;
+            foreach (int count in monsterKillCounts) kills = (int)Math.Min(int.MaxValue, (long)kills + count);
+            lastResults[resultKey] = new RunSummary { coins = runCurrency, kills = kills, experience = runExperience };
             Array.Copy(save.progress.kills, resultPermanentKillCounts, resultPermanentKillCounts.Length);
             resultMonsterStage = PrototypeRules.Stage(tables.balance, save.progress);
             resultPresentationOpenedAt = Time.unscaledTime;
@@ -120,6 +133,12 @@ namespace ProjectDM
             ChangeScreen(BeginRunNow);
         }
 
+        internal void BeginDebugStage(int stageId)
+        {
+            if (stages == null || transition?.Active == true || !stages.Select(stageId)) return;
+            BeginRun();
+        }
+
         private void BeginRunNow()
         {
             characters?.ApplySelected();
@@ -129,6 +148,7 @@ namespace ProjectDM
             Array.Copy(save.progress.kills, resultPermanentKillCounts, resultPermanentKillCounts.Length);
             resultMonsterStage = PrototypeRules.Stage(tables.balance, save.progress);
             runCurrency = 0;
+            runExperience = 0;
             elapsed = 0f;
             // Former health purchases retain their save ID and now increase mana capacity.
             mana.Reset(Mathf.Max(1f, (settings.useTableStartingMana ? tables.balance.ResolvedInitialMana : settings.startingMana)

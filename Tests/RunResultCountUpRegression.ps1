@@ -3,6 +3,10 @@ $projectRoot = Split-Path -Parent $PSScriptRoot
 $helperSource = Get-Content (Join-Path $projectRoot 'Assets/Scripts/Systems/UI/Results/RunResultPresentation.cs') -Raw
 $compiledType = Add-Type -TypeDefinition $helperSource -PassThru | Where-Object FullName -eq 'ProjectDM.RunResultPresentation'
 $countMethod = $compiledType.GetMethod('CountUp', [Reflection.BindingFlags]'NonPublic,Static')
+$change = $compiledType.GetMethod('Change', [Reflection.BindingFlags]'NonPublic,Static')
+foreach ($case in @(@(150,100,'+50%'),@(50,100,'-50%'),@(0,100,'-100%'),@(100,100,'변동 없음'),@(1,0,'첫 획득'),@(0,0,'변동 없음'),@(12000,100,'120배'))) {
+    if ($change.Invoke($null,[object[]]@([double]$case[0],[double]$case[1])) -ne $case[2]) { throw 'Run comparison sign/zero baseline is wrong.' }
+}
 function Get-Count([int] $target, [double] $elapsed, [double] $duration = 1.1, [double] $delay = 0) {
     return $countMethod.Invoke($null, [object[]]@($target, $elapsed, $duration, $delay))
 }

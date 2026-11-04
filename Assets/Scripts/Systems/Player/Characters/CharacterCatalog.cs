@@ -10,6 +10,7 @@ namespace ProjectDM
         public string id, name, description;
         public bool enabled;
         public float damage, interval, manaCost, range, angle;
+        public float finalCombatScale;
         public int extraTargets;
         public float duration, orbitSpeed, shardRadius, hitInterval, freezeSeconds, chillDuration, slowFraction;
         public int shardCount, chillThreshold;
@@ -20,16 +21,18 @@ namespace ProjectDM
     {
         public string id, name, description, icon;
         public float damage, interval, range, radius, duration, tickInterval, speed;
+        public float initialDamage;
         public int count, charge;
     }
     [Serializable] internal sealed class CharacterUpgrade
     {
         public string id, name, description, icon, rarity;
         public string skill, unit;
-        public bool unlock;
+        public bool unlock, permanentOnly;
         public float step, permanentStep;
         public float effectiveCap;
         public int maxRank, cost;
+        public int permanentMaxRank, permanentCostStep;
         public string Key(string character) => "magic." + character + "." + id;
     }
 
@@ -52,7 +55,9 @@ namespace ProjectDM
                 if (character == null || string.IsNullOrEmpty(character.id) || !ids.Add(character.id)) throw new InvalidOperationException("캐릭터 ID 중복/누락");
                 if (!character.enabled) continue;
                 if (character.id != "projectile" && character.id != "lightning" && character.id != "flame" && character.id != "frost") throw new InvalidOperationException("지원하지 않는 기본 마법");
-                if (!FinitePositive(character.damage) || !FinitePositive(character.interval) || !FinitePositive(character.manaCost) ||
+                if (float.IsNaN(character.finalCombatScale) || float.IsInfinity(character.finalCombatScale) || character.finalCombatScale < 0 ||
+                    (character.finalCombatScale > 0 && character.finalCombatScale < 1) ||
+                    !FinitePositive(character.damage) || !FinitePositive(character.interval) || !FinitePositive(character.manaCost) ||
                     !FinitePositive(character.range) || character.extraTargets < 0 ||
                     (character.id == "flame" && (!FinitePositive(character.angle) || character.angle > 180)) || character.upgrades == null)
                     throw new InvalidOperationException("캐릭터 기본 수치/강화 정의 오류: " + character.id);
@@ -60,6 +65,8 @@ namespace ProjectDM
                     !FinitePositive(character.shardRadius) || !FinitePositive(character.hitInterval) || !FinitePositive(character.freezeSeconds) ||
                     !FinitePositive(character.chillDuration) || !FinitePositive(character.slowFraction) || character.slowFraction >= 1 ||
                     character.shardCount < 1 || character.shardCount > 16 || character.chillThreshold < 1)) throw new InvalidOperationException("빙결 공전 설정 오류");
+                if (Array.Exists(tables.balance.monsters, monster => monster.hp * tables.balance.miniBossHealthMultiplier * Math.Max(1, character.finalCombatScale) >= 1000000))
+                    throw new InvalidOperationException("최종 몬스터 체력은 100만 미만이어야 합니다: " + character.id);
                 List<PrototypeGrowth> rows = new(); List<PrototypeGrowthNode> nodes = new(); HashSet<string> upgrades = new();
                 string[] expected = character.id == "projectile" ? new[] { "damage", "speed", "count", "pierce", "homing" } :
                     character.id == "lightning" ? new[] { "damage", "speed", "jumps", "range", "echo" } :
@@ -69,6 +76,7 @@ namespace ProjectDM
                 var skillIds = new HashSet<string>();
                 foreach (var skill in character.skills)
                     if (skill == null || string.IsNullOrEmpty(skill.id) || !skillIds.Add(skill.id) || string.IsNullOrEmpty(skill.name) ||
+                        float.IsNaN(skill.initialDamage) || float.IsInfinity(skill.initialDamage) || skill.initialDamage < 0 ||
                         !FinitePositive(skill.damage) || !FinitePositive(skill.interval) || !FinitePositive(skill.range) ||
                         !FinitePositive(skill.radius) || !FinitePositive(skill.duration) || !FinitePositive(skill.tickInterval) ||
                         !FinitePositive(skill.speed) || skill.count < 1 || skill.count > 16 || skill.charge < 1)
@@ -79,14 +87,16 @@ namespace ProjectDM
                 {
                     CharacterUpgrade upgrade = character.upgrades[i];
                     if (upgrade == null || string.IsNullOrEmpty(upgrade.id) || !skillIds.Contains(upgrade.skill ?? "") || !upgrades.Add(upgrade.id) || upgrade.maxRank < 1 || upgrade.cost < 1 ||
+                        upgrade.permanentMaxRank < 0 || upgrade.permanentMaxRank > 99 || upgrade.permanentCostStep < 0 ||
                         !FinitePositive(upgrade.step) || !FinitePositive(upgrade.permanentStep) || float.IsNaN(upgrade.effectiveCap) || float.IsInfinity(upgrade.effectiveCap) || upgrade.effectiveCap < 0) throw new InvalidOperationException("전용 강화 오류: " + character.id);
-                    if (upgrade.unlock && (upgrade.maxRank != 1 || upgrade.step != 1 || upgrade.permanentStep != 1)) throw new InvalidOperationException("해금 노드는 1단계여야 합니다.");
+                    if (upgrade.unlock && (upgrade.maxRank != 1 || upgrade.permanentMaxRank > 1 || upgrade.step != 1 || upgrade.permanentStep != 1)) throw new InvalidOperationException("해금 노드는 1단계여야 합니다.");
                     string key = upgrade.Key(character.id);
                     string prerequisite = upgrade.skill == character.skills[0].id || upgrade.unlock ? null : "magic." + character.id + "." + upgrade.skill + "Unlock";
                     rows.Add(new PrototypeGrowth { id = key, name = upgrade.name, description = upgrade.description + " (영구 성장 · 다음 런 적용)",
                         requires = prerequisite, icon = upgrade.icon, unit = upgrade.unit ?? (upgrade.id == "damage" || upgrade.id == "speed" || upgrade.id == "burn" ? "%" :
                             upgrade.id == "echo" ? "%p" : upgrade.id == "homing" || upgrade.id == "orbitSpeed" ? "°/초" : upgrade.id == "width" ? "°" :
-                            upgrade.id == "range" || upgrade.id == "size" ? "유닛" : upgrade.id == "freezeDuration" ? "초" : "개"), baseCost = upgrade.cost, costGrowth = 1.8f, maxRank = Mathf.Min(3, upgrade.maxRank), step = upgrade.permanentStep });
+                            upgrade.id == "range" || upgrade.id == "size" ? "유닛" : upgrade.id == "freezeDuration" ? "초" : "개"), baseCost = upgrade.cost, costGrowth = 1.8f,
+                        rankCostStep = upgrade.permanentCostStep, maxRank = upgrade.permanentMaxRank > 0 ? upgrade.permanentMaxRank : Mathf.Min(3, upgrade.maxRank), step = upgrade.permanentStep });
                     // Two short outward branches, rather than a long chain or remote cross-links.
                     nodes.Add(new PrototypeGrowthNode { id = key, growthId = key, name = upgrade.name, ranks = Mathf.Min(3, upgrade.maxRank), parentRanks = i < 2 ? 0 : 1,
                         parent = i < 2 ? "ROOT" : character.upgrades[i - 2].Key(character.id),
@@ -105,6 +115,17 @@ namespace ProjectDM
                             upgrade.unlock ? (i == 1 ? character.upgrades[0].Key(character.id) : "magic." + character.id + "." + character.skills[i - 1].id + "Unlock") :
                             "magic." + character.id + "." + skill.id + "Unlock";
                         node.parentRanks = node.parent == "ROOT" ? 0 : 1;
+                    }
+                }
+                foreach (var row in rows)
+                {
+                    var previous = nodes.Find(node => node.growthId == row.id);
+                    for (int start = previous.ranks; start < row.maxRank; start += 3)
+                    {
+                        var node = new PrototypeGrowthNode { id = row.id + "_mastery_" + (start / 3 + 1), growthId = row.id,
+                            name = row.name + " 숙련 " + (start / 3 + 1), startRank = start, ranks = Mathf.Min(3, row.maxRank - start),
+                            parent = previous.id, parentRanks = previous.ranks, x = previous.x + 210, y = previous.y };
+                        nodes.Add(node); previous = node;
                     }
                 }
                 GameTables graph = new GameTables(tables.balance, tables.skillTable, new PrototypeGrowthTable { rows = rows.ToArray(), nodes = nodes.ToArray() });

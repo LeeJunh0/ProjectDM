@@ -1,0 +1,37 @@
+{
+  "created_utc": "2026-11-03T05:34:41.692360+00:00",
+  "results": [
+    {
+      "character": "projectile",
+      "runs": 92,
+      "hours": 3.349367947048611,
+      "max_actual_hit": 972233.0
+    },
+    {
+      "character": "flame",
+      "runs": 40,
+      "hours": 2.8473611111111112,
+      "max_actual_hit": 999966.8125
+    },
+    {
+      "character": "lightning",
+      "runs": 41,
+      "hours": 2.9119444444444444,
+      "max_actual_hit": 976921.0625
+    },
+    {
+      "character": "frost",
+      "runs": 41,
+      "hours": 2.9180555555555556,
+      "max_actual_hit": 980603.6875
+    }
+  ],
+  "source_hashes": {
+    "Assets/Resources/ProjectDM/Data/PrototypeCharacters.json": "bb26834a8a80a91bb68dd64c109f2266a12ce4da514c7eb0edd1e32725ec29c9",
+    "Assets/Scripts/Systems/Combat/CharacterArsenalSystem.cs": "d8059e4b5e98dd58acb3ddc133b91254045642a100a4e1ba885b83dad60d246b",
+    "Assets/Scripts/Systems/Combat/EnemySystem.cs": "07ea16791686c60612f7743a801ed20a91b7d9d7bc86d566a66d4d617f82aca6",
+    "Assets/Scripts/Systems/Data/PrototypeProgression.cs": "6de656ec1acf5099ad885161c773299a66b630bcbf61149be4048e4e178976e6",
+    "Assets/Scripts/Systems/Progression/ProgressionService.cs": "5e42360176f36abbd7228695f114b5c732d0d22068e282e6cc4de6b829c9c2d8",
+    "Tests/CampaignPlaytest.cs": "e4e254b7ae54c4f206105ff0f3b5dbda83f76565d0b3fb71ea20dfb9bff8eb85"
+  }
+}

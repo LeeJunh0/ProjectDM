@@ -5,6 +5,13 @@ namespace ProjectDM
     /// <summary>Display-only count-up math. Never changes earned rewards or kill counters.</summary>
     internal static class RunResultPresentation
     {
+        internal static string Change(double current, double previous)
+        {
+            if (previous <= 0) return current > 0 ? "첫 획득" : "변동 없음";
+            double percent = (current / previous - 1) * 100;
+            if (percent >= 1000) return (current / previous).ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) + "배";
+            return Math.Abs(percent) < .5 ? "변동 없음" : percent.ToString("+0;-0", System.Globalization.CultureInfo.InvariantCulture) + "%";
+        }
         internal readonly struct PermanentKillProgress
         {
             internal readonly int before, total, runKills, target;

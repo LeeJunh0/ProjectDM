@@ -37,7 +37,7 @@ namespace ProjectDM
             UiGraphics.DrawSolidRect(new Rect(0f, 0f, Screen.width, Screen.height), new Color(.015f, .018f, .04f, .6f));
             // The approved preview has a tall panel; scale the complete composition from 1920 x 1080.
             const float panelWidth = 720f;
-            const float panelHeight = 780f;
+            const float panelHeight = 840f;
             float scale = Mathf.Min(Screen.width / 1920f, Screen.height / 1080f);
             Matrix4x4 previousMatrix = GUI.matrix;
             GUI.matrix = previousMatrix * Matrix4x4.TRS(new Vector3((Screen.width - panelWidth * scale) * .5f, (Screen.height - panelHeight * scale) * .5f, 0f), Quaternion.identity, Vector3.one * scale);
@@ -101,9 +101,15 @@ namespace ProjectDM
                     DrawFittedLabel(new Rect(426f, rowY + 30f, 230f, 20f), status, statusStyle, 12);
                     if (progress.HasTarget) DrawPermanentKillBar(new Rect(136f, rowY + 51f, 520f, 6f), progress, displayedTotal);
                 }
-                UiGraphics.DrawResultDivider(632f);
-                returnToMap = graphics.DrawResultButton(new Rect(38f, 658f, 310f, 78f), "돌아가기", false);
-                restart = graphics.DrawResultButton(new Rect(372f, 658f, 310f, 78f), "다시 시작", true);
+                var summaryStyle = new GUIStyle(body) { fontSize = 21, alignment = TextAnchor.MiddleCenter };
+                string experienceComparison = run.previousResult == null ? "" : " · " + RunResultPresentation.Change(run.runExperience, run.previousResult.experience);
+                UiGraphics.DrawStaticLabel(new Rect(44f, 638f, 632f, 30f), "획득 경험치 " + CompactNumber.Format(run.runExperience) + experienceComparison, summaryStyle);
+                if (run.previousResult != null)
+                    UiGraphics.DrawStaticLabel(new Rect(44f, 670f, 632f, 26f), "동일 타입·스테이지 대비  재화 " + RunResultPresentation.Change(run.runCurrency, run.previousResult.coins)
+                        + " · 처치 " + RunResultPresentation.Change(totalKills, run.previousResult.kills), new GUIStyle(summaryStyle) { fontSize = 19 });
+                UiGraphics.DrawResultDivider(704f);
+                returnToMap = graphics.DrawResultButton(new Rect(38f, 724f, 310f, 78f), "돌아가기", false);
+                restart = graphics.DrawResultButton(new Rect(372f, 724f, 310f, 78f), "다시 시작", true);
             }
             finally { GUI.matrix = previousMatrix; }
             if (returnToMap) run.ReturnToGrowthMap();

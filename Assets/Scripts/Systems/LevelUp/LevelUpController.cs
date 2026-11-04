@@ -148,7 +148,7 @@ namespace ProjectDM
             CharacterDefinition character = run.characters.Current;
             List<CharacterUpgrade> candidates = new();
             foreach (CharacterUpgrade row in character.upgrades)
-                if (!row.unlock && skills.IsSkillUnlocked(row.skill) && skills.RunRank(row.Key(character.id)) < row.maxRank &&
+                if (!row.unlock && !row.permanentOnly && skills.IsSkillUnlocked(row.skill) && skills.RunRank(row.Key(character.id)) < row.maxRank &&
                     (row.effectiveCap<=0 || skills.PersonalAmount(row.id)<row.effectiveCap-.00001f) &&
                     !(character.id == "frost" && row.id == "chill" && skills.PersonalAmount("chill") >= character.chillThreshold - 1)) candidates.Add(row);
             List<RunUpgradePresentation> choices = new();
@@ -208,6 +208,7 @@ namespace ProjectDM
         }
         internal void AddExperience(float amount)
         {
+            run.runExperience += amount;
             experience += amount;
             while (experience >= experienceToNext)
             {

@@ -16,7 +16,7 @@ Assert-True ($null -eq [ProjectDM.PrototypeRules]::Validate($balance, $skills, $
 Assert-True ($balance.ResolvedInitialMana -eq 40 -and $balance.basicAttackManaCost -eq 1 -and $balance.bossElapsedSeconds -eq 180) 'Initial mana / basic attack cost / independent boss cap mismatch.'
 Assert-True ($growth.rows.Count -eq 30 -and $skills.rows.Count -eq 6) 'Missing growth or skill rows.'
 
-# Compression keeps the approved maximum effects; intermediate purchases are now larger and interleaved.
+# Legacy metadata remains available for save migration; current economy uses direct rank prices.
 $proposal = Get-Content (Join-Path $projectRoot 'Tools/Balance/progression_v2.json') -Raw | ConvertFrom-Json
 foreach ($row in $growth.rows) {
     if ($row.id -eq 'population') { Assert-True ($row.maxRank -eq 30 -and $row.step -eq 5) 'Population growth must expand to +150 monsters.'; continue }
@@ -26,7 +26,7 @@ foreach ($row in $growth.rows) {
     Assert-True ($row.maxRank -le $source.max_rank -and (($separateChance -and $row.baseCost -eq 10) -or
         (-not $separateChance -and $row.baseCost -eq $source.base_cost -and $row.minStage -eq $source.min_stage))) "V2 growth cap/cost/stage mismatch: $($row.id)"
     Assert-True ([Math]::Abs($row.costGrowth - $source.cost_growth) -lt 0.00001) "Cost growth mismatch: $($row.id)"
-    if ($null -ne $source.step) { Assert-True ([Math]::Abs($row.step * $row.maxRank - $source.step * $source.max_rank) -lt 0.00001) "Maximum effect changed: $($row.id)" }
+    if ($null -ne $source.step) { Assert-True ($row.step * $row.maxRank + .00001 -ge $source.step * $source.max_rank) "Existing maximum effect was reduced: $($row.id)" }
 }
 Assert-True ([Math]::Abs($balance.ResolvedManaAbsorbChance - $proposal.time_reward.base_chance) -lt 0.000001) 'Original recovery probability must carry over to mana absorption.'
 
@@ -238,7 +238,7 @@ $visualSave.SetRank('b',1)
 Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$c,$visualSave,0) -and [ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$d,$visualSave,0)) 'Invested grid links must reveal adjacent nodes.'
 $reverseSave = [ProjectDM.PrototypeSave]::new(); $reverseSave.SetRank('d',0,.25)
 Assert-True ([ProjectDM.PrototypeRules]::IsNodeRevealed($visualFixture,$b,$reverseSave,0)) 'Grid links must reveal in both directions and retain fractional legacy investment.'
-# Keep old saves' EXACT effects, including a fraction smaller than one new purchase.
+# Preserve old ranks and residual fractions; balance buffs also apply to migrated purchases.
 foreach ($row in $growth.rows) {
     $old = Get-Source $row.id
     if ($null -eq $old) { continue } # Grade chance is new, not a compressed legacy purchase.
@@ -252,7 +252,12 @@ foreach ($row in $growth.rows) {
         $expected = $oldRank * $old.step
         if ($row.id -eq 'damage' -and $oldRank -gt 0) { $expected += $balance.firstDamageBonus }
         $actual = [ProjectDM.PrototypeRules]::Amount($balance, $row, $migrated.Rank($row.id), $migrated.PartialRank($row.id))
-        Assert-True ([Math]::Abs($actual - $expected) -lt .00001) "Save migration changed growth effect: $($row.id) rank $oldRank"
+        Assert-True ($actual + .00001 -ge $expected) "Save migration reduced growth effect: $($row.id) rank $oldRank"
+        if ($row.rankCostGrowth -gt 0) {
+            $expectedCurrent = $oldRank / [ProjectDM.PrototypeRules]::LegacyRankScale($row) * $row.step
+            if ($row.id -eq 'damage' -and $oldRank -gt 0) { $expectedCurrent += $balance.firstDamageBonus }
+            Assert-True ([Math]::Abs($actual - $expectedCurrent) -lt .00001) "Price changes altered rank conversion: $($row.id)"
+        }
         $before = $migrated.Rank($row.id) + $migrated.PartialRank($row.id)
         [ProjectDM.PrototypeRules]::MigrateGrowthRanks($migrated, $growth)
         Assert-True ($migrated.version -eq 3 -and $migrated.completedRuns -eq 7 -and $migrated.kills[0] -eq 99 -and
@@ -266,7 +271,9 @@ foreach ($row in $growth.rows) {
     $newTotal = 0L
     $compressedRanks = if ($row.legacyCompressedMaxRank -gt 0) { $row.legacyCompressedMaxRank } else { $row.maxRank }
     for ($rank = 0; $rank -lt $compressedRanks; $rank++) { $newTotal += [ProjectDM.PrototypeRules]::Cost($row, $rank, $balance.latePriceScale) }
-    if ($row.id.EndsWith('Chance')) {
+    if ($row.rankCostGrowth -gt 0) {
+        Assert-True ($newTotal -lt $legacyTotal) "Current prices must remove legacy cost inflation: $($row.id)"
+    } elseif ($row.id.EndsWith('Chance')) {
         Assert-True ($newTotal -ge .25 * $legacyTotal -and $newTotal -le .45 * $legacyTotal) "Individual skill chance costs must share the old common budget: $($row.id)"
     } else {
         Assert-True ($newTotal -ge .9 * $legacyTotal -and $newTotal -le 1.001 * $legacyTotal) "Compression destroyed total economic cost: $($row.id)"

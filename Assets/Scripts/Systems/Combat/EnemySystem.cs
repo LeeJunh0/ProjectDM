@@ -43,6 +43,7 @@ namespace ProjectDM
 
         internal readonly List<Enemy> enemies = new();
         internal readonly EnemySpatialGrid spatial = new();
+        internal float MaxDamageThisRun { get; private set; }
 
         internal float nextSpawn;
         internal float nextMiniBoss;
@@ -92,10 +93,13 @@ namespace ProjectDM
 
         internal int SpawnStage => debugStageOverride >= 0 ? debugStageOverride : PrototypeRules.Stage(tables.balance, save.progress);
 
-        internal int FieldTarget => tables.balance.stages[SpawnStage].target + Mathf.FloorToInt(progression.PermanentAmount("population"));
+        private int PersonalPopulation => run.characters?.Current == null ? 0 :
+            Mathf.FloorToInt(progression.PermanentAmount("magic." + run.characters.Current.id + ".hunt"));
 
-        internal int FieldCap => tables.balance.stages[SpawnStage].cap + Mathf.FloorToInt(progression.PermanentAmount("populationCap"));
-        internal int RefillBatch => tables.balance.stages[SpawnStage].batch + Mathf.FloorToInt(progression.PermanentAmount("spawnBatch"));
+        internal int FieldTarget => tables.balance.stages[SpawnStage].target + Mathf.FloorToInt(progression.PermanentAmount("population")) + PersonalPopulation;
+
+        internal int FieldCap => tables.balance.stages[SpawnStage].cap + Mathf.FloorToInt(progression.PermanentAmount("populationCap")) + PersonalPopulation;
+        internal int RefillBatch => tables.balance.stages[SpawnStage].batch + Mathf.FloorToInt(progression.PermanentAmount("spawnBatch")) + PersonalPopulation / 6;
 
         internal void SpawnPrototypeInitialEnemies()
         {
@@ -183,7 +187,7 @@ namespace ProjectDM
                 rank = miniBoss ? EnemyRank.MiniBoss : EnemyRank.Normal,
                 rewardMultiplier = miniBoss ? tables.balance.miniBossRewardMultiplier : 1,
                 hitRadiusMultiplier = miniBoss ? tables.balance.miniBossScale : 1,
-                hitPoints = row.hp * (miniBoss ? tables.balance.miniBossHealthMultiplier : 1), speed = row.speed });
+                hitPoints = row.hp * (miniBoss ? tables.balance.miniBossHealthMultiplier : 1) * progression.CombatScale, speed = row.speed });
         }
 
         internal static bool IsLive(Enemy enemy) => enemy != null && !enemy.dead && enemy.transform != null;
@@ -199,11 +203,12 @@ namespace ProjectDM
         internal void DamageElementalEnemy(Enemy enemy, float damage, CombatDamageKind presentationKind, CombatDamageElement element)
         {
             if (!IsLive(enemy) || damage <= 0 || float.IsNaN(damage) || float.IsInfinity(damage)) return;
-            damage = Mathf.Max(1f, damage);
+            damage = (float)PrototypeRules.CombatDamage(damage, progression.CombatScale);
+            MaxDamageThisRun = Mathf.Max(MaxDamageThisRun, damage);
             if (showElementalDamage != null) showElementalDamage(enemy.transform.position, damage, presentationKind, element);
             else showDamage(enemy.transform.position, damage, presentationKind);
             enemy.hitPoints -= damage;
-            if (enemy.hitPoints > 0) return;
+            if (enemy.hitPoints > damage * .000001f) return;
             enemy.dead = true; // Single owner of death, rewards and pool return, including AoE overlaps.
             Vector3 position = enemy.transform.position;
             int kind = (int)enemy.kind;
@@ -222,6 +227,7 @@ namespace ProjectDM
 
         internal void Reset()
         {
+            MaxDamageThisRun = 0;
             foreach (Enemy enemy in enemies) if (enemy.transform != null) objectPool.Return(enemy.transform.gameObject);
             enemies.Clear(); spatial.Rebuild(enemies); nextSpawn = 0; nextMiniBoss = tables.balance.miniBossInterval; debugStageOverride = -1;
         }

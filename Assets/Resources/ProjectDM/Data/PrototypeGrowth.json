@@ -64,7 +64,8 @@
       "minStage": 0,
       "step": 0.2,
       "legacyMaxRank": 200,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.18
     },
     {
       "id": "speed",
@@ -81,12 +82,13 @@
       "minStage": 0,
       "step": 0.04,
       "legacyMaxRank": 150,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.22
     },
     {
       "id": "time",
       "name": "최대 마나",
-      "description": "다음 런의 최대 마나 +2 MP. 마나가 가득 찬 상태로 시작합니다.",
+      "description": "최대 마나 +8 MP. 성장할수록 한 런에서 사용할 수 있는 마법이 늘어납니다.",
       "icon": "gem",
       "unit": "MP",
       "parent": "ROOT",
@@ -96,14 +98,15 @@
       "costGrowth": 1.065,
       "maxRank": 10,
       "minStage": 0,
-      "step": 2,
+      "step": 8,
       "legacyMaxRank": 50,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.65
     },
     {
       "id": "extension",
       "name": "처치 마나 흡수",
-      "description": "처치마다 마나 드랍 확률 +0.2%p. 모든 피해원에 적용하며 마나 방울 획득 시 최대 마나까지 회복합니다.",
+      "description": "처치 시 마나 드랍 확률 +2.5%p. 많은 적을 휩쓸수록 마나를 더 회수합니다.",
       "icon": "gem",
       "unit": "%p",
       "parent": "time",
@@ -113,14 +116,15 @@
       "costGrowth": 1.065,
       "maxRank": 10,
       "minStage": 0,
-      "step": 0.002,
+      "step": 0.025,
       "legacyMaxRank": 50,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.65
     },
     {
       "id": "yield",
       "name": "재화 획득량",
-      "description": "몬스터 코인과 상자 보상 배율 증가. 소수 코인은 확률 반올림합니다.",
+      "description": "몬스터 재화 획득량 +15%. 몬스터 생성량 성장과 함께 보상이 늘어납니다.",
       "icon": "coin",
       "unit": "%",
       "parent": "ROOT",
@@ -130,14 +134,15 @@
       "costGrowth": 1.06,
       "maxRank": 15,
       "minStage": 0,
-      "step": 0.04,
+      "step": 0.15,
       "legacyMaxRank": 75,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.45
     },
     {
       "id": "xp",
       "name": "경험치 획득량",
-      "description": "몬스터 경험치 배율 증가. 소수 경험치도 누적됩니다.",
+      "description": "경험치 획득량 +16%. 다음 런에서 더 많은 강화 선택지를 얻습니다.",
       "icon": "gem",
       "unit": "%",
       "parent": "yield",
@@ -147,9 +152,10 @@
       "costGrowth": 1.06,
       "maxRank": 15,
       "minStage": 0,
-      "step": 0.06,
+      "step": 0.16,
       "legacyMaxRank": 75,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.45
     },
     {
       "id": "population",
@@ -167,7 +173,8 @@
       "step": 5,
       "legacyMaxRank": 50,
       "costRampRanks": 2,
-      "legacyCompressedMaxRank": 10
+      "legacyCompressedMaxRank": 10,
+      "rankCostGrowth": 1.23
     },
     {
       "id": "respawn",
@@ -184,7 +191,8 @@
       "minStage": 0,
       "step": 0.0504,
       "legacyMaxRank": 63,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.45
     },
     {
       "id": "multishot",
@@ -315,7 +323,8 @@
       "costGrowth": 1.65,
       "maxRank": 9,
       "minStage": 1,
-      "step": 0.02
+      "step": 0.02,
+      "rankCostGrowth": 1.65
     },
     {
       "id": "silverDropChance",
@@ -331,7 +340,8 @@
       "costGrowth": 1.65,
       "maxRank": 9,
       "minStage": 1,
-      "step": 0.02
+      "step": 0.02,
+      "rankCostGrowth": 1.65
     },
     {
       "id": "goldDropChance",
@@ -347,7 +357,8 @@
       "costGrowth": 1.65,
       "maxRank": 9,
       "minStage": 2,
-      "step": 0.01
+      "step": 0.01,
+      "rankCostGrowth": 1.65
     },
     {
       "id": "emeraldDropChance",
@@ -363,7 +374,8 @@
       "costGrowth": 1.65,
       "maxRank": 9,
       "minStage": 3,
-      "step": 0.006
+      "step": 0.006,
+      "rankCostGrowth": 1.65
     },
     {
       "id": "amethystDropChance",
@@ -379,7 +391,8 @@
       "costGrowth": 1.65,
       "maxRank": 9,
       "minStage": 4,
-      "step": 0.003
+      "step": 0.003,
+      "rankCostGrowth": 1.65
     },
     {
       "id": "health",
@@ -395,7 +408,8 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 20,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.12
     },
     {
       "id": "movement",
@@ -411,7 +425,8 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 0.08,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.12
     },
     {
       "id": "criticalChance",
@@ -427,7 +442,8 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 0.03,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.15
     },
     {
       "id": "criticalDamage",
@@ -443,7 +459,8 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 0.25,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.15
     },
     {
       "id": "invulnerability",
@@ -459,7 +476,8 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 0.1,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.12
     },
     {
       "id": "magnet",
@@ -475,7 +493,8 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 0.5,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.12
     },
     {
       "id": "luck",
@@ -491,7 +510,8 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 25,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.4
     },
     {
       "id": "populationCap",
@@ -507,7 +527,8 @@
       "maxRank": 20,
       "minStage": 0,
       "step": 10,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.3
     },
     {
       "id": "spawnBatch",
@@ -523,7 +544,8 @@
       "maxRank": 12,
       "minStage": 0,
       "step": 1,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.65
     },
     {
       "id": "magnetDropChance",
@@ -539,7 +561,8 @@
       "maxRank": 3,
       "minStage": 0,
       "step": 0.01,
-      "costRampRanks": 2
+      "costRampRanks": 2,
+      "rankCostGrowth": 1.12
     }
   ],
   "nodes": [

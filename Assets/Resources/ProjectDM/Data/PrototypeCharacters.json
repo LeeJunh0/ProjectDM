@@ -20,7 +20,9 @@
           "permanentStep": 0.15,
           "maxRank": 99,
           "cost": 8,
-          "skill": "missile"
+          "skill": "missile",
+          "permanentMaxRank": 24,
+          "permanentCostStep": 1000
         },
         {
           "id": "speed",
@@ -96,7 +98,9 @@
           "cost": 30,
           "skill": "beam",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentMaxRank": 24,
+          "permanentCostStep": 1000
         },
         {
           "id": "beamWidth",
@@ -166,7 +170,9 @@
           "cost": 30,
           "skill": "satellite",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentMaxRank": 24,
+          "permanentCostStep": 1000
         },
         {
           "id": "satelliteCount",
@@ -225,6 +231,22 @@
           "unit": "개",
           "unlock": false,
           "effectiveCap": 2
+        },
+        {
+          "id": "hunt",
+          "name": "무리 사냥 숙련",
+          "description": "이 타입으로 시작하는 다음 런의 생성 목표·최대 개체 수 +3마리. 2단계마다 한 번의 젠 수 +1. 공통 성장에 추가 적용됩니다.",
+          "icon": "slime",
+          "rarity": "silver",
+          "step": 3,
+          "permanentStep": 3,
+          "maxRank": 1,
+          "cost": 2000,
+          "skill": "missile",
+          "unit": "마리",
+          "permanentOnly": true,
+          "permanentMaxRank": 12,
+          "permanentCostStep": 3000
         }
       ],
       "skills": [
@@ -273,7 +295,8 @@
           "count": 2,
           "charge": 3
         }
-      ]
+      ],
+      "finalCombatScale": 2518.492021660294
     },
     {
       "id": "lightning",
@@ -296,7 +319,9 @@
           "permanentStep": 0.15,
           "maxRank": 99,
           "cost": 8,
-          "skill": "chain"
+          "skill": "chain",
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "speed",
@@ -372,7 +397,9 @@
           "cost": 30,
           "skill": "orb",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "orbRange",
@@ -442,7 +469,9 @@
           "cost": 30,
           "skill": "thunder",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "thunderRange",
@@ -501,6 +530,22 @@
           "unit": "명",
           "unlock": false,
           "effectiveCap": 2
+        },
+        {
+          "id": "hunt",
+          "name": "무리 사냥 숙련",
+          "description": "이 타입으로 시작하는 다음 런의 생성 목표·최대 개체 수 +3마리. 2단계마다 한 번의 젠 수 +1. 공통 성장에 추가 적용됩니다.",
+          "icon": "slime",
+          "rarity": "silver",
+          "step": 3,
+          "permanentStep": 3,
+          "maxRank": 1,
+          "cost": 2000,
+          "skill": "chain",
+          "unit": "마리",
+          "permanentOnly": true,
+          "permanentMaxRank": 12,
+          "permanentCostStep": 3000
         }
       ],
       "skills": [
@@ -549,7 +594,8 @@
           "count": 1,
           "charge": 5
         }
-      ]
+      ],
+      "finalCombatScale": 1746.1544683511372
     },
     {
       "id": "flame",
@@ -572,7 +618,9 @@
           "permanentStep": 0.15,
           "maxRank": 99,
           "cost": 8,
-          "skill": "cone"
+          "skill": "cone",
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "speed",
@@ -648,7 +696,9 @@
           "cost": 30,
           "skill": "firefield",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "firefieldRange",
@@ -718,7 +768,9 @@
           "cost": 30,
           "skill": "meteor",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "meteorRange",
@@ -776,6 +828,22 @@
           "unit": "명",
           "unlock": false,
           "effectiveCap": 3
+        },
+        {
+          "id": "hunt",
+          "name": "무리 사냥 숙련",
+          "description": "이 타입으로 시작하는 다음 런의 생성 목표·최대 개체 수 +3마리. 2단계마다 한 번의 젠 수 +1. 공통 성장에 추가 적용됩니다.",
+          "icon": "slime",
+          "rarity": "silver",
+          "step": 3,
+          "permanentStep": 3,
+          "maxRank": 1,
+          "cost": 2000,
+          "skill": "cone",
+          "unit": "마리",
+          "permanentOnly": true,
+          "permanentMaxRank": 12,
+          "permanentCostStep": 3000
         }
       ],
       "skills": [
@@ -824,7 +892,8 @@
           "count": 1,
           "charge": 4
         }
-      ]
+      ],
+      "finalCombatScale": 2182.693085438921
     },
     {
       "id": "frost",
@@ -855,7 +924,9 @@
           "permanentStep": 0.15,
           "maxRank": 99,
           "cost": 8,
-          "skill": "orbit"
+          "skill": "orbit",
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "speed",
@@ -944,7 +1015,7 @@
         {
           "id": "blizzardUnlock",
           "name": "눈보라 해금",
-          "description": "적 무리를 추적하며 냉기를 축적합니다. 기본 시전으로 충전하며 추가 마나 소모 없이 자동 사용합니다.",
+          "description": "적 무리를 추적하며 냉기를 축적합니다. 기본 시전으로 충전하며 추가 마나 소모 없이 자동 사용합니다. 첫 파동의 강타 후 지속 피해를 줍니다.",
           "icon": "skill.frost.blizzard",
           "rarity": "silver",
           "step": 1,
@@ -967,7 +1038,9 @@
           "cost": 30,
           "skill": "blizzard",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "blizzardRange",
@@ -1037,7 +1110,9 @@
           "cost": 30,
           "skill": "shatter",
           "unit": "%",
-          "unlock": false
+          "unlock": false,
+          "permanentMaxRank": 24,
+          "permanentCostStep": 4000
         },
         {
           "id": "shatterRange",
@@ -1096,6 +1171,22 @@
           "unit": "개",
           "unlock": false,
           "effectiveCap": 1
+        },
+        {
+          "id": "hunt",
+          "name": "무리 사냥 숙련",
+          "description": "이 타입으로 시작하는 다음 런의 생성 목표·최대 개체 수 +3마리. 2단계마다 한 번의 젠 수 +1. 공통 성장에 추가 적용됩니다.",
+          "icon": "slime",
+          "rarity": "silver",
+          "step": 3,
+          "permanentStep": 3,
+          "maxRank": 1,
+          "cost": 2000,
+          "skill": "orbit",
+          "unit": "마리",
+          "permanentOnly": true,
+          "permanentMaxRank": 12,
+          "permanentCostStep": 3000
         }
       ],
       "skills": [
@@ -1117,7 +1208,7 @@
         {
           "id": "blizzard",
           "name": "눈보라",
-          "description": "적 무리를 추적하며 냉기를 축적합니다.",
+          "description": "적 무리를 추적하며 냉기를 축적합니다. 첫 냉기 파동은 강하게 타격하고 이후에는 지속 피해를 줍니다.",
           "icon": "skill.frost.blizzard",
           "damage": 0.35,
           "interval": 3.5,
@@ -1127,7 +1218,8 @@
           "tickInterval": 0.5,
           "speed": 0.8,
           "count": 1,
-          "charge": 2
+          "charge": 2,
+          "initialDamage": 3
         },
         {
           "id": "shatter",
@@ -1144,7 +1236,8 @@
           "count": 1,
           "charge": 3
         }
-      ]
+      ],
+      "finalCombatScale": 1678.9946811068623
     }
   ]
 }

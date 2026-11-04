@@ -53,4 +53,5 @@ foreach ($policy in $result.policies.PSObject.Properties) {
     }
 }
 $priceCount = ($growth.rows | Measure-Object maxRank -Sum).Sum
-Write-Output "Current balance parity: $checks assertions PASS (table/rules hashes, all $priceCount prices, actual C# node purchase replay, stages, wallets, snapshots)."
+$replayCount = @($result.policies.PSObject.Properties).Count
+Write-Output "Current balance parity: $checks assertions PASS (table/rules hashes, all $priceCount prices, graded reward cases, $replayCount policy replays)."

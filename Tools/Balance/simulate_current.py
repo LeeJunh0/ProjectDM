@@ -30,7 +30,7 @@ def load_current():
     skills = json.loads((DATA / "PrototypeSkills.json").read_text(encoding="utf-8"))
     # Match JsonUtility's float fields, important at ceil() price boundaries.
     for row in growth["rows"]:
-        for key in ("costGrowth", "step", "costRampRanks", "damageRatio"):
+        for key in ("costGrowth", "rankCostGrowth", "step", "costRampRanks", "damageRatio"):
             if key in row:
                 row[key] = f32(row[key])
     config["runtime_balance"] = balance
@@ -156,6 +156,10 @@ def legacy_cost(row, rank, scale):
 
 def current_price(config, key, rank):
     row = config["growth_rows"][key]
+    if row.get("rankCostStep", 0) > 0:
+        return legacy_cost(row, rank, config["late_price_scale"]) if rank < 3 else legacy_cost(row, 2, config["late_price_scale"]) + row["rankCostStep"] * (rank - 2)
+    if row.get("rankCostGrowth", 0) > 0:
+        return legacy_cost(dict(row, costGrowth=row["rankCostGrowth"]), rank, config["late_price_scale"])
     scale = row.get("legacyMaxRank", row["maxRank"]) / row["maxRank"]
     if scale == 1 or rank <= 0:
         return legacy_cost(row, rank, config["late_price_scale"])
@@ -426,6 +430,7 @@ def summarize(rows, choice_seconds=2.5):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--samples", type=int, default=20)
+    parser.add_argument("--prices-only", action="store_true", help="Export current price/reward parity cases without the archived combat model")
     parser.add_argument("--policy", choices=["all", "balanced", "combat", "field"], default="all")
     parser.add_argument("--profile", choices=["default", "low_collection", "low_accuracy", "stationary"], default="default")
     parser.add_argument("--output", type=Path, default=ROOT / "Temp/Balance-current.json")
@@ -456,7 +461,7 @@ def main():
                         output["loot_cases"].append({"kind": kind, "stage": stage, "currency": currency, "chance": chance, "sample": sample,
                             "grade": grade, "bonuses": bonuses, "quantity": .04, "bonus_coin": currency, "rounding_sample": .25,
                             "reward": grade_reward(config, kind, grade, currency, .04, currency, .25)})
-    policies = config["policies"] if args.policy == "all" else [args.policy]
+    policies = [] if args.prices_only else config["policies"] if args.policy == "all" else [args.policy]
     for policy in policies:
         rows = [campaign(config, seed, policy, profiles[args.profile]) for seed in range(args.samples)]
         output["policies"][policy] = summarize(rows, config["overhead"]["level_choice_seconds"])

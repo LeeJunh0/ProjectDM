@@ -27,7 +27,7 @@ namespace ProjectDM
         float clock, satelliteVisual;
         int satelliteVolley;
         Transform caster;
-        sealed class Zone { internal string id; internal Vector3 center, velocity; internal float remaining, next, radius, power; }
+        sealed class Zone { internal string id; internal Vector3 center, velocity; internal float remaining, next, radius, power; internal bool pulsed; }
         sealed class Beam { internal Vector3 direction; internal float remaining, next, width, power, sweep; internal readonly HashSet<Enemy> hits = new(); }
         sealed class Bolt { internal Vector3 center, direction; internal float remaining, power, speed; }
         sealed class Impact { internal Vector3 center; internal float remaining, radius, power; }
@@ -164,13 +164,15 @@ namespace ProjectDM
                 while(z.next<=.00001f)
                 {
                     z.next+=s.tickInterval;
+                    float pulsePower=!z.pulsed&&s.initialDamage>0?z.power*s.initialDamage/s.damage:z.power;
+                    z.pulsed=true;
                     Color tint=z.id=="firefield"?new Color(1,.3f,.05f,.6f):z.id=="orb"?new Color(.5f,.75f,1,.7f):new Color(.4f,.9f,1,.6f);
                     visuals?.SkillPulse(z.center,z.radius,"skill."+session.Current.id+"."+z.id,tint,s.tickInterval);
                     targets.Clear();foreach(var e in enemies.enemies)if(EnemySystem.IsLive(e)&&(e.transform.position-z.center).sqrMagnitude<=z.radius*z.radius)targets.Add(e);
                     foreach(var e in targets)
                     {
                         if(z.id=="orb")visuals?.Link(z.center,e.transform.position);
-                        hit(e,z.power);
+                        hit(e,pulsePower);
                         if(z.id=="blizzard"&&EnemySystem.IsLive(e))Cold(e,1+Mathf.FloorToInt(amount("blizzardCold")));
                     }
                     if(z.id=="orb"&&amount("orbLink")>0)
@@ -193,6 +195,8 @@ namespace ProjectDM
         }
         void Shatter(CharacterSkillDefinition s,float power,float radius)
         {
+            // Shatter must reach targets frozen by the grown orbit, including its outer ring.
+            radius=Mathf.Max(radius,session.Current.range+amount("range")+session.Current.shardRadius+amount("size")+(amount("rings")>=1?.65f:0)+.5f);
             visuals?.SkillPulse(caster.position,radius,s.icon,new Color(.5f,.95f,1),.45f);
             targets.Clear();foreach(var e in enemies.enemies)if(EnemySystem.IsLive(e)&&(e.transform.position-caster.position).sqrMagnitude<=radius*radius)targets.Add(e);
             // A bounded breadth-first cascade. A frozen monster can explode once per wave, without recursive calls.

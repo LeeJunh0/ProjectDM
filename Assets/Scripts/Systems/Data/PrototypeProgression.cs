@@ -98,8 +98,10 @@ namespace ProjectDM
     public sealed class PrototypeGrowth
     {
         public string id, name, description, requires, parent, icon, unit;
-        public int baseCost, maxRank, minStage, legacyMaxRank, legacyCompressedMaxRank;
+        public int baseCost, maxRank, minStage, legacyMaxRank, legacyCompressedMaxRank, rankCostStep;
         public float costGrowth, step, damageRatio, x, y, costRampRanks;
+        // A new price curve can replace bundled legacy costs without changing saved-rank migration.
+        public float rankCostGrowth;
     }
 
     [Serializable]
@@ -148,6 +150,20 @@ namespace ProjectDM
 
     public static class PrototypeRules
     {
+        public static double CombatScale(double finalScale, double masteryFraction)
+        {
+            double progress = Math.Min(1, Math.Max(0, masteryFraction));
+            return 1 + (Math.Max(1, finalScale) - 1) * progress * progress * progress;
+        }
+
+        public static double CombatDamage(double damage, double scale)
+        {
+            double value = Math.Max(1, damage) * Math.Max(1, scale);
+            // Keep small hits linear; diminishing gains near the actual damage ceiling avoid M values.
+            if (value <= 100000) return value;
+            return Math.Min(999999, 100000 + 899999 * (1 - Math.Exp(-(value - 100000) / 899999)));
+        }
+
         public static int Stage(PrototypeBalance balance, PrototypeSave save)
         {
             int stage = 0;
@@ -158,6 +174,16 @@ namespace ProjectDM
 
         public static int Cost(PrototypeGrowth row, int rank, double latePriceScale)
         {
+            // Keep the first three introductory ranks cheap, then price mastery at a steady pace.
+            if (row.rankCostStep > 0)
+                return rank < 3 ? LegacyCost(row, rank, latePriceScale) :
+                    (int)Math.Min(int.MaxValue, (long)LegacyCost(row, 2, latePriceScale) + (long)row.rankCostStep * (rank - 2));
+            if (row.rankCostGrowth > 0)
+            {
+                double rankPrice = row.baseCost * Math.Pow(row.rankCostGrowth, Math.Max(0, rank)) *
+                    (1 + (latePriceScale - 1) * (1 - Math.Exp(-Math.Max(0, rank) / 8.0)));
+                return (int)Math.Min(int.MaxValue, Math.Max(1, Math.Ceiling(rankPrice)));
+            }
             double scale = LegacyRankScale(row);
             // Keep the affordable first purchase; later purchases bundle the old curve's costs.
             if (scale == 1 || rank <= 0) return LegacyCost(row, rank, latePriceScale);
@@ -469,7 +495,8 @@ namespace ProjectDM
             foreach (PrototypeGrowth r in growth.rows)
             {
                 if (r == null || Array.IndexOf(growthIds, r.id) < 0 || !ids.Add(r.id) || r.baseCost < 1 ||
-                    !Positive(r.costGrowth) || r.costGrowth < 1 || r.maxRank < 1 || r.maxRank > 10000 ||
+                    !Positive(r.costGrowth) || r.costGrowth < 1 || r.rankCostStep < 0 || !FiniteNonnegative(r.rankCostGrowth) ||
+                    (r.rankCostGrowth > 0 && r.rankCostGrowth < 1) || r.maxRank < 1 || r.maxRank > 10000 ||
                     r.minStage < 0 || r.minStage > 4 || r.legacyMaxRank < 0 || r.legacyMaxRank > 10000 || r.legacyCompressedMaxRank < 0 || r.legacyCompressedMaxRank > r.maxRank ||
                     (r.legacyMaxRank > 0 && r.legacyMaxRank < r.maxRank) || !FiniteNonnegative(r.costRampRanks) || !FiniteNonnegative(r.step) ||
                     !FiniteNonnegative(r.damageRatio) || float.IsNaN(r.x) || float.IsInfinity(r.x) ||

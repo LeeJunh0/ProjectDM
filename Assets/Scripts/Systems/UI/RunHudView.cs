@@ -124,7 +124,7 @@ namespace ProjectDM
                 alignment = TextAnchor.MiddleRight,
                 fontSize = Screen.width < 650 ? 12 : 15
             };
-            GUI.Label(new Rect(x, y + 28f, width, 26f), $"공격력 {stats.MainDamage:0.##}  |  공격 간격 {stats.AttackInterval:0.00}초  |  필드 {enemiesSystem.enemies.Count}/{enemiesSystem.FieldTarget}  |  마나 흡수 +{run.mana.AbsorbedThisRun:0.##} MP", informationStyle);
+            GUI.Label(new Rect(x, y + 28f, width, 26f), $"공격력 {stats.DisplayDamage:0}  |  공격 간격 {stats.AttackInterval:0.00}초  |  필드 {enemiesSystem.enemies.Count}/{enemiesSystem.FieldTarget}  |  마나 흡수 +{run.mana.AbsorbedThisRun:0.##} MP", informationStyle);
         }
 
         internal void DrawExperienceBar()

@@ -136,11 +136,12 @@ namespace ProjectDM.Editor
             var nodes = new List<object[]> { Headers.Concat(new[] { "displayParent", "displayOrthogonal", "displayLinks" }).Cast<object>().ToArray() };
             foreach (var tree in settings.trees) foreach (var n in tree.nodes)
                 nodes.Add(new object[] { tree.id, n.enabled, n.id, n.growthId, n.name, n.ranks, n.parent, n.parentRanks, n.x, n.y, n.displayParent, n.displayOrthogonal, string.Join("|", n.displayLinks ?? Array.Empty<string>()) });
-            var effects = new List<object[]> { new object[] { "treeId", "growthId", "name", "description", "maxRank", "baseCost", "costGrowth", "step", "requires" } };
+            var effects = new List<object[]> { new object[] { "treeId", "growthId", "name", "description", "maxRank", "baseCost", "costGrowth", "step", "requires", "rankCostGrowth", "rankCostStep" } };
             foreach (var tree in settings.trees) foreach (var row in graphs[tree.id].growthTable.rows)
-                effects.Add(new object[] { tree.id, row.id, row.name, row.description, row.maxRank, row.baseCost, row.costGrowth, row.step, row.requires });
+                effects.Add(new object[] { tree.id, row.id, row.name, row.description, row.maxRank, row.baseCost, row.costGrowth, row.step, row.requires, row.rankCostGrowth, row.rankCostStep });
             var guide = new List<object[]> {
                 new object[] { "성장트리 편집", "Nodes 시트만 가져옵니다. Effects는 구현된 성장 종류의 참고 목록입니다." },
+                new object[] { "현재 비용", "rankCostStep이 있으면 4단계부터 일정 비용 증가, 그 외 rankCostGrowth가 있으면 현재 단계별 곡선을 사용합니다. legacy 항목은 저장 단계 변환용입니다." },
                 new object[] { "흐름", "엑셀 불러오기 → 그래프/연결 편집 → 게임에 저장. 불러오기만으로 게임 설정은 바뀌지 않습니다." },
                 new object[] { "treeId", "common / projectile / flame / lightning / frost" },
                 new object[] { "enabled", "TRUE인 노드만 생성합니다. 부모를 끄면 자식의 부모도 수정하세요." },

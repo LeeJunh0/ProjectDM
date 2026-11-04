@@ -12,6 +12,9 @@ namespace ProjectDM
         private readonly ProgressionService progression;
         private readonly SkillSystem skills;
 
+        // Gameplay uses MainDamage; the enemy applies scale and ceiling exactly once.
+        internal float DisplayDamage => (float)PrototypeRules.CombatDamage(MainDamage, progression.CombatScale);
+
         internal CombatStats(GameTables tables, ProgressionService progression, SkillSystem skills)
         {
             this.tables = tables;

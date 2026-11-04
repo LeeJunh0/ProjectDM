@@ -20,6 +20,7 @@ namespace ProjectDM
         internal readonly Dictionary<string, int> activeGrowthRanks = new();
 
         internal readonly Dictionary<string, double> activeGrowthPartialRanks = new();
+        internal float CombatScale { get; private set; } = 1;
 
         internal int ActiveRank(string id) => activeGrowthRanks.TryGetValue(id, out int value) ? value : 0;
 
@@ -43,6 +44,15 @@ namespace ProjectDM
             {
                 activeGrowthRanks[row.id] = Mathf.Min(save.progress.Rank(row.id), row.maxRank);
                 activeGrowthPartialRanks[row.id] = save.progress.Rank(row.id) < row.maxRank ? save.progress.PartialRank(row.id) : 0;
+            }
+            var character = tables.characters?.Find(save.progress.selectedCharacter);
+            if (character?.enabled != true) character = tables.characters?.Find("projectile");
+            CombatScale = 1;
+            if (character?.skills != null)
+            {
+                double rank = ActiveRank("magic." + character.id + ".damage");
+                for (int i = 1; i < character.skills.Length; i++) rank += ActiveRank("magic." + character.id + "." + character.skills[i].id + "Power");
+                CombatScale = (float)PrototypeRules.CombatScale(character.finalCombatScale, rank / 72);
             }
         }
     }

@@ -80,14 +80,14 @@ MonoBehaviour:
       id: population_1
       growthId: population
       name: "\uD544\uB4DC \uAC1C\uCCB4 \uC218 I"
-      parent: experienceGradeChance_3
-      displayParent: experienceGradeChance_3
-      displayOrthogonal: 1
+      parent: xp_1
+      displayParent: xp_1
+      displayOrthogonal: 0
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2100
-      y: -1600
+      x: -420
+      y: -640
     - enabled: 1
       id: extension_1
       growthId: extension
@@ -128,14 +128,14 @@ MonoBehaviour:
       id: respawn_1
       growthId: respawn
       name: "\uB9AC\uC2A4\uD3F0 \uC18D\uB3C4 I"
-      parent: magnet_1
-      displayParent: magnet_1
-      displayOrthogonal: 1
+      parent: spawnBatch_2
+      displayParent: spawnBatch_2
+      displayOrthogonal: 0
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -1890
-      y: -2400
+      x: -210
+      y: -1440
     - enabled: 1
       id: population_2
       growthId: population
@@ -146,8 +146,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2310
-      y: -1600
+      x: -630
+      y: -640
     - enabled: 1
       id: extension_2
       growthId: extension
@@ -254,8 +254,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -2100
-      y: -2400
+      x: -420
+      y: -1440
     - enabled: 1
       id: xp_3
       growthId: xp
@@ -326,8 +326,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -2520
-      y: -1600
+      x: -840
+      y: -640
     - enabled: 1
       id: extension_3
       growthId: extension
@@ -376,8 +376,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2310
-      y: -2400
+      x: -630
+      y: -1440
     - enabled: 1
       id: damage_7
       growthId: damage
@@ -464,8 +464,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -2310
-      y: -2560
+      x: -630
+      y: -1600
     - enabled: 1
       id: extension_4
       growthId: extension
@@ -489,8 +489,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 1
       parentRanks: 3
-      x: -2730
-      y: -1600
+      x: -1050
+      y: -640
     - enabled: 1
       id: time_4
       growthId: time
@@ -604,8 +604,8 @@ MonoBehaviour:
       - respawn_2
       ranks: 3
       parentRanks: 3
-      x: -2100
-      y: -2560
+      x: -420
+      y: -1600
     - enabled: 1
       id: damage_12
       growthId: damage
@@ -662,12 +662,12 @@ MonoBehaviour:
       name: "\uC0C1\uC704 \uACBD\uD5D8\uCE58 \uD655\uB960 I"
       parent: xp_4
       displayParent: xp_4
-      displayOrthogonal: 1
+      displayOrthogonal: 0
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -1260
-      y: -960
+      x: -840
+      y: 0
     - enabled: 1
       id: silverDropChance_2
       growthId: silverDropChance
@@ -690,8 +690,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 2
-      x: -1470
-      y: -960
+      x: -1050
+      y: 0
     - enabled: 1
       id: silverDropChance_3
       growthId: silverDropChance
@@ -714,8 +714,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -1470
-      y: -1120
+      x: -1050
+      y: 160
     - enabled: 1
       id: goldDropChance_1
       growthId: goldDropChance
@@ -842,12 +842,12 @@ MonoBehaviour:
       name: "\uC774\uB3D9\uC18D\uB3C4"
       parent: experienceGradeChance_2
       displayParent: experienceGradeChance_2
-      displayOrthogonal: 1
+      displayOrthogonal: 0
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2100
-      y: -640
+      x: -1260
+      y: 0
     - enabled: 1
       id: criticalChance_1
       growthId: criticalChance
@@ -888,14 +888,14 @@ MonoBehaviour:
       id: magnet_1
       growthId: magnet
       name: "\uC544\uC774\uD15C \uB04C\uC5B4\uC624\uAE30 \uBC94\uC704"
-      parent: xp_4
-      displayParent: xp_4
+      parent: xp_1
+      displayParent: xp_1
       displayOrthogonal: 1
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -1260
-      y: -2720
+      x: -210
+      y: -480
     - enabled: 1
       id: luck_1
       growthId: luck
@@ -906,8 +906,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -1890
-      y: -3040
+      x: -210
+      y: -640
     - enabled: 1
       id: population_5
       growthId: population
@@ -918,8 +918,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2730
-      y: -1760
+      x: -1050
+      y: -800
     - enabled: 1
       id: population_6
       growthId: population
@@ -931,8 +931,8 @@ MonoBehaviour:
       - population_3
       ranks: 3
       parentRanks: 1
-      x: -2520
-      y: -1760
+      x: -840
+      y: -800
     - enabled: 1
       id: population_7
       growthId: population
@@ -944,8 +944,8 @@ MonoBehaviour:
       - population_2
       ranks: 3
       parentRanks: 1
-      x: -2310
-      y: -1760
+      x: -630
+      y: -800
     - enabled: 1
       id: population_8
       growthId: population
@@ -957,8 +957,8 @@ MonoBehaviour:
       - population_1
       ranks: 3
       parentRanks: 1
-      x: -2100
-      y: -1760
+      x: -420
+      y: -800
     - enabled: 1
       id: population_9
       growthId: population
@@ -969,8 +969,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2100
-      y: -1920
+      x: -420
+      y: -960
     - enabled: 1
       id: population_10
       growthId: population
@@ -982,8 +982,8 @@ MonoBehaviour:
       - population_7
       ranks: 3
       parentRanks: 1
-      x: -2310
-      y: -1920
+      x: -630
+      y: -960
     - enabled: 1
       id: population_11
       growthId: population
@@ -995,20 +995,20 @@ MonoBehaviour:
       - population_6
       ranks: 2
       parentRanks: 1
-      x: -2520
-      y: -1920
+      x: -840
+      y: -960
     - enabled: 1
       id: populationCap_1
       growthId: populationCap
       name: "\uBAAC\uC2A4\uD130 \uCD5C\uB300 \uAC1C\uCCB4 \uC218"
-      parent: movement_1
-      displayParent: movement_1
-      displayOrthogonal: 1
+      parent: population_1
+      displayParent: population_1
+      displayOrthogonal: 0
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2730
-      y: -160
+      x: -840
+      y: -480
     - enabled: 1
       id: populationCap_2
       growthId: populationCap
@@ -1019,8 +1019,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2940
-      y: -160
+      x: -1050
+      y: -480
     - enabled: 1
       id: populationCap_3
       growthId: populationCap
@@ -1031,8 +1031,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -3150
-      y: -160
+      x: -1260
+      y: -480
     - enabled: 1
       id: populationCap_4
       growthId: populationCap
@@ -1043,7 +1043,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -3150
+      x: -1260
       y: -320
     - enabled: 1
       id: populationCap_5
@@ -1056,7 +1056,7 @@ MonoBehaviour:
       - populationCap_2
       ranks: 3
       parentRanks: 1
-      x: -2940
+      x: -1050
       y: -320
     - enabled: 1
       id: populationCap_6
@@ -1069,7 +1069,7 @@ MonoBehaviour:
       - populationCap_1
       ranks: 3
       parentRanks: 1
-      x: -2730
+      x: -840
       y: -320
     - enabled: 1
       id: populationCap_7
@@ -1081,19 +1081,19 @@ MonoBehaviour:
       displayLinks: []
       ranks: 2
       parentRanks: 1
-      x: -2730
-      y: -480
+      x: -840
+      y: -160
     - enabled: 1
       id: spawnBatch_1
       growthId: spawnBatch
       name: "\uD55C \uBC88\uC5D0 \uC0DD\uC131\uB418\uB294 \uBAAC\uC2A4\uD130"
-      parent: movement_1
-      displayParent: movement_1
-      displayOrthogonal: 1
+      parent: population_1
+      displayParent: population_1
+      displayOrthogonal: 0
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2730
+      x: -210
       y: -960
     - enabled: 1
       id: spawnBatch_2
@@ -1105,8 +1105,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2940
-      y: -960
+      x: -210
+      y: -1120
     - enabled: 1
       id: spawnBatch_3
       growthId: spawnBatch
@@ -1117,7 +1117,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -2940
+      x: 0
       y: -1120
     - enabled: 1
       id: spawnBatch_4
@@ -1130,20 +1130,20 @@ MonoBehaviour:
       - spawnBatch_1
       ranks: 3
       parentRanks: 1
-      x: -2730
-      y: -1120
+      x: 0
+      y: -960
     - enabled: 1
       id: magnetDropChance_1
       growthId: magnetDropChance
       name: "\uC790\uC11D \uB4DC\uB78D \uD655\uB960"
       parent: population_4
       displayParent: population_4
-      displayOrthogonal: 1
+      displayOrthogonal: 0
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -3360
-      y: -1600
+      x: -1260
+      y: -640
   - id: projectile
     name: "\uB9C8\uBC95\uBBF8\uC0AC\uC77C"
     nodes:
@@ -1342,6 +1342,306 @@ MonoBehaviour:
       ranks: 1
       parentRanks: 1
       x: 210
+      y: -320
+    - enabled: 1
+      id: magic.projectile.damage_mastery_2
+      growthId: magic.projectile.damage
+      name: "\ub9c8\ub825\ud0c4 \uc704\ub825 \uc219\ub828 2"
+      parent: magic.projectile.split
+      displayParent: magic.projectile.split
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 210
+      y: -480
+    - enabled: 1
+      id: magic.projectile.damage_mastery_3
+      growthId: magic.projectile.damage
+      name: "\ub9c8\ub825\ud0c4 \uc704\ub825 \uc219\ub828 3"
+      parent: magic.projectile.damage_mastery_2
+      displayParent: magic.projectile.damage_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: -480
+    - enabled: 1
+      id: magic.projectile.damage_mastery_4
+      growthId: magic.projectile.damage
+      name: "\ub9c8\ub825\ud0c4 \uc704\ub825 \uc219\ub828 4"
+      parent: magic.projectile.damage_mastery_3
+      displayParent: magic.projectile.damage_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -480
+    - enabled: 1
+      id: magic.projectile.damage_mastery_5
+      growthId: magic.projectile.damage
+      name: "\ub9c8\ub825\ud0c4 \uc704\ub825 \uc219\ub828 5"
+      parent: magic.projectile.damage_mastery_4
+      displayParent: magic.projectile.damage_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -640
+    - enabled: 1
+      id: magic.projectile.damage_mastery_6
+      growthId: magic.projectile.damage
+      name: "\ub9c8\ub825\ud0c4 \uc704\ub825 \uc219\ub828 6"
+      parent: magic.projectile.damage_mastery_5
+      displayParent: magic.projectile.damage_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: -640
+    - enabled: 1
+      id: magic.projectile.damage_mastery_7
+      growthId: magic.projectile.damage
+      name: "\ub9c8\ub825\ud0c4 \uc704\ub825 \uc219\ub828 7"
+      parent: magic.projectile.damage_mastery_6
+      displayParent: magic.projectile.damage_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 210
+      y: -640
+    - enabled: 1
+      id: magic.projectile.damage_mastery_8
+      growthId: magic.projectile.damage
+      name: "\ub9c8\ub825\ud0c4 \uc704\ub825 \uc219\ub828 8"
+      parent: magic.projectile.damage_mastery_7
+      displayParent: magic.projectile.damage_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 210
+      y: -800
+    - enabled: 1
+      id: magic.projectile.beamPower_mastery_2
+      growthId: magic.projectile.beamPower
+      name: "\ub9c8\ub825 \uad11\uc120 \uc704\ub825 \uc219\ub828 2"
+      parent: magic.projectile.beamSweep
+      displayParent: magic.projectile.beamSweep
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 480
+    - enabled: 1
+      id: magic.projectile.beamPower_mastery_3
+      growthId: magic.projectile.beamPower
+      name: "\ub9c8\ub825 \uad11\uc120 \uc704\ub825 \uc219\ub828 3"
+      parent: magic.projectile.beamPower_mastery_2
+      displayParent: magic.projectile.beamPower_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: 480
+    - enabled: 1
+      id: magic.projectile.beamPower_mastery_4
+      growthId: magic.projectile.beamPower
+      name: "\ub9c8\ub825 \uad11\uc120 \uc704\ub825 \uc219\ub828 4"
+      parent: magic.projectile.beamPower_mastery_3
+      displayParent: magic.projectile.beamPower_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: 480
+    - enabled: 1
+      id: magic.projectile.beamPower_mastery_5
+      growthId: magic.projectile.beamPower
+      name: "\ub9c8\ub825 \uad11\uc120 \uc704\ub825 \uc219\ub828 5"
+      parent: magic.projectile.beamPower_mastery_4
+      displayParent: magic.projectile.beamPower_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: 640
+    - enabled: 1
+      id: magic.projectile.beamPower_mastery_6
+      growthId: magic.projectile.beamPower
+      name: "\ub9c8\ub825 \uad11\uc120 \uc704\ub825 \uc219\ub828 6"
+      parent: magic.projectile.beamPower_mastery_5
+      displayParent: magic.projectile.beamPower_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: 640
+    - enabled: 1
+      id: magic.projectile.beamPower_mastery_7
+      growthId: magic.projectile.beamPower
+      name: "\ub9c8\ub825 \uad11\uc120 \uc704\ub825 \uc219\ub828 7"
+      parent: magic.projectile.beamPower_mastery_6
+      displayParent: magic.projectile.beamPower_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 640
+    - enabled: 1
+      id: magic.projectile.beamPower_mastery_8
+      growthId: magic.projectile.beamPower
+      name: "\ub9c8\ub825 \uad11\uc120 \uc704\ub825 \uc219\ub828 8"
+      parent: magic.projectile.beamPower_mastery_7
+      displayParent: magic.projectile.beamPower_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 800
+    - enabled: 1
+      id: magic.projectile.satellitePower_mastery_2
+      growthId: magic.projectile.satellitePower
+      name: "\ub9c8\ub825 \uc704\uc131 \uc704\ub825 \uc219\ub828 2"
+      parent: magic.projectile.satelliteVolley
+      displayParent: magic.projectile.satelliteVolley
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 480
+    - enabled: 1
+      id: magic.projectile.satellitePower_mastery_3
+      growthId: magic.projectile.satellitePower
+      name: "\ub9c8\ub825 \uc704\uc131 \uc704\ub825 \uc219\ub828 3"
+      parent: magic.projectile.satellitePower_mastery_2
+      displayParent: magic.projectile.satellitePower_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 480
+    - enabled: 1
+      id: magic.projectile.satellitePower_mastery_4
+      growthId: magic.projectile.satellitePower
+      name: "\ub9c8\ub825 \uc704\uc131 \uc704\ub825 \uc219\ub828 4"
+      parent: magic.projectile.satellitePower_mastery_3
+      displayParent: magic.projectile.satellitePower_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -840
+      y: 480
+    - enabled: 1
+      id: magic.projectile.satellitePower_mastery_5
+      growthId: magic.projectile.satellitePower
+      name: "\ub9c8\ub825 \uc704\uc131 \uc704\ub825 \uc219\ub828 5"
+      parent: magic.projectile.satellitePower_mastery_4
+      displayParent: magic.projectile.satellitePower_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -840
+      y: 640
+    - enabled: 1
+      id: magic.projectile.satellitePower_mastery_6
+      growthId: magic.projectile.satellitePower
+      name: "\ub9c8\ub825 \uc704\uc131 \uc704\ub825 \uc219\ub828 6"
+      parent: magic.projectile.satellitePower_mastery_5
+      displayParent: magic.projectile.satellitePower_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 640
+    - enabled: 1
+      id: magic.projectile.satellitePower_mastery_7
+      growthId: magic.projectile.satellitePower
+      name: "\ub9c8\ub825 \uc704\uc131 \uc704\ub825 \uc219\ub828 7"
+      parent: magic.projectile.satellitePower_mastery_6
+      displayParent: magic.projectile.satellitePower_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 640
+    - enabled: 1
+      id: magic.projectile.satellitePower_mastery_8
+      growthId: magic.projectile.satellitePower
+      name: "\ub9c8\ub825 \uc704\uc131 \uc704\ub825 \uc219\ub828 8"
+      parent: magic.projectile.satellitePower_mastery_7
+      displayParent: magic.projectile.satellitePower_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 800
+    - enabled: 1
+      id: magic.projectile.hunt
+      growthId: magic.projectile.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 1"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: -210
+      y: -160
+    - enabled: 1
+      id: magic.projectile.hunt_mastery_2
+      growthId: magic.projectile.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 2"
+      parent: magic.projectile.hunt
+      displayParent: magic.projectile.hunt
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -160
+    - enabled: 1
+      id: magic.projectile.hunt_mastery_3
+      growthId: magic.projectile.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 3"
+      parent: magic.projectile.hunt_mastery_2
+      displayParent: magic.projectile.hunt_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -320
+    - enabled: 1
+      id: magic.projectile.hunt_mastery_4
+      growthId: magic.projectile.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 4"
+      parent: magic.projectile.hunt_mastery_3
+      displayParent: magic.projectile.hunt_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -210
       y: -320
   - id: flame
     name: "\uD654\uC5FC"
@@ -1542,6 +1842,306 @@ MonoBehaviour:
       parentRanks: 1
       x: 210
       y: -320
+    - enabled: 1
+      id: magic.flame.damage_mastery_2
+      growthId: magic.flame.damage
+      name: "\ud654\uc5fc \uc704\ub825 \uc219\ub828 2"
+      parent: magic.flame.spread
+      displayParent: magic.flame.spread
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 210
+      y: -480
+    - enabled: 1
+      id: magic.flame.damage_mastery_3
+      growthId: magic.flame.damage
+      name: "\ud654\uc5fc \uc704\ub825 \uc219\ub828 3"
+      parent: magic.flame.damage_mastery_2
+      displayParent: magic.flame.damage_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: -480
+    - enabled: 1
+      id: magic.flame.damage_mastery_4
+      growthId: magic.flame.damage
+      name: "\ud654\uc5fc \uc704\ub825 \uc219\ub828 4"
+      parent: magic.flame.damage_mastery_3
+      displayParent: magic.flame.damage_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -480
+    - enabled: 1
+      id: magic.flame.damage_mastery_5
+      growthId: magic.flame.damage
+      name: "\ud654\uc5fc \uc704\ub825 \uc219\ub828 5"
+      parent: magic.flame.damage_mastery_4
+      displayParent: magic.flame.damage_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -640
+    - enabled: 1
+      id: magic.flame.damage_mastery_6
+      growthId: magic.flame.damage
+      name: "\ud654\uc5fc \uc704\ub825 \uc219\ub828 6"
+      parent: magic.flame.damage_mastery_5
+      displayParent: magic.flame.damage_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: -640
+    - enabled: 1
+      id: magic.flame.damage_mastery_7
+      growthId: magic.flame.damage
+      name: "\ud654\uc5fc \uc704\ub825 \uc219\ub828 7"
+      parent: magic.flame.damage_mastery_6
+      displayParent: magic.flame.damage_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 210
+      y: -640
+    - enabled: 1
+      id: magic.flame.damage_mastery_8
+      growthId: magic.flame.damage
+      name: "\ud654\uc5fc \uc704\ub825 \uc219\ub828 8"
+      parent: magic.flame.damage_mastery_7
+      displayParent: magic.flame.damage_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 210
+      y: -800
+    - enabled: 1
+      id: magic.flame.firefieldPower_mastery_2
+      growthId: magic.flame.firefieldPower
+      name: "\ubd88\uae38 \uc9c0\ub300 \uc704\ub825 \uc219\ub828 2"
+      parent: magic.flame.firefieldDuration
+      displayParent: magic.flame.firefieldDuration
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 480
+    - enabled: 1
+      id: magic.flame.firefieldPower_mastery_3
+      growthId: magic.flame.firefieldPower
+      name: "\ubd88\uae38 \uc9c0\ub300 \uc704\ub825 \uc219\ub828 3"
+      parent: magic.flame.firefieldPower_mastery_2
+      displayParent: magic.flame.firefieldPower_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: 480
+    - enabled: 1
+      id: magic.flame.firefieldPower_mastery_4
+      growthId: magic.flame.firefieldPower
+      name: "\ubd88\uae38 \uc9c0\ub300 \uc704\ub825 \uc219\ub828 4"
+      parent: magic.flame.firefieldPower_mastery_3
+      displayParent: magic.flame.firefieldPower_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: 480
+    - enabled: 1
+      id: magic.flame.firefieldPower_mastery_5
+      growthId: magic.flame.firefieldPower
+      name: "\ubd88\uae38 \uc9c0\ub300 \uc704\ub825 \uc219\ub828 5"
+      parent: magic.flame.firefieldPower_mastery_4
+      displayParent: magic.flame.firefieldPower_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: 640
+    - enabled: 1
+      id: magic.flame.firefieldPower_mastery_6
+      growthId: magic.flame.firefieldPower
+      name: "\ubd88\uae38 \uc9c0\ub300 \uc704\ub825 \uc219\ub828 6"
+      parent: magic.flame.firefieldPower_mastery_5
+      displayParent: magic.flame.firefieldPower_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: 640
+    - enabled: 1
+      id: magic.flame.firefieldPower_mastery_7
+      growthId: magic.flame.firefieldPower
+      name: "\ubd88\uae38 \uc9c0\ub300 \uc704\ub825 \uc219\ub828 7"
+      parent: magic.flame.firefieldPower_mastery_6
+      displayParent: magic.flame.firefieldPower_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 640
+    - enabled: 1
+      id: magic.flame.firefieldPower_mastery_8
+      growthId: magic.flame.firefieldPower
+      name: "\ubd88\uae38 \uc9c0\ub300 \uc704\ub825 \uc219\ub828 8"
+      parent: magic.flame.firefieldPower_mastery_7
+      displayParent: magic.flame.firefieldPower_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 800
+    - enabled: 1
+      id: magic.flame.meteorPower_mastery_2
+      growthId: magic.flame.meteorPower
+      name: "\uc720\uc131 \ub099\ud558 \uc704\ub825 \uc219\ub828 2"
+      parent: magic.flame.meteorIgnite
+      displayParent: magic.flame.meteorIgnite
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 480
+    - enabled: 1
+      id: magic.flame.meteorPower_mastery_3
+      growthId: magic.flame.meteorPower
+      name: "\uc720\uc131 \ub099\ud558 \uc704\ub825 \uc219\ub828 3"
+      parent: magic.flame.meteorPower_mastery_2
+      displayParent: magic.flame.meteorPower_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 480
+    - enabled: 1
+      id: magic.flame.meteorPower_mastery_4
+      growthId: magic.flame.meteorPower
+      name: "\uc720\uc131 \ub099\ud558 \uc704\ub825 \uc219\ub828 4"
+      parent: magic.flame.meteorPower_mastery_3
+      displayParent: magic.flame.meteorPower_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -840
+      y: 480
+    - enabled: 1
+      id: magic.flame.meteorPower_mastery_5
+      growthId: magic.flame.meteorPower
+      name: "\uc720\uc131 \ub099\ud558 \uc704\ub825 \uc219\ub828 5"
+      parent: magic.flame.meteorPower_mastery_4
+      displayParent: magic.flame.meteorPower_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -840
+      y: 640
+    - enabled: 1
+      id: magic.flame.meteorPower_mastery_6
+      growthId: magic.flame.meteorPower
+      name: "\uc720\uc131 \ub099\ud558 \uc704\ub825 \uc219\ub828 6"
+      parent: magic.flame.meteorPower_mastery_5
+      displayParent: magic.flame.meteorPower_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 640
+    - enabled: 1
+      id: magic.flame.meteorPower_mastery_7
+      growthId: magic.flame.meteorPower
+      name: "\uc720\uc131 \ub099\ud558 \uc704\ub825 \uc219\ub828 7"
+      parent: magic.flame.meteorPower_mastery_6
+      displayParent: magic.flame.meteorPower_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 640
+    - enabled: 1
+      id: magic.flame.meteorPower_mastery_8
+      growthId: magic.flame.meteorPower
+      name: "\uc720\uc131 \ub099\ud558 \uc704\ub825 \uc219\ub828 8"
+      parent: magic.flame.meteorPower_mastery_7
+      displayParent: magic.flame.meteorPower_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 800
+    - enabled: 1
+      id: magic.flame.hunt
+      growthId: magic.flame.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 1"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: -210
+      y: -160
+    - enabled: 1
+      id: magic.flame.hunt_mastery_2
+      growthId: magic.flame.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 2"
+      parent: magic.flame.hunt
+      displayParent: magic.flame.hunt
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -160
+    - enabled: 1
+      id: magic.flame.hunt_mastery_3
+      growthId: magic.flame.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 3"
+      parent: magic.flame.hunt_mastery_2
+      displayParent: magic.flame.hunt_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -320
+    - enabled: 1
+      id: magic.flame.hunt_mastery_4
+      growthId: magic.flame.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 4"
+      parent: magic.flame.hunt_mastery_3
+      displayParent: magic.flame.hunt_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -210
+      y: -320
   - id: lightning
     name: "\uBC88\uAC1C"
     nodes:
@@ -1740,6 +2340,306 @@ MonoBehaviour:
       ranks: 1
       parentRanks: 1
       x: 210
+      y: -320
+    - enabled: 1
+      id: magic.lightning.damage_mastery_2
+      growthId: magic.lightning.damage
+      name: "\ubc88\uac1c \uc704\ub825 \uc219\ub828 2"
+      parent: magic.lightning.fork
+      displayParent: magic.lightning.fork
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 210
+      y: -480
+    - enabled: 1
+      id: magic.lightning.damage_mastery_3
+      growthId: magic.lightning.damage
+      name: "\ubc88\uac1c \uc704\ub825 \uc219\ub828 3"
+      parent: magic.lightning.damage_mastery_2
+      displayParent: magic.lightning.damage_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: -480
+    - enabled: 1
+      id: magic.lightning.damage_mastery_4
+      growthId: magic.lightning.damage
+      name: "\ubc88\uac1c \uc704\ub825 \uc219\ub828 4"
+      parent: magic.lightning.damage_mastery_3
+      displayParent: magic.lightning.damage_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -480
+    - enabled: 1
+      id: magic.lightning.damage_mastery_5
+      growthId: magic.lightning.damage
+      name: "\ubc88\uac1c \uc704\ub825 \uc219\ub828 5"
+      parent: magic.lightning.damage_mastery_4
+      displayParent: magic.lightning.damage_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -640
+    - enabled: 1
+      id: magic.lightning.damage_mastery_6
+      growthId: magic.lightning.damage
+      name: "\ubc88\uac1c \uc704\ub825 \uc219\ub828 6"
+      parent: magic.lightning.damage_mastery_5
+      displayParent: magic.lightning.damage_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: -640
+    - enabled: 1
+      id: magic.lightning.damage_mastery_7
+      growthId: magic.lightning.damage
+      name: "\ubc88\uac1c \uc704\ub825 \uc219\ub828 7"
+      parent: magic.lightning.damage_mastery_6
+      displayParent: magic.lightning.damage_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 210
+      y: -640
+    - enabled: 1
+      id: magic.lightning.damage_mastery_8
+      growthId: magic.lightning.damage
+      name: "\ubc88\uac1c \uc704\ub825 \uc219\ub828 8"
+      parent: magic.lightning.damage_mastery_7
+      displayParent: magic.lightning.damage_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 210
+      y: -800
+    - enabled: 1
+      id: magic.lightning.orbPower_mastery_2
+      growthId: magic.lightning.orbPower
+      name: "\uc804\uae30 \uad6c\uccb4 \uc704\ub825 \uc219\ub828 2"
+      parent: magic.lightning.orbLink
+      displayParent: magic.lightning.orbLink
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 480
+    - enabled: 1
+      id: magic.lightning.orbPower_mastery_3
+      growthId: magic.lightning.orbPower
+      name: "\uc804\uae30 \uad6c\uccb4 \uc704\ub825 \uc219\ub828 3"
+      parent: magic.lightning.orbPower_mastery_2
+      displayParent: magic.lightning.orbPower_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: 480
+    - enabled: 1
+      id: magic.lightning.orbPower_mastery_4
+      growthId: magic.lightning.orbPower
+      name: "\uc804\uae30 \uad6c\uccb4 \uc704\ub825 \uc219\ub828 4"
+      parent: magic.lightning.orbPower_mastery_3
+      displayParent: magic.lightning.orbPower_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: 480
+    - enabled: 1
+      id: magic.lightning.orbPower_mastery_5
+      growthId: magic.lightning.orbPower
+      name: "\uc804\uae30 \uad6c\uccb4 \uc704\ub825 \uc219\ub828 5"
+      parent: magic.lightning.orbPower_mastery_4
+      displayParent: magic.lightning.orbPower_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: 640
+    - enabled: 1
+      id: magic.lightning.orbPower_mastery_6
+      growthId: magic.lightning.orbPower
+      name: "\uc804\uae30 \uad6c\uccb4 \uc704\ub825 \uc219\ub828 6"
+      parent: magic.lightning.orbPower_mastery_5
+      displayParent: magic.lightning.orbPower_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: 640
+    - enabled: 1
+      id: magic.lightning.orbPower_mastery_7
+      growthId: magic.lightning.orbPower
+      name: "\uc804\uae30 \uad6c\uccb4 \uc704\ub825 \uc219\ub828 7"
+      parent: magic.lightning.orbPower_mastery_6
+      displayParent: magic.lightning.orbPower_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 640
+    - enabled: 1
+      id: magic.lightning.orbPower_mastery_8
+      growthId: magic.lightning.orbPower
+      name: "\uc804\uae30 \uad6c\uccb4 \uc704\ub825 \uc219\ub828 8"
+      parent: magic.lightning.orbPower_mastery_7
+      displayParent: magic.lightning.orbPower_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 800
+    - enabled: 1
+      id: magic.lightning.thunderPower_mastery_2
+      growthId: magic.lightning.thunderPower
+      name: "\ub099\ub8b0 \uc704\ub825 \uc219\ub828 2"
+      parent: magic.lightning.thunderChain
+      displayParent: magic.lightning.thunderChain
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 480
+    - enabled: 1
+      id: magic.lightning.thunderPower_mastery_3
+      growthId: magic.lightning.thunderPower
+      name: "\ub099\ub8b0 \uc704\ub825 \uc219\ub828 3"
+      parent: magic.lightning.thunderPower_mastery_2
+      displayParent: magic.lightning.thunderPower_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 480
+    - enabled: 1
+      id: magic.lightning.thunderPower_mastery_4
+      growthId: magic.lightning.thunderPower
+      name: "\ub099\ub8b0 \uc704\ub825 \uc219\ub828 4"
+      parent: magic.lightning.thunderPower_mastery_3
+      displayParent: magic.lightning.thunderPower_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -840
+      y: 480
+    - enabled: 1
+      id: magic.lightning.thunderPower_mastery_5
+      growthId: magic.lightning.thunderPower
+      name: "\ub099\ub8b0 \uc704\ub825 \uc219\ub828 5"
+      parent: magic.lightning.thunderPower_mastery_4
+      displayParent: magic.lightning.thunderPower_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -840
+      y: 640
+    - enabled: 1
+      id: magic.lightning.thunderPower_mastery_6
+      growthId: magic.lightning.thunderPower
+      name: "\ub099\ub8b0 \uc704\ub825 \uc219\ub828 6"
+      parent: magic.lightning.thunderPower_mastery_5
+      displayParent: magic.lightning.thunderPower_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 640
+    - enabled: 1
+      id: magic.lightning.thunderPower_mastery_7
+      growthId: magic.lightning.thunderPower
+      name: "\ub099\ub8b0 \uc704\ub825 \uc219\ub828 7"
+      parent: magic.lightning.thunderPower_mastery_6
+      displayParent: magic.lightning.thunderPower_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 640
+    - enabled: 1
+      id: magic.lightning.thunderPower_mastery_8
+      growthId: magic.lightning.thunderPower
+      name: "\ub099\ub8b0 \uc704\ub825 \uc219\ub828 8"
+      parent: magic.lightning.thunderPower_mastery_7
+      displayParent: magic.lightning.thunderPower_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 800
+    - enabled: 1
+      id: magic.lightning.hunt
+      growthId: magic.lightning.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 1"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: -210
+      y: -160
+    - enabled: 1
+      id: magic.lightning.hunt_mastery_2
+      growthId: magic.lightning.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 2"
+      parent: magic.lightning.hunt
+      displayParent: magic.lightning.hunt
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -160
+    - enabled: 1
+      id: magic.lightning.hunt_mastery_3
+      growthId: magic.lightning.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 3"
+      parent: magic.lightning.hunt_mastery_2
+      displayParent: magic.lightning.hunt_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -320
+    - enabled: 1
+      id: magic.lightning.hunt_mastery_4
+      growthId: magic.lightning.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 4"
+      parent: magic.lightning.hunt_mastery_3
+      displayParent: magic.lightning.hunt_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -210
       y: -320
   - id: frost
     name: "\uBE59\uACB0"
@@ -1978,3 +2878,303 @@ MonoBehaviour:
       parentRanks: 1
       x: 630
       y: -480
+    - enabled: 1
+      id: magic.frost.damage_mastery_2
+      growthId: magic.frost.damage
+      name: "\uc5bc\uc74c \uc704\ub825 \uc219\ub828 2"
+      parent: magic.frost.rings
+      displayParent: magic.frost.rings
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 630
+      y: -640
+    - enabled: 1
+      id: magic.frost.damage_mastery_3
+      growthId: magic.frost.damage
+      name: "\uc5bc\uc74c \uc704\ub825 \uc219\ub828 3"
+      parent: magic.frost.damage_mastery_2
+      displayParent: magic.frost.damage_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: -640
+    - enabled: 1
+      id: magic.frost.damage_mastery_4
+      growthId: magic.frost.damage
+      name: "\uc5bc\uc74c \uc704\ub825 \uc219\ub828 4"
+      parent: magic.frost.damage_mastery_3
+      displayParent: magic.frost.damage_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 1050
+      y: -640
+    - enabled: 1
+      id: magic.frost.damage_mastery_5
+      growthId: magic.frost.damage
+      name: "\uc5bc\uc74c \uc704\ub825 \uc219\ub828 5"
+      parent: magic.frost.damage_mastery_4
+      displayParent: magic.frost.damage_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 1050
+      y: -800
+    - enabled: 1
+      id: magic.frost.damage_mastery_6
+      growthId: magic.frost.damage
+      name: "\uc5bc\uc74c \uc704\ub825 \uc219\ub828 6"
+      parent: magic.frost.damage_mastery_5
+      displayParent: magic.frost.damage_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: -800
+    - enabled: 1
+      id: magic.frost.damage_mastery_7
+      growthId: magic.frost.damage
+      name: "\uc5bc\uc74c \uc704\ub825 \uc219\ub828 7"
+      parent: magic.frost.damage_mastery_6
+      displayParent: magic.frost.damage_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -800
+    - enabled: 1
+      id: magic.frost.damage_mastery_8
+      growthId: magic.frost.damage
+      name: "\uc5bc\uc74c \uc704\ub825 \uc219\ub828 8"
+      parent: magic.frost.damage_mastery_7
+      displayParent: magic.frost.damage_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: -960
+    - enabled: 1
+      id: magic.frost.blizzardPower_mastery_2
+      growthId: magic.frost.blizzardPower
+      name: "\ub208\ubcf4\ub77c \uc704\ub825 \uc219\ub828 2"
+      parent: magic.frost.blizzardCold
+      displayParent: magic.frost.blizzardCold
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: 420
+      y: 480
+    - enabled: 1
+      id: magic.frost.blizzardPower_mastery_3
+      growthId: magic.frost.blizzardPower
+      name: "\ub208\ubcf4\ub77c \uc704\ub825 \uc219\ub828 3"
+      parent: magic.frost.blizzardPower_mastery_2
+      displayParent: magic.frost.blizzardPower_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: 480
+    - enabled: 1
+      id: magic.frost.blizzardPower_mastery_4
+      growthId: magic.frost.blizzardPower
+      name: "\ub208\ubcf4\ub77c \uc704\ub825 \uc219\ub828 4"
+      parent: magic.frost.blizzardPower_mastery_3
+      displayParent: magic.frost.blizzardPower_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: 480
+    - enabled: 1
+      id: magic.frost.blizzardPower_mastery_5
+      growthId: magic.frost.blizzardPower
+      name: "\ub208\ubcf4\ub77c \uc704\ub825 \uc219\ub828 5"
+      parent: magic.frost.blizzardPower_mastery_4
+      displayParent: magic.frost.blizzardPower_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 840
+      y: 640
+    - enabled: 1
+      id: magic.frost.blizzardPower_mastery_6
+      growthId: magic.frost.blizzardPower
+      name: "\ub208\ubcf4\ub77c \uc704\ub825 \uc219\ub828 6"
+      parent: magic.frost.blizzardPower_mastery_5
+      displayParent: magic.frost.blizzardPower_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 630
+      y: 640
+    - enabled: 1
+      id: magic.frost.blizzardPower_mastery_7
+      growthId: magic.frost.blizzardPower
+      name: "\ub208\ubcf4\ub77c \uc704\ub825 \uc219\ub828 7"
+      parent: magic.frost.blizzardPower_mastery_6
+      displayParent: magic.frost.blizzardPower_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 640
+    - enabled: 1
+      id: magic.frost.blizzardPower_mastery_8
+      growthId: magic.frost.blizzardPower
+      name: "\ub208\ubcf4\ub77c \uc704\ub825 \uc219\ub828 8"
+      parent: magic.frost.blizzardPower_mastery_7
+      displayParent: magic.frost.blizzardPower_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: 420
+      y: 800
+    - enabled: 1
+      id: magic.frost.shatterPower_mastery_2
+      growthId: magic.frost.shatterPower
+      name: "\uc1c4\ube59 \ud30c\ub3d9 \uc704\ub825 \uc219\ub828 2"
+      parent: magic.frost.shatterCascade
+      displayParent: magic.frost.shatterCascade
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 1
+      x: -420
+      y: 480
+    - enabled: 1
+      id: magic.frost.shatterPower_mastery_3
+      growthId: magic.frost.shatterPower
+      name: "\uc1c4\ube59 \ud30c\ub3d9 \uc704\ub825 \uc219\ub828 3"
+      parent: magic.frost.shatterPower_mastery_2
+      displayParent: magic.frost.shatterPower_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 480
+    - enabled: 1
+      id: magic.frost.shatterPower_mastery_4
+      growthId: magic.frost.shatterPower
+      name: "\uc1c4\ube59 \ud30c\ub3d9 \uc704\ub825 \uc219\ub828 4"
+      parent: magic.frost.shatterPower_mastery_3
+      displayParent: magic.frost.shatterPower_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -840
+      y: 480
+    - enabled: 1
+      id: magic.frost.shatterPower_mastery_5
+      growthId: magic.frost.shatterPower
+      name: "\uc1c4\ube59 \ud30c\ub3d9 \uc704\ub825 \uc219\ub828 5"
+      parent: magic.frost.shatterPower_mastery_4
+      displayParent: magic.frost.shatterPower_mastery_4
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -840
+      y: 640
+    - enabled: 1
+      id: magic.frost.shatterPower_mastery_6
+      growthId: magic.frost.shatterPower
+      name: "\uc1c4\ube59 \ud30c\ub3d9 \uc704\ub825 \uc219\ub828 6"
+      parent: magic.frost.shatterPower_mastery_5
+      displayParent: magic.frost.shatterPower_mastery_5
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -630
+      y: 640
+    - enabled: 1
+      id: magic.frost.shatterPower_mastery_7
+      growthId: magic.frost.shatterPower
+      name: "\uc1c4\ube59 \ud30c\ub3d9 \uc704\ub825 \uc219\ub828 7"
+      parent: magic.frost.shatterPower_mastery_6
+      displayParent: magic.frost.shatterPower_mastery_6
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 640
+    - enabled: 1
+      id: magic.frost.shatterPower_mastery_8
+      growthId: magic.frost.shatterPower
+      name: "\uc1c4\ube59 \ud30c\ub3d9 \uc704\ub825 \uc219\ub828 8"
+      parent: magic.frost.shatterPower_mastery_7
+      displayParent: magic.frost.shatterPower_mastery_7
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: 800
+    - enabled: 1
+      id: magic.frost.hunt
+      growthId: magic.frost.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 1"
+      parent: ROOT
+      displayParent: ROOT
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 0
+      x: -210
+      y: -160
+    - enabled: 1
+      id: magic.frost.hunt_mastery_2
+      growthId: magic.frost.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 2"
+      parent: magic.frost.hunt
+      displayParent: magic.frost.hunt
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -160
+    - enabled: 1
+      id: magic.frost.hunt_mastery_3
+      growthId: magic.frost.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 3"
+      parent: magic.frost.hunt_mastery_2
+      displayParent: magic.frost.hunt_mastery_2
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -420
+      y: -320
+    - enabled: 1
+      id: magic.frost.hunt_mastery_4
+      growthId: magic.frost.hunt
+      name: "\ubb34\ub9ac \uc0ac\ub0e5 \uc219\ub828 4"
+      parent: magic.frost.hunt_mastery_3
+      displayParent: magic.frost.hunt_mastery_3
+      displayOrthogonal: 0
+      displayLinks: []
+      ranks: 3
+      parentRanks: 3
+      x: -210
+      y: -320
