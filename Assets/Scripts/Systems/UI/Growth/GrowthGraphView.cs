@@ -64,7 +64,9 @@ namespace ProjectDM
 
         internal Vector2 metaTreePan;
 
-        internal float metaTreeZoom = .75f;
+        internal const float DefaultZoom = 1.45f;
+        internal const float MinimumZoom = DefaultZoom * .5f;
+        internal float metaTreeZoom = DefaultZoom;
 
         internal int selectedMetaTreeNode = -1;
 
@@ -87,9 +89,7 @@ namespace ProjectDM
             DrawMetaTreeCanvas(treeCanvas);
             DrawPrototypeGrowthDetails();
             DrawGrowthWallet();
-            DrawPrototypeGraphOverview();
-            DrawStageSelection();
-            DrawCharacterSelection();
+            DrawGraphDebugControls();
             // This is a navigation button, not a popup/header; the graph still owns the whole screen.
             Rect navigationArea = GrowthNavigationRect;
             Rect navigation = new Rect(navigationArea.x, navigationArea.yMax - 44, navigationArea.width, 44);
@@ -117,8 +117,8 @@ namespace ProjectDM
                 return;
             }
 
-            // Finish a middle-button drag even when the pointer crosses the fixed purchase panel.
-            if (currentEvent.type == EventType.MouseUp && currentEvent.button == 2)
+            // Finish a background drag even when the pointer crosses a fixed panel.
+            if (currentEvent.rawType == EventType.MouseUp && currentEvent.button == 0)
             {
                 if (isPanningMetaTree) currentEvent.Use();
                 isPanningMetaTree = false;
@@ -137,15 +137,18 @@ namespace ProjectDM
             {
                 purchaseHold.Clear();
                 float previousZoom = metaTreeZoom;
-                metaTreeZoom = Mathf.Clamp(metaTreeZoom - currentEvent.delta.y * .06f, .04f, 1.45f);
+                metaTreeZoom = Mathf.Clamp(metaTreeZoom - currentEvent.delta.y * .06f, MinimumZoom, DefaultZoom);
                 Vector2 canvasCenter = canvas.size * .5f;
                 Vector2 pointer = currentEvent.mousePosition - canvas.position;
                 metaTreePan += (pointer - canvasCenter - metaTreePan) * (1f - metaTreeZoom / previousZoom);
                 currentEvent.Use();
             }
 
-            if (currentEvent.type == EventType.MouseDown && currentEvent.button == 2 && canvas.Contains(currentEvent.mousePosition))
+            if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0 && canvas.Contains(currentEvent.mousePosition))
             {
+                Vector2 pointer = currentEvent.mousePosition - canvas.position;
+                for (int i = 1; i < metaTreeNodes.Length; i++)
+                    if (metaTreeNodes[i].state != MetaTreeNodeState.Hidden && GetMetaTreeNodeHitRect(metaTreeNodes[i], canvas.size).Contains(pointer)) return;
                 purchaseHold.Clear();
                 isPanningMetaTree = true;
                 metaTreeLastPointer = currentEvent.mousePosition;
@@ -350,12 +353,15 @@ namespace ProjectDM
             PixelUiArt.Draw(nodeRect, PixelUiArt.Node, Mathf.Max(2, nodeRect.width * .14f), frameTint);
             if (purchaseHold.NodeId == node.id)
             {
-                Rect inside = new Rect(nodeRect.x + nodeRect.width * .14f, nodeRect.y + nodeRect.height * .14f,
-                    nodeRect.width * .72f, nodeRect.height * .72f);
+                float frameBorder = Mathf.Max(2, nodeRect.width * .14f);
+                float fillInset = frameBorder * .43f;
+                Rect inside = new Rect(nodeRect.x + fillInset, nodeRect.y + fillInset,
+                    nodeRect.width - fillInset * 2, nodeRect.height - fillInset * 2);
                 Rect fill = GrowthHoldFillRect(inside, purchaseHold.Progress(Time.unscaledTime));
                 Color tint = ThemeTint(new Color(1f, .72f, .24f, .55f));
-                UiGraphics.DrawSolidRect(fill, tint);
-                UiGraphics.DrawSolidRect(new Rect(fill.x, fill.y, fill.width, Mathf.Min(2, fill.height)), new Color(tint.r, tint.g, tint.b, .95f));
+                DrawGrowthHoldFill(fill, inside, frameBorder - fillInset, tint);
+                DrawGrowthHoldFill(new Rect(fill.x, fill.y, fill.width, Mathf.Min(2, fill.height)), inside,
+                    frameBorder - fillInset, new Color(tint.r, tint.g, tint.b, .95f));
             }
             if (isSelected || isHovered)
             { Color outline = border; outline.a *= revealOpacity; UiGraphics.DrawOutline(new Rect(nodeRect.x + 2, nodeRect.y + 2, nodeRect.width - 4, nodeRect.height - 4), outline, 1); }
@@ -425,6 +431,27 @@ namespace ProjectDM
             return new Rect(inside.x, inside.yMax - height, inside.width, height);
         }
 
+        private static void DrawGrowthHoldFill(Rect fill, Rect inside, float corner, Color tint)
+        {
+            // Match the frame's stepped corners while filling right up to its inner rim.
+            for (int band = 0; band < 5; band++)
+            {
+                Rect section = GrowthHoldFillBand(fill, inside, corner, band);
+                if (section.height > 0) UiGraphics.DrawSolidRect(section, tint);
+            }
+        }
+
+        internal static Rect GrowthHoldFillBand(Rect fill, Rect inside, float corner, int band)
+        {
+            float top = band == 0 ? inside.y : band == 1 ? inside.y + corner * .5f :
+                band == 2 ? inside.y + corner : band == 3 ? inside.yMax - corner : inside.yMax - corner * .5f;
+            float bottom = band == 0 ? inside.y + corner * .5f : band == 1 ? inside.y + corner :
+                band == 2 ? inside.yMax - corner : band == 3 ? inside.yMax - corner * .5f : inside.yMax;
+            float cut = band == 2 ? 0 : band == 1 || band == 3 ? corner * .5f : corner;
+            top = Mathf.Max(top, fill.y); bottom = Mathf.Min(bottom, fill.yMax);
+            return new Rect(inside.x + cut, top, inside.width - cut * 2, Mathf.Max(0, bottom - top));
+        }
+
         private void HandleGrowthPurchaseHold()
         {
             Event e = Event.current;
@@ -462,70 +489,29 @@ namespace ProjectDM
         internal bool prototypeGraphViewInitialized;
         internal Vector2 prototypeGraphCanvasSize;
 
-        internal Rect GrowthOverviewRect => new Rect(22, 22, 110, 30);
+        internal bool debugControlsExpanded = true;
+        internal static Rect GrowthDebugToggleRect => new Rect(22, 22, 140, 30);
         internal Rect GrowthDetailsRect => GetGrowthDetailsRect(new Vector2(Screen.width, Screen.height));
         internal Rect GrowthNavigationRect => GetGrowthNavigationRect(new Vector2(Screen.width, Screen.height), run.runEnded);
 
-        internal void FitPrototypeGraph(Vector2 canvasSize, bool overview = false)
+        internal void FitPrototypeGraph(Vector2 canvasSize)
         {
-            metaTreeZoom = PrototypeRules.GraphFitZoom(tables.graphLayoutNodes, canvasSize.x, canvasSize.y);
+            metaTreeZoom = DefaultZoom;
             metaTreePan = Vector2.zero;
-            Rect[] overlays = GetGrowthOverlayRects(canvasSize, run.runEnded);
-            if (tables.growthTable.authoredLayout)
-            {
-                // Overview fits the whole map; opening the tree focuses on ROOT and nearby nodes.
-                float startY = Mathf.Max(overlays[1].yMax, overlays[5].yMax) + 24;
-                Rect free = Rect.MinMaxRect(Mathf.Min(overlays[2].xMax + 20, canvasSize.x * .5f), startY, canvasSize.x - 24, overlays[3].yMin - 16);
-                Vector2 min = Vector2.zero, max = Vector2.zero;
-                foreach (var node in tables.graphLayoutNodes)
-                { min = Vector2.Min(min, new Vector2(node.x, node.y)); max = Vector2.Max(max, new Vector2(node.x, node.y)); }
-                metaTreeZoom = Mathf.Clamp(Mathf.Min(Mathf.Max(1, free.width - 100) / Mathf.Max(1, max.x - min.x),
-                    Mathf.Max(1, free.height - 110) / Mathf.Max(1, max.y - min.y)), .04f, 1.05f);
-                metaTreePan = free.center - canvasSize * .5f - (min + max) * .5f * metaTreeZoom;
-                if (!overview)
-                {
-                    float closeZoom = Mathf.Clamp(Mathf.Min(free.width / 1100f, free.height / 700f), .4f, .75f);
-                    metaTreeZoom = Mathf.Max(metaTreeZoom, closeZoom);
-                    metaTreePan = free.center - canvasSize * .5f;
-                }
-                prototypeGraphCanvasSize = canvasSize; prototypeGraphViewInitialized = true; return;
-            }
-            bool obscured = false;
-            foreach (MetaTreeNodePresentation node in metaTreeNodes)
-            {
-                if (node.state == MetaTreeNodeState.Hidden) continue;
-                Rect card = GetMetaTreeNodeRect(node, canvasSize);
-                foreach (Rect overlay in overlays) if (card.Overlaps(overlay)) obscured = true;
-            }
-            if (obscured)
-            {
-                // Keep the existing full-screen framing when unobstructed. In small Game views,
-                // fit into whichever free rectangle (above/right of details) has more square space.
-                float top = Mathf.Max(overlays[1].yMax, overlays[5].yMax) + 16;
-                Rect above = Rect.MinMaxRect(22, top, canvasSize.x - 22, overlays[2].yMin - 16);
-                Rect right = Rect.MinMaxRect(overlays[2].xMax + 16, top, canvasSize.x - 22, overlays[3].yMin - 16);
-                Rect available = Mathf.Min(above.width, above.height) >= Mathf.Min(right.width, right.height) ? above : right;
-                float horizontal = 1, vertical = 1;
-                foreach (PrototypeGrowthNode node in tables.graphLayoutNodes)
-                {
-                    horizontal = Mathf.Max(horizontal, Mathf.Abs(node.x));
-                    vertical = Mathf.Max(vertical, Mathf.Abs(node.y));
-                }
-                // Reserve the same maximum card margin as the original fit, including its minimum scale.
-                metaTreeZoom = Mathf.Clamp(Mathf.Min((available.width - 100) / (horizontal * 2),
-                    (available.height - 100) / (vertical * 2)), .04f, 1.05f);
-                metaTreePan = available.center - canvasSize * .5f;
-            }
             prototypeGraphCanvasSize = canvasSize;
             prototypeGraphViewInitialized = true;
         }
 
-        internal void DrawPrototypeGraphOverview()
+        private void DrawGraphDebugControls()
         {
-            if (graphics.DrawButton(GrowthOverviewRect, "전체 보기")) FitPrototypeGraph(new Vector2(Screen.width, Screen.height), true);
+            if (graphics.DrawButton(GrowthDebugToggleRect, debugControlsExpanded ? "디버그 UI 접기" : "디버그 UI 펼치기"))
+                debugControlsExpanded = !debugControlsExpanded;
+            if (!debugControlsExpanded) return;
+            DrawStageSelection();
+            DrawCharacterSelection();
         }
 
-        private static Rect StageSelectionRect => new Rect(142, 22, 240, 30);
+        private static Rect StageSelectionRect => new Rect(172, 22, 240, 30);
         internal static Rect CharacterSelectionRect(Vector2 size) => new Rect(22, 96, Mathf.Min(540, size.x - 44), 64);
 
         private void DrawCharacterSelection()
@@ -578,8 +564,8 @@ namespace ProjectDM
         internal bool IsPrototypeGraphOverlay(Vector2 pointer)
         {
             // Pointer tests run for each node; do not allocate a rectangle array per test.
-            return GrowthOverviewRect.Contains(pointer) || StageSelectionRect.Contains(pointer) ||
-                (run.characters != null && CharacterSelectionRect(new Vector2(Screen.width, Screen.height)).Contains(pointer)) || GrowthWalletRect.Contains(pointer) ||
+            return GrowthDebugToggleRect.Contains(pointer) || (debugControlsExpanded && (StageSelectionRect.Contains(pointer) ||
+                (run.characters != null && CharacterSelectionRect(new Vector2(Screen.width, Screen.height)).Contains(pointer)))) || GrowthWalletRect.Contains(pointer) ||
                 GrowthDetailsRect.Contains(pointer) || GrowthNavigationRect.Contains(pointer);
         }
 
@@ -594,7 +580,7 @@ namespace ProjectDM
 
         internal static Rect[] GetGrowthOverlayRects(Vector2 size, bool ended)
         {
-            return new[] { new Rect(22, 22, 110, 30), GetGrowthWalletRect(size), GetGrowthDetailsRect(size), GetGrowthNavigationRect(size, ended), StageSelectionRect, CharacterSelectionRect(size) };
+            return new[] { GrowthDebugToggleRect, GetGrowthWalletRect(size), GetGrowthDetailsRect(size), GetGrowthNavigationRect(size, ended), StageSelectionRect, CharacterSelectionRect(size) };
         }
 
         internal Rect GrowthWalletRect => GetGrowthWalletRect(new Vector2(Screen.width, Screen.height));
@@ -733,7 +719,7 @@ namespace ProjectDM
             GUIStyle heading = new GUIStyle(body) { fontSize = 16, fontStyle = FontStyle.Bold };
             string mode = save.sandboxThisSession ? "  [실험: 저장 안 됨]" : "";
             GUI.Label(new Rect(38, panel.y + 10, width - 30, 25), $"성장 지도 조작{mode}", heading);
-            GUI.Label(new Rect(38, panel.y + 43, width - 30, 60), "노드를 꾹 눌러 한 단계 구매\n손을 떼거나 노드를 벗어나면 취소\n휠: 확대/축소 · 가운데 버튼: 이동", body);
+            GUI.Label(new Rect(38, panel.y + 43, width - 30, 60), "노드를 꾹 눌러 한 단계 구매\n손을 떼거나 노드를 벗어나면 취소\n휠: 크기 조절 · 빈 곳을 왼쪽 드래그: 이동", body);
             DrawPrototypeStageProgress(new Rect(38, panel.y + 106, width - 30, 34), body);
         }
 

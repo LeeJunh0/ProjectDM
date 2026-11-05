@@ -14,7 +14,7 @@ function tick(now){if(last!==null&&playing)time+=Math.min(.1,(now-last)/1000)*Nu
 images.forEach((im,i)=>{im.onload=()=>{if(++loaded===images.length){document.querySelector('#status').textContent='재생 중';requestAnimationFrame(tick)}};im.onerror=()=>{document.querySelector('#status').textContent='이미지 로딩 실패'};im.src=sources[i]});document.querySelector('#play').onclick=()=>{playing=!playing;document.querySelector('#play').textContent=playing?'일시정지':'재생';document.querySelector('#status').textContent=playing?'재생 중':'일시정지'};
 </script></html>`;fs.writeFileSync(path.join(dir,'index.html'),html);
 // A script-independent motion preview of the two most changed directional effects.
-for(const id of ['beam','cone']){
+for(const id of ['beam','cone','missile']){
  const {fx,r}=await tunedRender(id,loadSettings(process.env.PROJECTDM_PIXELFX_TUNING??path.join(dir,'tuning.json'))),w=240,h=144;
  const bgfile=path.join(root,'Docs/QA/2026-11-03-dungeon-sharp.png');
  const d=spawnSync('ffmpeg',['-v','error','-i',bgfile,'-vf','crop=480:288:200:160,scale=240:144:flags=neighbor','-f','rawvideo','-pix_fmt','rgba','-'],{maxBuffer:4e6});if(d.status!==0)throw Error(d.stderr.toString());
@@ -26,4 +26,4 @@ for(const id of ['beam','cone']){
  }
  const result=spawnSync('ffmpeg',['-v','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',w+'x'+h,'-r','24','-i','-','-filter_complex','split[a][b];[a]palettegen[p];[b][p]paletteuse=dither=none','-loop','0',path.join(dir,id+'-game.gif')],{input:raw,maxBuffer:4e6});if(result.status!==0)throw Error(result.stderr.toString());
 }
-console.log('Self-contained 15-effect game-background preview and beam/cone GIFs exported.');
+console.log('Self-contained 15-effect game-background preview and beam/cone/missile GIFs exported.');

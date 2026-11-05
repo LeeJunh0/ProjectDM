@@ -10,7 +10,9 @@ assert.equal(frames.length,1);for(let i=0;i<60;i++)frames.shift()(i*30);
 assert.equal(draws,60*15*2);assert(coordinates.size>100,'Preview must animate distinct atlas frames');
 element('#biome').value='2';frames.shift()(1900);element('#play').onclick();const paused=vm.runInContext('time',sandbox);frames.shift()(2000);assert.equal(vm.runInContext('time',sandbox),paused);
 const resources=JSON.parse(fs.readFileSync(path.join(root,'Assets/Resources/ProjectDM/Skills/PixelFX/skill-effects.json'),'utf8'));
-assert.equal(resources.clips.length,15);assert.equal(resources.clips.reduce((n,c)=>n+c.frames.length,0),183);
+assert.equal(resources.clips.length,15);
+const tuning=JSON.parse(fs.readFileSync('Design/Skills/PixelFX-v1/tuning.json','utf8'));
+for(const clip of resources.clips){const profile=tuning.profiles.find(p=>p.id===clip.id);assert(profile);assert.equal(clip.frames.length,Math.round(.5/profile.speed*clip.fps)+(clip.loop?0:1),clip.id+' frame count must follow edited speed');}
 assert.deepEqual(fs.readFileSync(path.join(root,'Design/Skills/PixelFX-v1/skill-effects.png')),fs.readFileSync(path.join(root,'Assets/Resources/ProjectDM/Skills/PixelFX/skill-effects.png')));
 assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root,'Design/Skills/PixelFX-v1/skill-effects.json'),'utf8')),resources);
 console.log('PixelFX preview PASS: 15 moving clips, embedded images, 60 real scheduled frames, scene switch, pause, runtime atlas parity.');

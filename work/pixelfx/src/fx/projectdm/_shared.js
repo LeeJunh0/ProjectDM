@@ -14,13 +14,20 @@ export function drawEffect(p,t,o){
  const glow=(x,y,r,k=1)=>p.glow(x,y,r,C[3],light*k*fade);
  const mote=(i,x,y,a=1)=>{let s=i%4===0?2:1;p.rect(x,y,s,s,C[i%3+2],a*fade);if(i%5===0&&id!=='cone'&&id!=='firefield'&&id!=='meteor')sparkle(p,x,y,2,C[5],C[3],a*fade);};
  if(id==='missile'){
-  p.poly([[27,-2],[34,-5],[42,0],[34,5],[27,2],[30,0]],C[1]);
-  p.poly([[30,-2],[35,-3],[40,0],[34,3],[30,1]],C[3]);
-  p.poly([[33,-1],[37,-1],[40,0],[34,1]],C[5]);p.line(31,-2,35,-3,C[4]);
+  // Preserve the original Projectile_Bolt's pale core, violet energy and broken rear plume.
   const tail=o.tail??1;
-  if(tail>0){p.line(28-7*tail,-1,27,-1,C[2],.8);p.line(29-4*tail,2,28,2,C[3],.65);}
-  glow(35,0,8,.7);
-  for(let i=0;i<Math.round(3*(o.density??1));i++){let x=23-((q+i*.31)%1)*6,y=(i-1)*3;p.dot(x,y,C[2+i%2],.6);}
+  if(tail>0){p.ellipse(28,0,6*tail,2.4,C[2],.45);p.ellipse(22,Math.sin(ph)*1.2,4*tail,1.5,C[1],.4);}
+  if(tail>0)cycle(t,.5,Math.round(18*(o.density??1)),o.seed+91,.32,(age,life,r)=>{
+   const u=age/life,x=31-u*18*tail,y=r.range(-3.5,3.5)*(1+u*.5);
+   const s=(1-u)*3.4+.4,color=C[u<.3?3:u<.65?2:1];
+   p.disc(x,y,s,color,(1-u)*.65);
+  });
+  const pulse=1+.05*Math.sin(ph*2);
+  p.poly([[26,-2],[30,-4],[31,-6],[35,-5],[39,-4],[42,0],[40,3],[36,5],[31,4],[28,2],[25,1]],C[1],.8);
+  p.ellipse(34,0,6*pulse,4.5*pulse,C[2]);p.ellipse(36,-.7,4.2,3.6,C[3]);
+  p.ellipse(36,-1,2.8,2.5,C[4]);p.rect(35,-2,2,3,C[5]);
+  p.rect(30,-5,2,1,C[2],.8);p.dot(40,2,C[3],.8);
+  glow(35,-1,12,1.15);glow(23,0,9,.5);
  }else if(id==='beam'){
   const points=[];for(let i=0;i<=40;i++){let x=-40+i*2;points.push([x,Math.sin(x*.15-ph*2)*.6]);}
   for(let i=1;i<points.length;i++)p.beam(...points[i-1],...points[i],5*(o.width??1),C[1]);

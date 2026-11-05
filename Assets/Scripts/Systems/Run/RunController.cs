@@ -39,10 +39,12 @@ namespace ProjectDM
             this.isChoosing = isChoosing;
             this.stages = stages;
             this.mana = mana;
+            relicForge = new RelicForge(save, () => runEnded && !showMetaTree);
             characters = tables.characters == null ? null : new CharacterSession(tables.characters, save.progress);
         }
 
         internal int runCurrency;
+        internal readonly RelicForge relicForge;
         internal float runExperience;
         internal sealed class RunSummary
         {
@@ -83,6 +85,7 @@ namespace ProjectDM
         {
             if (runEnded) return;
             runEnded = true;
+            relicForge.RecordResult(runCurrency);
             string resultKey = (characters?.Current.id ?? "projectile") + ":" + stages?.Current?.stageId;
             lastResults.TryGetValue(resultKey, out previousResult);
             int kills = 0;
@@ -104,7 +107,7 @@ namespace ProjectDM
 
         internal void ToggleMetaTree()
         {
-            if (isChoosing()) return;
+            if (isChoosing() || relicForge.IsOpen) return;
             ChangeScreen(() =>
             {
                 showMetaTree = !showMetaTree;
@@ -141,6 +144,7 @@ namespace ProjectDM
 
         private void BeginRunNow()
         {
+            relicForge.LeaveResult();
             characters?.ApplySelected();
             resetWorld();
             Array.Clear(monsterKillCounts, 0, monsterKillCounts.Length);

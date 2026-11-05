@@ -124,6 +124,9 @@ namespace ProjectDM
         public List<PrototypeRank> ranks = new List<PrototypeRank>();
         public int completedRuns;
         public double playedSeconds;
+        public int bestRunCurrency;
+        public int relicFragments;
+        public int pendingRelicFragments;
         public bool reachedBoss;
 
         public int Rank(string id)

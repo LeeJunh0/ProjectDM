@@ -39,6 +39,10 @@ namespace ProjectDM
                 for (int seed = 1; seed <= 30; seed++)
                 {
                     var route = PickupFlightPresentation.CreateRoute(seed);
+                    var fastMana = PickupFlightPresentation.CreateRoute(seed, PickupKind.Mana);
+                    var fastXp = PickupFlightPresentation.CreateRoute(seed, PickupKind.Experience);
+                    Check(Mathf.Abs(fastMana.duration - route.duration * .3f) < .0001f && fastMana.duration == fastXp.duration,
+                        "Mana and XP must fly in 30% of the unchanged currency flight time");
                     shortest = Mathf.Min(shortest, route.duration); longest = Mathf.Max(longest, route.duration);
                     float minSide = 0, maxSide = 0;
                     for (int frame = 1; frame < 40; frame++)
@@ -117,15 +121,24 @@ namespace ProjectDM
                 flights.Show(Vector3.zero, sprite, PickupKind.Currency, 17);
                 flights.Show(Vector3.zero, sprite, PickupKind.Mana, 5);
                 flights.Show(Vector3.zero, sprite, PickupKind.Experience, 9);
-                Check(flights.PendingCurrency == 17 && flights.PendingMana == 5 && flights.PendingExperience == 9, "Each visible flight must defer its HUD amount only");
+                flights.Tick(.3f, screen, currency, manaTarget, experienceTarget);
+                Check(flights.ActiveCount == 1 && flights.ManaPulse == 1 && flights.ExperiencePulse == 1 && flights.CurrencyPulse == 0,
+                    "Mana and XP must arrive within 300ms while currency continues flying");
+                Check(flights.PendingCurrency == 17, "Faster mana/XP presentation cannot release currency early");
+                flights.Clear();
+
+                flights.Show(Vector3.zero, sprite, PickupKind.Currency, 17);
+                flights.Show(Vector3.zero, sprite, PickupKind.Mana, 5);
+                flights.Show(Vector3.zero, sprite, PickupKind.Experience, 9);
+                Check(flights.PendingCurrency == 17, "Currency alone defers its HUD amount");
                 flights.Tick(.1f, screen, currency, manaTarget, experienceTarget);
-                Check(flights.PendingCurrency == 17 && flights.PendingExperience == 9, "Amounts must remain pending before arrival");
+                Check(flights.PendingCurrency == 17, "Currency remains pending before arrival");
                 flights.Tick(1, screen, currency, manaTarget, experienceTarget);
-                Check(flights.PendingMana == 5 && flights.PendingExperience == 9, "Arrival must begin filling rather than jumping immediately");
+                Check(flights.PendingCurrency == 17, "Currency arrival begins filling rather than jumping immediately");
                 flights.Tick(.14f, screen, currency, manaTarget, experienceTarget);
-                Check(flights.PendingMana > 0 && flights.PendingMana < 5 && flights.PendingExperience > 0 && flights.PendingExperience < 9, "Arrived gains must fill gradually");
+                Check(flights.PendingCurrency > 0 && flights.PendingCurrency < 17, "Currency display must settle gradually");
                 flights.Tick(.2f, screen, currency, manaTarget, experienceTarget);
-                Check(flights.PendingCurrency == 0 && flights.PendingMana == 0 && flights.PendingExperience == 0, "Arrival must release the matching HUD amounts");
+                Check(flights.PendingCurrency == 0, "Currency settlement must release its HUD amount");
                 flights.Show(Vector3.zero, sprite, PickupKind.Currency, 4);
                 flights.Clear();
                 Check(flights.PendingCurrency == 0, "Screen changes must flush pending display amounts");
@@ -162,8 +175,8 @@ namespace ProjectDM
                 var hud = new RunHudView(settings, save, tables, run, null, null, selection, new UiGraphics(), null, art);
                 hud.ShowPickupFlight(Vector3.zero, sprite, PickupKind.Experience, 5);
                 hud.ExperienceDisplay(out int shownLevel, out double shownXp, out int shownThreshold);
-                Check(shownLevel == 1 && shownXp == PrototypeRules.XpThreshold(tables.balance, 1) - 2,
-                    "In-flight XP crossing a level must keep the previous HUD level and progress until arrival");
+                Check(shownLevel == 2 && shownXp == 3,
+                    "XP and level must display their actual values while the pickup is still flying");
                 hud.ResetPickupFeedback();
                 hud.ExperienceDisplay(out shownLevel, out shownXp, out shownThreshold);
                 Check(shownLevel == 2 && shownXp == 3, "Flushing flight display must reveal the actual XP and level");

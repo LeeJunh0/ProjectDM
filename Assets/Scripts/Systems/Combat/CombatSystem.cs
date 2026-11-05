@@ -81,7 +81,7 @@ namespace ProjectDM
                 SpriteRenderer renderer = bolt.GetComponentInChildren<SpriteRenderer>();
                 Sprite pixelMissile=PixelFxLibrary.Frame("missile",0);
                 renderer.sprite = pixelMissile!=null?pixelMissile:art.boltSprite;
-                renderer.transform.localScale=pixelMissile!=null?Vector3.one*2:Vector3.one;
+                renderer.transform.localScale=pixelMissile!=null?Vector3.one*6:Vector3.one;
                 renderer.sortingOrder = 5;
                 renderer.color = pixelMissile!=null?Color.white:new Color(1f, .7f, 1f);
                 Animator animator = bolt.GetComponentInChildren<Animator>();

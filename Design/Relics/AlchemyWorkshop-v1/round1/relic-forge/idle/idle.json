@@ -1,0 +1,567 @@
+{
+ "frames": [
+  {
+   "filename": "idle 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 1",
+   "frame": {
+    "x": 160,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 2",
+   "frame": {
+    "x": 320,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 3",
+   "frame": {
+    "x": 480,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 4",
+   "frame": {
+    "x": 640,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 5",
+   "frame": {
+    "x": 0,
+    "y": 144,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 6",
+   "frame": {
+    "x": 160,
+    "y": 144,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 7",
+   "frame": {
+    "x": 320,
+    "y": 144,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 8",
+   "frame": {
+    "x": 480,
+    "y": 144,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 9",
+   "frame": {
+    "x": 640,
+    "y": 144,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 10",
+   "frame": {
+    "x": 0,
+    "y": 288,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 11",
+   "frame": {
+    "x": 160,
+    "y": 288,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 12",
+   "frame": {
+    "x": 320,
+    "y": 288,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 13",
+   "frame": {
+    "x": 480,
+    "y": 288,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 14",
+   "frame": {
+    "x": 640,
+    "y": 288,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 15",
+   "frame": {
+    "x": 0,
+    "y": 432,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 16",
+   "frame": {
+    "x": 160,
+    "y": 432,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 17",
+   "frame": {
+    "x": 320,
+    "y": 432,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 18",
+   "frame": {
+    "x": 480,
+    "y": 432,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 19",
+   "frame": {
+    "x": 640,
+    "y": 432,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 20",
+   "frame": {
+    "x": 0,
+    "y": 576,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 21",
+   "frame": {
+    "x": 160,
+    "y": 576,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 22",
+   "frame": {
+    "x": 320,
+    "y": 576,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  },
+  {
+   "filename": "idle 23",
+   "frame": {
+    "x": 480,
+    "y": 576,
+    "w": 160,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 144
+   },
+   "duration": 42
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "idle.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 800,
+   "h": 720
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "idle",
+    "from": 0,
+    "to": 23,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "relic-forge/idle",
+   "name": "Alchemy kettle idle",
+   "fps": 24,
+   "loop": true,
+   "frames": 24,
+   "frameSize": [
+    160,
+    144
+   ],
+   "pivot": [
+    80,
+    76
+   ],
+   "columns": 5
+  }
+ }
+}

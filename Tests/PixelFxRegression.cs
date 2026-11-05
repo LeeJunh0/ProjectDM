@@ -24,7 +24,7 @@ namespace ProjectDM.Editor
                     var clip=PixelFxLibrary.Find(id);Check(clip!=null&&clip.sprites.Length>=12&&clip.fps==24,"All skill and particle clips must exist: "+id);
                     foreach(var sprite in clip.sprites)Check(sprite.texture==texture&&sprite.textureRect.width>0&&sprite.textureRect.height>0,"All frames share one valid atlas");
                     Check(PixelFxLibrary.Frame(id,0)!=PixelFxLibrary.Frame(id,.125f),"Animated frames must advance: "+id);
-                    if(clip.loop)Check(PixelFxLibrary.Frame(id,0)==PixelFxLibrary.Frame(id,.5f),"Loop must wrap exactly");
+                    if(clip.loop)Check(PixelFxLibrary.Frame(id,0)==PixelFxLibrary.Frame(id,(clip.sprites.Length + .25f) / clip.fps),"Loop must wrap at its authored duration: " + id);
                     else Check(PixelFxLibrary.Frame(id,2)==clip.sprites[clip.sprites.Length-1],"One-shots hold their empty terminal frame");
                 }
                 Check(PixelFxLibrary.Frame("missing",0)==null,"Missing clip keeps legacy fallback available");

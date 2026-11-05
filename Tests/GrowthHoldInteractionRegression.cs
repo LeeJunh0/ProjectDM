@@ -97,6 +97,19 @@ namespace ProjectDM.Editor
                     Check(fill.yMax == inside.yMax && fill.height >= 0 && fill.height <= inside.height, "Fill must grow upward inside the node");
                 }
                 Check(GrowthGraphView.GrowthHoldFillRect(inside, .5f).y == 136, "Half fill rises from the bottom");
+                Rect fullFill = GrowthGraphView.GrowthHoldFillRect(inside, 1);
+                Rect centerBand = GrowthGraphView.GrowthHoldFillBand(fullFill, inside, 8, 2);
+                Check(centerBand.xMin == inside.xMin && centerBand.xMax == inside.xMax, "Fill must touch both inner side walls");
+                float coveredHeight = 0;
+                for (int band = 0; band < 5; band++)
+                {
+                    Rect part = GrowthGraphView.GrowthHoldFillBand(fullFill, inside, 8, band);
+                    coveredHeight += part.height;
+                    Check(part.xMin >= inside.xMin && part.xMax <= inside.xMax, "Corner fill cannot escape the inner frame");
+                    if (band == 0) Check(part.yMin == inside.yMin && part.xMin > inside.xMin, "Top fill touches rim while leaving the stepped corner clear");
+                    if (band == 4) Check(part.yMax == inside.yMax, "Bottom fill touches the inner rim");
+                }
+                Check(coveredHeight == inside.height, "Fill bands must not leave horizontal gaps");
                 foreach (Vector2 screen in new[] { new Vector2(1920,1080), new Vector2(960,540), new Vector2(480,320) })
                 foreach (Vector2 pointer in new[] { Vector2.zero, new Vector2(screen.x, 0), screen, new Vector2(0, screen.y), screen * .5f })
                 foreach (Vector2 size in new[] { new Vector2(360,230), new Vector2(600,800) })

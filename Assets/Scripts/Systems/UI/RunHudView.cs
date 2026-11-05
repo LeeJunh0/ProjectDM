@@ -158,9 +158,7 @@ namespace ProjectDM
         internal void ExperienceDisplay(out int level, out double experience, out int threshold)
         {
             level = selection.level;
-            experience = selection.experience - pickupFlights.PendingExperience;
-            while (experience < 0 && level > 1) experience += PrototypeRules.XpThreshold(tables.balance, --level);
-            experience = Math.Max(0, experience);
+            experience = Math.Max(0, selection.experience);
             threshold = PrototypeRules.XpThreshold(tables.balance, level);
         }
 
@@ -172,7 +170,7 @@ namespace ProjectDM
             Rect area = ManaHudRect(new Vector2(Screen.width, Screen.height));
             area.position += manaBar.Hit.Offset;
             float y = area.y;
-            float remaining = run.runEnded ? run.mana.Current : Mathf.Max(0, run.mana.Current - (float)pickupFlights.PendingMana);
+            float remaining = run.mana.Current;
             float fraction = remaining / run.mana.Maximum;
             float impact = manaBar.Hit.Intensity;
             Color accent = Color.Lerp(Color.Lerp(manaBar.CurrentColor, Color.white, .35f), new Color(.6f, .92f, 1), impact);

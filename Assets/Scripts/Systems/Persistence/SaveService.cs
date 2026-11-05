@@ -119,6 +119,8 @@ namespace ProjectDM
                 progress.SetRank("yield", Mathf.Max(0, fortuneLevel));
             }
             int sourceVersion = progress.version;
+            if (progress.bestRunCurrency < 0 || progress.relicFragments < 0 || progress.pendingRelicFragments < 0 || progress.pendingRelicFragments > 5)
+                throw new InvalidOperationException("유물 제련 저장값이 올바르지 않습니다. 기존 저장은 변경하지 않습니다.");
             string oldSnapshot = progress.version < 3 && store.HasKey(PrototypeSaveKey)
                 ? store.GetString(PrototypeSaveKey) : null;
             PrototypeRules.MigrateGrowthRanks(progress, tables.growthTable);

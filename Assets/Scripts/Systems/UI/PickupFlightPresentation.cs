@@ -18,8 +18,6 @@ namespace ProjectDM
         internal int ActiveCount => flights.Count;
         internal int SparkCount => sparks.Count;
         internal double PendingCurrency { get; private set; }
-        internal double PendingMana { get; private set; }
-        internal double PendingExperience { get; private set; }
 
         private struct Flight
         {
@@ -129,18 +127,16 @@ namespace ProjectDM
             flights.Add(new Flight
             {
                 start = new Vector2(point.x / Screen.width, 1f - point.y / Screen.height),
-                sprite = sprite, kind = kind, seed = seed, route = CreateRoute(seed), amount = amount
+                sprite = sprite, kind = kind, seed = seed, route = CreateRoute(seed, kind), amount = amount
             });
         }
 
         private void Pending(PickupKind kind, double amount)
         {
             if (kind == PickupKind.Currency) PendingCurrency = System.Math.Max(0, PendingCurrency + amount);
-            else if (kind == PickupKind.Mana) PendingMana = System.Math.Max(0, PendingMana + amount);
-            else PendingExperience = System.Math.Max(0, PendingExperience + amount);
         }
 
-        private static float Variation(int seed, uint salt)
+        internal static float Variation(int seed, uint salt)
         {
             // Local hashes must not consume the random sequence used for drops or upgrade choices.
             uint value = unchecked((uint)seed * 747796405u + salt);
@@ -148,7 +144,7 @@ namespace ProjectDM
             return (value & 0x00ffffffu) / 16777215f;
         }
 
-        internal static Route CreateRoute(int seed)
+        internal static Route CreateRoute(int seed, PickupKind pickupKind = PickupKind.Currency)
         {
             int kind = Mathf.Min(2, Mathf.FloorToInt(Variation(seed, 7) * 3));
             float side = Variation(seed, 19) < .5f ? -1 : 1;
@@ -162,7 +158,7 @@ namespace ProjectDM
                 secondAlong = Mathf.Lerp(.65f, .82f, Variation(seed, 107)),
                 firstSide = firstSide * side, secondSide = secondSide * side,
                 initialSpeed = Mathf.Lerp(.5f, .95f, Variation(seed, 149)),
-                duration = Mathf.Lerp(.56f, .92f, Variation(seed, 181))
+                duration = Mathf.Lerp(.56f, .92f, Variation(seed, 181)) * (pickupKind == PickupKind.Currency ? 1 : .3f)
             };
         }
 
@@ -229,7 +225,7 @@ namespace ProjectDM
                 }
                 if (flight.age >= flight.route.duration)
                 {
-                    settling.Add(new Settlement { kind = flight.kind, amount = flight.amount });
+                    if (flight.kind == PickupKind.Currency) settling.Add(new Settlement { kind = flight.kind, amount = flight.amount });
                     if (flight.kind == PickupKind.Currency) CurrencyPulse = 1;
                     else if (flight.kind == PickupKind.Mana) ManaPulse = 1;
                     else ExperiencePulse = 1;
@@ -307,7 +303,7 @@ namespace ProjectDM
             flights.Clear(); sparks.Clear();
             settling.Clear();
             CurrencyPulse = ManaPulse = ExperiencePulse = 0;
-            PendingCurrency = PendingMana = PendingExperience = 0;
+            PendingCurrency = 0;
         }
     }
 }

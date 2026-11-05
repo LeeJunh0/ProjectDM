@@ -1,289 +1,289 @@
 {
-  "profiles": [
-    {
-      "id": "beam",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#33213f",
-        "#613676",
-        "#a052bb",
-        "#d488e6",
-        "#f1c9fa"
-      ]
-    },
-    {
-      "id": "blizzard",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#233b59",
-        "#3c6d90",
-        "#6fa6c4",
-        "#a5d3df",
-        "#e1f4ef"
-      ]
-    },
-    {
-      "id": "chain",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#282b52",
-        "#40568c",
-        "#687fbd",
-        "#a0cced",
-        "#e2f4f7"
-      ]
-    },
-    {
-      "id": "cone",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#472334",
-        "#8e3431",
-        "#d25c28",
-        "#ef9e43",
-        "#ffe1a0"
-      ]
-    },
-    {
-      "id": "firefield",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#472334",
-        "#8e3431",
-        "#d25c28",
-        "#ef9e43",
-        "#ffe1a0"
-      ]
-    },
-    {
-      "id": "fireimpact",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#472334",
-        "#8e3431",
-        "#d25c28",
-        "#ef9e43",
-        "#ffe1a0"
-      ]
-    },
-    {
-      "id": "frostshard",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#233b59",
-        "#3c6d90",
-        "#6fa6c4",
-        "#a5d3df",
-        "#e1f4ef"
-      ]
-    },
-    {
-      "id": "hit",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#253147",
-        "#72839a",
-        "#b6c6d2",
-        "#e0e8ee",
-        "#ffffff"
-      ]
-    },
-    {
-      "id": "meteor",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#472334",
-        "#8e3431",
-        "#d25c28",
-        "#ef9e43",
-        "#ffe1a0"
-      ]
-    },
-    {
-      "id": "missile",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#33213f",
-        "#613676",
-        "#a052bb",
-        "#d488e6",
-        "#f1c9fa"
-      ]
-    },
-    {
-      "id": "mote",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#253147",
-        "#72839a",
-        "#b6c6d2",
-        "#e0e8ee",
-        "#ffffff"
-      ]
-    },
-    {
-      "id": "orb",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#33213f",
-        "#613676",
-        "#a052bb",
-        "#d488e6",
-        "#f1c9fa"
-      ]
-    },
-    {
-      "id": "satellite",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#33213f",
-        "#613676",
-        "#a052bb",
-        "#d488e6",
-        "#f1c9fa"
-      ]
-    },
-    {
-      "id": "shatter",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#233b59",
-        "#3c6d90",
-        "#6fa6c4",
-        "#a5d3df",
-        "#e1f4ef"
-      ]
-    },
-    {
-      "id": "thunder",
-      "seed": 17,
-      "light": 1,
-      "density": 1,
-      "width": 1,
-      "spread": 1,
-      "speed": 1,
-      "size": 1,
-      "tail": 1,
-      "starRadius": 1,
-      "palette": [
-        "#282b52",
-        "#40568c",
-        "#687fbd",
-        "#a0cced",
-        "#e2f4f7"
-      ]
-    }
-  ]
+    "profiles": [
+        {
+            "id": "beam",
+            "seed": 17,
+            "light": 1.0,
+            "density": 0.800000011920929,
+            "width": 0.8899999856948853,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#33213F",
+                "#613676",
+                "#A052BB",
+                "#D488E6",
+                "#F4D1F4"
+            ]
+        },
+        {
+            "id": "blizzard",
+            "seed": 17,
+            "light": 0.8600000143051148,
+            "density": 1.0499999523162842,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 0.6299999952316284,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.2200000286102296,
+            "palette": [
+                "#233B59",
+                "#3C6D90",
+                "#6FA6C4",
+                "#A5D3DF",
+                "#E1F4EF"
+            ]
+        },
+        {
+            "id": "chain",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#282b52",
+                "#40568c",
+                "#687fbd",
+                "#a0cced",
+                "#e2f4f7"
+            ]
+        },
+        {
+            "id": "cone",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#472334",
+                "#8e3431",
+                "#d25c28",
+                "#ef9e43",
+                "#ffe1a0"
+            ]
+        },
+        {
+            "id": "firefield",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#472334",
+                "#8e3431",
+                "#d25c28",
+                "#ef9e43",
+                "#ffe1a0"
+            ]
+        },
+        {
+            "id": "fireimpact",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#472334",
+                "#8e3431",
+                "#d25c28",
+                "#ef9e43",
+                "#ffe1a0"
+            ]
+        },
+        {
+            "id": "frostshard",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#233b59",
+                "#3c6d90",
+                "#6fa6c4",
+                "#a5d3df",
+                "#e1f4ef"
+            ]
+        },
+        {
+            "id": "hit",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#253147",
+                "#72839a",
+                "#b6c6d2",
+                "#e0e8ee",
+                "#ffffff"
+            ]
+        },
+        {
+            "id": "meteor",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#472334",
+                "#8e3431",
+                "#d25c28",
+                "#ef9e43",
+                "#ffe1a0"
+            ]
+        },
+        {
+            "id": "missile",
+            "seed": 17,
+            "light": 1.0,
+            "density": 0.550000011920929,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#26064F",
+                "#50129D",
+                "#6926A2",
+                "#B564ED",
+                "#E7B6FF"
+            ]
+        },
+        {
+            "id": "mote",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#253147",
+                "#72839a",
+                "#b6c6d2",
+                "#e0e8ee",
+                "#ffffff"
+            ]
+        },
+        {
+            "id": "orb",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#33213f",
+                "#613676",
+                "#a052bb",
+                "#d488e6",
+                "#f1c9fa"
+            ]
+        },
+        {
+            "id": "satellite",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#33213f",
+                "#613676",
+                "#a052bb",
+                "#d488e6",
+                "#f1c9fa"
+            ]
+        },
+        {
+            "id": "shatter",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#233b59",
+                "#3c6d90",
+                "#6fa6c4",
+                "#a5d3df",
+                "#e1f4ef"
+            ]
+        },
+        {
+            "id": "thunder",
+            "seed": 17,
+            "light": 1.0,
+            "density": 1.0,
+            "width": 1.0,
+            "spread": 1.0,
+            "speed": 1.0,
+            "size": 1.0,
+            "tail": 1.0,
+            "starRadius": 1.0,
+            "palette": [
+                "#282b52",
+                "#40568c",
+                "#687fbd",
+                "#a0cced",
+                "#e2f4f7"
+            ]
+        }
+    ]
 }

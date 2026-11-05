@@ -38,7 +38,7 @@ node tools/projectdm-preview.mjs
 node tools/projectdm-edit.mjs apply cone ../../Design/Skills/PixelFX-v1/tuning.json ../../Temp/PixelFXEditor/manual
 ```
 
-마력탄은 각진 작은 마법 결정과 짧고 곧은 잔광으로 바꿨고, 유성 충돌 파편은 11개에서 15개로 늘렸다. 빙결 폭풍의 큰 별은 바깥으로 옮겼다. 나머지 승인된 11개 효과는 기본 설정에서 기존 픽셀 결과를 유지한다.
+마력탄은 pixelfx 이전의 `Projectile_Bolt_0~3.png`를 기준으로 밝은 연보라색 핵과 짙은 보라색 기운을 재해석했다. 가로로 조금 늘어난 불규칙한 본체와 뒤로 퍼지며 사라지는 반투명 잔광을 사용하며, 원본 그림을 그대로 복사하지 않는다. 참고 확대 이미지는 `missile-reference/original.png`, 최종 프레임은 `missile-original-final`, 움직임 미리보기는 `missile-game.gif`다. 기본 발사체의 시각 크기는 이전보다 3배 확대했다. 유성 충돌 파편은 11개에서 15개로 늘렸고, 빙결 폭풍의 큰 별은 바깥으로 옮겼다. 나머지 승인된 11개 효과는 기본 설정에서 기존 픽셀 결과를 유지한다.
 
 도구의 코어·셰이프 라이브러리는 pixelfx의 MIT 라이선스다. `work/pixelfx/LICENSE`와 런타임 폴더의 `LICENSE.txt`에 저작권과 허가문을 보존했다. 기존 라이브러리의 arcane-orb, fire-breath, snowflake-burst, chain-lightning을 렌더해 비교한 뒤 프로젝트 전용 형태를 작성했다.
 

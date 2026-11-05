@@ -15,6 +15,8 @@ namespace ProjectDM
         private readonly BossMilestone boss;
         private readonly PlayerCombatSystem playerCombat;
         private readonly UiGraphics graphics;
+        private readonly RelicForgeMotion forgeMotion = new();
+        private float lastForgeResult = float.NegativeInfinity;
 
         internal RunResultView(GameSettings settings, GameTables tables, WorldArtAssets art, RunController run, BossMilestone boss, PlayerCombatSystem playerCombat, UiGraphics graphics)
         {
@@ -34,10 +36,11 @@ namespace ProjectDM
 
         internal void DrawRunResults()
         {
+            if (run.relicForge.IsOpen) { DrawRelicForge(); return; }
             UiGraphics.DrawSolidRect(new Rect(0f, 0f, Screen.width, Screen.height), new Color(.015f, .018f, .04f, .6f));
             // The approved preview has a tall panel; scale the complete composition from 1920 x 1080.
             const float panelWidth = 720f;
-            const float panelHeight = 840f;
+            const float panelHeight = 910f;
             float scale = Mathf.Min(Screen.width / 1920f, Screen.height / 1080f);
             Matrix4x4 previousMatrix = GUI.matrix;
             GUI.matrix = previousMatrix * Matrix4x4.TRS(new Vector3((Screen.width - panelWidth * scale) * .5f, (Screen.height - panelHeight * scale) * .5f, 0f), Quaternion.identity, Vector3.one * scale);
@@ -108,13 +111,89 @@ namespace ProjectDM
                     UiGraphics.DrawStaticLabel(new Rect(44f, 670f, 632f, 26f), "동일 타입·스테이지 대비  재화 " + RunResultPresentation.Change(run.runCurrency, run.previousResult.coins)
                         + " · 처치 " + RunResultPresentation.Change(totalKills, run.previousResult.kills), new GUIStyle(summaryStyle) { fontSize = 19 });
                 UiGraphics.DrawResultDivider(704f);
-                returnToMap = graphics.DrawResultButton(new Rect(38f, 724f, 310f, 78f), "돌아가기", false);
-                restart = graphics.DrawResultButton(new Rect(372f, 724f, 310f, 78f), "다시 시작", true);
+                if (graphics.DrawResultButton(new Rect(38f, 720f, 644f, 50f), "귀환 작업실 · 연금 가마", false)) run.ChangeScreen(() => run.relicForge.Open());
+                returnToMap = graphics.DrawResultButton(new Rect(38f, 790f, 310f, 78f), "돌아가기", false);
+                restart = graphics.DrawResultButton(new Rect(372f, 790f, 310f, 78f), "다시 시작", true);
             }
             finally { GUI.matrix = previousMatrix; }
             if (returnToMap) run.ReturnToGrowthMap();
             else if (restart) run.BeginRun();
         }
+
+        private void DrawRelicForge()
+        {
+            var forge = run.relicForge;
+            if (lastForgeResult != run.resultPresentationOpenedAt)
+            { forgeMotion.Clear(); lastForgeResult = run.resultPresentationOpenedAt; }
+            float now = Time.unscaledTime;
+            bool busy = forgeMotion.Busy(now);
+            float scale = Mathf.Min(Screen.width / 1920f, Screen.height / 1080f);
+            Matrix4x4 previous = GUI.matrix;
+            DrawWorkshopRoom();
+            GUI.matrix = previous * Matrix4x4.TRS(new Vector3((Screen.width - 1920 * scale) * .5f, (Screen.height - 1080 * scale) * .5f), Quaternion.identity, Vector3.one * scale);
+            try
+            {
+                var count = new GUIStyle(graphics.statStyle) { fontSize = 28, alignment = TextAnchor.MiddleLeft,
+                    normal = { textColor = new Color(.94f, .89f, .8f) } };
+                UiGraphics.DrawResultSprite(new Rect(1650, 64, 40, 40), art.coinSprite);
+                UiGraphics.DrawStaticLabel(new Rect(1702, 64, 150, 40), CompactNumber.Format(forge.Gold), count);
+                forgeMotion.DrawFragmentIcon(new Rect(1650, 118, 40, 44));
+                UiGraphics.DrawStaticLabel(new Rect(1702, 120, 150, 40), CompactNumber.Format(forgeMotion.VisibleFragments(forge.Fragments, now)), count);
+
+                // Leave headroom for the falling coins and crystal burst above the kettle.
+                forgeMotion.Draw(new Rect(-264, -500, 2448, 1814.4f), now, forge.Pending > 0);
+
+                bool enabled = GUI.enabled;
+                try
+                {
+                    GUI.enabled = enabled && !busy;
+                    if (busy) graphics.DrawResultButton(new Rect(1450, 820, 380, 70), "응축 중…", false);
+                    else if (forge.Rolls == 0)
+                    {
+                        GUI.enabled = enabled && forge.BlockReason == null;
+                        if (graphics.DrawResultButton(new Rect(1450, 820, 380, 70), ForgeEntryLabel(forge), true)) BeginForgeMotion(true);
+                        GUI.enabled = enabled;
+                        if (graphics.DrawResultButton(new Rect(1450, 910, 380, 70), "작업실 나가기", false)) LeaveWorkshop();
+                    }
+                    else if (forge.CanContinue)
+                    {
+                        if (graphics.DrawResultButton(new Rect(1450, 820, 380, 70), "조각 " + forge.Pending + "개 꺼내기", false)) { forge.Claim(); forgeMotion.Clear(); }
+                        if (graphics.DrawResultButton(new Rect(1450, 910, 380, 70), (forge.Rolls == 1 ? 2 : 5) + "개로 응축 · 50%", true)) BeginForgeMotion(false);
+                    }
+                    else if (graphics.DrawResultButton(new Rect(1450, 910, 380, 70), "작업실 나가기", false)) LeaveWorkshop();
+                }
+                finally { GUI.enabled = enabled; }
+            }
+            finally { GUI.matrix = previous; }
+        }
+
+        private static void DrawWorkshopRoom()
+        {
+            UiGraphics.DrawSolidRect(new Rect(0, 0, Screen.width, Screen.height), new Color(.055f, .043f, .066f));
+            float unit = Mathf.Max(.1f, Screen.height / 1080f), floor = Screen.height * .685f, rowHeight = 68 * unit;
+            UiGraphics.DrawSolidRect(new Rect(0, floor, Screen.width, Screen.height - floor), new Color(.095f, .066f, .073f));
+            UiGraphics.DrawSolidRect(new Rect(0, floor, Screen.width, 4 * unit), new Color(.16f, .105f, .10f));
+            for (int row = 0; row < 6; row++)
+            {
+                float y = floor + row * rowHeight;
+                UiGraphics.DrawSolidRect(new Rect(0, y, Screen.width, 2 * unit), new Color(.074f, .052f, .06f));
+                for (float x = (row % 2 == 0 ? 120 : 275) * unit; x < Screen.width; x += 310 * unit)
+                    UiGraphics.DrawSolidRect(new Rect(x, y, 2 * unit, rowHeight), new Color(.079f, .054f, .06f));
+            }
+        }
+
+        private static string ForgeEntryLabel(RelicForge forge) => forge.Stake <= 0 ? "원정 수입 없음" :
+            forge.Stake < forge.Minimum ? "최소 " + CompactNumber.Format(forge.Minimum) + " 금화 필요" :
+            forge.Gold < forge.Stake ? "금화 부족" : forge.BlockReason != null ? "참가 불가" :
+            CompactNumber.Format(forge.Stake) + " 금화 넣기 · 50%";
+
+        private void BeginForgeMotion(bool deposit)
+        {
+            int before = run.relicForge.Fragments;
+            bool accepted = deposit ? run.relicForge.Begin() : run.relicForge.Continue();
+            if (accepted) forgeMotion.Begin(run.relicForge.LastSucceeded, deposit, before, Time.unscaledTime, run.relicForge.Stake);
+        }
+        private void LeaveWorkshop() => run.ChangeScreen(() => { run.relicForge.Close(); forgeMotion.Clear(); });
 
         internal RunResultPresentation.PermanentKillProgress GetPermanentKillProgress(int kind)
         {
