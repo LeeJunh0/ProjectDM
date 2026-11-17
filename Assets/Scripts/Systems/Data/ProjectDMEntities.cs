@@ -49,6 +49,8 @@ namespace ProjectDM
         internal float visualAge;
         internal bool pixelFx;
         public Vector2 direction;
+        internal Vector2 arcNormal;
+        internal float arcDistance, arcHeight;
         public float damage;
         public float lifetime;
         public int pierces;

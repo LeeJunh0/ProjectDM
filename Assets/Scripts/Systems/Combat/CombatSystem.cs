@@ -82,6 +82,8 @@ namespace ProjectDM
                 Sprite pixelMissile=PixelFxLibrary.Frame("missile",0);
                 renderer.sprite = pixelMissile!=null?pixelMissile:art.boltSprite;
                 renderer.transform.localScale=pixelMissile!=null?Vector3.one*6:Vector3.one;
+                renderer.transform.localPosition = Vector3.zero;
+                renderer.transform.localRotation = Quaternion.identity;
                 renderer.sortingOrder = 5;
                 renderer.color = pixelMissile!=null?Color.white:new Color(1f, .7f, 1f);
                 Animator animator = bolt.GetComponentInChildren<Animator>();
@@ -94,7 +96,10 @@ namespace ProjectDM
                 }
                 projectiles.Add(new Projectile { transform = bolt.transform, renderer=renderer,pixelFx=pixelMissile!=null,direction = direction,
                     damage = stats.MainDamage * (i == 0 ? 1f : tables.GrowthRow("multishot").damageRatio), lifetime = tables.balance.projectileLifetime,
-                    pierces = Mathf.FloorToInt(skills.PersonalAmount("pierce")) });
+                    pierces = Mathf.FloorToInt(skills.PersonalAmount("pierce")),
+                    arcNormal = Vector2.Perpendicular(direction) * (i % 2 == 0 ? 1 : -1),
+                    arcDistance = Mathf.Max(0, Vector2.Distance(target.transform.position, playerWorld.player.position) - .55f * target.hitRadiusMultiplier),
+                    arcHeight = skills.PersonalAmount("homing") > 0 ? Mathf.Min(1.1f, Vector2.Distance(target.transform.position, playerWorld.player.position) * .25f) : 0 });
             }
         }
 
@@ -107,9 +112,10 @@ namespace ProjectDM
                 if(bolt.pixelFx && bolt.renderer!=null){bolt.visualAge+=dt;bolt.renderer.sprite=PixelFxLibrary.Frame("missile",bolt.visualAge);}
                 Vector2 from = bolt.transform.position;
                 float homing = skills.PersonalAmount("homing");
+                Enemy nearest = null;
                 if (homing > 0)
                 {
-                    Enemy nearest = null; float distance = float.MaxValue;
+                    float distance = float.MaxValue;
                     foreach (Enemy enemy in enemiesSystem.enemies)
                         if (EnemySystem.IsLive(enemy) && !bolt.hits.Contains(enemy) && ((Vector2)enemy.transform.position - from).sqrMagnitude < distance)
                         { nearest = enemy; distance = ((Vector2)enemy.transform.position - from).sqrMagnitude; }
@@ -122,6 +128,8 @@ namespace ProjectDM
                 }
                 Vector2 to = from + bolt.direction * tables.balance.projectileSpeed * dt;
                 bolt.transform.position = to;
+                UpdateHomingArc(bolt, nearest != null ? Vector2.Distance(to, nearest.transform.position) : 0,
+                    nearest != null ? .55f * nearest.hitRadiusMultiplier : .55f);
                 bolt.lifetime -= dt;
                 // Swept collision prevents faster projectiles from tunneling past small targets.
                 Enemy hit = null;
@@ -148,6 +156,19 @@ namespace ProjectDM
                     projectiles.RemoveAt(i);
                 }
             }
+        }
+
+        internal static void UpdateHomingArc(Projectile bolt, float remainingDistance, float hitRadius = .55f)
+        {
+            if (bolt.renderer == null || bolt.renderer.transform == bolt.transform) return;
+            // Lift only the artwork; steering, swept hits and the final impact stay on the original path.
+            float progress = bolt.arcDistance > .001f ? 1 - Mathf.Clamp01((remainingDistance - hitRadius) / bolt.arcDistance) : 1;
+            float offset = 4 * bolt.arcHeight * progress * (1 - progress);
+            bolt.renderer.transform.position = bolt.transform.position + (Vector3)(bolt.arcNormal * offset);
+            Vector2 tangent = bolt.direction;
+            if (progress > 0 && progress < 1)
+                tangent += bolt.arcNormal * (4 * bolt.arcHeight * (1 - 2 * progress) / bolt.arcDistance);
+            bolt.renderer.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg);
         }
 
         internal bool forceCriticalHits;
