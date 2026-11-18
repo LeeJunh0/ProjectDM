@@ -170,20 +170,47 @@ namespace ProjectDM.Editor
                 var run = new RunController(settings, save, tables, null, null, null, null, null, () => { }, () => { }, () => false, new RunMana());
                 using (var view = new GrowthGraphView(settings, save, tables, null, null, run, null, null))
                 {
-                    var personal = typeof(GrowthGraphView).GetField("personalGraph", BindingFlags.Instance | BindingFlags.NonPublic);
-                    foreach (string id in GrowthTreeSettings.TreeIds)
+                    var common = tables.characters.CommonGraph;
+                    foreach (var character in tables.characters.Definitions.Where(character => character.enabled))
                     {
-                        personal.SetValue(view, id != "common");
-                        if (id != "common") run.characters.Select(id);
+                        run.characters.Select(character.id);
                         view.BuildPrototypeGraph();
-                        var graph = id == "common" ? tables.characters.CommonGraph : tables.characters.Graphs[id];
-                        for (int i = 0; i < graph.growthTable.nodes.Length; i++)
+                        var personal = tables.characters.Graphs[character.id];
+                        var shown = view.metaTreeNodes.ToDictionary(node => node.id);
+                        Check(shown.Count == 1 + common.graphLayoutNodes.Length + personal.graphLayoutNodes.Length,
+                            character.id + ": map must include one root, common growth, objectives and the selected skills.");
+                        Check(shown["ROOT"].title == character.name, "Root must follow the selected character.");
+                        foreach (var goal in common.growthTable.goalLine)
+                            Check(shown[goal.id].state != MetaTreeNodeState.Hidden, "Objectives must display for each character.");
+                        foreach (var graph in new[] { common, personal })
+                        foreach (var node in graph.growthTable.nodes)
                         {
-                            var node = graph.growthTable.nodes[i];
-                            var drawn = view.metaTreeNodes[i + 1];
+                            var drawn = shown[node.id];
                             bool expected = PrototypeRules.IsNodeRevealed(graph.growthTable, node, save.progress, 0);
                             Check((drawn.state != MetaTreeNodeState.Hidden) == expected, node.id + ": runtime presentation leaked a node.");
                             if (!expected) Check(drawn.title == "" && drawn.subtitle == "", node.id + ": hidden text leaked.");
+                            Check(drawn.position.y * (graph == common ? -1 : 1) > 0, node.id + ": node overlapped the other growth area.");
+                            Check(view.metaTreeNodes[drawn.parentIndex].id == node.VisualParent, node.id + ": display link changed.");
+                        }
+                        var canvas = new Vector2(1920, 1080);
+                        view.metaTreeZoom = GrowthGraphView.DefaultZoom;
+                        foreach (var node in view.metaTreeNodes.Skip(1))
+                        {
+                            var card = view.GetMetaTreeNodeRect(node, canvas);
+                            Check(!view.metaTreeNodes.Any(other => other.id != node.id && other.parentIndex >= 0 &&
+                                card.Overlaps(view.GetMetaTreeNodeRect(other, canvas))), node.id + ": cards overlap.");
+                        }
+                        foreach (var size in new[] { canvas, new Vector2(1280, 720), new Vector2(960, 540) })
+                        {
+                            view.FitPrototypeGraph(size);
+                            var viewport = new Rect(Vector2.zero, size);
+                            var overlays = GrowthGraphView.GetGrowthOverlayRects(size, false);
+                            foreach (var node in view.metaTreeNodes.Where(node => node.parentIndex == 0))
+                            {
+                                var card = view.GetMetaTreeNodeRect(node, size);
+                                Check(viewport.Contains(card.min) && viewport.Contains(card.max), node.id + ": first card is outside the opening view.");
+                                Check(!overlays.Any(overlay => overlay.Overlaps(card)), node.id + ": first card is covered by a fixed panel.");
+                            }
                         }
                     }
                 }

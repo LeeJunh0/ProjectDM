@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,16 +11,14 @@ namespace ProjectDM
     {
         private readonly GameSettings settings;
         private readonly SaveService save;
-        private readonly GameTables sourceTables;
-        private bool personalGraph;
+        private GameTables tables;
+        private string displayedCharacterId;
         private GrowthGraphTheme graphTheme;
         private GrowthGraphTheme Theme => graphTheme != null ? graphTheme : graphTheme = Resources.Load<GrowthGraphTheme>("ProjectDM/UI/GrowthGraphTheme");
-        internal string ThemeCharacterId => personalGraph ? run.characters?.SelectedId : null;
         internal string SymbolCharacterId => GrowthTreeEffects.Character(run.characters?.SelectedId);
         private Color SymbolAccent => Theme != null ? Theme.Accent(SymbolCharacterId) : GrowthTreeEffects.Accent(SymbolCharacterId);
-        private Color ThemeTint(Color original) => Theme != null ? Theme.Tint(original, ThemeCharacterId) : original;
-        private GameTables tables => run.characters == null ? sourceTables : personalGraph
-            ? run.characters.Catalog.Graphs[run.characters.SelectedId] : run.characters.Catalog.CommonGraph;
+        private Color ThemeTint(Color original, MetaTreeNodePresentation node) =>
+            node.position.y > 0 && Theme != null ? Theme.Tint(original, displayedCharacterId) : original;
         private readonly ProgressionService progression;
         private readonly WorldArtAssets art;
         private readonly RunController run;
@@ -54,7 +53,7 @@ namespace ProjectDM
         {
             this.settings = settings;
             this.save = save;
-            sourceTables = tables;
+            this.tables = tables;
             this.progression = progression;
             this.art = art;
             this.run = run;
@@ -137,7 +136,7 @@ namespace ProjectDM
             {
                 purchaseHold.Clear();
                 float previousZoom = metaTreeZoom;
-                metaTreeZoom = Mathf.Clamp(metaTreeZoom - currentEvent.delta.y * .06f, MinimumZoom, DefaultZoom);
+                metaTreeZoom = Mathf.Clamp(metaTreeZoom - currentEvent.delta.y * .06f, Mathf.Min(MinimumZoom, OpeningZoom(canvas.size)), DefaultZoom);
                 Vector2 canvasCenter = canvas.size * .5f;
                 Vector2 pointer = currentEvent.mousePosition - canvas.position;
                 metaTreePan += (pointer - canvasCenter - metaTreePan) * (1f - metaTreeZoom / previousZoom);
@@ -184,13 +183,13 @@ namespace ProjectDM
                 }
 
                 MetaTreeNodePresentation parent = metaTreeNodes[node.parentIndex];
-                bool orthogonal = tables.growthNodeLookup.TryGetValue(node.id, out var growth) && growth.displayOrthogonal;
-                var points = GrowthConnectionPath.Points(GetMetaTreeNodeCenter(parent, canvasSize), GetMetaTreeNodeCenter(node, canvasSize), orthogonal, metaTreeZoom);
+                tables.growthNodeLookup.TryGetValue(node.id, out var growth);
+                var points = GetConnectionPoints(parent, node, growth, canvasSize);
                 Color connectorColor = tables.goalNodeLookup.ContainsKey(node.id)
                     ? new Color(.67f, .82f, .9f, .85f)
                     : ThemeTint(node.state == MetaTreeNodeState.Locked
                     ? new Color(.28f, .18f, .11f, .85f)
-                    : new Color(.97f, .66f, .16f, .92f));
+                    : new Color(.97f, .66f, .16f, .92f), node);
                 if (IsMetaTreeConnectionVisible(parent, node))
                 {
                     DrawRevealPath(points, parent.id, node.id, connectorColor, symbolCenter);
@@ -202,7 +201,7 @@ namespace ProjectDM
                     int neighbor = Array.FindIndex(metaTreeNodes, candidate => candidate.id == link);
                     if (neighbor < 0 || !IsMetaTreeConnectionVisible(node, metaTreeNodes[neighbor])) continue;
                     Color gridColor = node.state == MetaTreeNodeState.Locked || metaTreeNodes[neighbor].state == MetaTreeNodeState.Locked
-                        ? ThemeTint(new Color(.28f, .18f, .11f, .85f)) : connectorColor;
+                        ? ThemeTint(new Color(.28f, .18f, .11f, .85f), node) : connectorColor;
                     DrawRevealPath(new[] { GetMetaTreeNodeCenter(metaTreeNodes[neighbor], canvasSize), GetMetaTreeNodeCenter(node, canvasSize) }, metaTreeNodes[neighbor].id, node.id, gridColor, symbolCenter);
                     if (!reveal.IsAnimating(node.id, Time.unscaledTime) && !reveal.IsAnimating(metaTreeNodes[neighbor].id, Time.unscaledTime) && HasGrowthInvestment(node.id) && HasGrowthInvestment(metaTreeNodes[neighbor].id))
                     {
@@ -226,6 +225,22 @@ namespace ProjectDM
         internal Vector2 GetMetaTreeNodeCenter(MetaTreeNodePresentation node, Vector2 canvasSize)
         {
             return canvasSize * .5f + metaTreePan + node.position * metaTreeZoom;
+        }
+
+        private Vector2[] GetConnectionPoints(MetaTreeNodePresentation parent, MetaTreeNodePresentation node,
+            PrototypeGrowthNode growth, Vector2 canvasSize)
+        {
+            Vector2 from = GetMetaTreeNodeCenter(parent, canvasSize);
+            Vector2 to = GetMetaTreeNodeCenter(node, canvasSize);
+            if (growth?.displayOrthogonal != true) return new[] { from, to };
+            if (displayedCharacterId == null) return GrowthConnectionPath.Points(from, to, true, metaTreeZoom);
+            if (parent.parentIndex < 0) return new[] { from, to };
+            var source = tables.GrowthNode(parent.id);
+            var points = GrowthConnectionPath.Points(new Vector2(source.x, source.y), new Vector2(growth.x, growth.y), true, 1);
+            int side = node.position.y > 0 ? 1 : -1;
+            for (int i = 0; i < points.Length; i++)
+                points[i] = canvasSize * .5f + metaTreePan + MapPosition(points[i], side) * metaTreeZoom;
+            return points;
         }
 
         internal Rect GetMetaTreeNodeRect(MetaTreeNodePresentation node, Vector2 canvasSize)
@@ -337,10 +352,10 @@ namespace ProjectDM
             if (isGoal) labelRect = new Rect(nodeRect.x - 32, nodeRect.yMax + 2, nodeRect.width + 64, 18 * detailScale);
             Color border = ThemeTint(node.state == MetaTreeNodeState.Locked
                 ? new Color(.36f, .27f, .18f, .9f)
-                : new Color(.96f, .66f, .19f));
+                : new Color(.96f, .66f, .19f), node);
             if (node.state == MetaTreeNodeState.Completed)
             {
-                border = ThemeTint(new Color(1f, .82f, .36f));
+                border = ThemeTint(new Color(1f, .82f, .36f), node);
             }
             if (isGoal)
             {
@@ -358,7 +373,7 @@ namespace ProjectDM
                 Rect inside = new Rect(nodeRect.x + fillInset, nodeRect.y + fillInset,
                     nodeRect.width - fillInset * 2, nodeRect.height - fillInset * 2);
                 Rect fill = GrowthHoldFillRect(inside, purchaseHold.Progress(Time.unscaledTime));
-                Color tint = ThemeTint(new Color(1f, .72f, .24f, .55f));
+                Color tint = ThemeTint(new Color(1f, .72f, .24f, .55f), node);
                 DrawGrowthHoldFill(fill, inside, frameBorder - fillInset, tint);
                 DrawGrowthHoldFill(new Rect(fill.x, fill.y, fill.width, Mathf.Min(2, fill.height)), inside,
                     frameBorder - fillInset, new Color(tint.r, tint.g, tint.b, .95f));
@@ -372,7 +387,7 @@ namespace ProjectDM
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter,
                 wordWrap = true,
-                normal = { textColor = ThemeTint(node.state == MetaTreeNodeState.Locked ? new Color(.72f, .64f, .52f) : new Color(.96f, .85f, .65f)) }
+                normal = { textColor = ThemeTint(node.state == MetaTreeNodeState.Locked ? new Color(.72f, .64f, .52f) : new Color(.96f, .85f, .65f), node) }
             };
             if (isGoal)
             {
@@ -408,7 +423,7 @@ namespace ProjectDM
                 float segmentWidth = (nodeRect.width - padding * 2 - gap * (definition.ranks - 1)) / definition.ranks;
                 for (int slot = 0; slot < definition.ranks; slot++)
                 {
-                    Color segment = ThemeTint(slot < filled ? new Color(1f, .8f, .28f) : new Color(.29f, .23f, .16f));
+                    Color segment = ThemeTint(slot < filled ? new Color(1f, .8f, .28f) : new Color(.29f, .23f, .16f), node);
                     segment.a *= revealOpacity;
                     UiGraphics.DrawSolidRect(new Rect(nodeRect.x + padding + slot * (segmentWidth + gap), nodeRect.yMax - 4, segmentWidth, 2), segment);
                 }
@@ -494,10 +509,14 @@ namespace ProjectDM
         internal Rect GrowthDetailsRect => GetGrowthDetailsRect(new Vector2(Screen.width, Screen.height));
         internal Rect GrowthNavigationRect => GetGrowthNavigationRect(new Vector2(Screen.width, Screen.height), run.runEnded);
 
+        private float OpeningZoom(Vector2 canvasSize) => run.characters == null ? DefaultZoom : Mathf.Min(1f, canvasSize.y / 1080f);
+
         internal void FitPrototypeGraph(Vector2 canvasSize)
         {
-            metaTreeZoom = DefaultZoom;
-            metaTreePan = Vector2.zero;
+            metaTreeZoom = OpeningZoom(canvasSize);
+            // Keep the opening branches clear of the fixed panels on narrow screens.
+            float inset = run.characters == null ? 0 : Mathf.Max(0, 580f - canvasSize.x * .5f);
+            metaTreePan = new Vector2(inset, inset * .25f);
             prototypeGraphCanvasSize = canvasSize;
             prototypeGraphViewInitialized = true;
         }
@@ -512,7 +531,7 @@ namespace ProjectDM
         }
 
         private static Rect StageSelectionRect => new Rect(172, 22, 240, 30);
-        internal static Rect CharacterSelectionRect(Vector2 size) => new Rect(22, 96, Mathf.Min(540, size.x - 44), 64);
+        internal static Rect CharacterSelectionRect(Vector2 size) => new Rect(22, 60, Mathf.Min(400, size.x - 44), 64);
 
         private void DrawCharacterSelection()
         {
@@ -533,13 +552,7 @@ namespace ProjectDM
                 }
                 GUI.enabled = enabled;
             }
-            bool common = graphics.DrawTab(new Rect(area.x, area.y + 34, 112, 28), "공통 성장", !personalGraph, new Color(1, .8f, .4f));
-            bool personal = graphics.DrawTab(new Rect(area.x + 118, area.y + 34, 150, 28), "선택 캐릭터 전용 성장", personalGraph, SymbolAccent);
-            if ((common && personalGraph) || (personal && !personalGraph))
-            {
-                ResetNavigation(); personalGraph = !personalGraph; selectedMetaTreeNode = -1; prototypeGraphViewInitialized = false;
-            }
-            GUI.Label(new Rect(area.x + 278, area.y + 36, area.width - 278, 24), "선택·구매는 다음 런부터 적용");
+            GUI.Label(new Rect(area.x, area.y + 36, area.width, 24), "캐릭터 선택과 성장 효과는 다음 런부터 적용");
         }
 
         private void DrawStageSelection()
@@ -569,7 +582,7 @@ namespace ProjectDM
                 GrowthDetailsRect.Contains(pointer) || GrowthNavigationRect.Contains(pointer);
         }
 
-        private static Rect GetGrowthDetailsRect(Vector2 size) => new Rect(22, size.y - 174, Mathf.Min(355f, size.x - 44f), 150);
+        private static Rect GetGrowthDetailsRect(Vector2 size) => new Rect(22, size.y - 174, Mathf.Min(355f, size.x / 3f), 150);
         private static Rect GetGrowthNavigationRect(Vector2 size, bool ended) =>
             new Rect(size.x - 202, size.y - (ended ? 66 : 118), 180, ended ? 44 : 96);
         private static Rect GetGrowthWalletRect(Vector2 size)
@@ -590,7 +603,7 @@ namespace ProjectDM
             Rect rect = GrowthWalletRect;
             PixelUiArt.Draw(rect, PixelUiArt.Currency, 12, Color.white);
             UiGraphics.DrawResultSprite(new Rect(rect.x + 14f, rect.y + 16f, 32f, 32f), art.coinSprite);
-            GUIStyle label = new GUIStyle(graphics.statStyle) { fontSize = 11, normal = { textColor = ThemeTint(new Color(.68f, .59f, .44f)) } };
+            GUIStyle label = new GUIStyle(graphics.statStyle) { fontSize = 11, normal = { textColor = new Color(.68f, .59f, .44f) } };
             GUIStyle amount = new GUIStyle(graphics.statStyle) { fontSize = 24, fontStyle = FontStyle.Bold, normal = { textColor = new Color(1f, .82f, .42f) } };
             GUI.Label(new Rect(rect.x + 60f, rect.y + 7f, rect.width - 76f, 18f), "보유 재화", label);
             string value = CompactNumber.Format(save.metaCurrency);
@@ -598,13 +611,36 @@ namespace ProjectDM
             GUI.Label(new Rect(rect.x + 60f, rect.y + 24f, rect.width - 76f, 32f), value, amount);
         }
 
+        private static Vector2 MapPosition(Vector2 position, int side)
+        {
+            // Fold the two authored maps around the same origin so each has room for all its branches.
+            if (side == 0 || position == Vector2.zero) return position;
+            float angle = Mathf.Atan2(position.x, side * position.y) * .5f;
+            float radius = position.magnitude;
+            return new Vector2(radius * Mathf.Sin(angle) * 1.8f, side * Mathf.Max(48, radius * Mathf.Cos(angle) * 1.55f));
+        }
+
         internal void BuildPrototypeGraph()
         {
+            CharacterSession characters = run.characters;
+            var common = characters?.Catalog.CommonGraph;
+            if (characters != null && displayedCharacterId != characters.SelectedId)
+            {
+                var personal = characters.Catalog.Graphs[characters.SelectedId];
+                tables = new GameTables(common.balance, common.skillTable, new PrototypeGrowthTable
+                {
+                    rows = common.growthTable.rows.Concat(personal.growthTable.rows).ToArray(),
+                    nodes = common.graphLayoutNodes.Take(common.growthTable.nodes.Length).Concat(personal.graphLayoutNodes).ToArray(),
+                    goalLine = common.growthTable.goalLine,
+                    authoredLayout = true
+                });
+                displayedCharacterId = characters.SelectedId;
+            }
             if (metaTreeNodes.Length != tables.graphLayoutNodes.Length + 1)
                 metaTreeNodes = new MetaTreeNodePresentation[tables.graphLayoutNodes.Length + 1];
-            metaTreeNodes[0] = new MetaTreeNodePresentation("ROOT", personalGraph && run.characters != null ? run.characters.Catalog.Find(run.characters.SelectedId).name : "기본 공격 해금",
+            metaTreeNodes[0] = new MetaTreeNodePresentation("ROOT", characters != null ? characters.Catalog.Find(displayedCharacterId).name : "기본 공격 해금",
                 run.characters != null ? "선택한 캐릭터의 고유 마법을 자동 시전합니다. 캐릭터 변경과 영구 성장은 다음 런부터 적용됩니다." : "가까운 몬스터를 향해 기본 투사체를 자동으로 발사합니다.", Vector2.zero,
-                -1, MetaTreeNodeState.Completed, ThemeTint(new Color(.91f, .69f, .3f)));
+                -1, MetaTreeNodeState.Completed, SymbolAccent);
             int stage = PrototypeRules.Stage(tables.balance, save.progress);
             for (int i = 0; i < tables.growthTable.nodes.Length; i++)
             {
@@ -618,8 +654,10 @@ namespace ProjectDM
                 int parent = 0;
                 for (int j = 0; j < tables.growthTable.nodes.Length; j++)
                     if (tables.growthTable.nodes[j].id == node.VisualParent) parent = j + 1;
+                int side = common == null ? 0 : i < common.growthTable.nodes.Length ? -1 : 1;
+                var layout = tables.graphLayoutNodes[i];
                 metaTreeNodes[i + 1] = new MetaTreeNodePresentation(node.id, revealed ? node.name : "", revealed ? row.description : "",
-                    new Vector2(tables.graphLayoutNodes[i].x, tables.graphLayoutNodes[i].y), parent, state, ThemeTint(new Color(.96f, .66f, .19f)));
+                    MapPosition(new Vector2(layout.x, layout.y), side), parent, state, new Color(.96f, .66f, .19f));
             }
             if (tables.growthTable.goalLine != null) for (int i = 0; i < tables.growthTable.goalLine.Length; i++)
             {
@@ -627,7 +665,7 @@ namespace ProjectDM
                 int index = tables.growthTable.nodes.Length + i + 1;
                 // The main objective roadmap is previewed in full; ordinary growth keeps one-hop concealment.
                 metaTreeNodes[index] = new MetaTreeNodePresentation(goal.id, goal.name, GoalDescription(goal),
-                    new Vector2(goal.x, goal.y), i == 0 ? 0 : index - 1,
+                    MapPosition(new Vector2(goal.x, goal.y), common == null ? 0 : -1), i == 0 ? 0 : index - 1,
                     i == 0 ? MetaTreeNodeState.Completed : MetaTreeNodeState.Locked, new Color(.59f, .78f, .86f));
             }
             if (selectedMetaTreeNode == 0) selectedMetaTreeNode = -1;
@@ -715,7 +753,7 @@ namespace ProjectDM
             Rect panel = GrowthDetailsRect;
             float width = panel.width;
             PixelUiArt.Draw(panel, PixelUiArt.Panel, 12, Color.white);
-            GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = ThemeTint(new Color(.92f, .8f, .6f)) } };
+            GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = new Color(.92f, .8f, .6f) } };
             GUIStyle heading = new GUIStyle(body) { fontSize = 16, fontStyle = FontStyle.Bold };
             string mode = save.sandboxThisSession ? "  [실험: 저장 안 됨]" : "";
             GUI.Label(new Rect(38, panel.y + 10, width - 30, 25), $"성장 지도 조작{mode}", heading);
@@ -739,7 +777,7 @@ namespace ProjectDM
             if (node.state == MetaTreeNodeState.Hidden) return;
             if (node.id == "ROOT") return;
             float width = Mathf.Max(1, Mathf.Min(360f, Screen.width - 36f));
-            GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = ThemeTint(new Color(.92f, .78f, .56f)) } };
+            GUIStyle body = new GUIStyle(graphics.statStyle) { fontSize = 12, wordWrap = true, normal = { textColor = ThemeTint(new Color(.92f, .78f, .56f), node) } };
             GUIStyle heading = new GUIStyle(body) { fontSize = 17, fontStyle = FontStyle.Bold };
             string description, status;
             if (tables.goalNodeLookup.TryGetValue(node.id, out PrototypeGoalNode goal))

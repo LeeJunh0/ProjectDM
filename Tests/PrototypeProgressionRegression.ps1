@@ -303,7 +303,7 @@ foreach ($issue in @('parent_overflow', 'implicit_cycle', 'cost_scale')) {
 $runtimeUI = Get-Content (Join-Path $projectRoot 'Assets/Scripts/Systems/UI/Growth/GrowthGraphView.cs') -Raw
 $runtimeGraph = $runtimeUI
 Assert-True ($runtimeGraph -match '(?s)internal Rect GetMetaTreeNodeHitRect\([^}]+return GetMetaTreeNodeRect\(node, canvasSize\);\s*}') 'Node pointer hit area must be card-only, excluding titles at every zoom.'
-Assert-True ($runtimeUI.Contains('new MetaTreeNodePresentation("ROOT", personalGraph') -and $runtimeUI.Contains(': "기본 공격 해금"') -and -not $runtimeUI.Contains('"기원의 문"')) 'Central node must represent basic attack unlock, or the selected personal-magic character.'
+Assert-True ($runtimeUI.Contains('new MetaTreeNodePresentation("ROOT", characters != null ? characters.Catalog.Find(displayedCharacterId).name') -and $runtimeUI.Contains(': "기본 공격 해금"')) 'Central node must represent the selected character, with basic attack as the fallback.'
 Assert-True ($runtimeUI.Contains('PrototypeRules.IsNodeRevealed(tables.growthTable, node, save.progress, stage)') -and
     $runtimeUI.Contains('revealed ? node.name : ""') -and $runtimeUI.Contains('revealed ? row.description : ""')) 'Hidden presentations must redact their title and description.'
 Assert-True ($runtimeGraph -match '(?s)if \(node.state == MetaTreeNodeState.Hidden\)\s*\{(?:(?!\}).)*return;\s*}') 'Hidden cards must return before drawing icon, text, or click controls.'
