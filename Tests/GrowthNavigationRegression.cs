@@ -34,7 +34,7 @@ namespace ProjectDM.Editor
                 using (var view = new GrowthGraphView(settings, save, tables, null, null, run, null, null))
                 {
                     var canvas = new Rect(0, 0, 1920, 1080); view.BuildPrototypeGraph(); view.FitPrototypeGraph(canvas.size);
-                    Check(view.metaTreeZoom == 1f && view.metaTreePan == Vector2.zero, "Opening must fit the first branches around ROOT");
+                    Check(view.metaTreeZoom == GrowthGraphView.DefaultZoom && view.metaTreePan == Vector2.zero, "Opening must center the original layout around ROOT");
                     var blank = new Vector2(1820, 540);
                     Send(view, canvas, EventType.ScrollWheel, blank, new Vector2(0, 100));
                     Check(view.metaTreeZoom == GrowthGraphView.DefaultZoom * .5f, "Zoom out must stop at half the default scale");

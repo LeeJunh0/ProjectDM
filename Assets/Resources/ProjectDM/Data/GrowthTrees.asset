@@ -1218,7 +1218,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 0
       x: 210
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.projectile.speed
       growthId: magic.projectile.speed
@@ -1230,7 +1230,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 1
       x: 420
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.projectile.count
       growthId: magic.projectile.count
@@ -1242,7 +1242,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 1
       x: 630
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.projectile.pierce
       growthId: magic.projectile.pierce
@@ -1253,8 +1253,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: -320
+      x: 840
+      y: 0
     - enabled: 1
       id: magic.projectile.homing
       growthId: magic.projectile.homing
@@ -1262,23 +1262,22 @@ MonoBehaviour:
       parent: magic.projectile.pierce
       displayParent: magic.projectile.pierce
       displayOrthogonal: 0
-      displayLinks:
-      - magic.projectile.speed
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: -320
+      x: 1050
+      y: 0
     - enabled: 1
       id: magic.projectile.beamUnlock
       growthId: magic.projectile.beamUnlock
       name: "\uB9C8\uB825 \uAD11\uC120 \uD574\uAE08"
       parent: magic.projectile.damage
-      displayParent: ROOT
+      displayParent: magic.projectile.damage
       displayOrthogonal: 0
       displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: 210
+      x: 0
       y: 160
     - enabled: 1
       id: magic.projectile.beamPower
@@ -1290,8 +1289,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: 160
+      x: -210
+      y: 320
     - enabled: 1
       id: magic.projectile.beamWidth
       growthId: magic.projectile.beamWidth
@@ -1302,8 +1301,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: 160
+      x: -210
+      y: 480
     - enabled: 1
       id: magic.projectile.beamCount
       growthId: magic.projectile.beamCount
@@ -1314,8 +1313,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: 320
+      x: -420
+      y: 480
     - enabled: 1
       id: magic.projectile.beamSweep
       growthId: magic.projectile.beamSweep
@@ -1323,24 +1322,23 @@ MonoBehaviour:
       parent: magic.projectile.beamCount
       displayParent: magic.projectile.beamCount
       displayOrthogonal: 0
-      displayLinks:
-      - magic.projectile.beamPower
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: 320
+      x: -630
+      y: 480
     - enabled: 1
       id: magic.projectile.satelliteUnlock
       growthId: magic.projectile.satelliteUnlock
       name: "\uB9C8\uB825 \uC704\uC131 \uD574\uAE08"
       parent: magic.projectile.beamUnlock
-      displayParent: ROOT
+      displayParent: magic.projectile.beamUnlock
       displayOrthogonal: 0
       displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: -210
-      y: 160
+      x: 0
+      y: 320
     - enabled: 1
       id: magic.projectile.satellitePower
       growthId: magic.projectile.satellitePower
@@ -1351,8 +1349,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 160
+      x: 0
+      y: 480
     - enabled: 1
       id: magic.projectile.satelliteCount
       growthId: magic.projectile.satelliteCount
@@ -1363,8 +1361,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -630
-      y: 160
+      x: 0
+      y: 640
     - enabled: 1
       id: magic.projectile.satelliteRate
       growthId: magic.projectile.satelliteRate
@@ -1375,8 +1373,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -630
-      y: 320
+      x: 0
+      y: 800
     - enabled: 1
       id: magic.projectile.satelliteVolley
       growthId: magic.projectile.satelliteVolley
@@ -1384,12 +1382,11 @@ MonoBehaviour:
       parent: magic.projectile.satelliteRate
       displayParent: magic.projectile.satelliteRate
       displayOrthogonal: 0
-      displayLinks:
-      - magic.projectile.satellitePower
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 320
+      x: 0
+      y: 960
     - enabled: 1
       id: magic.projectile.split
       growthId: magic.projectile.split
@@ -1397,12 +1394,11 @@ MonoBehaviour:
       parent: magic.projectile.homing
       displayParent: magic.projectile.homing
       displayOrthogonal: 0
-      displayLinks:
-      - magic.projectile.damage
+      displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: 210
-      y: -320
+      x: 1260
+      y: 0
     - enabled: 1
       id: magic.projectile.damage_mastery_2
       growthId: magic.projectile.damage
@@ -1413,8 +1409,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 210
-      y: -480
+      x: 1470
+      y: 0
     - enabled: 1
       id: magic.projectile.damage_mastery_3
       growthId: magic.projectile.damage
@@ -1425,8 +1421,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: -480
+      x: 1680
+      y: 0
     - enabled: 1
       id: magic.projectile.damage_mastery_4
       growthId: magic.projectile.damage
@@ -1437,8 +1433,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: -480
+      x: 2100
+      y: 0
     - enabled: 1
       id: magic.projectile.damage_mastery_5
       growthId: magic.projectile.damage
@@ -1449,8 +1445,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: -640
+      x: 2100
+      y: 160
     - enabled: 1
       id: magic.projectile.damage_mastery_6
       growthId: magic.projectile.damage
@@ -1461,8 +1457,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: -640
+      x: 2310
+      y: 160
     - enabled: 1
       id: magic.projectile.damage_mastery_7
       growthId: magic.projectile.damage
@@ -1473,8 +1469,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 210
-      y: -640
+      x: 2520
+      y: 160
     - enabled: 1
       id: magic.projectile.damage_mastery_8
       growthId: magic.projectile.damage
@@ -1485,8 +1481,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 210
-      y: -800
+      x: 2520
+      y: 320
     - enabled: 1
       id: magic.projectile.beamPower_mastery_2
       growthId: magic.projectile.beamPower
@@ -1497,7 +1493,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
+      x: -840
       y: 480
     - enabled: 1
       id: magic.projectile.beamPower_mastery_3
@@ -1509,8 +1505,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: 480
+      x: -840
+      y: 640
     - enabled: 1
       id: magic.projectile.beamPower_mastery_4
       growthId: magic.projectile.beamPower
@@ -1521,8 +1517,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
-      y: 480
+      x: -630
+      y: 640
     - enabled: 1
       id: magic.projectile.beamPower_mastery_5
       growthId: magic.projectile.beamPower
@@ -1533,7 +1529,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
+      x: -420
       y: 640
     - enabled: 1
       id: magic.projectile.beamPower_mastery_6
@@ -1545,7 +1541,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
+      x: -210
       y: 640
     - enabled: 1
       id: magic.projectile.beamPower_mastery_7
@@ -1557,8 +1553,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: 640
+      x: -210
+      y: 800
     - enabled: 1
       id: magic.projectile.beamPower_mastery_8
       growthId: magic.projectile.beamPower
@@ -1569,7 +1565,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
+      x: -420
       y: 800
     - enabled: 1
       id: magic.projectile.satellitePower_mastery_2
@@ -1581,8 +1577,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 480
+      x: 210
+      y: 960
     - enabled: 1
       id: magic.projectile.satellitePower_mastery_3
       growthId: magic.projectile.satellitePower
@@ -1593,8 +1589,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -630
-      y: 480
+      x: 420
+      y: 960
     - enabled: 1
       id: magic.projectile.satellitePower_mastery_4
       growthId: magic.projectile.satellitePower
@@ -1605,8 +1601,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -840
-      y: 480
+      x: 630
+      y: 960
     - enabled: 1
       id: magic.projectile.satellitePower_mastery_5
       growthId: magic.projectile.satellitePower
@@ -1617,8 +1613,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -840
-      y: 640
+      x: 630
+      y: 1120
     - enabled: 1
       id: magic.projectile.satellitePower_mastery_6
       growthId: magic.projectile.satellitePower
@@ -1629,8 +1625,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -630
-      y: 640
+      x: 420
+      y: 1120
     - enabled: 1
       id: magic.projectile.satellitePower_mastery_7
       growthId: magic.projectile.satellitePower
@@ -1641,8 +1637,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: 640
+      x: 210
+      y: 1120
     - enabled: 1
       id: magic.projectile.satellitePower_mastery_8
       growthId: magic.projectile.satellitePower
@@ -1653,8 +1649,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: 800
+      x: 210
+      y: 1280
     - enabled: 1
       id: magic.projectile.hunt
       growthId: magic.projectile.hunt
@@ -1666,7 +1662,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 0
       x: -210
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.projectile.hunt_mastery_2
       growthId: magic.projectile.hunt
@@ -1678,7 +1674,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 3
       x: -420
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.projectile.hunt_mastery_3
       growthId: magic.projectile.hunt
@@ -1689,8 +1685,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: -320
+      x: -630
+      y: 0
     - enabled: 1
       id: magic.projectile.hunt_mastery_4
       growthId: magic.projectile.hunt
@@ -1701,8 +1697,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -210
-      y: -320
+      x: -735
+      y: 80
   - id: flame
     name: "\uD654\uC5FC"
     nodes:
@@ -1717,7 +1713,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 0
       x: 210
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.flame.speed
       growthId: magic.flame.speed
@@ -1729,7 +1725,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 1
       x: 420
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.flame.range
       growthId: magic.flame.range
@@ -1741,7 +1737,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 1
       x: 630
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.flame.width
       growthId: magic.flame.width
@@ -1752,8 +1748,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: -320
+      x: 840
+      y: 0
     - enabled: 1
       id: magic.flame.burn
       growthId: magic.flame.burn
@@ -1761,23 +1757,22 @@ MonoBehaviour:
       parent: magic.flame.width
       displayParent: magic.flame.width
       displayOrthogonal: 0
-      displayLinks:
-      - magic.flame.speed
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: -320
+      x: 1050
+      y: 0
     - enabled: 1
       id: magic.flame.firefieldUnlock
       growthId: magic.flame.firefieldUnlock
       name: "\uBD88\uAE38 \uC9C0\uB300 \uD574\uAE08"
       parent: magic.flame.damage
-      displayParent: ROOT
+      displayParent: magic.flame.damage
       displayOrthogonal: 0
       displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: 210
+      x: 0
       y: 160
     - enabled: 1
       id: magic.flame.firefieldPower
@@ -1789,8 +1784,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: 160
+      x: -210
+      y: 320
     - enabled: 1
       id: magic.flame.firefieldRange
       growthId: magic.flame.firefieldRange
@@ -1801,8 +1796,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: 160
+      x: -210
+      y: 480
     - enabled: 1
       id: magic.flame.firefieldCount
       growthId: magic.flame.firefieldCount
@@ -1813,8 +1808,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: 320
+      x: -420
+      y: 480
     - enabled: 1
       id: magic.flame.firefieldDuration
       growthId: magic.flame.firefieldDuration
@@ -1822,24 +1817,23 @@ MonoBehaviour:
       parent: magic.flame.firefieldCount
       displayParent: magic.flame.firefieldCount
       displayOrthogonal: 0
-      displayLinks:
-      - magic.flame.firefieldPower
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: 320
+      x: -630
+      y: 480
     - enabled: 1
       id: magic.flame.meteorUnlock
       growthId: magic.flame.meteorUnlock
       name: "\uC720\uC131 \uB099\uD558 \uD574\uAE08"
       parent: magic.flame.firefieldUnlock
-      displayParent: ROOT
+      displayParent: magic.flame.firefieldUnlock
       displayOrthogonal: 0
       displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: -210
-      y: 160
+      x: 0
+      y: 320
     - enabled: 1
       id: magic.flame.meteorPower
       growthId: magic.flame.meteorPower
@@ -1850,8 +1844,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 160
+      x: 0
+      y: 480
     - enabled: 1
       id: magic.flame.meteorRange
       growthId: magic.flame.meteorRange
@@ -1862,8 +1856,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -630
-      y: 160
+      x: 0
+      y: 640
     - enabled: 1
       id: magic.flame.meteorCount
       growthId: magic.flame.meteorCount
@@ -1874,8 +1868,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -630
-      y: 320
+      x: 0
+      y: 800
     - enabled: 1
       id: magic.flame.meteorIgnite
       growthId: magic.flame.meteorIgnite
@@ -1883,12 +1877,11 @@ MonoBehaviour:
       parent: magic.flame.meteorCount
       displayParent: magic.flame.meteorCount
       displayOrthogonal: 0
-      displayLinks:
-      - magic.flame.meteorPower
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 320
+      x: 0
+      y: 960
     - enabled: 1
       id: magic.flame.spread
       growthId: magic.flame.spread
@@ -1896,12 +1889,11 @@ MonoBehaviour:
       parent: magic.flame.burn
       displayParent: magic.flame.burn
       displayOrthogonal: 0
-      displayLinks:
-      - magic.flame.damage
+      displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: 210
-      y: -320
+      x: 1260
+      y: 0
     - enabled: 1
       id: magic.flame.damage_mastery_2
       growthId: magic.flame.damage
@@ -1912,8 +1904,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 210
-      y: -480
+      x: 1470
+      y: 0
     - enabled: 1
       id: magic.flame.damage_mastery_3
       growthId: magic.flame.damage
@@ -1924,8 +1916,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: -480
+      x: 1680
+      y: 0
     - enabled: 1
       id: magic.flame.damage_mastery_4
       growthId: magic.flame.damage
@@ -1936,8 +1928,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: -480
+      x: 2100
+      y: 0
     - enabled: 1
       id: magic.flame.damage_mastery_5
       growthId: magic.flame.damage
@@ -1948,8 +1940,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: -640
+      x: 2100
+      y: 160
     - enabled: 1
       id: magic.flame.damage_mastery_6
       growthId: magic.flame.damage
@@ -1960,8 +1952,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: -640
+      x: 2310
+      y: 160
     - enabled: 1
       id: magic.flame.damage_mastery_7
       growthId: magic.flame.damage
@@ -1972,8 +1964,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 210
-      y: -640
+      x: 2520
+      y: 160
     - enabled: 1
       id: magic.flame.damage_mastery_8
       growthId: magic.flame.damage
@@ -1984,8 +1976,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 210
-      y: -800
+      x: 2520
+      y: 320
     - enabled: 1
       id: magic.flame.firefieldPower_mastery_2
       growthId: magic.flame.firefieldPower
@@ -1996,7 +1988,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
+      x: -840
       y: 480
     - enabled: 1
       id: magic.flame.firefieldPower_mastery_3
@@ -2008,8 +2000,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: 480
+      x: -840
+      y: 640
     - enabled: 1
       id: magic.flame.firefieldPower_mastery_4
       growthId: magic.flame.firefieldPower
@@ -2020,8 +2012,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
-      y: 480
+      x: -630
+      y: 640
     - enabled: 1
       id: magic.flame.firefieldPower_mastery_5
       growthId: magic.flame.firefieldPower
@@ -2032,7 +2024,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
+      x: -420
       y: 640
     - enabled: 1
       id: magic.flame.firefieldPower_mastery_6
@@ -2044,7 +2036,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
+      x: -210
       y: 640
     - enabled: 1
       id: magic.flame.firefieldPower_mastery_7
@@ -2056,8 +2048,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: 640
+      x: -210
+      y: 800
     - enabled: 1
       id: magic.flame.firefieldPower_mastery_8
       growthId: magic.flame.firefieldPower
@@ -2068,7 +2060,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
+      x: -420
       y: 800
     - enabled: 1
       id: magic.flame.meteorPower_mastery_2
@@ -2080,8 +2072,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 480
+      x: 210
+      y: 960
     - enabled: 1
       id: magic.flame.meteorPower_mastery_3
       growthId: magic.flame.meteorPower
@@ -2092,8 +2084,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -630
-      y: 480
+      x: 420
+      y: 960
     - enabled: 1
       id: magic.flame.meteorPower_mastery_4
       growthId: magic.flame.meteorPower
@@ -2104,8 +2096,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -840
-      y: 480
+      x: 630
+      y: 960
     - enabled: 1
       id: magic.flame.meteorPower_mastery_5
       growthId: magic.flame.meteorPower
@@ -2116,8 +2108,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -840
-      y: 640
+      x: 630
+      y: 1120
     - enabled: 1
       id: magic.flame.meteorPower_mastery_6
       growthId: magic.flame.meteorPower
@@ -2128,8 +2120,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -630
-      y: 640
+      x: 420
+      y: 1120
     - enabled: 1
       id: magic.flame.meteorPower_mastery_7
       growthId: magic.flame.meteorPower
@@ -2140,8 +2132,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: 640
+      x: 210
+      y: 1120
     - enabled: 1
       id: magic.flame.meteorPower_mastery_8
       growthId: magic.flame.meteorPower
@@ -2152,8 +2144,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: 800
+      x: 210
+      y: 1280
     - enabled: 1
       id: magic.flame.hunt
       growthId: magic.flame.hunt
@@ -2165,7 +2157,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 0
       x: -210
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.flame.hunt_mastery_2
       growthId: magic.flame.hunt
@@ -2177,7 +2169,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 3
       x: -420
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.flame.hunt_mastery_3
       growthId: magic.flame.hunt
@@ -2188,8 +2180,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: -320
+      x: -630
+      y: 0
     - enabled: 1
       id: magic.flame.hunt_mastery_4
       growthId: magic.flame.hunt
@@ -2200,8 +2192,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -210
-      y: -320
+      x: -735
+      y: 80
   - id: lightning
     name: "\uBC88\uAC1C"
     nodes:
@@ -2216,7 +2208,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 0
       x: 210
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.lightning.speed
       growthId: magic.lightning.speed
@@ -2228,7 +2220,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 1
       x: 420
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.lightning.jumps
       growthId: magic.lightning.jumps
@@ -2240,7 +2232,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 1
       x: 630
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.lightning.range
       growthId: magic.lightning.range
@@ -2251,8 +2243,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: -320
+      x: 840
+      y: 0
     - enabled: 1
       id: magic.lightning.echo
       growthId: magic.lightning.echo
@@ -2260,23 +2252,22 @@ MonoBehaviour:
       parent: magic.lightning.range
       displayParent: magic.lightning.range
       displayOrthogonal: 0
-      displayLinks:
-      - magic.lightning.speed
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: -320
+      x: 1050
+      y: 0
     - enabled: 1
       id: magic.lightning.orbUnlock
       growthId: magic.lightning.orbUnlock
       name: "\uC804\uAE30 \uAD6C\uCCB4 \uD574\uAE08"
       parent: magic.lightning.damage
-      displayParent: ROOT
+      displayParent: magic.lightning.damage
       displayOrthogonal: 0
       displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: 210
+      x: 0
       y: 160
     - enabled: 1
       id: magic.lightning.orbPower
@@ -2288,8 +2279,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: 160
+      x: -210
+      y: 320
     - enabled: 1
       id: magic.lightning.orbRange
       growthId: magic.lightning.orbRange
@@ -2300,8 +2291,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: 160
+      x: -210
+      y: 480
     - enabled: 1
       id: magic.lightning.orbCount
       growthId: magic.lightning.orbCount
@@ -2312,8 +2303,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: 320
+      x: -420
+      y: 480
     - enabled: 1
       id: magic.lightning.orbLink
       growthId: magic.lightning.orbLink
@@ -2321,24 +2312,23 @@ MonoBehaviour:
       parent: magic.lightning.orbCount
       displayParent: magic.lightning.orbCount
       displayOrthogonal: 0
-      displayLinks:
-      - magic.lightning.orbPower
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: 320
+      x: -630
+      y: 480
     - enabled: 1
       id: magic.lightning.thunderUnlock
       growthId: magic.lightning.thunderUnlock
       name: "\uB099\uB8B0 \uD574\uAE08"
       parent: magic.lightning.orbUnlock
-      displayParent: ROOT
+      displayParent: magic.lightning.orbUnlock
       displayOrthogonal: 0
       displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: -210
-      y: 160
+      x: 0
+      y: 320
     - enabled: 1
       id: magic.lightning.thunderPower
       growthId: magic.lightning.thunderPower
@@ -2349,8 +2339,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 160
+      x: 0
+      y: 480
     - enabled: 1
       id: magic.lightning.thunderRange
       growthId: magic.lightning.thunderRange
@@ -2361,8 +2351,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -630
-      y: 160
+      x: 0
+      y: 640
     - enabled: 1
       id: magic.lightning.thunderCount
       growthId: magic.lightning.thunderCount
@@ -2373,8 +2363,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -630
-      y: 320
+      x: 0
+      y: 800
     - enabled: 1
       id: magic.lightning.thunderChain
       growthId: magic.lightning.thunderChain
@@ -2382,12 +2372,11 @@ MonoBehaviour:
       parent: magic.lightning.thunderCount
       displayParent: magic.lightning.thunderCount
       displayOrthogonal: 0
-      displayLinks:
-      - magic.lightning.thunderPower
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 320
+      x: 0
+      y: 960
     - enabled: 1
       id: magic.lightning.fork
       growthId: magic.lightning.fork
@@ -2395,12 +2384,11 @@ MonoBehaviour:
       parent: magic.lightning.echo
       displayParent: magic.lightning.echo
       displayOrthogonal: 0
-      displayLinks:
-      - magic.lightning.damage
+      displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: 210
-      y: -320
+      x: 1260
+      y: 0
     - enabled: 1
       id: magic.lightning.damage_mastery_2
       growthId: magic.lightning.damage
@@ -2411,8 +2399,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 210
-      y: -480
+      x: 1470
+      y: 0
     - enabled: 1
       id: magic.lightning.damage_mastery_3
       growthId: magic.lightning.damage
@@ -2423,8 +2411,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: -480
+      x: 1680
+      y: 0
     - enabled: 1
       id: magic.lightning.damage_mastery_4
       growthId: magic.lightning.damage
@@ -2435,8 +2423,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: -480
+      x: 2100
+      y: 0
     - enabled: 1
       id: magic.lightning.damage_mastery_5
       growthId: magic.lightning.damage
@@ -2447,8 +2435,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: -640
+      x: 2100
+      y: 160
     - enabled: 1
       id: magic.lightning.damage_mastery_6
       growthId: magic.lightning.damage
@@ -2459,8 +2447,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: -640
+      x: 2310
+      y: 160
     - enabled: 1
       id: magic.lightning.damage_mastery_7
       growthId: magic.lightning.damage
@@ -2471,8 +2459,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 210
-      y: -640
+      x: 2520
+      y: 160
     - enabled: 1
       id: magic.lightning.damage_mastery_8
       growthId: magic.lightning.damage
@@ -2483,8 +2471,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 210
-      y: -800
+      x: 2520
+      y: 320
     - enabled: 1
       id: magic.lightning.orbPower_mastery_2
       growthId: magic.lightning.orbPower
@@ -2495,7 +2483,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
+      x: -840
       y: 480
     - enabled: 1
       id: magic.lightning.orbPower_mastery_3
@@ -2507,8 +2495,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: 480
+      x: -840
+      y: 640
     - enabled: 1
       id: magic.lightning.orbPower_mastery_4
       growthId: magic.lightning.orbPower
@@ -2519,8 +2507,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
-      y: 480
+      x: -630
+      y: 640
     - enabled: 1
       id: magic.lightning.orbPower_mastery_5
       growthId: magic.lightning.orbPower
@@ -2531,7 +2519,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
+      x: -420
       y: 640
     - enabled: 1
       id: magic.lightning.orbPower_mastery_6
@@ -2543,7 +2531,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
+      x: -210
       y: 640
     - enabled: 1
       id: magic.lightning.orbPower_mastery_7
@@ -2555,8 +2543,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: 640
+      x: -210
+      y: 800
     - enabled: 1
       id: magic.lightning.orbPower_mastery_8
       growthId: magic.lightning.orbPower
@@ -2567,7 +2555,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
+      x: -420
       y: 800
     - enabled: 1
       id: magic.lightning.thunderPower_mastery_2
@@ -2579,8 +2567,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 480
+      x: 210
+      y: 960
     - enabled: 1
       id: magic.lightning.thunderPower_mastery_3
       growthId: magic.lightning.thunderPower
@@ -2591,8 +2579,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -630
-      y: 480
+      x: 420
+      y: 960
     - enabled: 1
       id: magic.lightning.thunderPower_mastery_4
       growthId: magic.lightning.thunderPower
@@ -2603,8 +2591,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -840
-      y: 480
+      x: 630
+      y: 960
     - enabled: 1
       id: magic.lightning.thunderPower_mastery_5
       growthId: magic.lightning.thunderPower
@@ -2615,8 +2603,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -840
-      y: 640
+      x: 630
+      y: 1120
     - enabled: 1
       id: magic.lightning.thunderPower_mastery_6
       growthId: magic.lightning.thunderPower
@@ -2627,8 +2615,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -630
-      y: 640
+      x: 420
+      y: 1120
     - enabled: 1
       id: magic.lightning.thunderPower_mastery_7
       growthId: magic.lightning.thunderPower
@@ -2639,8 +2627,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: 640
+      x: 210
+      y: 1120
     - enabled: 1
       id: magic.lightning.thunderPower_mastery_8
       growthId: magic.lightning.thunderPower
@@ -2651,8 +2639,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: 800
+      x: 210
+      y: 1280
     - enabled: 1
       id: magic.lightning.hunt
       growthId: magic.lightning.hunt
@@ -2664,7 +2652,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 0
       x: -210
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.lightning.hunt_mastery_2
       growthId: magic.lightning.hunt
@@ -2676,7 +2664,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 3
       x: -420
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.lightning.hunt_mastery_3
       growthId: magic.lightning.hunt
@@ -2687,8 +2675,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: -320
+      x: -630
+      y: 0
     - enabled: 1
       id: magic.lightning.hunt_mastery_4
       growthId: magic.lightning.hunt
@@ -2699,8 +2687,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -210
-      y: -320
+      x: -735
+      y: 80
   - id: frost
     name: "\uBE59\uACB0"
     nodes:
@@ -2715,7 +2703,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 0
       x: 210
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.frost.speed
       growthId: magic.frost.speed
@@ -2727,7 +2715,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 1
       x: 420
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.frost.count
       growthId: magic.frost.count
@@ -2739,7 +2727,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 1
       x: 630
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.frost.orbitSpeed
       growthId: magic.frost.orbitSpeed
@@ -2750,8 +2738,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: -320
+      x: 840
+      y: 0
     - enabled: 1
       id: magic.frost.range
       growthId: magic.frost.range
@@ -2759,12 +2747,11 @@ MonoBehaviour:
       parent: magic.frost.orbitSpeed
       displayParent: magic.frost.orbitSpeed
       displayOrthogonal: 0
-      displayLinks:
-      - magic.frost.speed
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: -320
+      x: 1050
+      y: 0
     - enabled: 1
       id: magic.frost.size
       growthId: magic.frost.size
@@ -2772,12 +2759,11 @@ MonoBehaviour:
       parent: magic.frost.range
       displayParent: magic.frost.range
       displayOrthogonal: 0
-      displayLinks:
-      - magic.frost.damage
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 210
-      y: -320
+      x: 1260
+      y: 0
     - enabled: 1
       id: magic.frost.chill
       growthId: magic.frost.chill
@@ -2788,8 +2774,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 2
       parentRanks: 1
-      x: 210
-      y: -480
+      x: 1470
+      y: 0
     - enabled: 1
       id: magic.frost.freezeDuration
       growthId: magic.frost.freezeDuration
@@ -2797,23 +2783,22 @@ MonoBehaviour:
       parent: magic.frost.chill
       displayParent: magic.frost.chill
       displayOrthogonal: 0
-      displayLinks:
-      - magic.frost.range
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: -480
+      x: 1680
+      y: 0
     - enabled: 1
       id: magic.frost.blizzardUnlock
       growthId: magic.frost.blizzardUnlock
       name: "\uB208\uBCF4\uB77C \uD574\uAE08"
       parent: magic.frost.damage
-      displayParent: ROOT
+      displayParent: magic.frost.damage
       displayOrthogonal: 0
       displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: 210
+      x: 0
       y: 160
     - enabled: 1
       id: magic.frost.blizzardPower
@@ -2825,8 +2810,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: 160
+      x: -210
+      y: 320
     - enabled: 1
       id: magic.frost.blizzardRange
       growthId: magic.frost.blizzardRange
@@ -2837,8 +2822,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: 160
+      x: -210
+      y: 480
     - enabled: 1
       id: magic.frost.blizzardCount
       growthId: magic.frost.blizzardCount
@@ -2849,8 +2834,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: 320
+      x: -420
+      y: 480
     - enabled: 1
       id: magic.frost.blizzardCold
       growthId: magic.frost.blizzardCold
@@ -2858,24 +2843,23 @@ MonoBehaviour:
       parent: magic.frost.blizzardCount
       displayParent: magic.frost.blizzardCount
       displayOrthogonal: 0
-      displayLinks:
-      - magic.frost.blizzardPower
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
-      y: 320
+      x: -630
+      y: 480
     - enabled: 1
       id: magic.frost.shatterUnlock
       growthId: magic.frost.shatterUnlock
       name: "\uC1C4\uBE59 \uD30C\uB3D9 \uD574\uAE08"
       parent: magic.frost.blizzardUnlock
-      displayParent: ROOT
+      displayParent: magic.frost.blizzardUnlock
       displayOrthogonal: 0
       displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: -210
-      y: 160
+      x: 0
+      y: 320
     - enabled: 1
       id: magic.frost.shatterPower
       growthId: magic.frost.shatterPower
@@ -2886,8 +2870,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 160
+      x: 0
+      y: 480
     - enabled: 1
       id: magic.frost.shatterRange
       growthId: magic.frost.shatterRange
@@ -2898,8 +2882,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -630
-      y: 160
+      x: 0
+      y: 640
     - enabled: 1
       id: magic.frost.shatterShards
       growthId: magic.frost.shatterShards
@@ -2910,8 +2894,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -630
-      y: 320
+      x: 0
+      y: 800
     - enabled: 1
       id: magic.frost.shatterCascade
       growthId: magic.frost.shatterCascade
@@ -2919,12 +2903,11 @@ MonoBehaviour:
       parent: magic.frost.shatterShards
       displayParent: magic.frost.shatterShards
       displayOrthogonal: 0
-      displayLinks:
-      - magic.frost.shatterPower
+      displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 320
+      x: 0
+      y: 960
     - enabled: 1
       id: magic.frost.rings
       growthId: magic.frost.rings
@@ -2932,12 +2915,11 @@ MonoBehaviour:
       parent: magic.frost.freezeDuration
       displayParent: magic.frost.freezeDuration
       displayOrthogonal: 0
-      displayLinks:
-      - magic.frost.orbitSpeed
+      displayLinks: []
       ranks: 1
       parentRanks: 1
-      x: 630
-      y: -480
+      x: 1890
+      y: 0
     - enabled: 1
       id: magic.frost.damage_mastery_2
       growthId: magic.frost.damage
@@ -2948,8 +2930,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 630
-      y: -640
+      x: 2100
+      y: 0
     - enabled: 1
       id: magic.frost.damage_mastery_3
       growthId: magic.frost.damage
@@ -2960,8 +2942,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
-      y: -640
+      x: 2310
+      y: 0
     - enabled: 1
       id: magic.frost.damage_mastery_4
       growthId: magic.frost.damage
@@ -2972,8 +2954,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 1050
-      y: -640
+      x: 2520
+      y: 0
     - enabled: 1
       id: magic.frost.damage_mastery_5
       growthId: magic.frost.damage
@@ -2984,8 +2966,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 1050
-      y: -800
+      x: 2520
+      y: 160
     - enabled: 1
       id: magic.frost.damage_mastery_6
       growthId: magic.frost.damage
@@ -2996,8 +2978,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
-      y: -800
+      x: 2730
+      y: 160
     - enabled: 1
       id: magic.frost.damage_mastery_7
       growthId: magic.frost.damage
@@ -3008,8 +2990,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: -800
+      x: 2940
+      y: 160
     - enabled: 1
       id: magic.frost.damage_mastery_8
       growthId: magic.frost.damage
@@ -3020,8 +3002,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: -960
+      x: 2940
+      y: 320
     - enabled: 1
       id: magic.frost.blizzardPower_mastery_2
       growthId: magic.frost.blizzardPower
@@ -3032,7 +3014,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: 420
+      x: -840
       y: 480
     - enabled: 1
       id: magic.frost.blizzardPower_mastery_3
@@ -3044,8 +3026,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
-      y: 480
+      x: -840
+      y: 640
     - enabled: 1
       id: magic.frost.blizzardPower_mastery_4
       growthId: magic.frost.blizzardPower
@@ -3056,8 +3038,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
-      y: 480
+      x: -630
+      y: 640
     - enabled: 1
       id: magic.frost.blizzardPower_mastery_5
       growthId: magic.frost.blizzardPower
@@ -3068,7 +3050,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 840
+      x: -420
       y: 640
     - enabled: 1
       id: magic.frost.blizzardPower_mastery_6
@@ -3080,7 +3062,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 630
+      x: -210
       y: 640
     - enabled: 1
       id: magic.frost.blizzardPower_mastery_7
@@ -3092,8 +3074,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
-      y: 640
+      x: -210
+      y: 800
     - enabled: 1
       id: magic.frost.blizzardPower_mastery_8
       growthId: magic.frost.blizzardPower
@@ -3104,7 +3086,7 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: 420
+      x: -420
       y: 800
     - enabled: 1
       id: magic.frost.shatterPower_mastery_2
@@ -3116,8 +3098,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 1
-      x: -420
-      y: 480
+      x: 210
+      y: 960
     - enabled: 1
       id: magic.frost.shatterPower_mastery_3
       growthId: magic.frost.shatterPower
@@ -3128,8 +3110,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -630
-      y: 480
+      x: 420
+      y: 960
     - enabled: 1
       id: magic.frost.shatterPower_mastery_4
       growthId: magic.frost.shatterPower
@@ -3140,8 +3122,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -840
-      y: 480
+      x: 630
+      y: 960
     - enabled: 1
       id: magic.frost.shatterPower_mastery_5
       growthId: magic.frost.shatterPower
@@ -3152,8 +3134,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -840
-      y: 640
+      x: 630
+      y: 1120
     - enabled: 1
       id: magic.frost.shatterPower_mastery_6
       growthId: magic.frost.shatterPower
@@ -3164,8 +3146,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -630
-      y: 640
+      x: 420
+      y: 1120
     - enabled: 1
       id: magic.frost.shatterPower_mastery_7
       growthId: magic.frost.shatterPower
@@ -3176,8 +3158,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: 640
+      x: 210
+      y: 1120
     - enabled: 1
       id: magic.frost.shatterPower_mastery_8
       growthId: magic.frost.shatterPower
@@ -3188,8 +3170,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: 800
+      x: 210
+      y: 1280
     - enabled: 1
       id: magic.frost.hunt
       growthId: magic.frost.hunt
@@ -3201,7 +3183,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 0
       x: -210
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.frost.hunt_mastery_2
       growthId: magic.frost.hunt
@@ -3213,7 +3195,7 @@ MonoBehaviour:
       ranks: 3
       parentRanks: 3
       x: -420
-      y: -160
+      y: 0
     - enabled: 1
       id: magic.frost.hunt_mastery_3
       growthId: magic.frost.hunt
@@ -3224,8 +3206,8 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -420
-      y: -320
+      x: -630
+      y: 0
     - enabled: 1
       id: magic.frost.hunt_mastery_4
       growthId: magic.frost.hunt
@@ -3236,5 +3218,5 @@ MonoBehaviour:
       displayLinks: []
       ranks: 3
       parentRanks: 3
-      x: -210
-      y: -320
+      x: -735
+      y: 80

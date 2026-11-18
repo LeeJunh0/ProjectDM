@@ -27,7 +27,6 @@ namespace ProjectDM.Editor
                 var authored = Resources.Load<GrowthTreeSettings>(GrowthTreeSettings.ResourcePath);
                 var workbook = GrowthTreeSpreadsheet.Import(Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Design/GrowthTree.xlsx"));
                 Check(workbook.Validate(GrowthTreeSettings.Graphs(tables)) == null, "Workbook must import as a valid growth table.");
-                int unlockExceptions = 0;
                 foreach (string id in GrowthTreeSettings.TreeIds)
                 {
                     var source = authored.trees.Single(tree => tree.id == id);
@@ -41,10 +40,7 @@ namespace ProjectDM.Editor
                             node.displayOrthogonal == row.displayOrthogonal && node.x == row.x && node.y == row.y &&
                             (node.displayLinks ?? Array.Empty<string>()).SequenceEqual(row.displayLinks ?? Array.Empty<string>()),
                             node.id + ": workbook differs from the actual authored node.");
-                        bool skillOrder = id != "common" && node.id.EndsWith("Unlock", StringComparison.Ordinal) &&
-                            node.VisualParent == "ROOT" && node.parent != "ROOT";
-                        if (skillOrder) unlockExceptions++;
-                        else Check(node.parent == node.VisualParent, node.id + ": purchase parent differs from the visible path.");
+                        Check(node.parent == node.VisualParent, node.id + ": purchase parent differs from the visible path.");
                     }
 
                     var graph = id == "common" ? tables.characters.CommonGraph : tables.characters.Graphs[id];
@@ -77,7 +73,6 @@ namespace ProjectDM.Editor
                         Check(PrototypeRules.NodeRank(node, fresh) == node.ranks, id + ": undiscoverable or blocked node " + node.id);
                     Debug.Log("GROWTH VISIBILITY " + id + ": " + graph.growthTable.nodes.Length + " nodes, " + purchases + " purchases, no deadlocks.");
                 }
-                Check(unlockExceptions == 8, "The second and third skill unlocks must preserve their existing order.");
                 Check(tables.characters.CommonGraph.growthLookup.ContainsKey("speed"), "Common attack speed must remain a permanent growth");
                 var fallbackTables = new GameTables(tables.balance, tables.skillTable, tables.growthTable);
                 var fallbackSave = new SaveService(fallbackTables, new MemoryProgressStore(), true) { progress = new PrototypeSave() };
@@ -181,7 +176,10 @@ namespace ProjectDM.Editor
                             character.id + ": map must include one root, common growth, objectives and the selected skills.");
                         Check(shown["ROOT"].title == character.name, "Root must follow the selected character.");
                         foreach (var goal in common.growthTable.goalLine)
+                        {
                             Check(shown[goal.id].state != MetaTreeNodeState.Hidden, "Objectives must display for each character.");
+                            Check(shown[goal.id].position == new Vector2(goal.x, goal.y), "Objective moved from its authored coordinates.");
+                        }
                         foreach (var graph in new[] { common, personal })
                         foreach (var node in graph.growthTable.nodes)
                         {
@@ -189,9 +187,27 @@ namespace ProjectDM.Editor
                             bool expected = PrototypeRules.IsNodeRevealed(graph.growthTable, node, save.progress, 0);
                             Check((drawn.state != MetaTreeNodeState.Hidden) == expected, node.id + ": runtime presentation leaked a node.");
                             if (!expected) Check(drawn.title == "" && drawn.subtitle == "", node.id + ": hidden text leaked.");
-                            Check(drawn.position.y * (graph == common ? -1 : 1) > 0, node.id + ": node overlapped the other growth area.");
+                            Check(drawn.position == new Vector2(node.x, node.y), node.id + ": runtime map displaced the authored coordinates.");
                             Check(view.metaTreeNodes[drawn.parentIndex].id == node.VisualParent, node.id + ": display link changed.");
                         }
+                        var preview = new PrototypeSave();
+                        string prefix = "magic." + character.id + ".";
+                        var strength = personal.GrowthNode(prefix + "damage");
+                        var speed = personal.GrowthNode(prefix + "speed");
+                        var second = personal.GrowthNode(prefix + character.skills[1].id + "Unlock");
+                        var third = personal.GrowthNode(prefix + character.skills[2].id + "Unlock");
+                        int firstRunGold = 20;
+                        Check(shown[strength.id].state == MetaTreeNodeState.Reachable && shown[second.id].state == MetaTreeNodeState.Hidden,
+                            character.id + ": the opening should show the affordable first upgrade.");
+                        Check(PrototypeRules.TryPurchaseNode(personal.balance, personal.NodeGrowthRow(strength.id), strength, preview, 0, ref firstRunGold, personal.growthTable) &&
+                            PrototypeRules.TryPurchaseNode(personal.balance, personal.NodeGrowthRow(speed.id), speed, preview, 0, ref firstRunGold, personal.growthTable),
+                            character.id + ": the opening budget should buy both damage and speed.");
+                        Check(PrototypeRules.IsNodeRevealed(personal.growthTable, second, preview, 0) &&
+                            !PrototypeRules.IsNodeRevealed(personal.growthTable, third, preview, 0),
+                            character.id + ": first investment should reveal the second skill only.");
+                        int unlockGold = 40;
+                        Check(PrototypeRules.TryPurchaseNode(personal.balance, personal.NodeGrowthRow(second.id), second, preview, 0, ref unlockGold, personal.growthTable) &&
+                            PrototypeRules.IsNodeRevealed(personal.growthTable, third, preview, 0), character.id + ": second skill should reveal the third.");
                         var canvas = new Vector2(1920, 1080);
                         view.metaTreeZoom = GrowthGraphView.DefaultZoom;
                         foreach (var node in view.metaTreeNodes.Skip(1))

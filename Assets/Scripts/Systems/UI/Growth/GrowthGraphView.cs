@@ -18,7 +18,9 @@ namespace ProjectDM
         internal string SymbolCharacterId => GrowthTreeEffects.Character(run.characters?.SelectedId);
         private Color SymbolAccent => Theme != null ? Theme.Accent(SymbolCharacterId) : GrowthTreeEffects.Accent(SymbolCharacterId);
         private Color ThemeTint(Color original, MetaTreeNodePresentation node) =>
-            node.position.y > 0 && Theme != null ? Theme.Tint(original, displayedCharacterId) : original;
+            displayedCharacterId != null && tables.growthNodeLookup.TryGetValue(node.id, out var growth) &&
+            growth.growthId.StartsWith("magic.", StringComparison.Ordinal) && Theme != null
+                ? Theme.Tint(original, displayedCharacterId) : original;
         private readonly ProgressionService progression;
         private readonly WorldArtAssets art;
         private readonly RunController run;
@@ -184,7 +186,8 @@ namespace ProjectDM
 
                 MetaTreeNodePresentation parent = metaTreeNodes[node.parentIndex];
                 tables.growthNodeLookup.TryGetValue(node.id, out var growth);
-                var points = GetConnectionPoints(parent, node, growth, canvasSize);
+                var points = GrowthConnectionPath.Points(GetMetaTreeNodeCenter(parent, canvasSize),
+                    GetMetaTreeNodeCenter(node, canvasSize), growth?.displayOrthogonal == true, metaTreeZoom);
                 Color connectorColor = tables.goalNodeLookup.ContainsKey(node.id)
                     ? new Color(.67f, .82f, .9f, .85f)
                     : ThemeTint(node.state == MetaTreeNodeState.Locked
@@ -225,22 +228,6 @@ namespace ProjectDM
         internal Vector2 GetMetaTreeNodeCenter(MetaTreeNodePresentation node, Vector2 canvasSize)
         {
             return canvasSize * .5f + metaTreePan + node.position * metaTreeZoom;
-        }
-
-        private Vector2[] GetConnectionPoints(MetaTreeNodePresentation parent, MetaTreeNodePresentation node,
-            PrototypeGrowthNode growth, Vector2 canvasSize)
-        {
-            Vector2 from = GetMetaTreeNodeCenter(parent, canvasSize);
-            Vector2 to = GetMetaTreeNodeCenter(node, canvasSize);
-            if (growth?.displayOrthogonal != true) return new[] { from, to };
-            if (displayedCharacterId == null) return GrowthConnectionPath.Points(from, to, true, metaTreeZoom);
-            if (parent.parentIndex < 0) return new[] { from, to };
-            var source = tables.GrowthNode(parent.id);
-            var points = GrowthConnectionPath.Points(new Vector2(source.x, source.y), new Vector2(growth.x, growth.y), true, 1);
-            int side = node.position.y > 0 ? 1 : -1;
-            for (int i = 0; i < points.Length; i++)
-                points[i] = canvasSize * .5f + metaTreePan + MapPosition(points[i], side) * metaTreeZoom;
-            return points;
         }
 
         internal Rect GetMetaTreeNodeRect(MetaTreeNodePresentation node, Vector2 canvasSize)
@@ -509,13 +496,13 @@ namespace ProjectDM
         internal Rect GrowthDetailsRect => GetGrowthDetailsRect(new Vector2(Screen.width, Screen.height));
         internal Rect GrowthNavigationRect => GetGrowthNavigationRect(new Vector2(Screen.width, Screen.height), run.runEnded);
 
-        private float OpeningZoom(Vector2 canvasSize) => run.characters == null ? DefaultZoom : Mathf.Min(1f, canvasSize.y / 1080f);
+        private float OpeningZoom(Vector2 canvasSize) => run.characters == null ? DefaultZoom : Mathf.Min(DefaultZoom, canvasSize.y / 720f);
 
         internal void FitPrototypeGraph(Vector2 canvasSize)
         {
             metaTreeZoom = OpeningZoom(canvasSize);
             // Keep the opening branches clear of the fixed panels on narrow screens.
-            float inset = run.characters == null ? 0 : Mathf.Max(0, 580f - canvasSize.x * .5f);
+            float inset = run.characters == null ? 0 : Mathf.Max(0, 540f - canvasSize.x * .5f);
             metaTreePan = new Vector2(inset, inset * .25f);
             prototypeGraphCanvasSize = canvasSize;
             prototypeGraphViewInitialized = true;
@@ -611,15 +598,6 @@ namespace ProjectDM
             GUI.Label(new Rect(rect.x + 60f, rect.y + 24f, rect.width - 76f, 32f), value, amount);
         }
 
-        private static Vector2 MapPosition(Vector2 position, int side)
-        {
-            // Fold the two authored maps around the same origin so each has room for all its branches.
-            if (side == 0 || position == Vector2.zero) return position;
-            float angle = Mathf.Atan2(position.x, side * position.y) * .5f;
-            float radius = position.magnitude;
-            return new Vector2(radius * Mathf.Sin(angle) * 1.8f, side * Mathf.Max(48, radius * Mathf.Cos(angle) * 1.55f));
-        }
-
         internal void BuildPrototypeGraph()
         {
             CharacterSession characters = run.characters;
@@ -634,6 +612,13 @@ namespace ProjectDM
                     goalLine = common.growthTable.goalLine,
                     authoredLayout = true
                 });
+                if (!common.growthTable.authoredLayout)
+                {
+                    // The legacy fallback graphs were positioned independently.
+                    float offset = common.graphLayoutNodes.Max(node => node.y) + 160 - personal.graphLayoutNodes.Min(node => node.y);
+                    for (int i = common.growthTable.nodes.Length; i < tables.growthTable.nodes.Length; i++)
+                        tables.graphLayoutNodes[i].y += offset;
+                }
                 displayedCharacterId = characters.SelectedId;
             }
             if (metaTreeNodes.Length != tables.graphLayoutNodes.Length + 1)
@@ -654,10 +639,9 @@ namespace ProjectDM
                 int parent = 0;
                 for (int j = 0; j < tables.growthTable.nodes.Length; j++)
                     if (tables.growthTable.nodes[j].id == node.VisualParent) parent = j + 1;
-                int side = common == null ? 0 : i < common.growthTable.nodes.Length ? -1 : 1;
                 var layout = tables.graphLayoutNodes[i];
                 metaTreeNodes[i + 1] = new MetaTreeNodePresentation(node.id, revealed ? node.name : "", revealed ? row.description : "",
-                    MapPosition(new Vector2(layout.x, layout.y), side), parent, state, new Color(.96f, .66f, .19f));
+                    new Vector2(layout.x, layout.y), parent, state, new Color(.96f, .66f, .19f));
             }
             if (tables.growthTable.goalLine != null) for (int i = 0; i < tables.growthTable.goalLine.Length; i++)
             {
@@ -665,7 +649,7 @@ namespace ProjectDM
                 int index = tables.growthTable.nodes.Length + i + 1;
                 // The main objective roadmap is previewed in full; ordinary growth keeps one-hop concealment.
                 metaTreeNodes[index] = new MetaTreeNodePresentation(goal.id, goal.name, GoalDescription(goal),
-                    MapPosition(new Vector2(goal.x, goal.y), common == null ? 0 : -1), i == 0 ? 0 : index - 1,
+                    new Vector2(goal.x, goal.y), i == 0 ? 0 : index - 1,
                     i == 0 ? MetaTreeNodeState.Completed : MetaTreeNodeState.Locked, new Color(.59f, .78f, .86f));
             }
             if (selectedMetaTreeNode == 0) selectedMetaTreeNode = -1;
