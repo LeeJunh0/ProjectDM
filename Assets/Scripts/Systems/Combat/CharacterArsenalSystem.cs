@@ -29,7 +29,13 @@ namespace ProjectDM
         Transform caster;
         sealed class Zone { internal string id; internal Vector3 center, velocity; internal float remaining, next, radius, power; internal bool pulsed; }
         sealed class Beam { internal Vector3 direction; internal float remaining, next, width, power, sweep; internal readonly HashSet<Enemy> hits = new(); }
-        sealed class Bolt { internal Vector3 center, direction; internal float remaining, power, speed; }
+        sealed class Bolt
+        {
+            internal Vector3 center, direction;
+            internal float remaining = 2, power, speed, arcDistance, arcHeight;
+            internal Vector2 arcNormal;
+            internal Enemy target, splitFrom;
+        }
         sealed class Impact { internal Vector3 center; internal float remaining, radius, power; }
         internal int ActiveEffects => zones.Count + beams.Count + bolts.Count + impacts.Count;
 
@@ -223,16 +229,76 @@ namespace ProjectDM
                 visuals?.MeteorImpact(p.center,p.radius);impacts.RemoveAt(i);}
         }
         void Shoot(Vector3 from,Vector3 to,float power,float speed)
-        {bolts.Add(new Bolt{center=from,direction=(to-from).sqrMagnitude<.001f?Vector3.right:(to-from).normalized,power=power,speed=speed,remaining=2});}
+        {bolts.Add(new Bolt{center=from,direction=(to-from).sqrMagnitude<.001f?Vector3.right:(to-from).normalized,power=power,speed=speed});}
+
         internal void Split(Vector3 point,float power,Enemy original)
-        {if(amount("split")<1)return;visited.Clear();visited.Add(original);for(int i=0;i<Mathf.FloorToInt(amount("split"));i++){var e=Nearest(point,5,visited);if(e==null)break;visited.Add(e);Shoot(point,e.transform.position,power*.5f,10);}}
+        {
+            int count = Mathf.FloorToInt(amount("split"));
+            if (count < 1) return;
+            visited.Clear();
+            visited.Add(original);
+            for (int i = 0; i < count; i++)
+            {
+                Enemy target = Nearest(point, 5, visited);
+                if (target == null) break;
+                visited.Add(target);
+                Vector3 delta = target.transform.position - point;
+                bolts.Add(new Bolt
+                {
+                    center = point, direction = delta.normalized, speed = 10, power = power * .5f,
+                    target = target, splitFrom = original,
+                    arcDistance = Mathf.Max(0, delta.magnitude - .4f * target.hitRadiusMultiplier),
+                    arcHeight = Mathf.Min(1.1f, delta.magnitude * .25f),
+                    arcNormal = Vector2.Perpendicular(delta.normalized) * (i % 2 == 0 ? 1 : -1)
+                });
+            }
+        }
+
         void TickBolts(float dt)
         {
-            for(int i=bolts.Count-1;i>=0;i--){var b=bolts[i];Vector3 end=b.center+b.direction*b.speed*dt;Enemy nearest=null;float along=float.MaxValue;
-                enemies.spatial.Bounds(Vector3.Min(b.center,end)-Vector3.one*1.5f,Vector3.Max(b.center,end)+Vector3.one*1.5f,collisionCandidates);
-                foreach(var e in collisionCandidates)if(EnemySystem.IsLive(e)&&SegmentDistance(e.transform.position,b.center,end)<.4f*e.hitRadiusMultiplier){float d=(e.transform.position-b.center).sqrMagnitude;if(d<along){nearest=e;along=d;}}
-                visuals?.SatelliteShot(end,b.direction);b.center=end;b.remaining-=dt;
-                if(nearest!=null)hit(nearest,b.power);if(nearest!=null||b.remaining<=0)bolts.RemoveAt(i);}
+            for (int i = bolts.Count - 1; i >= 0; i--)
+            {
+                var bolt = bolts[i];
+                float travel = bolt.speed * dt;
+                Vector3 end = bolt.center + bolt.direction * travel;
+                if (bolt.target != null)
+                {
+                    if (!EnemySystem.IsLive(bolt.target))
+                    {
+                        visited.Clear();
+                        visited.Add(bolt.splitFrom);
+                        bolt.target = Nearest(bolt.center, 5, visited);
+                        if (bolt.target == null) { bolts.RemoveAt(i); continue; }
+                    }
+                    Vector3 targetPoint = bolt.target.transform.position;
+                    bolt.direction = (targetPoint - bolt.center).normalized;
+                    end = Vector3.MoveTowards(bolt.center, targetPoint, travel);
+                }
+
+                Enemy nearest = null;
+                float along = float.MaxValue;
+                enemies.spatial.Bounds(Vector3.Min(bolt.center, end) - Vector3.one * 1.5f,
+                    Vector3.Max(bolt.center, end) + Vector3.one * 1.5f, collisionCandidates);
+                foreach (var enemy in collisionCandidates)
+                {
+                    if (enemy == bolt.splitFrom || !EnemySystem.IsLive(enemy) ||
+                        SegmentDistance(enemy.transform.position, bolt.center, end) >= .4f * enemy.hitRadiusMultiplier) continue;
+                    float distance = (enemy.transform.position - bolt.center).sqrMagnitude;
+                    if (distance < along) { nearest = enemy; along = distance; }
+                }
+
+                if (bolt.target != null)
+                {
+                    float remaining = nearest == null ? Vector3.Distance(end, bolt.target.transform.position) - .4f * bolt.target.hitRadiusMultiplier : 0;
+                    var (offset, tangent) = CombatSystem.SampleHomingArc(bolt.direction, bolt.arcNormal, bolt.arcDistance, bolt.arcHeight, remaining);
+                    visuals?.SatelliteShot(end + (Vector3)offset, tangent, scale: 1.35f);
+                }
+                else visuals?.SatelliteShot(end, bolt.direction);
+                bolt.center = end;
+                bolt.remaining -= dt;
+                if (nearest != null) hit(nearest, bolt.power);
+                if (nearest != null || bolt.remaining <= 0) bolts.RemoveAt(i);
+            }
         }
         void Area(Vector3 point,float radius,float power)
         {targets.Clear();foreach(var e in enemies.enemies)if(EnemySystem.IsLive(e)&&(e.transform.position-point).sqrMagnitude<=radius*radius)targets.Add(e);foreach(var e in targets)hit(e,power);}

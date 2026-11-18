@@ -175,10 +175,10 @@ namespace ProjectDM
             if(!PixelEffect("thunder",(from+to)*.5f,new Vector2(1.1f,length*96/72),0,.25f,Color.white))Link(from,to);
         }
 
-        internal void SatelliteShot(Vector3 point,Vector3 direction)
+        internal void SatelliteShot(Vector3 point,Vector3 direction,float scale=1f)
         {
-            if(!PixelEffect("missile",point,Vector2.one*1.8f,Mathf.Atan2(direction.y,direction.x)*Mathf.Rad2Deg,.09f,Color.white))
-                SkillLine(point-direction*.15f,point,.12f,new Color(.8f,.4f,1),.12f);
+            if(!PixelEffect("missile",point,Vector2.one*(1.8f*scale),Mathf.Atan2(direction.y,direction.x)*Mathf.Rad2Deg,.09f,Color.white))
+                SkillLine(point-direction*(.15f*scale),point,.12f*scale,new Color(.8f,.4f,1),.12f);
         }
 
         internal void HitSpark(Vector3 point,CombatDamageElement element)

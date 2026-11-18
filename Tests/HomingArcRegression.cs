@@ -44,10 +44,50 @@ namespace ProjectDM.Editor
                 bolt.arcHeight = 1; bolt.arcDistance = 0;
                 CombatSystem.UpdateHomingArc(bolt, 0);
                 Check((art.transform.position - collisionOrigin).sqrMagnitude < .00001f, "Point-blank shots and lost targets do not create invalid offsets");
+                CheckSplitTracking(root.transform);
                 Debug.Log("HOMING ARC PASSED: " + checks + " assertions");
                 UnityEngine.Object.DestroyImmediate(root); EditorApplication.Exit(0);
             }
             catch (Exception e) { if (root != null) UnityEngine.Object.DestroyImmediate(root); Debug.LogException(e); EditorApplication.Exit(1); }
+        }
+
+        private static void CheckSplitTracking(Transform caster)
+        {
+            GameTables tables = GameTables.LoadResources(new GameSettings());
+            var session = new CharacterSession(tables.characters, new PrototypeSave());
+            var field = new EnemySystem(null, null, tables, null, null, null, null, null, null, null, null, null);
+            Enemy Spawn(Vector3 position)
+            {
+                var enemy = new Enemy { transform = new GameObject("Split target").transform, hitPoints = 100 };
+                enemy.transform.SetParent(caster);
+                enemy.transform.position = position;
+                field.enemies.Add(enemy);
+                return enemy;
+            }
+            Enemy original = Spawn(Vector3.zero);
+            Enemy target = Spawn(Vector3.right * 4);
+            Enemy hit = null;
+            float power = 0;
+            var arsenal = new CharacterArsenalSystem(session, field, null, () => 10,
+                id => id == "split" ? 1 : 0, _ => false, (enemy, damage) => { hit = enemy; power = damage; });
+            field.spatial.Rebuild(field.enemies);
+            arsenal.Split(original.transform.position, 10, original);
+            arsenal.Tick(.1f, caster);
+            Check(hit == null && arsenal.ActiveEffects == 1, "Split must leave the original living enemy.");
+            target.transform.position += Vector3.up * 2.5f;
+            field.spatial.Rebuild(field.enemies);
+            for (int i = 0; i < 10 && hit == null; i++) arsenal.Tick(.1f, caster);
+            Check(hit == target && power == 5, "Split must track a target off its launch line and retain half damage.");
+            Check(arsenal.ActiveEffects == 0, "Split ends on impact.");
+
+            Enemy replacement = Spawn(Vector3.down * 4);
+            target.transform.position = Vector3.right * 3;
+            arsenal.Split(Vector3.zero, 10, original);
+            target.dead = true;
+            hit = null;
+            field.spatial.Rebuild(field.enemies);
+            for (int i = 0; i < 10 && hit == null; i++) arsenal.Tick(.1f, caster);
+            Check(hit == replacement, "Split retargets if its selected enemy dies before impact.");
         }
     }
 }

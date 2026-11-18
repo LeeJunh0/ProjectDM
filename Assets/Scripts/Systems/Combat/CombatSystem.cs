@@ -162,13 +162,18 @@ namespace ProjectDM
         {
             if (bolt.renderer == null || bolt.renderer.transform == bolt.transform) return;
             // Lift only the artwork; steering, swept hits and the final impact stay on the original path.
-            float progress = bolt.arcDistance > .001f ? 1 - Mathf.Clamp01((remainingDistance - hitRadius) / bolt.arcDistance) : 1;
-            float offset = 4 * bolt.arcHeight * progress * (1 - progress);
-            bolt.renderer.transform.position = bolt.transform.position + (Vector3)(bolt.arcNormal * offset);
-            Vector2 tangent = bolt.direction;
-            if (progress > 0 && progress < 1)
-                tangent += bolt.arcNormal * (4 * bolt.arcHeight * (1 - 2 * progress) / bolt.arcDistance);
+            var (offset, tangent) = SampleHomingArc(bolt.direction, bolt.arcNormal, bolt.arcDistance, bolt.arcHeight, remainingDistance - hitRadius);
+            bolt.renderer.transform.position = bolt.transform.position + (Vector3)offset;
             bolt.renderer.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg);
+        }
+
+        internal static (Vector2 offset, Vector2 tangent) SampleHomingArc(Vector2 direction, Vector2 normal, float distance, float height, float remaining)
+        {
+            float progress = distance > .001f ? 1 - Mathf.Clamp01(remaining / distance) : 1;
+            Vector2 tangent = direction;
+            if (progress > 0 && progress < 1)
+                tangent += normal * (4 * height * (1 - 2 * progress) / distance);
+            return (normal * (4 * height * progress * (1 - progress)), tangent);
         }
 
         internal bool forceCriticalHits;
